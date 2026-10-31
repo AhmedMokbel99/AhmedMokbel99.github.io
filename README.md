@@ -141,22 +141,33 @@ python build.py
 
 ## 🌐 النشر
 
-### Netlify (الخيار الموصى به)
+### GitHub Pages (الاستضافة الحالية — مجانية ودائمة)
+
+الموقع منشور على: **https://ahmedmokbel99.github.io/**
+
+- الريبو: `AhmedMokbel99/AhmedMokbel99.github.io`
+- النشر تلقائي من الفرع `main` (Settings → Pages → Deploy from a branch → `main` / root).
+- كل `git push` إلى `main` يحدّث الموقع خلال دقيقة تقريبًا.
+- لا توجد مدة تجريبية ولا حدّ زمني؛ GitHub Pages مجاني للمستودعات العامة.
+
+```bash
+git add -A
+git commit -m "وصف التعديل"
+git push
+```
+
+> **مهم:** نموذج التواصل لا يعمل على GitHub Pages (لا يوجد خادم يستقبل `POST`).
+> عند فشل الإرسال يعرض الموقع زر «افتح واتساب» مع كل التفاصيل تلقائيًا.
+
+### Netlify (بديل اختياري)
 
 1. اسحب مجلد المشروع إلى [Netlify Drop](https://app.netlify.com/drop) أو اربطه بمستودع Git.
 2. ملف `netlify.toml` يضبط مجلد النشر والرؤوس الأمنية والتخزين المؤقت تلقائيًا.
 3. اذهب إلى **Forms** في لوحة Netlify للتأكد من اكتشاف نموذج `contact`.
-4. بعد أول نشر، اختبر إرسال النموذج من الموقع المنشور (على localhost يتحول إلى واتساب).
-
-### GitHub Pages / أي استضافة ثابتة
-
-الموقع يعمل كما هو، لكن **إرسال النموذج عبر Netlify Forms لن يعمل**.
-في هذه الحالة يظهر للمستخدم زر «افتح واتساب» مع كل التفاصيل بعد فشل الإرسال،
-أو استخدم زر واتساب الموجود بجانب النموذج مباشرة.
 
 ### عند استخدام نطاق مخصص
 
-ابحث في المشروع عن `ahmed-mokbel.netlify.app` وحدّثه في:
+ابحث في المشروع عن `ahmedmokbel99.github.io` وحدّثه في:
 
 - `index.html` (canonical / OG / Twitter / JSON-LD)
 - `robots.txt` (رابط sitemap)
