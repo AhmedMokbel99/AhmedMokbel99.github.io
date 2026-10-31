@@ -41,7 +41,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -93,8 +93,8 @@
   }
   </script>
 
-  <script src="js/data.js?v=5" defer></script>
-  <script src="js/main.js?v=5" defer></script>
+  <script src="js/data.js?v=6" defer></script>
+  <script src="js/main.js?v=6" defer></script>
 </head>
 <body>
 
@@ -260,7 +260,7 @@
             </li>
             <li>
               <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
-              يعمل على بيهانس منذ <strong>2015</strong>
+              يعمل على بيهانس منذ <strong id="behanceSince">2015</strong>
             </li>
             <li>
               <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
@@ -291,11 +291,11 @@
           </div>
 
           <div class="float-pill float-pill--one" aria-hidden="true">
-            <b>+13</b>
+            <b id="pillYears">+13</b>
             <small>سنوات خبرة</small>
           </div>
           <div class="float-pill float-pill--two" aria-hidden="true">
-            <b>+160</b>
+            <b id="pillProjects">+160</b>
             <small>مشروع منجز</small>
           </div>
         </div>
@@ -472,9 +472,8 @@
         </noscript>
 
         <p class="work-note">
-          جميع المشاريع منشورة على
-          <a data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">بيهانس</a>
-          — <span id="workCount">13</span> مشروعًا مختارًا.
+          <span id="workTotal">13</span> مشروعًا مختارًا — <span id="behanceCount">12</span> منها منشورة على
+          <a data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">بيهانس</a>.
         </p>
       </div>
     </section>

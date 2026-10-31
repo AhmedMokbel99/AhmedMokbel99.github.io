@@ -13,6 +13,11 @@ const SITE_DATA = {
   firstName: "أحمد",
   title: "مصمم جرافيك وموشن جرافيك",
   location: "المنصورة، مصر",
+
+  /* سنة بداية المسيرة — سنوات الخبرة تُحسب تلقائيًا منها كل عام */
+  careerStart: 2013,
+
+  /* سنة الانضمام إلى بيهانس */
   behanceSince: "2015",
 
   /* النص التعريفي في قسم البداية */
@@ -60,12 +65,18 @@ const SITE_DATA = {
     "مؤثرات بصرية VFX",
   ],
 
-  /* أرقام قسم الإحصائيات */
+  /*
+   * أرقام قسم الإحصائيات.
+   * القيم ذات الـ key تُحسب تلقائيًا:
+   *   experience → السنة الحالية ناقص careerStart
+   *   behance    → عدد المشاريع التي لها رابط خارجي فعلي
+   * القيم الرقمية الثابتة تُعدَّل يدويًا عند الحاجة.
+   */
   stats: [
-    { value: 13, suffix: "+", label: "سنوات خبرة" },
-    { value: 160, suffix: "+", label: "مشروع منجز" },
-    { value: 80, suffix: "+", label: "عميل راضٍ" },
-    { value: 13, suffix: "", label: "مشروع على بيهانس" },
+    { key: "experience", suffix: "+", label: "سنوات خبرة" },
+    { key: "projects", value: 160, suffix: "+", label: "مشروع منجز" },
+    { key: "clients", value: 80, suffix: "+", label: "عميل راضٍ" },
+    { key: "behance", suffix: "", label: "مشروع على بيهانس" },
   ],
 };
 

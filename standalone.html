@@ -3005,7 +3005,7 @@ body.has-dialog {
             </li>
             <li>
               <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
-              يعمل على بيهانس منذ <strong>2015</strong>
+              يعمل على بيهانس منذ <strong id="behanceSince">2015</strong>
             </li>
             <li>
               <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
@@ -3036,11 +3036,11 @@ body.has-dialog {
           </div>
 
           <div class="float-pill float-pill--one" aria-hidden="true">
-            <b>+13</b>
+            <b id="pillYears">+13</b>
             <small>سنوات خبرة</small>
           </div>
           <div class="float-pill float-pill--two" aria-hidden="true">
-            <b>+160</b>
+            <b id="pillProjects">+160</b>
             <small>مشروع منجز</small>
           </div>
         </div>
@@ -3217,9 +3217,8 @@ body.has-dialog {
         </noscript>
 
         <p class="work-note">
-          جميع المشاريع منشورة على
-          <a data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">بيهانس</a>
-          — <span id="workCount">13</span> مشروعًا مختارًا.
+          <span id="workTotal">13</span> مشروعًا مختارًا — <span id="behanceCount">12</span> منها منشورة على
+          <a data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">بيهانس</a>.
         </p>
       </div>
     </section>
@@ -3619,6 +3618,11 @@ const SITE_DATA = {
   firstName: "أحمد",
   title: "مصمم جرافيك وموشن جرافيك",
   location: "المنصورة، مصر",
+
+  /* سنة بداية المسيرة — سنوات الخبرة تُحسب تلقائيًا منها كل عام */
+  careerStart: 2013,
+
+  /* سنة الانضمام إلى بيهانس */
   behanceSince: "2015",
 
   /* النص التعريفي في قسم البداية */
@@ -3666,12 +3670,18 @@ const SITE_DATA = {
     "مؤثرات بصرية VFX",
   ],
 
-  /* أرقام قسم الإحصائيات */
+  /*
+   * أرقام قسم الإحصائيات.
+   * القيم ذات الـ key تُحسب تلقائيًا:
+   *   experience → السنة الحالية ناقص careerStart
+   *   behance    → عدد المشاريع التي لها رابط خارجي فعلي
+   * القيم الرقمية الثابتة تُعدَّل يدويًا عند الحاجة.
+   */
   stats: [
-    { value: 13, suffix: "+", label: "سنوات خبرة" },
-    { value: 160, suffix: "+", label: "مشروع منجز" },
-    { value: 80, suffix: "+", label: "عميل راضٍ" },
-    { value: 13, suffix: "", label: "مشروع على بيهانس" },
+    { key: "experience", suffix: "+", label: "سنوات خبرة" },
+    { key: "projects", value: 160, suffix: "+", label: "مشروع منجز" },
+    { key: "clients", value: 80, suffix: "+", label: "عميل راضٍ" },
+    { key: "behance", suffix: "", label: "مشروع على بيهانس" },
   ],
 };
 
@@ -3984,10 +3994,27 @@ function initSiteData() {
     track.innerHTML = set + set;
   }
 
-  /* الإحصائيات */
+  /* الإحصائيات — القيم الديناميكية تُحسب من نفس مصدر البيانات */
+  const currentYear = new Date().getFullYear();
+  const work = typeof WORK_DATA !== 'undefined' ? WORK_DATA : [];
+  const behanceProjects = work.filter((p) => p.external && p.url);
+
+  const siteStats = (SITE_DATA.stats || []).map((stat) => {
+    if (stat.key === 'experience') {
+      const start = Number(SITE_DATA.careerStart) || currentYear;
+      return { ...stat, value: Math.max(1, currentYear - start) };
+    }
+    if (stat.key === 'behance') {
+      return { ...stat, value: behanceProjects.length };
+    }
+    return stat;
+  });
+
+  const statValue = (key) => siteStats.find((s) => s.key === key)?.value;
+
   const stats = $('#statsGrid');
-  if (stats && Array.isArray(SITE_DATA.stats)) {
-    stats.innerHTML = SITE_DATA.stats
+  if (stats && siteStats.length) {
+    stats.innerHTML = siteStats
       .map(
         (s) => `
         <div class="stat">
@@ -3998,8 +4025,30 @@ function initSiteData() {
       .join('');
   }
 
+  /* البطاقات العائمة وملاحظة الأعمال — أرقام مطابقة للإحصائيات */
+  const pillYears = $('#pillYears');
+  if (pillYears && statValue('experience')) {
+    pillYears.textContent = `+${statValue('experience')}`;
+  }
+
+  const pillProjects = $('#pillProjects');
+  if (pillProjects && statValue('projects')) {
+    pillProjects.textContent = `+${statValue('projects')}`;
+  }
+
+  const workTotal = $('#workTotal');
+  if (workTotal) workTotal.textContent = String(work.length);
+
+  const behanceCount = $('#behanceCount');
+  if (behanceCount) behanceCount.textContent = String(behanceProjects.length);
+
+  const since = $('#behanceSince');
+  if (since && SITE_DATA.behanceSince) {
+    since.textContent = String(SITE_DATA.behanceSince);
+  }
+
   const year = $('#year');
-  if (year) year.textContent = new Date().getFullYear();
+  if (year) year.textContent = currentYear;
 }
 
 /* ------------------------------------------------------------
@@ -4380,7 +4429,7 @@ function renderProjects() {
   renderFilters();
   observeReveals(grid);
 
-  const counter = $('#workCount');
+  const counter = $('#workTotal');
   if (counter) counter.textContent = String(state.projects.length);
 }
 

@@ -93,10 +93,27 @@ function initSiteData() {
     track.innerHTML = set + set;
   }
 
-  /* الإحصائيات */
+  /* الإحصائيات — القيم الديناميكية تُحسب من نفس مصدر البيانات */
+  const currentYear = new Date().getFullYear();
+  const work = typeof WORK_DATA !== 'undefined' ? WORK_DATA : [];
+  const behanceProjects = work.filter((p) => p.external && p.url);
+
+  const siteStats = (SITE_DATA.stats || []).map((stat) => {
+    if (stat.key === 'experience') {
+      const start = Number(SITE_DATA.careerStart) || currentYear;
+      return { ...stat, value: Math.max(1, currentYear - start) };
+    }
+    if (stat.key === 'behance') {
+      return { ...stat, value: behanceProjects.length };
+    }
+    return stat;
+  });
+
+  const statValue = (key) => siteStats.find((s) => s.key === key)?.value;
+
   const stats = $('#statsGrid');
-  if (stats && Array.isArray(SITE_DATA.stats)) {
-    stats.innerHTML = SITE_DATA.stats
+  if (stats && siteStats.length) {
+    stats.innerHTML = siteStats
       .map(
         (s) => `
         <div class="stat">
@@ -107,8 +124,30 @@ function initSiteData() {
       .join('');
   }
 
+  /* البطاقات العائمة وملاحظة الأعمال — أرقام مطابقة للإحصائيات */
+  const pillYears = $('#pillYears');
+  if (pillYears && statValue('experience')) {
+    pillYears.textContent = `+${statValue('experience')}`;
+  }
+
+  const pillProjects = $('#pillProjects');
+  if (pillProjects && statValue('projects')) {
+    pillProjects.textContent = `+${statValue('projects')}`;
+  }
+
+  const workTotal = $('#workTotal');
+  if (workTotal) workTotal.textContent = String(work.length);
+
+  const behanceCount = $('#behanceCount');
+  if (behanceCount) behanceCount.textContent = String(behanceProjects.length);
+
+  const since = $('#behanceSince');
+  if (since && SITE_DATA.behanceSince) {
+    since.textContent = String(SITE_DATA.behanceSince);
+  }
+
   const year = $('#year');
-  if (year) year.textContent = new Date().getFullYear();
+  if (year) year.textContent = currentYear;
 }
 
 /* ------------------------------------------------------------
@@ -489,7 +528,7 @@ function renderProjects() {
   renderFilters();
   observeReveals(grid);
 
-  const counter = $('#workCount');
+  const counter = $('#workTotal');
   if (counter) counter.textContent = String(state.projects.length);
 }
 
