@@ -1,0 +1,26 @@
+{
+  "name": "أحمد مقبل — مصمم جرافيك وموشن جرافيك",
+  "short_name": "أحمد مقبل",
+  "description": "بورتفوليو أحمد مقبل، مصمم جرافيك وموشن جرافيك ومؤسس وكالة DOT Media.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07080d",
+  "theme_color": "#07080d",
+  "icons": [
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

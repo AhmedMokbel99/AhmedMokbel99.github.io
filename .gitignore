@@ -1,0 +1,13 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# Build / preview artifacts
+dist/
+_site/
+*.log

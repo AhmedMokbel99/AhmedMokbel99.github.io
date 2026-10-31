@@ -1,0 +1,9 @@
+# robots.txt — أحمد مقبل | Ahmed Mokbel Portfolio
+User-agent: *
+Allow: /
+
+# نسخة الملف الواحد مخصّصة للاستخدام المحلي فقط
+Disallow: /standalone.html
+Disallow: /404.html
+
+Sitemap: https://ahmed-mokbel.netlify.app/sitemap.xml

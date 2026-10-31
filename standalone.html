@@ -1,0 +1,4807 @@
+<!DOCTYPE html>
+<!-- نسخة مولّدة آليًا بواسطة build.py — عدّل الملفات الأصلية ثم أعد البناء -->
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>أحمد مقبل — مصمم جرافيك وموشن جرافيك | DOT Media</title>
+  <meta name="description" content="أحمد مقبل، مصمم جرافيك وموشن جرافيك من المنصورة ومؤسس وكالة DOT Media. هوية بصرية، موشن جرافيك، تصميم رقمي وطباعي، وإنتاج محتوى تجاري.">
+  <meta name="author" content="أحمد مقبل">
+  <meta name="theme-color" content="#07080d">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://ahmed-mokbel.netlify.app/">
+
+  <!-- Icons & manifest -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="أحمد مقبل">
+  <meta property="og:locale" content="ar_EG">
+  <meta property="og:url" content="https://ahmed-mokbel.netlify.app/">
+  <meta property="og:title" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك | DOT Media">
+  <meta property="og:description" content="هوية بصرية، موشن جرافيك، تصميم رقمي وطباعي، وإنتاج محتوى تجاري من المنصورة — مصر.">
+  <meta property="og:image" content="https://ahmed-mokbel.netlify.app/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك ومؤسس DOT Media">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://ahmed-mokbel.netlify.app/">
+  <meta name="twitter:title" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك | DOT Media">
+  <meta name="twitter:description" content="هوية بصرية، موشن جرافيك، تصميم رقمي وطباعي، وإنتاج محتوى تجاري من المنصورة — مصر.">
+  <meta name="twitter:image" content="https://ahmed-mokbel.netlify.app/assets/og-image.jpg">
+  <meta name="twitter:image:alt" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+/* ============================================================
+   أحمد مقبل — Portfolio
+   Design system / Layout / Components
+   ------------------------------------------------------------
+   01. Tokens & reset
+   02. Base typography & utilities
+   03. Background decor
+   04. Header & navigation
+   05. Buttons
+   06. Hero
+   07. Marquee
+   08. Stats
+   09. About
+   10. Services
+   11. Work & filters
+   12. Process
+   13. FAQ
+   14. Contact & form
+   15. Footer
+   16. Floating actions
+   17. Project dialog
+   18. Toast
+   19. Reveal & motion
+   20. Responsive
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   01. Tokens & reset
+   ------------------------------------------------------------ */
+:root {
+  /* Colors */
+  --bg: #07080d;
+  --bg-soft: #0b0d14;
+  --surface: #11141d;
+  --surface-2: #171b27;
+  --surface-3: #1d2231;
+
+  --line: rgba(255, 255, 255, 0.075);
+  --line-strong: rgba(255, 255, 255, 0.14);
+
+  --text: #f7f9fc;
+  --muted: #a8b4c8;
+  --dim: #8593a8;
+
+  --brand: #8b5cf6;
+  --brand-deep: #6d28d9;
+  --cyan: #22d3ee;
+  --green: #25d366;
+
+  --brand-soft: rgba(139, 92, 246, 0.14);
+  --brand-line: rgba(139, 92, 246, 0.34);
+
+  --grad: linear-gradient(135deg, #a78bfa 0%, #60a5fa 48%, #22d3ee 100%);
+  --grad-solid: linear-gradient(135deg, #7c3aed 0%, #4f46e5 55%, #0891b2 100%);
+
+  /* Typography */
+  --font-display: "Tajawal", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Layout */
+  --container: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 2rem);
+  --nav-h: 74px;
+  --section-y: clamp(4.5rem, 9vw, 7.5rem);
+  --radius-sm: 12px;
+  --radius: 18px;
+  --radius-lg: 26px;
+
+  /* Effects */
+  --shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9);
+  --shadow-brand: 0 20px 50px -22px rgba(124, 58, 237, 0.55);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  font-weight: 400;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+::selection {
+  background: var(--brand);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.38;
+  letter-spacing: 0;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------
+   02. Base typography & utilities
+   ------------------------------------------------------------ */
+.wrap {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+  position: relative;
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+.section--soft {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 60%);
+  border-block: 1px solid var(--line);
+}
+
+.svg-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+body.menu-open,
+body.has-dialog {
+  overflow: hidden;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  inset-inline-start: 50%;
+  top: -100px;
+  transform: translateX(50%);
+  z-index: 3000;
+  padding: 0.7rem 1.5rem;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 0 0 12px 12px;
+  font-weight: 600;
+  transition: top 0.25s var(--ease);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--grad);
+  border-radius: 2px;
+}
+
+.section-head {
+  max-width: 42rem;
+  margin-bottom: clamp(2.25rem, 4vw, 3.25rem);
+}
+
+.section-head h2 {
+  font-size: clamp(1.85rem, 3.6vw, 2.75rem);
+}
+
+.section-head p {
+  color: var(--muted);
+  font-size: 1.02rem;
+  margin-top: 0.85rem;
+}
+
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon--solid {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* ------------------------------------------------------------
+   03. Background decor
+   ------------------------------------------------------------ */
+.page-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-glow::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 70vh;
+  background:
+    radial-gradient(46rem 26rem at 78% 8%, rgba(124, 58, 237, 0.16), transparent 70%),
+    radial-gradient(38rem 24rem at 14% 24%, rgba(6, 182, 212, 0.1), transparent 70%);
+}
+
+.page-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 15%, transparent 75%);
+}
+
+/* ------------------------------------------------------------
+   04. Header & navigation
+   ------------------------------------------------------------ */
+.scroll-progress {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  height: 3px;
+  width: 0;
+  background: var(--grad);
+  z-index: 2000;
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.7);
+  transition: width 0.08s linear;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  background: rgba(7, 8, 13, 0.72);
+  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.site-header.is-scrolled {
+  background: rgba(7, 8, 13, 0.92);
+  border-bottom-color: var(--line);
+  box-shadow: 0 18px 40px -32px #000;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.brand__mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--grad-solid);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff;
+  box-shadow: 0 8px 22px -8px rgba(124, 58, 237, 0.9);
+  transition: transform 0.35s var(--ease);
+}
+
+.brand:hover .brand__mark {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+.nav__panel {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 2.8vw, 2.4rem);
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.1rem, 2.4vw, 2rem);
+}
+
+.nav__link {
+  position: relative;
+  display: inline-block;
+  padding-block: 0.4rem;
+  font-size: 0.94rem;
+  font-weight: 500;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.nav__link::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--grad);
+  transform: scaleX(0);
+  transform-origin: var(--nav-origin, right);
+  transition: transform 0.3s var(--ease);
+}
+
+.nav__link:hover,
+.nav__link.is-active {
+  color: var(--text);
+}
+
+.nav__link:hover::after,
+.nav__link.is-active::after {
+  transform: scaleX(1);
+}
+
+.nav__cta {
+  display: inline-flex;
+}
+
+.nav__toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.nav__toggle:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--line-strong);
+}
+
+.nav__toggle .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.nav__toggle .icon-close {
+  display: none;
+}
+
+.nav__toggle[aria-expanded="true"] .icon-menu {
+  display: none;
+}
+
+.nav__toggle[aria-expanded="true"] .icon-close {
+  display: block;
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: var(--nav-h) 0 0;
+  background: rgba(4, 5, 9, 0.65);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 900;
+}
+
+.nav-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ------------------------------------------------------------
+   05. Buttons
+   ------------------------------------------------------------ */
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--text);
+  --btn-border: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 48px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s ease,
+    background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.btn--primary {
+  --btn-bg: var(--grad-solid);
+  --btn-fg: #fff;
+  box-shadow: 0 12px 30px -14px rgba(124, 58, 237, 0.9);
+}
+
+.btn--primary:hover {
+  box-shadow: 0 18px 38px -14px rgba(124, 58, 237, 0.95);
+  filter: brightness(1.08);
+}
+
+.btn--ghost {
+  --btn-bg: rgba(255, 255, 255, 0.035);
+  --btn-border: var(--line-strong);
+  --btn-fg: var(--text);
+}
+
+.btn--ghost:hover {
+  --btn-border: rgba(34, 211, 238, 0.45);
+  --btn-bg: rgba(34, 211, 238, 0.08);
+  box-shadow: 0 12px 28px -18px rgba(34, 211, 238, 0.7);
+}
+
+.btn--whatsapp {
+  --btn-bg: rgba(37, 211, 102, 0.12);
+  --btn-border: rgba(37, 211, 102, 0.35);
+  --btn-fg: #d7ffe6;
+}
+
+.btn--whatsapp:hover {
+  --btn-bg: rgba(37, 211, 102, 0.2);
+  box-shadow: 0 12px 28px -18px rgba(37, 211, 102, 0.6);
+}
+
+.btn--sm {
+  min-height: 42px;
+  padding: 0.55rem 1.15rem;
+  font-size: 0.86rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled],
+.btn[aria-busy="true"] {
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   06. Hero
+   ------------------------------------------------------------ */
+.hero {
+  position: relative;
+  padding-block: clamp(3.5rem, 7vw, 6rem) clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  align-items: center;
+  gap: clamp(2.2rem, 5vw, 4.5rem);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+}
+
+.badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 1.6rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.42rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  backdrop-filter: blur(10px);
+}
+
+.badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.16);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.16); }
+  50% { box-shadow: 0 0 0 7px rgba(52, 211, 153, 0.05); }
+}
+
+.badge--agency {
+  border-color: var(--brand-line);
+  background: rgba(124, 58, 237, 0.12);
+  color: #e6ddff;
+  font-weight: 500;
+  transition: transform 0.25s var(--ease), background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.badge--agency:hover {
+  transform: translateY(-2px);
+  background: rgba(124, 58, 237, 0.22);
+  border-color: var(--brand);
+}
+
+.badge--agency .icon {
+  color: var(--cyan);
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 5.4vw, 4.25rem);
+  line-height: 1.24;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.hero h1 .h1-sub {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.hero h1 .grad-text {
+  display: inline;
+  padding-bottom: 0.06em;
+}
+
+.hero-role {
+  min-height: 1.8em;
+  margin-top: 1.15rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  color: var(--cyan);
+  text-align: start;
+}
+
+.hero-role .caret {
+  display: inline-block;
+  width: 0.55em;
+  margin-inline-start: 2px;
+  color: var(--cyan);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hero-lead {
+  max-width: 36rem;
+  margin-top: 1.15rem;
+  color: var(--muted);
+  font-size: clamp(0.98rem, 1.5vw, 1.08rem);
+  line-height: 1.9;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 2.1rem;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  margin-top: 2.5rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--line);
+}
+
+.hero-meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--dim);
+  font-size: 0.86rem;
+}
+
+.hero-meta .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--brand);
+}
+
+.hero-meta strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Portrait */
+.hero-visual {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  justify-self: center;
+  isolation: isolate;
+}
+
+.hero-visual::before {
+  content: "";
+  position: absolute;
+  inset: 8% -12% -6% -8%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(139, 92, 246, 0.4), transparent 62%),
+    radial-gradient(circle at 20% 80%, rgba(34, 211, 238, 0.24), transparent 60%);
+  filter: blur(38px);
+  opacity: 0.85;
+}
+
+.portrait-card {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  padding: 10px;
+  border-radius: 30px;
+  background: linear-gradient(150deg, rgba(167, 139, 250, 0.75), rgba(255, 255, 255, 0.06) 38%, rgba(34, 211, 238, 0.55));
+  box-shadow: var(--shadow), 0 0 60px -24px rgba(139, 92, 246, 0.7);
+  transform: rotate(1.4deg);
+  transition: transform 0.6s var(--ease);
+}
+
+.portrait-card:hover {
+  transform: rotate(0deg) translateY(-4px);
+}
+
+.portrait-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.portrait-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  filter: brightness(0.96) contrast(1.05);
+  transition: transform 0.8s var(--ease), filter 0.4s ease;
+}
+
+.portrait-card:hover img {
+  transform: scale(1.035);
+  filter: brightness(1.02) contrast(1.07);
+}
+
+.portrait-card__inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 52%, rgba(7, 8, 13, 0.72) 100%);
+  pointer-events: none;
+}
+
+.portrait-badge {
+  position: absolute;
+  inset-inline-start: 20px;
+  bottom: 20px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(8, 9, 14, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  color: #e2e8f0;
+}
+
+.portrait-badge span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+}
+
+.float-pill {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  gap: 0.05rem;
+  padding: 0.7rem 1rem;
+  border-radius: 14px;
+  background: rgba(13, 16, 24, 0.82);
+  border: 1px solid var(--line-strong);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 40px -24px #000;
+  text-align: center;
+  animation: float-y 6s ease-in-out infinite;
+}
+
+.float-pill b {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.float-pill small {
+  color: var(--dim);
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
+
+.float-pill--one {
+  inset-inline-start: -22px;
+  top: 14%;
+}
+
+.float-pill--two {
+  inset-inline-end: -18px;
+  bottom: 14%;
+  animation-delay: -3s;
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+/* ------------------------------------------------------------
+   07. Marquee
+   ------------------------------------------------------------ */
+.marquee {
+  border-block: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.015);
+  overflow: hidden;
+  padding-block: 1rem;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x 36s linear infinite;
+}
+
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding-inline: 1.4rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.42);
+  white-space: nowrap;
+}
+
+.marquee__item::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--brand);
+  opacity: 0.85;
+}
+
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+
+/* ------------------------------------------------------------
+   08. Stats
+   ------------------------------------------------------------ */
+.stats {
+  padding-block: clamp(2.75rem, 5vw, 4rem);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.015);
+  overflow: hidden;
+}
+
+.stat {
+  position: relative;
+  padding: clamp(1.6rem, 3vw, 2.4rem) 1.25rem;
+  text-align: center;
+}
+
+.stat + .stat::before {
+  content: "";
+  position: absolute;
+  inset-block: 22%;
+  inset-inline-start: 0;
+  width: 1px;
+  background: var(--line);
+}
+
+.stat__value {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: clamp(2.1rem, 4vw, 3.1rem);
+  font-weight: 600;
+  line-height: 1.1;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat__label {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--muted);
+  font-size: 0.87rem;
+}
+
+/* ------------------------------------------------------------
+   09. About
+   ------------------------------------------------------------ */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(2rem, 4.5vw, 4rem);
+  align-items: start;
+}
+
+.about-aside {
+  display: grid;
+  gap: 1.1rem;
+  position: sticky;
+  top: calc(var(--nav-h) + 28px);
+}
+
+.quote-card {
+  position: relative;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(160deg, rgba(139, 92, 246, 0.12), rgba(34, 211, 238, 0.05) 60%, transparent),
+    var(--surface);
+  overflow: hidden;
+}
+
+.quote-card::before {
+  content: "\201D";
+  position: absolute;
+  top: -0.2em;
+  inset-inline-start: 1rem;
+  font-family: Georgia, serif;
+  font-size: 7rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.quote-card blockquote {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.quote-card blockquote mark {
+  background: none;
+  color: var(--cyan);
+}
+
+.quote-card__sign {
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--dim);
+  font-size: 0.78rem;
+}
+
+.quote-card__sign b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.agency-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--brand-line);
+  background: rgba(124, 58, 237, 0.07);
+}
+
+.agency-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.agency-card__head h3 {
+  font-size: 1.05rem;
+}
+
+.agency-card__head span {
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+}
+
+.agency-card p {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.7;
+  margin-top: 0.4rem;
+  max-width: 26rem;
+}
+
+.about-body h2 {
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  margin-bottom: 1.2rem;
+}
+
+.about-body p {
+  color: var(--muted);
+  font-size: 1.01rem;
+  line-height: 1.95;
+  margin-bottom: 1.1rem;
+}
+
+.about-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.about-lists {
+  display: grid;
+  gap: 1.35rem;
+  margin-top: 1.9rem;
+}
+
+.about-list__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.about-list__title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  padding: 0.42rem 0.85rem;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.025);
+  color: #dbe3f4;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  transition: transform 0.2s var(--ease), border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-line);
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.chip--tool {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.7rem;
+  color: var(--cyan);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, gap 0.2s ease;
+}
+
+.about-link:hover {
+  border-bottom-color: var(--cyan);
+  gap: 0.7rem;
+}
+
+/* ------------------------------------------------------------
+   10. Services
+   ------------------------------------------------------------ */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+
+.service {
+  position: relative;
+  padding: clamp(1.5rem, 2.6vw, 2.1rem);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012));
+  overflow: hidden;
+  transition: transform 0.35s var(--ease), border-color 0.3s ease,
+    background-color 0.3s ease, box-shadow 0.35s ease;
+}
+
+.service::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: var(--grad);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.service:hover {
+  transform: translateY(-5px);
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 26px 50px -34px rgba(0, 0, 0, 0.95);
+}
+
+.service:hover::before {
+  opacity: 1;
+}
+
+.service__icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 1.3rem;
+  border-radius: 13px;
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  background: rgba(139, 92, 246, 0.12);
+  color: #c4b5fd;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, transform 0.35s var(--ease);
+}
+
+.service:hover .service__icon {
+  transform: rotate(-5deg) scale(1.04);
+  background: rgba(34, 211, 238, 0.12);
+  border-color: rgba(34, 211, 238, 0.3);
+  color: #67e8f9;
+}
+
+.service__icon .icon {
+  width: 21px;
+  height: 21px;
+}
+
+.service h3 {
+  font-size: 1.12rem;
+  margin-bottom: 0.6rem;
+}
+
+.service p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.service__num {
+  position: absolute;
+  top: 1.35rem;
+  inset-inline-end: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.18);
+}
+
+/* ------------------------------------------------------------
+   11. Work & filters
+   ------------------------------------------------------------ */
+.work-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.work-head .section-head {
+  margin-bottom: 0;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--muted);
+  font-size: 0.84rem;
+  font-weight: 500;
+  transition: color 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease, transform 0.2s var(--ease);
+}
+
+.filter:hover {
+  color: var(--text);
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+.filter[aria-pressed="true"] {
+  background: var(--grad-solid);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 10px 24px -14px rgba(124, 58, 237, 0.9);
+}
+
+.filter__count {
+  min-width: 1.35rem;
+  padding-inline: 0.3rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.35rem;
+  text-align: center;
+}
+
+.filter[aria-pressed="true"] .filter__count {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.35rem;
+}
+
+.project {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+  transition: transform 0.4s var(--ease), border-color 0.3s ease,
+    box-shadow 0.4s ease, opacity 0.3s ease;
+}
+
+.project:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139, 92, 246, 0.42);
+  box-shadow: 0 30px 50px -32px rgba(0, 0, 0, 0.95),
+    0 0 40px -24px rgba(124, 58, 237, 0.75);
+}
+
+.project:has(.project__open:focus-visible) {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.project[hidden] {
+  display: none;
+}
+
+.project.is-enter {
+  animation: card-in 0.5s var(--ease) both;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+.project__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.project__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.94) saturate(1.02);
+  transition: transform 0.75s var(--ease), filter 0.4s ease;
+}
+
+.project:hover .project__media img {
+  transform: scale(1.06);
+  filter: brightness(1.02) saturate(1.06);
+}
+
+.project__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 8, 13, 0.05) 35%, rgba(7, 8, 13, 0.55) 100%);
+  pointer-events: none;
+}
+
+.project__badges {
+  position: absolute;
+  inset-inline: 0.8rem;
+  top: 0.8rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.project__code,
+.project__type {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(7, 8, 13, 0.74);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.project__type {
+  border-radius: 999px;
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(124, 58, 237, 0.88);
+}
+
+.project__type .icon {
+  width: 9px;
+  height: 9px;
+}
+
+.project__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 1.15rem 1.2rem 1.25rem;
+}
+
+.project__tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  color: var(--cyan);
+}
+
+.project__title {
+  margin-top: 0.35rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.project__more {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.9rem;
+  color: var(--dim);
+  font-size: 0.78rem;
+  transition: color 0.25s ease;
+}
+
+.project__more .icon {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s var(--ease);
+}
+
+.project:hover .project__more {
+  color: var(--cyan);
+}
+
+.project:hover .project__more .icon {
+  transform: translateX(3px);
+}
+
+.project__open {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  cursor: pointer;
+}
+
+.project__open:focus-visible {
+  outline: none;
+}
+
+.project__open::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(88, 28, 135, 0.06);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.project:hover .project__open::before {
+  opacity: 1;
+}
+
+.work-empty {
+  grid-column: 1 / -1;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius);
+}
+
+.work-empty a {
+  color: var(--cyan);
+  border-bottom: 1px solid rgba(34, 211, 238, 0.4);
+}
+
+/* حالة فشل تحميل صورة المشروع */
+.project__media.is-missing::before,
+.dialog-media.is-missing::before {
+  content: "معاينة غير متاحة";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(139, 92, 246, 0.25), transparent 70%),
+    var(--surface-2);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  z-index: 1;
+}
+
+.work-note {
+  margin-top: 1.8rem;
+  color: var(--dim);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.work-note a {
+  color: var(--cyan);
+  border-bottom: 1px solid rgba(34, 211, 238, 0.4);
+}
+
+/* ------------------------------------------------------------
+   12. Process
+   ------------------------------------------------------------ */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.1rem;
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  padding: 1.6rem 1.35rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.3s ease, background-color 0.3s ease,
+    transform 0.35s var(--ease);
+}
+
+.step:hover {
+  transform: translateY(-4px);
+  border-color: var(--brand-line);
+  background: rgba(139, 92, 246, 0.055);
+}
+
+.step__num {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 1.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--brand-line);
+  background: rgba(139, 92, 246, 0.12);
+  color: #c4b5fd;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+.step h3 {
+  font-size: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.step p {
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.75;
+}
+
+/* ------------------------------------------------------------
+   13. FAQ
+   ------------------------------------------------------------ */
+.faq-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.faq-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.faq {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.faq[open] {
+  border-color: var(--brand-line);
+  background: rgba(139, 92, 246, 0.05);
+}
+
+.faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.05rem 1.25rem;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  transition: color 0.2s ease;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary:hover {
+  color: var(--cyan);
+}
+
+.faq__icon {
+  position: relative;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  display: grid;
+  place-items: center;
+  transition: transform 0.3s var(--ease), background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.faq__icon::before,
+.faq__icon::after {
+  content: "";
+  position: absolute;
+  background: currentColor;
+  border-radius: 2px;
+}
+
+.faq__icon::before {
+  width: 10px;
+  height: 1.5px;
+}
+
+.faq__icon::after {
+  width: 1.5px;
+  height: 10px;
+  transition: transform 0.3s var(--ease);
+}
+
+.faq[open] .faq__icon {
+  transform: rotate(90deg);
+  border-color: var(--brand-line);
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--cyan);
+}
+
+.faq[open] .faq__icon::after {
+  transform: scaleY(0);
+}
+
+.faq p {
+  padding: 0 1.25rem 1.2rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.85;
+}
+
+.faq-cta {
+  margin-top: 1.2rem;
+}
+
+/* ------------------------------------------------------------
+   14. Contact & form
+   ------------------------------------------------------------ */
+.contact {
+  position: relative;
+  overflow: hidden;
+}
+
+.contact::before {
+  content: "";
+  position: absolute;
+  inset: 12% 8% auto;
+  height: 60%;
+  background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.16), transparent 68%);
+  pointer-events: none;
+}
+
+.contact-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.contact-copy h2 {
+  font-size: clamp(1.85rem, 3.4vw, 2.7rem);
+  margin-bottom: 1rem;
+}
+
+.contact-copy > p {
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.9;
+  max-width: 30rem;
+}
+
+.contact-channels {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 2rem;
+}
+
+.channel {
+  display: flex;
+  align-items: center;
+  gap: 0.95rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.022);
+  transition: border-color 0.25s ease, background-color 0.25s ease,
+    transform 0.25s var(--ease);
+}
+
+.channel:hover {
+  transform: translateX(-3px);
+  border-color: var(--brand-line);
+  background: rgba(139, 92, 246, 0.07);
+}
+
+.channel__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--cyan);
+}
+
+.channel__icon .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.channel__text {
+  display: grid;
+  min-width: 0;
+}
+
+.channel__text small {
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+}
+
+.channel__text b {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.channel__arrow {
+  margin-inline-start: auto;
+  color: var(--dim);
+  transition: transform 0.25s var(--ease), color 0.25s ease;
+}
+
+.channel:hover .channel__arrow {
+  color: var(--cyan);
+  transform: translateX(-3px);
+}
+
+.contact-socials {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.6rem;
+}
+
+.social-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--muted);
+  transition: transform 0.25s var(--ease), color 0.25s ease,
+    border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-3px);
+  color: #fff;
+  border-color: var(--brand-line);
+  background: rgba(139, 92, 246, 0.14);
+}
+
+.social-btn .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Form */
+.form-card {
+  padding: clamp(1.5rem, 3vw, 2.1rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  box-shadow: var(--shadow);
+}
+
+.form-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.form-card__head h3 {
+  font-size: 1.1rem;
+}
+
+.form-card__head span {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--dim);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.field label span {
+  color: var(--cyan);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.75rem 0.95rem;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(7, 8, 13, 0.55);
+  color: var(--text);
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #6c7a90;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: var(--line-strong);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  background: rgba(7, 8, 13, 0.8);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18);
+}
+
+.field textarea {
+  min-height: 112px;
+  resize: vertical;
+}
+
+.field select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238593a8' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 0.95rem center;
+  padding-inline-end: 2.2rem;
+  padding-inline-start: 0.95rem;
+}
+
+.field select option {
+  background: #141722;
+  color: var(--text);
+}
+
+.field__error {
+  min-height: 1.1em;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: #fca5a5;
+}
+
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: rgba(248, 113, 113, 0.7);
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.12);
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.1rem;
+}
+
+.form-actions .btn {
+  flex: 1 1 12rem;
+}
+
+.form-note {
+  margin-top: 0.9rem;
+  color: var(--dim);
+  font-size: 0.72rem;
+  line-height: 1.7;
+}
+
+.form-status {
+  display: none;
+  margin-top: 0.9rem;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  border: 1px solid transparent;
+}
+
+.form-status.is-visible {
+  display: block;
+}
+
+.form-status[data-state="success"] {
+  color: #bbf7d0;
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.form-status[data-state="error"] {
+  color: #fecaca;
+  background: rgba(248, 113, 113, 0.09);
+  border-color: rgba(248, 113, 113, 0.3);
+}
+
+.form-status[data-state="info"] {
+  color: #bae6fd;
+  background: rgba(14, 165, 233, 0.09);
+  border-color: rgba(14, 165, 233, 0.28);
+}
+
+.form-status a {
+  color: inherit;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------
+   15. Footer
+   ------------------------------------------------------------ */
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: var(--bg-soft);
+  padding-block: clamp(2.5rem, 5vw, 3.5rem) 1.5rem;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  padding-bottom: 2.2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.footer-brand p {
+  max-width: 24rem;
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 0.87rem;
+  line-height: 1.8;
+}
+
+.footer-title {
+  margin-bottom: 0.9rem;
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.footer-links {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--muted);
+  font-size: 0.87rem;
+  transition: color 0.2s ease, padding 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--cyan);
+  padding-inline-start: 4px;
+}
+
+.footer-emails {
+  margin-top: 1rem;
+}
+
+.footer-emails a {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 1.4rem;
+  color: var(--dim);
+  font-size: 0.76rem;
+}
+
+.footer-bottom a {
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.footer-bottom a:hover {
+  color: var(--cyan);
+}
+
+/* ------------------------------------------------------------
+   16. Floating actions
+   ------------------------------------------------------------ */
+.floating {
+  position: fixed;
+  z-index: 800;
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: rgba(13, 16, 24, 0.9);
+  color: var(--text);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s var(--ease), background-color 0.25s ease,
+    border-color 0.25s ease, opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.floating:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand);
+  background: rgba(139, 92, 246, 0.18);
+}
+
+.floating .icon {
+  width: 21px;
+  height: 21px;
+}
+
+.floating--whatsapp {
+  inset-inline-start: 22px;
+  bottom: 22px;
+  border-color: rgba(37, 211, 102, 0.35);
+  background: rgba(18, 48, 32, 0.92);
+  color: #6ef0a0;
+}
+
+.floating--whatsapp:hover {
+  border-color: var(--green);
+  background: rgba(37, 211, 102, 0.22);
+  color: #a7ffc4;
+}
+
+.floating--top {
+  inset-inline-end: 22px;
+  bottom: 22px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+}
+
+.floating--top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.floating__tip {
+  position: absolute;
+  inset-inline-start: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-6px);
+  padding: 0.3rem 0.65rem;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: rgba(13, 16, 24, 0.96);
+  color: var(--muted);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.floating--top .floating__tip {
+  inset-inline-start: auto;
+  inset-inline-end: calc(100% + 10px);
+  transform: translateY(-50%) translateX(6px);
+}
+
+.floating:hover .floating__tip,
+.floating:focus-visible .floating__tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%);
+}
+
+/* ------------------------------------------------------------
+   17. Project dialog
+   ------------------------------------------------------------ */
+.project-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(980px, calc(100vw - 2rem));
+  max-width: none;
+  max-height: min(90dvh, 860px);
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  overflow: hidden;
+  box-shadow: 0 40px 100px -40px #000;
+}
+
+.project-dialog::backdrop {
+  background: rgba(4, 5, 9, 0.78);
+  backdrop-filter: blur(9px);
+}
+
+.project-dialog[open] {
+  animation: dialog-in 0.35s var(--ease);
+}
+
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.dialog-close {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 14px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(7, 8, 13, 0.72);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  transition: background-color 0.2s ease, transform 0.25s var(--ease);
+}
+
+.dialog-close:hover {
+  background: rgba(239, 68, 68, 0.85);
+  transform: rotate(90deg);
+}
+
+.dialog-close .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.dialog-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  max-height: min(90dvh, 860px);
+}
+
+.dialog-media {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(139, 92, 246, 0.16), transparent 70%),
+    #06070b;
+  overflow: hidden;
+}
+
+.dialog-media img {
+  width: 100%;
+  height: 100%;
+  max-height: min(90dvh, 860px);
+  object-fit: contain;
+}
+
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 3vw, 2.3rem);
+  overflow-y: auto;
+  border-inline-start: 1px solid var(--line);
+}
+
+.dialog-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  color: var(--cyan);
+}
+
+.dialog-body h2 {
+  margin-top: 0.65rem;
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+}
+
+.dialog-summary {
+  margin-top: 0.85rem;
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.9;
+}
+
+.dialog-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--line);
+}
+
+.dialog-facts div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.dialog-facts dt {
+  color: var(--dim);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+}
+
+.dialog-facts dd {
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.dialog-cta {
+  margin-top: 1.6rem;
+}
+
+.dialog-cta .btn {
+  width: 100%;
+}
+
+.dialog-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.dialog-nav__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  font-size: 0.78rem;
+  transition: color 0.2s ease, border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.dialog-nav__btn:hover:not(:disabled) {
+  color: #fff;
+  border-color: var(--brand-line);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.dialog-nav__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.dialog-nav__btn .icon {
+  width: 15px;
+  height: 15px;
+}
+
+.dialog-nav__count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------
+   18. Toast
+   ------------------------------------------------------------ */
+.toast {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 28px;
+  z-index: 2500;
+  display: flex;
+  justify-content: center;
+  padding-inline: 1rem;
+  pointer-events: none;
+}
+
+.toast__msg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 34rem;
+  padding: 0.75rem 1.15rem;
+  border-radius: 12px;
+  border: 1px solid var(--line-strong);
+  background: rgba(13, 16, 24, 0.96);
+  color: var(--text);
+  font-size: 0.85rem;
+  box-shadow: var(--shadow);
+  transform: translateY(16px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, transform 0.3s var(--ease),
+    visibility 0.3s ease;
+}
+
+.toast__msg.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.toast__msg .icon {
+  width: 17px;
+  height: 17px;
+  color: var(--cyan);
+}
+
+/* ------------------------------------------------------------
+   19. Reveal & motion
+   ------------------------------------------------------------ */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.js [data-reveal="fade"] {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .marquee__track {
+    animation: none;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------
+   20. Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 1080px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+
+  .float-pill--one {
+    inset-inline-start: -12px;
+  }
+
+  .float-pill--two {
+    inset-inline-end: -10px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .work-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .process-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-top {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --nav-h: 68px;
+  }
+
+  .nav__toggle {
+    display: grid;
+  }
+
+  .nav__panel {
+    position: fixed;
+    inset-block-start: var(--nav-h);
+    inset-inline: 0;
+    z-index: 950;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.2rem;
+    max-height: 0;
+    padding: 0 var(--gutter);
+    background: #090b11;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    visibility: hidden;
+    transition: max-height 0.4s var(--ease), padding 0.4s var(--ease),
+      visibility 0.4s;
+    box-shadow: 0 30px 50px -20px #000;
+  }
+
+  .nav__panel.is-open {
+    max-height: calc(100dvh - var(--nav-h));
+    padding-block: 1.4rem 1.7rem;
+    visibility: visible;
+    overflow-y: auto;
+  }
+
+  .nav__links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.15rem;
+  }
+
+  .nav__link {
+    display: block;
+    padding: 0.7rem 0.2rem;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav__link::after {
+    display: none;
+  }
+
+  .nav__link.is-active {
+    color: var(--cyan);
+  }
+
+  .nav__cta {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.8rem;
+  }
+
+  .hero-copy {
+    text-align: start;
+  }
+
+  .hero-visual {
+    max-width: 340px;
+    margin-inline: auto;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.3rem, 8.5vw, 3.4rem);
+  }
+
+  .hero-meta {
+    gap: 1.1rem;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-aside {
+    position: static;
+    order: 2;
+  }
+
+  .about-body {
+    order: 1;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 680px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat:nth-child(3)::before,
+  .stat:nth-child(1)::before {
+    display: none;
+  }
+
+  .stat:nth-child(3),
+  .stat:nth-child(4) {
+    border-top: 1px solid var(--line);
+  }
+
+  .services-grid,
+  .work-grid,
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions .btn {
+    flex-basis: 100%;
+  }
+
+  .dialog-grid {
+    display: block;
+    overflow-y: auto;
+    max-height: min(90dvh, 860px);
+  }
+
+  .dialog-media {
+    max-height: 42dvh;
+  }
+
+  .dialog-media img {
+    max-height: 42dvh;
+    width: auto;
+  }
+
+  .dialog-body {
+    border-inline-start: 0;
+    border-top: 1px solid var(--line);
+    overflow: visible;
+  }
+
+  .float-pill {
+    display: none;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-meta {
+    font-size: 0.8rem;
+  }
+
+  .floating {
+    width: 46px;
+    height: 46px;
+  }
+
+  .floating--whatsapp {
+    inset-inline-start: 16px;
+    bottom: 16px;
+  }
+
+  .floating--top {
+    inset-inline-end: 16px;
+    bottom: 16px;
+  }
+
+  .floating__tip {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-aside {
+    gap: 0.9rem;
+  }
+
+  .badge {
+    font-size: 0.72rem;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .stat {
+    padding-inline: 0.75rem;
+  }
+}
+  </style>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://ahmed-mokbel.netlify.app/#person",
+        "name": "أحمد مقبل",
+        "jobTitle": "مصمم جرافيك وموشن جرافيك",
+        "description": "مصمم جرافيك وموشن جرافيك من المنصورة، مصر، ومؤسس وكالة DOT Media للإنتاج الإبداعي.",
+        "url": "https://ahmed-mokbel.netlify.app/",
+        "image": "https://ahmed-mokbel.netlify.app/assets/ahmed-mokbel.jpg",
+        "email": "mailto:ahmed01068775125@gmail.com",
+        "telephone": "+201228084197",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "المنصورة",
+          "addressCountry": "EG"
+        },
+        "worksFor": {
+          "@type": "Organization",
+          "name": "DOT Media",
+          "url": "https://www.facebook.com/profile.php?id=61581319508233"
+        },
+        "sameAs": [
+          "https://www.behance.net/ahmed01068b62e",
+          "https://www.facebook.com/profile.php?id=61581319508233",
+          "https://twitter.com/ahmed0106877"
+        ],
+        "knowsAbout": [
+          "Graphic Design",
+          "Motion Graphics",
+          "Brand Identity",
+          "Print Design",
+          "Video Production"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ahmed-mokbel.netlify.app/#website",
+        "url": "https://ahmed-mokbel.netlify.app/",
+        "name": "أحمد مقبل — بورتفوليو",
+        "inLanguage": "ar",
+        "publisher": { "@id": "https://ahmed-mokbel.netlify.app/#person" }
+      }
+    ]
+  }
+  </script>
+
+
+
+  <meta name="robots" content="noindex">
+</head>
+<body>
+
+  <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+
+  <!-- SVG sprite -->
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <symbol id="i-menu" viewBox="0 0 24 24">
+      <path d="M4 7h16M4 12h16M4 17h16"/>
+    </symbol>
+    <symbol id="i-close" viewBox="0 0 24 24">
+      <path d="M6 6l12 12M18 6 6 18"/>
+    </symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24">
+      <path d="M19 12H5M11 18l-6-6 6-6"/>
+    </symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24">
+      <path d="M5 12h14M13 6l6 6-6 6"/>
+    </symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </symbol>
+    <symbol id="i-external" viewBox="0 0 24 24">
+      <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="14" rx="2"/>
+      <path d="m3 7 9 6 9-6"/>
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24">
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24">
+      <rect x="3" y="5" width="18" height="16" rx="2"/>
+      <path d="M3 10h18M8 3v4M16 3v4"/>
+    </symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18"/>
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 24 24">
+      <path d="M6 3.5 20 12 6 20.5Z"/>
+    </symbol>
+    <symbol id="i-motion" viewBox="0 0 24 24">
+      <rect x="2" y="6" width="14" height="12" rx="2"/>
+      <path d="m16 10 6-4v12l-6-4"/>
+    </symbol>
+    <symbol id="i-brand" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 3a9 9 0 0 1 0 18M3 12h18"/>
+    </symbol>
+    <symbol id="i-print" viewBox="0 0 24 24">
+      <path d="M7 9V3h10v6"/>
+      <rect x="3" y="9" width="18" height="8" rx="2"/>
+      <path d="M7 17h10v4H7z"/>
+    </symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24">
+      <path d="M4 7h3l2-2h6l2 2h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z"/>
+      <circle cx="12" cy="13" r="3.5"/>
+    </symbol>
+    <symbol id="i-ads" viewBox="0 0 24 24">
+      <path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/>
+    </symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24">
+      <path d="m4 12 5 5L20 6"/>
+    </symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24">
+      <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.34-.76-1.84-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.71 4.29 3.8.6.26 1.07.41 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.3"/>
+    </symbol>
+    <symbol id="i-behance" viewBox="0 0 24 24">
+      <path d="M7.8 15.4h3.4c.9 0 1.6-.6 1.6-1.5 0-1-.7-1.4-1.6-1.4H7.8v2.9Zm0-4.7h3c.9 0 1.4-.5 1.4-1.3 0-.9-.5-1.3-1.4-1.3h-3v2.6ZM5 6.5h6.4c2.4 0 3.9 1.2 3.9 3.2 0 1.3-.7 2.2-1.8 2.7 1.5.4 2.4 1.5 2.4 3.1 0 2.3-1.7 3.6-4.4 3.6H5V6.5Zm12.2 1.8h5.3V9.6h-5.3V8.3Zm2.6 3.1c2.5 0 4.2 1.7 4.2 4.4v.6h-6.6c.1 1.3 1 2.1 2.4 2.1 1 0 1.8-.4 2.1-1.1h2c-.5 1.7-2 2.7-4.1 2.7-2.7 0-4.5-1.8-4.5-4.4 0-2.6 1.8-4.3 4.5-4.3Zm-.1 1.6c-1.1 0-1.9.7-2.1 1.8h4.1c-.1-1.1-.9-1.8-2-1.8Z"/>
+    </symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24">
+      <path d="M14 9h2.5V6H14c-2.2 0-3.5 1.5-3.5 3.6V11H8v3h2.5v7h3v-7h2.3l.5-3h-2.8V9.9c0-.6.3-.9 1-.9Z"/>
+    </symbol>
+    <symbol id="i-x" viewBox="0 0 24 24">
+      <path d="M18.9 3H21l-6.6 7.5L22.2 21h-6.1l-4.8-6.3L5.8 21H3.6l7.1-8-7.5-10H9.5l4.3 5.8L18.9 3Zm-1.1 16.2h1.2L7.3 4.7H6l11.8 14.5Z"/>
+    </symbol>
+  </svg>
+
+  <div class="page-glow" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- ═══ Header ═══ -->
+  <header class="site-header" id="siteHeader">
+    <div class="wrap nav">
+      <a href="#main" class="brand" aria-label="أحمد مقبل — الرئيسية">
+        <span class="brand__mark" aria-hidden="true">AM</span>
+        <span>أحمد مقبل</span>
+      </a>
+
+      <nav class="nav__panel" id="navPanel" aria-label="التنقل الرئيسي">
+        <ul class="nav__links">
+          <li><a class="nav__link" href="#about">نبذة</a></li>
+          <li><a class="nav__link" href="#services">الخدمات</a></li>
+          <li><a class="nav__link" href="#work">الأعمال</a></li>
+          <li><a class="nav__link" href="#process">الطريقة</a></li>
+          <li><a class="nav__link" href="#contact">تواصل</a></li>
+        </ul>
+        <a href="#contact" class="btn btn--primary btn--sm nav__cta">لنعمل معًا</a>
+      </nav>
+
+      <button class="nav__toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navPanel" aria-label="فتح القائمة">
+        <svg class="icon icon-menu" aria-hidden="true"><use href="#i-menu"></use></svg>
+        <svg class="icon icon-close" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+  <main id="main">
+
+    <!-- ═══ Hero ═══ -->
+    <section class="hero" id="hero" aria-labelledby="heroTitle">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="badges-row">
+            <span class="badge">
+              <span class="badge__dot" aria-hidden="true"></span>
+              متاح للعمل والتعاقد
+            </span>
+            <a class="badge badge--agency" data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">
+              <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
+              وكالة D●T Media للإنتاج الإبداعي
+              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+            </a>
+          </div>
+
+          <h1 id="heroTitle">
+            أحمد مقبل
+            <span class="h1-sub">يحوّل الفكرة إلى <span class="grad-text">حركة وهوية بصرية</span></span>
+          </h1>
+
+          <p class="hero-role" id="heroRole" aria-hidden="true">// موشن جرافيك — هوية بصرية — مؤسس وكالة DOT Media</p>
+          <span class="sr-only">التخصص: موشن جرافيك، هوية بصرية، ومؤسس وكالة DOT Media</span>
+
+          <p class="hero-lead">
+            من المنصورة، أعمل مصممًا ومختص موشن جرافيك ومؤسسًا لوكالة DOT Media للإنتاج الإبداعي.
+            نبتكر أفكارًا تبدأ من نقطة واحدة لتترك أثرًا تجاريًا ممتدًا لدى العلامات والشركات.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#work" class="btn btn--primary">
+              تصفح الأعمال
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+            <a href="#contact" class="btn btn--ghost">
+              <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+              تواصل معي
+            </a>
+          </div>
+
+          <ul class="hero-meta">
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>
+              المنصورة، مصر
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
+              يعمل على بيهانس منذ <strong>2015</strong>
+            </li>
+            <li>
+              <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
+              متاح للمشاريع عن بُعد
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-visual">
+          <div class="portrait-card">
+            <div class="portrait-card__inner">
+              <img
+                src="assets/ahmed-mokbel.jpg"
+                srcset="assets/ahmed-mokbel-480.jpg 480w, assets/ahmed-mokbel-800.jpg 800w, assets/ahmed-mokbel.jpg 887w"
+                sizes="(max-width: 900px) 340px, 430px"
+                width="887"
+                height="1024"
+                alt="أحمد مقبل — مصمم جرافيك وموشن جرافيك"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+              >
+              <span class="portrait-badge">
+                <span aria-hidden="true"></span>
+                DOT MEDIA — CREATIVE
+              </span>
+            </div>
+          </div>
+
+          <div class="float-pill float-pill--one" aria-hidden="true">
+            <b>+13</b>
+            <small>سنوات خبرة</small>
+          </div>
+          <div class="float-pill float-pill--two" aria-hidden="true">
+            <b>+160</b>
+            <small>مشروع منجز</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Marquee ═══ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" id="marqueeTrack"></div>
+    </div>
+
+    <!-- ═══ Stats ═══ -->
+    <section class="section stats" aria-label="أرقام سريعة">
+      <div class="wrap">
+        <div class="stats-grid" id="statsGrid" data-reveal></div>
+      </div>
+    </section>
+
+    <!-- ═══ About ═══ -->
+    <section id="about" class="section section--soft">
+      <div class="wrap about-grid">
+        <div class="about-aside">
+          <div class="quote-card" data-reveal>
+            <blockquote>
+              التصميم الاستثنائي لا يُقاس بجمال المظهر فقط، بل بقدرته على
+              <mark>بناء ثقة فورية</mark> وتحقيق نتائج ملموسة.
+            </blockquote>
+            <div class="quote-card__sign">
+              <div>
+                <b>أحمد مقبل</b>
+                <span>مؤسس DOT Media</span>
+              </div>
+              <svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg>
+            </div>
+          </div>
+
+          <div class="agency-card" data-reveal>
+            <div>
+              <div class="agency-card__head">
+                <h3>وكالة D●T Media</h3>
+                <span>Creative Production</span>
+              </div>
+              <p>وكالة إنتاج إعلامي وإعلاني متكاملة متخصصة في إنتاج المحتوى التجاري وتطوير الهويات البصرية.</p>
+            </div>
+            <a class="btn btn--ghost btn--sm" data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">
+              زيارة الصفحة
+              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="about-body">
+          <div class="eyebrow" data-reveal>نبذة</div>
+          <h2 data-reveal>نبتكر أفكارًا تبدأ من نقطة واحدة لتؤثر عالميًا</h2>
+          <p data-reveal>
+            بدأت رحلتي في التصميم من المنصورة، وبنيت مسيرتي عبر سنوات من الشغف والعمل الدؤوب:
+            من فيديوهات الموشن جرافيك الأولى، إلى تأسيس <strong>وكالة D●T Media</strong> لتقديم
+            حلول متكاملة في إنتاج المحتوى التجاري، الهويات البصرية، وتصميم الحملات الإعلانية
+            للشركات والعيادات والمؤسسات الكبرى.
+          </p>
+          <p data-reveal>
+            أؤمن أن التصميم الاستثنائي لا يُقاس بجمال المظهر فحسب، بل بقدرته على بناء جسر ثقة
+            فوري مع الجمهور وتحقيق نتائج ملموسة.
+          </p>
+
+          <div class="about-lists" data-reveal>
+            <div>
+              <div class="about-list__title">أدوات العمل</div>
+              <ul class="chip-row" id="toolChips"></ul>
+            </div>
+            <div>
+              <div class="about-list__title">مجالات الخبرة</div>
+              <ul class="chip-row" id="skillChips"></ul>
+            </div>
+          </div>
+
+          <a class="about-link" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
+            تابع أعمالي على بيهانس
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Services ═══ -->
+    <section id="services" class="section">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div class="eyebrow">الخدمات</div>
+          <h2>خدمات إبداعية وإنتاج متكامل</h2>
+          <p>من الفكرة الأولى والسيناريو المرئي وحتى التصدير النهائي الجاهز للنشر والطباعة والحملات الإعلانية.</p>
+        </div>
+
+        <div class="services-grid" data-reveal-group>
+          <article class="service" data-reveal>
+            <span class="service__num" aria-hidden="true">01</span>
+            <div class="service__icon">
+              <svg class="icon" aria-hidden="true"><use href="#i-motion"></use></svg>
+            </div>
+            <h3>موشن جرافيك</h3>
+            <p>فيديوهات تعريفية وإعلانية بحركة مدروسة ومؤثرات صوتية، من السيناريو وحتى التصدير النهائي.</p>
+          </article>
+
+          <article class="service" data-reveal>
+            <span class="service__num" aria-hidden="true">02</span>
+            <div class="service__icon">
+              <svg class="icon" aria-hidden="true"><use href="#i-brand"></use></svg>
+            </div>
+            <h3>هوية بصرية كاملة</h3>
+            <p>شعار، لوحة ألوان، خطوط، ودليل استخدام متكامل يعكس شخصية علامتك على كافة نقاط التواصل.</p>
+          </article>
+
+          <article class="service" data-reveal>
+            <span class="service__num" aria-hidden="true">03</span>
+            <div class="service__icon">
+              <svg class="icon" aria-hidden="true"><use href="#i-print"></use></svg>
+            </div>
+            <h3>تصميم رقمي وطباعي</h3>
+            <p>محتوى سوشيال ميديا مميز، بروشورات، ومطبوعات تجارية جاهزة للمطابع وفق المعايير العالمية.</p>
+          </article>
+
+          <article class="service" data-reveal>
+            <span class="service__num" aria-hidden="true">04</span>
+            <div class="service__icon">
+              <svg class="icon" aria-hidden="true"><use href="#i-camera"></use></svg>
+            </div>
+            <h3>تصوير وإنتاج إعلاني</h3>
+            <p>تصوير احترافي للمنتجات والخدمات بما يخدم دمجها لاحقًا في الحملات الإعلانية والتصاميم.</p>
+          </article>
+
+          <article class="service" data-reveal>
+            <span class="service__num" aria-hidden="true">05</span>
+            <div class="service__icon">
+              <svg class="icon" aria-hidden="true"><use href="#i-ads"></use></svg>
+            </div>
+            <h3>إعلانات السوشيال ميديا</h3>
+            <p>تصميمات مخصصة ترفع نسب التفاعل والمبيعات، مبنية على سيكولوجية الجذب البصري لا القوالب المستهلكة.</p>
+          </article>
+
+          <article class="service" data-reveal>
+            <span class="service__num" aria-hidden="true">06</span>
+            <div class="service__icon">
+              <svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg>
+            </div>
+            <h3>استشارات وتطوير بصري</h3>
+            <p>تحليل وتقييم الهوية البصرية الحالية للعلامات وتقديم حلول وتوصيات عملية لتجديدها ومواكبة السوق.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Work ═══ -->
+    <section id="work" class="section section--soft">
+      <div class="wrap">
+        <div class="work-head">
+          <div class="section-head" data-reveal>
+            <div class="eyebrow">الأعمال</div>
+            <h2>مشاريع مختارة من مسيرتي</h2>
+            <p>مختارات من أعمالي على بيهانس — اضغط على أي بطاقة لعرض تفاصيل المشروع وصورته كاملة.</p>
+          </div>
+        </div>
+
+        <div class="filters" id="filters" role="group" aria-label="تصفية الأعمال"></div>
+        <p class="sr-only" id="workLive" aria-live="polite"></p>
+
+        <div class="work-grid" id="workGrid" data-reveal-group></div>
+        <p class="work-empty" id="workEmpty" hidden>لا توجد مشاريع في هذا التصنيف حاليًا.</p>
+
+        <noscript>
+          <p class="work-empty">
+            لعرض معرض الأعمال يرجى تفعيل JavaScript، أو زيارة
+            <a href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">صفحتي على بيهانس</a>.
+          </p>
+        </noscript>
+
+        <p class="work-note">
+          جميع المشاريع منشورة على
+          <a data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">بيهانس</a>
+          — <span id="workCount">13</span> مشروعًا مختارًا.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ Process ═══ -->
+    <section id="process" class="section">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <div class="eyebrow">الطريقة</div>
+          <h2>كيف نصل من الفكرة إلى نتيجة تليق بعلامتك</h2>
+          <p>عملية واضحة تقلّل المفاجآت وتضمن أن كل قرار بصري يخدم هدفًا تجاريًا محددًا.</p>
+        </div>
+
+        <div class="process-grid" data-reveal-group>
+          <article class="step" data-reveal>
+            <div class="step__num">01</div>
+            <h3>اكتشاف وفهم</h3>
+            <p>جلسة نبدأ فيها بفهم العلامة والجمهور والهدف، وتحديد ما يحتاجه المشروع فعلًا قبل أي تصميم.</p>
+          </article>
+          <article class="step" data-reveal>
+            <div class="step__num">02</div>
+            <h3>استراتيجية واتجاه</h3>
+            <p>نبني الفكرة والاتجاه البصري: الرسالة، الأسلوب، الألوان، والمراجع التي تضمن اتساق العمل.</p>
+          </article>
+          <article class="step" data-reveal>
+            <div class="step__num">03</div>
+            <h3>تصميم وإنتاج</h3>
+            <p>تنفيذ التصميمات أو الموشن جرافيك على مراحل مع مراجعات واضحة، حتى الوصول للنسخة النهائية.</p>
+          </article>
+          <article class="step" data-reveal>
+            <div class="step__num">04</div>
+            <h3>تسليم ودعم</h3>
+            <p>تسليم الملفات الجاهزة للنشر أو الطباعة، مع تنظيم المصادر ودعم بعد التسليم عند الحاجة.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ FAQ ═══ -->
+    <section class="section section--soft" aria-labelledby="faqTitle">
+      <div class="wrap faq-grid">
+        <div class="section-head" data-reveal>
+          <div class="eyebrow">أسئلة شائعة</div>
+          <h2 id="faqTitle">قبل أن نبدأ</h2>
+          <p>إجابات سريعة على أكثر ما يُسأل عنه قبل بدء المشروع. لديك سؤال آخر؟ راسلني مباشرة.</p>
+          <a href="#contact" class="btn btn--ghost btn--sm faq-cta">
+            اسأل عن مشروعك
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+          </a>
+        </div>
+
+        <div class="faq-list" data-reveal-group>
+          <details class="faq" data-reveal>
+            <summary>
+              كم يستغرق تنفيذ المشروع؟
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <p>المدة تُحدد بعد جلسة الاكتشاف بحسب نطاق العمل وعدد المراجعات. ستحصل على جدول زمني واضح قبل بدء التنفيذ، مع نقاط مراجعة محددة.</p>
+          </details>
+
+          <details class="faq" data-reveal>
+            <summary>
+              هل تعمل مع عملاء خارج مصر؟
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <p>نعم. أعمل عن بُعد مع عملاء داخل مصر وخارجها، والتواصل يتم عبر واتساب أو البريد الإلكتروني مع اجتماعات أونلاين عند الحاجة.</p>
+          </details>
+
+          <details class="faq" data-reveal>
+            <summary>
+              ماذا أستلم في نهاية المشروع؟
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <p>نسخًا جاهزة للنشر أو الطباعة، ودليل استخدام مبسّط عند تسليم هوية بصرية كاملة.</p>
+          </details>
+
+          <details class="faq" data-reveal>
+            <summary>
+              كيف أبدأ؟
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <p>أرسل تفاصيل مشروعك من خلال النموذج أو واتساب: النشاط، الهدف، والخدمة المطلوبة. سأرد عليك لتحديد الخطوة التالية والموعد المناسب.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Contact ═══ -->
+    <section id="contact" class="section contact">
+      <div class="wrap contact-grid">
+        <div class="contact-copy" data-reveal>
+          <div class="eyebrow">تواصل</div>
+          <h2>جاهز نبدأ مشروعك القادم معًا؟</h2>
+          <p>
+            أخبرني بفكرتك ونوع الخدمة المطلوبة، وسأعود إليك بخطة واضحة للبدء.
+            أو تواصل مباشرة عبر واتساب إن كنت تفضّل الحديث السريع.
+          </p>
+
+          <div class="contact-channels">
+            <a class="channel" data-link="email" href="mailto:ahmed01068775125@gmail.com">
+              <span class="channel__icon">
+                <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+              </span>
+              <span class="channel__text">
+                <small>البريد الإلكتروني</small>
+                <b data-text="email">ahmed01068775125@gmail.com</b>
+              </span>
+              <svg class="icon channel__arrow" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+
+            <a class="channel" data-link="whatsapp" href="https://wa.me/201228084197" target="_blank" rel="noopener noreferrer">
+              <span class="channel__icon">
+                <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+              </span>
+              <span class="channel__text">
+                <small>واتساب</small>
+                <b>محادثة مباشرة</b>
+              </span>
+              <svg class="icon channel__arrow" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+
+            <a class="channel" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
+              <span class="channel__icon">
+                <svg class="icon icon--solid" aria-hidden="true"><use href="#i-behance"></use></svg>
+              </span>
+              <span class="channel__text">
+                <small>بيهانس</small>
+                <b>معرض الأعمال الكامل</b>
+              </span>
+              <svg class="icon channel__arrow" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+
+            <a class="channel" data-link="facebook" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">
+              <span class="channel__icon">
+                <svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg>
+              </span>
+              <span class="channel__text">
+                <small>فيسبوك — DOT Media</small>
+                <b>صفحة الوكالة</b>
+              </span>
+              <svg class="icon channel__arrow" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+          </div>
+
+          <div class="contact-socials">
+            <a class="social-btn" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer" aria-label="بيهانس">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-behance"></use></svg>
+            </a>
+            <a class="social-btn" data-link="facebook" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg>
+            </a>
+            <a class="social-btn" data-link="twitter" href="https://twitter.com/ahmed0106877" target="_blank" rel="noopener noreferrer" aria-label="إكس (تويتر)">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-x"></use></svg>
+            </a>
+            <a class="social-btn" data-link="whatsapp" href="https://wa.me/201228084197" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="form-card" data-reveal>
+          <div class="form-card__head">
+            <h3>أرسل تفاصيل مشروعك</h3>
+            <span>RESPONSE &lt; 24H</span>
+          </div>
+
+          <form
+            id="contactForm"
+            name="contact"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            novalidate
+          >
+            <input type="hidden" name="form-name" value="contact">
+            <p class="sr-only" aria-hidden="true">
+              <label>لا تملأ هذا الحقل <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+            </p>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="fieldName">الاسم <span aria-hidden="true">*</span></label>
+                <input id="fieldName" name="name" type="text" placeholder="اسمك الكامل" autocomplete="name" required>
+                <span class="field__error" id="errorName" aria-live="polite"></span>
+              </div>
+
+              <div class="field">
+                <label for="fieldPhone">الهاتف / واتساب <span aria-hidden="true">*</span></label>
+                <input id="fieldPhone" name="phone" type="tel" inputmode="tel" placeholder="01xxxxxxxxx" autocomplete="tel" dir="ltr" required>
+                <span class="field__error" id="errorPhone" aria-live="polite"></span>
+              </div>
+
+              <div class="field">
+                <label for="fieldEmail">البريد الإلكتروني <span aria-hidden="true">*</span></label>
+                <input id="fieldEmail" name="email" type="email" placeholder="name@example.com" autocomplete="email" dir="ltr" required>
+                <span class="field__error" id="errorEmail" aria-live="polite"></span>
+              </div>
+
+              <div class="field">
+                <label for="fieldService">نوع الخدمة <span aria-hidden="true">*</span></label>
+                <select id="fieldService" name="service" required>
+                  <option value="" selected>اختر الخدمة</option>
+                  <option value="موشن جرافيك">موشن جرافيك</option>
+                  <option value="هوية بصرية">هوية بصرية</option>
+                  <option value="تصميم رقمي وطباعي">تصميم رقمي وطباعي</option>
+                  <option value="تصوير وإنتاج إعلاني">تصوير وإنتاج إعلاني</option>
+                  <option value="حملات سوشيال ميديا">حملات سوشيال ميديا</option>
+                  <option value="استشارات بصرية">استشارات بصرية</option>
+                  <option value="أخرى">أخرى</option>
+                </select>
+                <span class="field__error" id="errorService" aria-live="polite"></span>
+              </div>
+
+              <div class="field field--full">
+                <label for="fieldMessage">تفاصيل المشروع <span aria-hidden="true">*</span></label>
+                <textarea id="fieldMessage" name="message" rows="4" placeholder="اكتب نبذة عن نشاطك، هدف المشروع، والمدة المطلوبة..." required></textarea>
+                <span class="field__error" id="errorMessage" aria-live="polite"></span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn--primary" id="formSubmit">
+                إرسال الطلب
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+              </button>
+              <button type="button" class="btn btn--whatsapp" id="formWhatsapp">
+                <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+                إرسال عبر واتساب
+              </button>
+            </div>
+
+            <p class="form-note">بياناتك تُستخدم للرد على طلبك فقط. لا رسائل تسويقية.</p>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══ Footer ═══ -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#main" class="brand" aria-label="أحمد مقبل — الرئيسية">
+            <span class="brand__mark" aria-hidden="true">AM</span>
+            <span>أحمد مقبل</span>
+          </a>
+          <p>مصمم جرافيك وموشن جرافيك من المنصورة، ومؤسس DOT Media للإنتاج الإبداعي. أصنع هويات بصرية وحكايات حركية تخدم أهداف العلامات.</p>
+        </div>
+
+        <div>
+          <div class="footer-title">تنقل سريع</div>
+          <nav class="footer-links" aria-label="روابط التذييل">
+            <a href="#about">نبذة</a>
+            <a href="#services">الخدمات</a>
+            <a href="#work">الأعمال</a>
+            <a href="#process">الطريقة</a>
+            <a href="#contact">تواصل</a>
+          </nav>
+        </div>
+
+        <div>
+          <div class="footer-title">تابعني</div>
+          <div class="footer-socials">
+            <a class="social-btn" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer" aria-label="بيهانس">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-behance"></use></svg>
+            </a>
+            <a class="social-btn" data-link="facebook" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg>
+            </a>
+            <a class="social-btn" data-link="twitter" href="https://twitter.com/ahmed0106877" target="_blank" rel="noopener noreferrer" aria-label="إكس (تويتر)">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-x"></use></svg>
+            </a>
+            <a class="social-btn" data-link="whatsapp" href="https://wa.me/201228084197" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+            </a>
+          </div>
+          <div class="footer-links footer-emails">
+            <a data-link="email" href="mailto:ahmed01068775125@gmail.com">ahmed01068775125@gmail.com</a>
+            <a href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">behance.net/ahmed01068b62e</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© <span id="year">2026</span> أحمد مقبل — <a data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">D●T Media</a>. جميع الحقوق محفوظة.</span>
+        <span>صُنع بعناية في المنصورة، مصر.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ Floating actions ═══ -->
+  <a
+    class="floating floating--whatsapp"
+    id="floatingWhatsapp"
+    href="https://wa.me/201228084197"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="تواصل عبر واتساب"
+  >
+    <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
+    <span class="floating__tip">تواصل عبر واتساب</span>
+  </a>
+
+  <button class="floating floating--top" id="backToTop" type="button" aria-label="العودة إلى الأعلى">
+    <svg class="icon" aria-hidden="true"><use href="#i-arrow-up"></use></svg>
+    <span class="floating__tip">إلى الأعلى</span>
+  </button>
+
+  <!-- ═══ Project dialog ═══ -->
+  <dialog class="project-dialog" id="projectDialog" aria-labelledby="dialogTitle">
+    <button class="dialog-close" id="dialogClose" type="button" aria-label="إغلاق نافذة المشروع">
+      <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+    </button>
+
+    <div class="dialog-grid">
+      <div class="dialog-media" id="dialogMedia">
+        <img id="dialogImage" src="assets/projects/f01_cover-900.jpg" alt="" width="900" height="1128" loading="lazy" decoding="async">
+      </div>
+
+      <div class="dialog-body">
+        <div class="dialog-kicker" id="dialogKicker">F01 · موشن جرافيك</div>
+        <h2 id="dialogTitle">يوم التأسيس السعودي</h2>
+        <p class="dialog-summary" id="dialogSummary"></p>
+
+        <dl class="dialog-facts">
+          <div>
+            <dt>التصنيف</dt>
+            <dd id="dialogCategory">موشن جرافيك</dd>
+          </div>
+          <div>
+            <dt>النوع</dt>
+            <dd id="dialogType">فيديو / موشن</dd>
+          </div>
+          <div>
+            <dt>الخدمة</dt>
+            <dd id="dialogTag">موشن جرافيك</dd>
+          </div>
+          <div>
+            <dt>رقم المشروع</dt>
+            <dd id="dialogCode">F01</dd>
+          </div>
+        </dl>
+
+        <div class="dialog-cta">
+          <a class="btn btn--primary" id="dialogLink" href="#" target="_blank" rel="noopener noreferrer">
+            عرض المشروع على بيهانس
+            <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+          </a>
+        </div>
+
+        <div class="dialog-nav">
+          <button class="dialog-nav__btn" id="dialogPrev" type="button">
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            السابق
+          </button>
+          <span class="dialog-nav__count" id="dialogCount">1 / 13</span>
+          <button class="dialog-nav__btn" id="dialogNext" type="button">
+            التالي
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ═══ Toast ═══ -->
+  <div class="toast" aria-live="polite" role="status">
+    <span class="toast__msg" id="toastMsg">
+      <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+      <span id="toastText"></span>
+    </span>
+  </div>
+
+  <noscript>
+    <style>
+      [data-reveal] { opacity: 1 !important; transform: none !important; }
+      .filters { display: none; }
+    </style>
+  </noscript>
+
+  <!-- Inlined application scripts -->
+  <script>
+/**
+ * ============================================================
+ * بيانات الموقع والأعمال — أحمد مقبل & DOT Media
+ * ------------------------------------------------------------
+ * كل ما تحتاج تعديله موجود هنا:
+ *   SITE_DATA  → المعلومات الشخصية وروابط التواصل
+ *   WORK_DATA  → المشاريع المعروضة في قسم الأعمال
+ * ============================================================
+ */
+
+const SITE_DATA = {
+  name: "أحمد مقبل",
+  firstName: "أحمد",
+  title: "مصمم جرافيك وموشن جرافيك",
+  location: "المنصورة، مصر",
+  behanceSince: "2015",
+
+  /* النص التعريفي في قسم البداية */
+  lead:
+    "من المنصورة، أعمل مصممًا ومختص موشن جرافيك ومؤسسًا لوكالة DOT Media للإنتاج الإبداعي. نبتكر أفكارًا تبدأ من نقطة واحدة لتترك أثرًا تجاريًا ممتدًا لدى العلامات والشركات.",
+
+  /* العبارات التي تتبدّل في سطر الدور (Typing) */
+  roles: [
+    "// موشن جرافيك — هوية بصرية",
+    "// مؤسس وكالة DOT Media",
+    "// After Effects & Premiere Pro",
+    "// تصميم رقمي وإنتاج إبداعي",
+  ],
+
+  agency: {
+    name: "DOT Media",
+    tagline: "Creative Production",
+    url: "https://www.facebook.com/profile.php?id=61581319508233",
+    description:
+      "وكالة إنتاج إعلامي وإعلاني متكاملة متخصصة في إنتاج المحتوى التجاري وتطوير الهويات البصرية.",
+  },
+
+  /* روابط التواصل */
+  email: "ahmed01068775125@gmail.com",
+  whatsapp: "201228084197",
+  behance: "https://www.behance.net/ahmed01068b62e",
+  facebook: "https://www.facebook.com/profile.php?id=61581319508233",
+  twitter: "https://twitter.com/ahmed0106877",
+
+  /* الأدوات والمهارات */
+  tools: [
+    "After Effects",
+    "Premiere Pro",
+    "Photoshop",
+    "Illustrator",
+    "Cinema 4D",
+    "Lightroom",
+  ],
+  skills: [
+    "موشن جرافيك",
+    "هوية بصرية",
+    "تصميم طباعي",
+    "إنتاج إعلامي",
+    "سوشيال ميديا",
+    "مؤثرات بصرية VFX",
+  ],
+
+  /* أرقام قسم الإحصائيات */
+  stats: [
+    { value: 13, suffix: "+", label: "سنوات خبرة" },
+    { value: 160, suffix: "+", label: "مشروع منجز" },
+    { value: 80, suffix: "+", label: "عميل راضٍ" },
+    { value: 13, suffix: "", label: "مشروع على بيهانس" },
+  ],
+};
+
+/* التصنيفات المستخدمة في الفلترة */
+const CATEGORIES = [
+  { id: "all", label: "الكل" },
+  { id: "motion", label: "موشن جرافيك" },
+  { id: "brand", label: "هوية وطباعة" },
+  { id: "digital", label: "تصميم رقمي" },
+];
+
+const WORK_DATA = [
+  {
+    id: "f01",
+    code: "F01",
+    title: "يوم التأسيس السعودي",
+    cat: "motion",
+    tag: "موشن جرافيك",
+    isVideo: true,
+    url: "https://www.behance.net/gallery/244580859/_",
+    external: true,
+    image: "assets/projects/f01_cover.jpg",
+    imageSmall: "assets/projects/f01_cover-900.jpg",
+    width: 1072,
+    height: 1344,
+    summary:
+      "عمل بصري بمناسبة يوم التأسيس السعودي لصالح TECHIFAY، يجمع بين التراث السعودي والهوية الخضراء والذهبية في تكوين مهيب.",
+  },
+  {
+    id: "f02",
+    code: "F02",
+    title: "ابن الباسل",
+    cat: "motion",
+    tag: "موشن جرافيك",
+    isVideo: true,
+    url: "https://www.behance.net/gallery/244097521/_",
+    external: true,
+    image: "assets/projects/f02_cover.png",
+    width: 404,
+    height: 316,
+    summary:
+      "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
+  },
+  {
+    id: "f03",
+    code: "F03",
+    title: "أعمالي في مجال الفيديوهات",
+    cat: "motion",
+    tag: "موشن جرافيك",
+    isVideo: true,
+    url: "https://www.behance.net/gallery/234886339/_",
+    external: true,
+    image: "assets/projects/f03_cover.png",
+    width: 404,
+    height: 316,
+    summary:
+      "مختارات من أعمال الفيديو والموشن جرافيك التي أنتجتها، من التحريك إلى المونتاج والتصدير النهائي.",
+  },
+  {
+    id: "f04",
+    code: "F04",
+    title: "أول أعمالي في الموشن جرافيك",
+    cat: "motion",
+    tag: "موشن جرافيك",
+    isVideo: true,
+    url: "https://www.behance.net/gallery/119428049/_",
+    external: true,
+    image: "assets/projects/f04_cover.png",
+    width: 404,
+    height: 316,
+    summary:
+      "من أوائل مشاريع الموشن جرافيك التي نفذتها؛ بداية المسار في التحريك والتصميم الحركي.",
+  },
+  {
+    id: "f05",
+    code: "F05",
+    title: "طاهر للطباعة",
+    cat: "brand",
+    tag: "هوية وطباعة",
+    isVideo: false,
+    url: "https://www.behance.net/gallery/128103663/_",
+    external: true,
+    image: "assets/projects/f05_cover.jpg",
+    imageSmall: "assets/projects/f05_cover-900.jpg",
+    width: 1400,
+    height: 1192,
+    summary:
+      "هوية بصرية وتصميمات طباعية لمطبعة طاهر، تشمل الشعار والمطبوعات وتطبيقات الهوية.",
+  },
+  {
+    id: "f06",
+    code: "F06",
+    title: "مركز هارفارد التعليمي",
+    cat: "brand",
+    tag: "هوية وطباعة",
+    isVideo: false,
+    url: "https://www.behance.net/gallery/148210723/_",
+    external: true,
+    image: "assets/projects/f06_cover.jpg",
+    width: 404,
+    height: 316,
+    summary:
+      "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي.",
+  },
+  {
+    id: "f07",
+    code: "F07",
+    title: "ULTRA GROW",
+    cat: "brand",
+    tag: "هوية وطباعة",
+    isVideo: false,
+    url: "https://www.behance.net/gallery/148215371/ULTRA-GROW",
+    external: true,
+    image: "assets/projects/f07_cover.jpg",
+    imageSmall: "assets/projects/f07_cover-900.jpg",
+    width: 1400,
+    height: 964,
+    summary:
+      "هوية بصرية وتغليف لعلامة ULTRA GROW بأسلوب عصري جريء يمنح المنتج حضورًا واضحًا على الرف.",
+  },
+  {
+    id: "f08",
+    code: "F08",
+    title: "ULTRA GROW 2",
+    cat: "brand",
+    tag: "هوية وطباعة",
+    isVideo: false,
+    url: "https://www.behance.net/gallery/194077839/ULTRA-GROW-2",
+    external: true,
+    image: "assets/projects/f08_cover.jpg",
+    imageSmall: "assets/projects/f08_cover-900.jpg",
+    width: 1400,
+    height: 980,
+    summary:
+      "تطوير للنظام البصري لعلامة ULTRA GROW وتوسيع تطبيقاته عبر مختلف نقاط التواصل.",
+  },
+  {
+    id: "f09",
+    code: "F09",
+    title: "تصميمات",
+    cat: "digital",
+    tag: "تصميم رقمي",
+    isVideo: false,
+    url: "https://www.behance.net/gallery/228287151/_",
+    external: true,
+    image: "assets/projects/f09_cover.png",
+    width: 404,
+    height: 316,
+    summary:
+      "مجموعة تصميمات رقمية متنوعة أُنتجت لعلامات ومناسبات مختلفة، تجمع بين الوضوح والجاذبية البصرية.",
+  },
+  {
+    id: "f10",
+    code: "F10",
+    title: "حقن فيلر",
+    cat: "digital",
+    tag: "تصميم رقمي",
+    isVideo: false,
+    url: "https://www.behance.net/gallery/194077395/_",
+    external: true,
+    image: "assets/projects/f10_cover.jpg",
+    imageSmall: "assets/projects/f10_cover-900.jpg",
+    width: 1400,
+    height: 1400,
+    summary:
+      "تصميم إعلاني لخدمة حقن الفيلر للدكتورة لينا بعّاد، بأسلوب ناعم يعتمد على درجات الوردي وعناصر الطبيعة.",
+  },
+  {
+    id: "f11",
+    code: "F11",
+    title: "INSTA WATCHES",
+    cat: "digital",
+    tag: "تصميم رقمي",
+    isVideo: false,
+    url: "https://www.behance.net/gallery/175994775/INSTA-WATCHES",
+    external: true,
+    image: "assets/projects/f11_cover.jpg",
+    width: 404,
+    height: 316,
+    summary:
+      "تصميمات رقمية لعلامة ساعات، تركّز على إبراز المنتج بإضاءة وتفاصيل فاخرة.",
+  },
+  {
+    id: "f12",
+    code: "F12",
+    title: "سر الطبيعة",
+    cat: "digital",
+    tag: "تصميم رقمي",
+    isVideo: false,
+    url: "https://www.behance.net/gallery/194077227/_",
+    external: true,
+    image: "assets/projects/f12_cover.jpg",
+    width: 404,
+    height: 316,
+    summary:
+      "تصميم إعلاني رقمي يستلهم الطبيعة في تكوين دافئ وجذاب يلفت الانتباه دون ازدحام بصري.",
+  },
+  {
+    id: "f13",
+    code: "F13",
+    title: "بوابة القبول",
+    cat: "brand",
+    tag: "تصميم طباعي",
+    isVideo: false,
+    url: "",
+    external: false,
+    image: "assets/projects/f13_cover.jpg",
+    imageSmall: "assets/projects/f13_cover-900.jpg",
+    imageMedium: "assets/projects/f13_cover-1400.jpg",
+    width: 2314,
+    height: 3069,
+    summary:
+      "تصميم رول أب لبوابة القبول للالتحاق بالجامعات، يجمع بين الهوية الأكاديمية والوضوح المعلوماتي في قطعة طباعية واحدة.",
+  },
+];
+  </script>
+  <script>
+/**
+ * ============================================================
+ * أحمد مقبل — Portfolio
+ * التفاعلات الرئيسية (Main JavaScript)
+ * ------------------------------------------------------------
+ * كل الوحدات مستقلة وآمنة إذا لم يوجد العنصر المرتبط بها.
+ * ============================================================
+ */
+'use strict';
+
+document.documentElement.classList.add('js');
+
+const $ = (selector, scope = document) => scope.querySelector(selector);
+const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+const categoryLabel = (id) =>
+  (typeof CATEGORIES !== 'undefined' && CATEGORIES.find((c) => c.id === id)?.label) || id;
+
+const formatCount = (n) => new Intl.NumberFormat('en-US').format(n);
+const whatsappBase = () =>
+  typeof SITE_DATA !== 'undefined' ? `https://wa.me/${SITE_DATA.whatsapp}` : '';
+
+/* ------------------------------------------------------------
+   Toast
+------------------------------------------------------------ */
+let toastTimer = null;
+function showToast(message) {
+  const toast = $('#toastMsg');
+  const text = $('#toastText');
+  if (!toast || !text) return;
+  text.textContent = message;
+  toast.classList.add('is-visible');
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 5000);
+}
+
+/* ------------------------------------------------------------
+   1) ربط بيانات الموقع بالعناصر
+------------------------------------------------------------ */
+function initSiteData() {
+  if (typeof SITE_DATA === 'undefined') return;
+
+  const links = {
+    email: `mailto:${SITE_DATA.email}?subject=${encodeURIComponent(
+      'طلب مشروع جديد — من الموقع الشخصي'
+    )}`,
+    whatsapp: `${whatsappBase()}?text=${encodeURIComponent(
+      'مرحباً أحمد، أود الاستفسار عن مشروع تصميم / موشن جرافيك'
+    )}`,
+    behance: SITE_DATA.behance,
+    facebook: SITE_DATA.facebook,
+    twitter: SITE_DATA.twitter,
+    agency: SITE_DATA.agency?.url || SITE_DATA.facebook,
+  };
+
+  $$('[data-link]').forEach((el) => {
+    const key = el.dataset.link;
+    if (!links[key]) return;
+    el.setAttribute('href', links[key]);
+
+    if (key === 'email') {
+      el.removeAttribute('target');
+      el.removeAttribute('rel');
+    } else {
+      el.setAttribute('target', '_blank');
+      el.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+
+  $$('[data-text="email"]').forEach((el) => {
+    el.textContent = SITE_DATA.email;
+  });
+
+  /* شرائح المهارات والأدوات */
+  const skills = $('#skillChips');
+  if (skills) {
+    skills.innerHTML = SITE_DATA.skills.map((s) => `<li class="chip">${s}</li>`).join('');
+  }
+
+  const tools = $('#toolChips');
+  if (tools) {
+    tools.innerHTML = SITE_DATA.tools
+      .map((t) => `<li class="chip chip--tool">${t}</li>`)
+      .join('');
+  }
+
+  /* شريط الماركي */
+  const track = $('#marqueeTrack');
+  if (track) {
+    const words = [...SITE_DATA.skills, SITE_DATA.agency?.name || 'DOT Media'];
+    const set = words.map((w) => `<span class="marquee__item">${w}</span>`).join('');
+    track.innerHTML = set + set;
+  }
+
+  /* الإحصائيات */
+  const stats = $('#statsGrid');
+  if (stats && Array.isArray(SITE_DATA.stats)) {
+    stats.innerHTML = SITE_DATA.stats
+      .map(
+        (s) => `
+        <div class="stat">
+          <span class="stat__value" data-count="${s.value}" data-suffix="${s.suffix || ''}">0</span>
+          <span class="stat__label">${s.label}</span>
+        </div>`
+      )
+      .join('');
+  }
+
+  const year = $('#year');
+  if (year) year.textContent = new Date().getFullYear();
+}
+
+/* ------------------------------------------------------------
+   2) الهيدر وقائمة الجوال
+------------------------------------------------------------ */
+function initHeader() {
+  const toggle = $('#navToggle');
+  const panel = $('#navPanel');
+  const overlay = $('#navOverlay');
+
+  if (!toggle || !panel) return;
+
+  const setOpen = (open) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'إغلاق القائمة' : 'فتح القائمة');
+    panel.classList.toggle('is-open', open);
+    if (overlay) overlay.classList.toggle('is-open', open);
+    document.body.classList.toggle('menu-open', open);
+
+    if (open) {
+      const first = panel.querySelector('a, button');
+      if (first) first.focus({ preventScroll: true });
+    }
+  };
+
+  toggle.addEventListener('click', () => {
+    setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  if (overlay) overlay.addEventListener('click', () => setOpen(false));
+
+  panel.addEventListener('click', (event) => {
+    if (event.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && panel.classList.contains('is-open')) {
+      setOpen(false);
+      toggle.focus();
+      return;
+    }
+
+    /* حصر التركيز داخل القائمة عند فتحها */
+    if (event.key === 'Tab' && panel.classList.contains('is-open')) {
+      const focusables = $$('a, button', panel).filter((el) => !el.disabled);
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900 && panel.classList.contains('is-open')) setOpen(false);
+  });
+}
+
+/* ------------------------------------------------------------
+   3) شريط التقدم + زر العودة للأعلى + ظل الهيدر
+------------------------------------------------------------ */
+function initScrollUI() {
+  const bar = $('#scrollProgress');
+  const header = $('#siteHeader');
+  const topBtn = $('#backToTop');
+  let ticking = false;
+
+  const update = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    if (bar) bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    if (header) header.classList.toggle('is-scrolled', scrollTop > 8);
+    if (topBtn) topBtn.classList.toggle('is-visible', scrollTop > 700);
+    ticking = false;
+  };
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    },
+    { passive: true }
+  );
+
+  update();
+
+  if (topBtn) {
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    });
+  }
+}
+
+/* ------------------------------------------------------------
+   4) القسم النشط في القائمة
+------------------------------------------------------------ */
+function initScrollSpy() {
+  const links = $$('.nav__link[href^="#"]');
+  if (!links.length) return;
+
+  const map = new Map();
+  const sections = [];
+
+  links.forEach((link) => {
+    const id = link.getAttribute('href').slice(1);
+    const section = document.getElementById(id);
+    if (!section) return;
+    map.set(section, link);
+    sections.push(section);
+  });
+
+  if (!sections.length || !('IntersectionObserver' in window)) return;
+
+  const setActive = (link) => {
+    links.forEach((l) => {
+      const active = l === link;
+      l.classList.toggle('is-active', active);
+      if (active) l.setAttribute('aria-current', 'true');
+      else l.removeAttribute('aria-current');
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(map.get(entry.target));
+      });
+    },
+    { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+/* ------------------------------------------------------------
+   5) تأثير الظهور عند التمرير
+------------------------------------------------------------ */
+let revealObserver = null;
+
+function initReveal() {
+  $$('[data-reveal-group]').forEach((group) => {
+    Array.from(group.children).forEach((child, index) => {
+      if (child.hasAttribute('data-reveal')) {
+        child.style.setProperty('--reveal-delay', `${Math.min(index, 7) * 70}ms`);
+      }
+    });
+  });
+
+  const elements = $$('[data-reveal]');
+  if (!elements.length) return;
+
+  if (!('IntersectionObserver' in window) || reduceMotion.matches) {
+    elements.forEach((el) => el.classList.add('is-in'));
+    return;
+  }
+
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px' }
+  );
+
+  elements.forEach((el) => revealObserver.observe(el));
+}
+
+function observeReveals(scope) {
+  const elements = $$('[data-reveal]', scope);
+  if (!revealObserver) {
+    elements.forEach((el) => el.classList.add('is-in'));
+    return;
+  }
+  elements.forEach((el) => revealObserver.observe(el));
+}
+
+/* ------------------------------------------------------------
+   6) العدادات
+------------------------------------------------------------ */
+function initCounters() {
+  const counters = $$('[data-count]');
+  if (!counters.length) return;
+
+  const animate = (el) => {
+    const target = Number(el.dataset.count) || 0;
+    const suffix = el.dataset.suffix || '';
+
+    if (reduceMotion.matches) {
+      el.textContent = formatCount(target) + suffix;
+      return;
+    }
+
+    const duration = 1500;
+    const start = window.performance.now();
+
+    const frame = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = formatCount(Math.round(target * eased)) + suffix;
+      if (progress < 1) window.requestAnimationFrame(frame);
+    };
+
+    window.requestAnimationFrame(frame);
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    counters.forEach(animate);
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        animate(entry.target);
+      });
+    },
+    { threshold: 0.4 }
+  );
+
+  counters.forEach((el) => observer.observe(el));
+}
+
+/* ------------------------------------------------------------
+   7) الكتابة الآلية لسطر الدور
+------------------------------------------------------------ */
+function initTyping() {
+  const el = $('#heroRole');
+  if (!el || typeof SITE_DATA === 'undefined' || !SITE_DATA.roles?.length) return;
+
+  const phrases = SITE_DATA.roles;
+  if (reduceMotion.matches) {
+    el.textContent = phrases[0];
+    return;
+  }
+
+  const text = document.createElement('span');
+  const caret = document.createElement('span');
+  caret.className = 'caret';
+  caret.setAttribute('aria-hidden', 'true');
+  caret.textContent = '|';
+  el.textContent = '';
+  el.append(text, caret);
+
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+
+  const tick = () => {
+    const current = phrases[phraseIndex];
+
+    if (!deleting) {
+      charIndex += 1;
+      text.textContent = current.slice(0, charIndex);
+      if (charIndex === current.length) {
+        deleting = true;
+        window.setTimeout(tick, 1900);
+        return;
+      }
+    } else {
+      charIndex -= 1;
+      text.textContent = current.slice(0, charIndex);
+      if (charIndex === 0) {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+      }
+    }
+
+    window.setTimeout(tick, deleting ? 34 : 62);
+  };
+
+  window.setTimeout(tick, 1000);
+}
+
+/* ------------------------------------------------------------
+   8) قسم الأعمال: العرض + الفلترة
+------------------------------------------------------------ */
+const state = {
+  projects: [],
+  visible: [],
+  dialogIndex: 0,
+};
+
+function projectMarkup(project) {
+  const category = categoryLabel(project.cat);
+  const fallback = project.imageSmall || project.image;
+
+  return `
+    <article class="project" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
+      <div class="project__media">
+        <img
+          src="${fallback}"
+          srcset="${project.imageSmall ? `${project.imageSmall} 900w, ` : ''}${project.image} ${project.width}w"
+          sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+          width="${project.width}"
+          height="${project.height}"
+          alt="${project.title} — ${project.tag}"
+          loading="lazy"
+          decoding="async"
+        >
+        <div class="project__badges">
+          <span class="project__code">${project.code}</span>
+          ${
+            project.isVideo
+              ? `<span class="project__type">
+                   <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
+                   فيديو
+                 </span>`
+              : ''
+          }
+        </div>
+      </div>
+      <div class="project__body">
+        <span class="project__tag">${project.tag}</span>
+        <h3 class="project__title">${project.title}</h3>
+        <span class="project__more">
+          <span>عرض التفاصيل</span>
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+        </span>
+      </div>
+      <button
+        type="button"
+        class="project__open"
+        data-project-open="${project.id}"
+        aria-label="عرض تفاصيل مشروع ${project.title} — ${category}"
+      ></button>
+    </article>`;
+}
+
+function renderFilters() {
+  const container = $('#filters');
+  if (!container || typeof CATEGORIES === 'undefined') return;
+
+  container.innerHTML = CATEGORIES.map((category) => {
+    const count =
+      category.id === 'all'
+        ? state.projects.length
+        : state.projects.filter((p) => p.cat === category.id).length;
+
+    return `<button
+      type="button"
+      class="filter"
+      data-filter="${category.id}"
+      aria-pressed="${category.id === 'all' ? 'true' : 'false'}"
+    >
+      ${category.label}
+      <span class="filter__count">${count}</span>
+    </button>`;
+  }).join('');
+}
+
+function renderProjects() {
+  const grid = $('#workGrid');
+  if (!grid || typeof WORK_DATA === 'undefined') return;
+
+  state.projects = WORK_DATA.slice();
+  state.visible = state.projects.slice();
+  grid.innerHTML = state.projects.map(projectMarkup).join('');
+
+  $$('[data-project-card]', grid).forEach((card, index) => {
+    card.style.setProperty('--reveal-delay', `${Math.min(index, 7) * 60}ms`);
+  });
+
+  renderFilters();
+  observeReveals(grid);
+
+  const counter = $('#workCount');
+  if (counter) counter.textContent = String(state.projects.length);
+}
+
+function initWork() {
+  const grid = $('#workGrid');
+  if (!grid) return;
+
+  const filters = $('#filters');
+  const live = $('#workLive');
+
+  if (filters) {
+    filters.addEventListener('click', (event) => {
+      const button = event.target.closest('.filter');
+      if (!button) return;
+
+      const filter = button.dataset.filter;
+      $$('.filter', filters).forEach((b) =>
+        b.setAttribute('aria-pressed', String(b === button))
+      );
+
+      state.visible = state.projects.filter((p) => filter === 'all' || p.cat === filter);
+
+      $$('[data-project-card]', grid).forEach((card) => {
+        const show = state.visible.some((p) => p.id === card.dataset.projectCard);
+        card.hidden = !show;
+        card.classList.remove('is-enter');
+        if (show) {
+          void card.offsetWidth;
+          card.classList.add('is-enter');
+        }
+      });
+
+      const empty = $('#workEmpty');
+      if (empty) empty.hidden = state.visible.length !== 0;
+
+      if (live) {
+        live.textContent = `يتم عرض ${state.visible.length} من ${state.projects.length} مشروعًا`;
+      }
+    });
+  }
+
+  grid.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-project-open]');
+    if (!trigger) return;
+    openProject(trigger.dataset.projectOpen);
+  });
+
+  /* صورة بديلة عند فشل التحميل */
+  grid.addEventListener(
+    'error',
+    (event) => {
+      const img = event.target;
+      if (!(img instanceof HTMLImageElement)) return;
+      const media = img.closest('.project__media');
+      if (!media) return;
+      media.classList.add('is-missing');
+      img.remove();
+    },
+    true
+  );
+}
+
+/* ------------------------------------------------------------
+   9) نافذة تفاصيل المشروع
+------------------------------------------------------------ */
+function renderDialog() {
+  const project = state.visible[state.dialogIndex];
+  if (!project) return;
+
+  const image = $('#dialogImage');
+  const media = $('#dialogMedia');
+  const kicker = $('#dialogKicker');
+  const title = $('#dialogTitle');
+  const summary = $('#dialogSummary');
+  const category = $('#dialogCategory');
+  const type = $('#dialogType');
+  const tag = $('#dialogTag');
+  const code = $('#dialogCode');
+  const link = $('#dialogLink');
+  const count = $('#dialogCount');
+  const prev = $('#dialogPrev');
+  const next = $('#dialogNext');
+
+  if (title) title.textContent = project.title;
+  if (kicker) kicker.textContent = `${project.code} · ${project.tag}`;
+  if (summary) summary.textContent = project.summary;
+  if (category) category.textContent = categoryLabel(project.cat);
+  if (type) type.textContent = project.isVideo ? 'فيديو / موشن' : 'تصميم ثابت';
+  if (tag) tag.textContent = project.tag;
+  if (code) code.textContent = project.code;
+
+  if (image) {
+    image.src = project.imageMedium || project.imageSmall || project.image;
+    image.srcset = project.imageSmall
+      ? `${project.imageSmall} 900w, ${project.image} ${project.width}w`
+      : '';
+    image.sizes = '(max-width: 680px) 92vw, 50vw';
+    image.alt = `${project.title} — ${project.tag}`;
+    image.width = project.width;
+    image.height = project.height;
+  }
+
+  if (media) media.classList.remove('is-missing');
+
+  if (link) {
+    if (project.external && project.url) {
+      link.hidden = false;
+      link.href = project.url;
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+      link.innerHTML = `عرض المشروع على بيهانس
+        <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>`;
+    } else {
+      link.hidden = true;
+      link.removeAttribute('href');
+      link.textContent = '';
+    }
+  }
+
+  if (count) count.textContent = `${state.dialogIndex + 1} / ${state.visible.length}`;
+  if (prev) prev.disabled = state.dialogIndex === 0;
+  if (next) next.disabled = state.dialogIndex === state.visible.length - 1;
+}
+
+function moveDialog(delta) {
+  const next = state.dialogIndex + delta;
+  if (next < 0 || next >= state.visible.length) return;
+  state.dialogIndex = next;
+  renderDialog();
+}
+
+function openProject(id) {
+  const dialog = $('#projectDialog');
+  if (!dialog) return;
+
+  const index = state.visible.findIndex((p) => p.id === id);
+  if (index === -1) return;
+
+  state.dialogIndex = index;
+
+  if (typeof HTMLDialogElement === 'undefined' || !dialog.showModal) {
+    const project = state.visible[index];
+    if (project?.url) window.open(project.url, '_blank', 'noopener');
+    return;
+  }
+
+  renderDialog();
+  document.body.classList.add('has-dialog');
+  if (!dialog.open) dialog.showModal();
+  $('#dialogClose')?.focus({ preventScroll: true });
+}
+
+function initProjectDialog() {
+  const dialog = $('#projectDialog');
+  if (!dialog) return;
+
+  if (typeof HTMLDialogElement === 'undefined' || !dialog.showModal) return;
+
+  $('#dialogClose')?.addEventListener('click', () => dialog.close());
+  $('#dialogPrev')?.addEventListener('click', () => moveDialog(-1));
+  $('#dialogNext')?.addEventListener('click', () => moveDialog(1));
+
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+
+  dialog.addEventListener('close', () => {
+    document.body.classList.remove('has-dialog');
+  });
+
+  dialog.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      moveDialog(1);
+    }
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      moveDialog(-1);
+    }
+  });
+
+  $('#dialogImage')?.addEventListener('error', () => {
+    $('#dialogMedia')?.classList.add('is-missing');
+  });
+}
+
+/* ------------------------------------------------------------
+   10) نموذج التواصل
+------------------------------------------------------------ */
+function initContactForm() {
+  const form = $('#contactForm');
+  if (!form) return;
+
+  const status = $('#formStatus');
+  const submit = $('#formSubmit');
+  const whatsappBtn = $('#formWhatsapp');
+
+  const setStatus = (stateName, message, link) => {
+    if (!status) return;
+    status.dataset.state = stateName;
+    status.textContent = message;
+
+    if (link) {
+      const anchor = document.createElement('a');
+      anchor.href = link.href;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+      anchor.textContent = link.label;
+      anchor.style.cssText = 'color:inherit;text-decoration:underline;margin-inline-start:.35rem;';
+      status.append(' ', anchor);
+    }
+
+    status.classList.add('is-visible');
+  };
+
+  const clearStatus = () => {
+    if (!status) return;
+    status.classList.remove('is-visible');
+    status.textContent = '';
+    status.removeAttribute('data-state');
+  };
+
+  const fields = {
+    name: $('#fieldName'),
+    phone: $('#fieldPhone'),
+    email: $('#fieldEmail'),
+    service: $('#fieldService'),
+    message: $('#fieldMessage'),
+  };
+
+  const errors = {
+    name: $('#errorName'),
+    phone: $('#errorPhone'),
+    email: $('#errorEmail'),
+    service: $('#errorService'),
+    message: $('#errorMessage'),
+  };
+
+  const validators = {
+    name: (v) => (v.trim().length >= 2 ? '' : 'اكتب اسمك الكامل من فضلك.'),
+    phone: (v) => {
+      const digits = v.replace(/\D/g, '');
+      return digits.length >= 8 && digits.length <= 15
+        ? ''
+        : 'اكتب رقم هاتف صحيحًا (8 إلى 15 رقمًا).';
+    },
+    email: (v) =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'اكتب بريدًا إلكترونيًا صحيحًا.',
+    service: (v) => (v ? '' : 'اختر نوع الخدمة المطلوبة.'),
+    message: (v) =>
+      v.trim().length >= 10 ? '' : 'اكتب وصفًا مختصرًا للمشروع (10 أحرف على الأقل).',
+  };
+
+  const validateField = (key) => {
+    const field = fields[key];
+    if (!field) return true;
+    const message = validators[key] ? validators[key](field.value) : '';
+    if (errors[key]) errors[key].textContent = message;
+    field.setAttribute('aria-invalid', String(Boolean(message)));
+    return !message;
+  };
+
+  Object.keys(fields).forEach((key) => {
+    const field = fields[key];
+    if (!field) return;
+    field.addEventListener('blur', () => validateField(key));
+    field.addEventListener('input', () => {
+      if (field.getAttribute('aria-invalid') === 'true') validateField(key);
+    });
+    field.addEventListener('change', () => {
+      if (field.getAttribute('aria-invalid') === 'true') validateField(key);
+    });
+  });
+
+  const validateAll = () => {
+    const results = Object.keys(fields).map(validateField);
+    const firstInvalid = Object.keys(fields).find(
+      (key) => fields[key]?.getAttribute('aria-invalid') === 'true'
+    );
+    if (firstInvalid && fields[firstInvalid]) {
+      fields[firstInvalid].focus();
+      fields[firstInvalid].scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+    return results.every(Boolean);
+  };
+
+  const getValues = () => ({
+    name: fields.name?.value.trim() || '',
+    phone: fields.phone?.value.trim() || '',
+    email: fields.email?.value.trim() || '',
+    service: fields.service?.value || '',
+    message: fields.message?.value.trim() || '',
+  });
+
+  const buildMessage = () => {
+    const v = getValues();
+    return [
+      'طلب مشروع جديد — من الموقع الشخصي',
+      '',
+      `الاسم: ${v.name}`,
+      `الهاتف: ${v.phone}`,
+      `البريد: ${v.email}`,
+      `نوع الخدمة: ${v.service}`,
+      '',
+      'تفاصيل المشروع:',
+      v.message,
+    ].join('\n');
+  };
+
+  const whatsappUrl = () => `${whatsappBase()}?text=${encodeURIComponent(buildMessage())}`;
+
+  const openWhatsApp = () => {
+    const url = whatsappUrl();
+    if (!url) return;
+    window.open(url, '_blank', 'noopener');
+  };
+
+  whatsappBtn?.addEventListener('click', () => {
+    if (!validateAll()) {
+      setStatus('error', 'راجع الحقول المطلوبة أولاً حتى نتمكن من تجهيز رسالتك.');
+      return;
+    }
+    openWhatsApp();
+    setStatus('info', 'تم تجهيز رسالتك على واتساب. أرسلها من تطبيق واتساب لإتمام التواصل.');
+  });
+
+  const isLocal =
+    window.location.protocol === 'file:' ||
+    ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    clearStatus();
+
+    if (!validateAll()) {
+      setStatus('error', 'هناك بعض الحقول تحتاج إلى تصحيح قبل الإرسال.');
+      return;
+    }
+
+    /* في المعاينة المحلية نجهّز الرسالة على واتساب مباشرة */
+    if (isLocal) {
+      openWhatsApp();
+      setStatus(
+        'info',
+        'هذه معاينة محلية، لذا تم تجهيز رسالتك على واتساب. عند النشر على Netlify سيعمل إرسال النموذج مباشرة.'
+      );
+      return;
+    }
+
+    if (submit) {
+      submit.setAttribute('aria-busy', 'true');
+      submit.disabled = true;
+    }
+
+    try {
+      const body = new URLSearchParams(new FormData(form)).toString();
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body,
+      });
+
+      if (!response.ok) throw new Error('Request failed');
+
+      form.reset();
+      Object.keys(fields).forEach((key) => {
+        fields[key]?.removeAttribute('aria-invalid');
+        if (errors[key]) errors[key].textContent = '';
+      });
+
+      setStatus('success', 'وصل طلبك بنجاح. سأتواصل معك في أقرب وقت ممكن.');
+      showToast('تم إرسال طلبك بنجاح');
+    } catch (error) {
+      setStatus('error', 'تعذّر إرسال النموذج من الخادم. يمكنك إرسال نفس التفاصيل عبر واتساب:', {
+        href: whatsappUrl(),
+        label: 'افتح واتساب',
+      });
+    } finally {
+      if (submit) {
+        submit.removeAttribute('aria-busy');
+        submit.disabled = false;
+      }
+    }
+  });
+}
+
+/* ------------------------------------------------------------
+   11) روابط إضافية
+------------------------------------------------------------ */
+function initMisc() {
+  const floatingWhatsApp = $('#floatingWhatsapp');
+  if (floatingWhatsApp && typeof SITE_DATA !== 'undefined') {
+    floatingWhatsApp.href = `${whatsappBase()}?text=${encodeURIComponent(
+      'مرحباً أحمد، أود الاستفسار عن مشروع تصميم / موشن جرافيك'
+    )}`;
+  }
+}
+
+/* ------------------------------------------------------------
+   التشغيل
+------------------------------------------------------------ */
+function init() {
+  initSiteData();
+  initHeader();
+  initScrollUI();
+  initScrollSpy();
+  initReveal();
+  renderProjects();
+  initWork();
+  initProjectDialog();
+  initCounters();
+  initTyping();
+  initContactForm();
+  initMisc();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init, { once: true });
+} else {
+  init();
+}
+  </script>
+</body>
+</html>
