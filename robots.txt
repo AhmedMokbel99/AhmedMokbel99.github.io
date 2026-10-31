@@ -6,4 +6,4 @@ Allow: /
 Disallow: /standalone.html
 Disallow: /404.html
 
-Sitemap: https://ahmed-mokbel.netlify.app/sitemap.xml
+Sitemap: https://ahmedmokbel99.github.io/sitemap.xml
