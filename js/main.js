@@ -478,7 +478,7 @@ function projectMarkup(project) {
         <span class="project__tag">${project.tag}</span>
         <h3 class="project__title">${project.title}</h3>
         <span class="project__more">
-          <span>عرض التفاصيل</span>
+          <span>${project.isVideo ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
           <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
         </span>
       </div>
@@ -599,6 +599,7 @@ function renderDialog() {
   if (!project) return;
 
   const image = $('#dialogImage');
+  const video = $('#dialogVideo');
   const media = $('#dialogMedia');
   const kicker = $('#dialogKicker');
   const title = $('#dialogTitle');
@@ -620,15 +621,38 @@ function renderDialog() {
   if (tag) tag.textContent = project.tag;
   if (code) code.textContent = project.code;
 
+  const hasVideo = Boolean(project.video);
+
+  if (video) {
+    if (hasVideo) {
+      if (video.getAttribute('src') !== project.video) {
+        video.src = project.video;
+        video.poster = project.imageMedium || project.imageSmall || project.image;
+      }
+      video.hidden = false;
+      video.load();
+    } else {
+      video.pause();
+      video.hidden = true;
+      video.removeAttribute('src');
+      video.removeAttribute('poster');
+      video.load();
+    }
+  }
+
   if (image) {
-    image.src = project.imageMedium || project.imageSmall || project.image;
-    image.srcset = project.imageSmall
-      ? `${project.imageSmall} 900w, ${project.image} ${project.width}w`
-      : '';
-    image.sizes = '(max-width: 680px) 92vw, 50vw';
-    image.alt = `${project.title} — ${project.tag}`;
-    image.width = project.width;
-    image.height = project.height;
+    image.hidden = hasVideo;
+
+    if (!hasVideo) {
+      image.src = project.imageMedium || project.imageSmall || project.image;
+      image.srcset = project.imageSmall
+        ? `${project.imageSmall} 900w, ${project.image} ${project.width}w`
+        : '';
+      image.sizes = '(max-width: 680px) 92vw, 50vw';
+      image.alt = `${project.title} — ${project.tag}`;
+      image.width = project.width;
+      image.height = project.height;
+    }
   }
 
   if (media) media.classList.remove('is-missing');
@@ -656,6 +680,13 @@ function renderDialog() {
 function moveDialog(delta) {
   const next = state.dialogIndex + delta;
   if (next < 0 || next >= state.visible.length) return;
+
+  const video = $('#dialogVideo');
+  if (video) {
+    video.pause();
+    video.currentTime = 0;
+  }
+
   state.dialogIndex = next;
   renderDialog();
 }
@@ -671,7 +702,8 @@ function openProject(id) {
 
   if (typeof HTMLDialogElement === 'undefined' || !dialog.showModal) {
     const project = state.visible[index];
-    if (project?.url) window.open(project.url, '_blank', 'noopener');
+    if (project?.video) window.open(project.video, '_blank', 'noopener');
+    else if (project?.url) window.open(project.url, '_blank', 'noopener');
     return;
   }
 
@@ -697,6 +729,12 @@ function initProjectDialog() {
 
   dialog.addEventListener('close', () => {
     document.body.classList.remove('has-dialog');
+
+    const video = $('#dialogVideo');
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
+    }
   });
 
   dialog.addEventListener('keydown', (event) => {

@@ -2295,6 +2295,18 @@ body.has-dialog {
   object-fit: contain;
 }
 
+.dialog-media video {
+  width: 100%;
+  height: 100%;
+  max-height: min(90dvh, 860px);
+  object-fit: contain;
+  background: #000;
+}
+
+.dialog-media [hidden] {
+  display: none;
+}
+
 .dialog-body {
   display: flex;
   flex-direction: column;
