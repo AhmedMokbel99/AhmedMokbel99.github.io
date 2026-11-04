@@ -10,4 +10,5 @@ Desktop.ini
 # Build / preview artifacts
 dist/
 _site/
+_source/
 *.log

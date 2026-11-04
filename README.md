@@ -112,6 +112,7 @@ const SITE_DATA = {
   cat: "brand",                    // motion | brand | digital
   tag: "هوية وطباعة",
   isVideo: false,                  // لإظهار أيقونة الفيديو
+  video: "assets/projects/f14.mp4", // اختياري: يشغّل الفيديو داخل نافذة المشروع
   url: "https://www.behance.net/...",
   external: true,                  // false لإخفاء زر «فتح المشروع»
   image: "assets/projects/f14_cover.jpg",       // الأكبر (نافذة التفاصيل)
