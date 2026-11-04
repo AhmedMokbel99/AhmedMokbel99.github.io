@@ -443,7 +443,24 @@ const state = {
   projects: [],
   visible: [],
   dialogIndex: 0,
+  videoIndex: 0,
 };
+
+/* قائمة فيديوهات المشروع: إما مشروع بمقطع واحد أو مشروع بعدة مقاطع */
+function projectVideos(project) {
+  if (!project) return [];
+  if (Array.isArray(project.videos) && project.videos.length) return project.videos;
+  if (project.video) {
+    return [
+      {
+        src: project.video,
+        poster: project.imageMedium || project.imageSmall || project.image,
+        title: project.title,
+      },
+    ];
+  }
+  return [];
+}
 
 function projectMarkup(project) {
   const category = categoryLabel(project.cat);
@@ -621,14 +638,38 @@ function renderDialog() {
   if (tag) tag.textContent = project.tag;
   if (code) code.textContent = project.code;
 
-  const hasVideo = Boolean(project.video);
+  const videos = projectVideos(project);
+  const hasVideo = videos.length > 0;
+  state.videoIndex = 0;
+
+  const playlist = $('#dialogPlaylist');
+
+  if (playlist) {
+    playlist.innerHTML = '';
+
+    if (videos.length > 1) {
+      videos.forEach((item, index) => {
+        const button = document.createElement('button');
+        const poster = item.poster || project.image || '';
+        button.type = 'button';
+        button.className = 'dialog-playlist__item';
+        button.dataset.videoIndex = String(index);
+        button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
+        button.setAttribute('aria-label', item.title || `المقطع ${index + 1}`);
+        button.innerHTML = `<img src="${poster}" alt="" width="200" height="150" loading="lazy" decoding="async"><span class="dialog-playlist__index">${index + 1}</span>`;
+        playlist.append(button);
+      });
+      playlist.hidden = false;
+    } else {
+      playlist.hidden = true;
+    }
+  }
 
   if (video) {
     if (hasVideo) {
-      if (video.getAttribute('src') !== project.video) {
-        video.src = project.video;
-        video.poster = project.imageMedium || project.imageSmall || project.image;
-      }
+      const first = videos[0];
+      video.src = first.src;
+      video.poster = first.poster || project.image || '';
       video.hidden = false;
       video.load();
     } else {
@@ -677,6 +718,33 @@ function renderDialog() {
   if (next) next.disabled = state.dialogIndex === state.visible.length - 1;
 }
 
+function selectVideo(index) {
+  const project = state.visible[state.dialogIndex];
+  const videos = projectVideos(project);
+  const item = videos[index];
+  const video = $('#dialogVideo');
+  if (!item || !video) return;
+
+  state.videoIndex = index;
+  video.src = item.src;
+  video.poster = item.poster || project.image || '';
+  video.hidden = false;
+  video.load();
+
+  const playlist = $('#dialogPlaylist');
+  if (playlist) {
+    playlist.querySelectorAll('[data-video-index]').forEach((button) => {
+      button.setAttribute(
+        'aria-current',
+        Number(button.dataset.videoIndex) === index ? 'true' : 'false'
+      );
+    });
+  }
+
+  const attempt = video.play();
+  if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
+}
+
 function moveDialog(delta) {
   const next = state.dialogIndex + delta;
   if (next < 0 || next >= state.visible.length) return;
@@ -702,7 +770,8 @@ function openProject(id) {
 
   if (typeof HTMLDialogElement === 'undefined' || !dialog.showModal) {
     const project = state.visible[index];
-    if (project?.video) window.open(project.video, '_blank', 'noopener');
+    const fallbackVideo = projectVideos(project)[0];
+    if (fallbackVideo) window.open(fallbackVideo.src, '_blank', 'noopener');
     else if (project?.url) window.open(project.url, '_blank', 'noopener');
     return;
   }
@@ -723,6 +792,12 @@ function initProjectDialog() {
   $('#dialogPrev')?.addEventListener('click', () => moveDialog(-1));
   $('#dialogNext')?.addEventListener('click', () => moveDialog(1));
 
+  $('#dialogPlaylist')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-video-index]');
+    if (!button) return;
+    selectVideo(Number(button.dataset.videoIndex));
+  });
+
   dialog.addEventListener('click', (event) => {
     if (event.target === dialog) dialog.close();
   });
@@ -738,6 +813,8 @@ function initProjectDialog() {
   });
 
   dialog.addEventListener('keydown', (event) => {
+    if (event.target.closest?.('video')) return;
+
     if (event.key === 'ArrowLeft') {
       event.preventDefault();
       moveDialog(1);

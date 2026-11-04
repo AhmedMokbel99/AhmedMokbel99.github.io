@@ -2337,6 +2337,66 @@ body.has-dialog {
   line-height: 1.9;
 }
 
+.dialog-playlist {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+
+.dialog-playlist[hidden] {
+  display: none;
+}
+
+.dialog-playlist__item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #06070b;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dialog-playlist__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+  transition: opacity 0.25s ease;
+}
+
+.dialog-playlist__item:hover img,
+.dialog-playlist__item[aria-current="true"] img {
+  opacity: 1;
+}
+
+.dialog-playlist__item[aria-current="true"] {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px var(--cyan);
+}
+
+.dialog-playlist__item:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.dialog-playlist__index {
+  position: absolute;
+  inset-block-end: 4px;
+  inset-inline-start: 4px;
+  min-width: 1.25rem;
+  padding: 0.08rem 0.3rem;
+  border-radius: 999px;
+  background: rgba(6, 7, 11, 0.78);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  line-height: 1.4;
+}
+
 .dialog-facts {
   display: grid;
   grid-template-columns: 1fr 1fr;
