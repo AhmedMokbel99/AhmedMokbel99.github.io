@@ -12,3 +12,6 @@ dist/
 _site/
 _source/
 *.log
+
+# Source folders (raw artwork, not deployed)
+تصميم/
