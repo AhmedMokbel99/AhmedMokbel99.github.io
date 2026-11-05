@@ -76,7 +76,7 @@ const SITE_DATA = {
     { key: "experience", suffix: "+", label: "سنوات خبرة" },
     { key: "projects", value: 160, suffix: "+", label: "مشروع منجز" },
     { key: "clients", value: 80, suffix: "+", label: "عميل راضٍ" },
-    { key: "behance", suffix: "", label: "مشروع على بيهانس" },
+    { key: "selected", suffix: "", label: "مشروع مختار من مسيرتي" },
   ],
 };
 

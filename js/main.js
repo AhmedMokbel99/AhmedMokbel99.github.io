@@ -103,6 +103,9 @@ function initSiteData() {
       const start = Number(SITE_DATA.careerStart) || currentYear;
       return { ...stat, value: Math.max(1, currentYear - start) };
     }
+    if (stat.key === 'selected') {
+      return { ...stat, value: work.length };
+    }
     if (stat.key === 'behance') {
       return { ...stat, value: behanceProjects.length };
     }

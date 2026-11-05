@@ -3271,7 +3271,7 @@ body.has-dialog {
           <div class="section-head" data-reveal>
             <div class="eyebrow">الأعمال</div>
             <h2>مشاريع مختارة من مسيرتي</h2>
-            <p>مختارات من أعمالي على بيهانس — اضغط على أي بطاقة لعرض تفاصيل المشروع وصورته كاملة.</p>
+            <p>مختارات من أعمالي — اضغط على أي بطاقة لعرض تفاصيل المشروع وصورته كاملة.</p>
           </div>
         </div>
 
@@ -3289,8 +3289,7 @@ body.has-dialog {
         </noscript>
 
         <p class="work-note">
-          <span id="workTotal">13</span> مشروعًا مختارًا — <span id="behanceCount">12</span> منها منشورة على
-          <a data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">بيهانس</a>.
+          <span id="workTotal">23</span> مشروعًا مختارًا من مسيرتي في التصميم والموشن جرافيك.
         </p>
       </div>
     </section>
@@ -3756,7 +3755,7 @@ const SITE_DATA = {
     { key: "experience", suffix: "+", label: "سنوات خبرة" },
     { key: "projects", value: 160, suffix: "+", label: "مشروع منجز" },
     { key: "clients", value: 80, suffix: "+", label: "عميل راضٍ" },
-    { key: "behance", suffix: "", label: "مشروع على بيهانس" },
+    { key: "selected", suffix: "", label: "مشروع مختار من مسيرتي" },
   ],
 };
 
@@ -4239,6 +4238,9 @@ function initSiteData() {
     if (stat.key === 'experience') {
       const start = Number(SITE_DATA.careerStart) || currentYear;
       return { ...stat, value: Math.max(1, currentYear - start) };
+    }
+    if (stat.key === 'selected') {
+      return { ...stat, value: work.length };
     }
     if (stat.key === 'behance') {
       return { ...stat, value: behanceProjects.length };
