@@ -98,8 +98,8 @@ const WORK_DATA = [
     isVideo: true,
     url: "https://www.behance.net/gallery/244580859/_",
     external: true,
-    image: "assets/projects/f01_cover.jpg",
-    imageSmall: "assets/projects/f01_cover-900.jpg",
+    image: "assets/projects/saudi-founding-day-motion-graphic.jpg",
+    imageSmall: "assets/projects/saudi-founding-day-motion-graphic-900.jpg",
     width: 1072,
     height: 1344,
     summary:
@@ -114,7 +114,7 @@ const WORK_DATA = [
     isVideo: true,
     url: "https://www.behance.net/gallery/244097521/_",
     external: true,
-    image: "assets/projects/f02_cover.png",
+    image: "assets/projects/ibn-albasel-motion-graphic.png",
     width: 404,
     height: 316,
     summary:
@@ -130,7 +130,7 @@ const WORK_DATA = [
     video: "assets/projects/f03_ans-dimashqi-steak.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f03_cover.jpg",
+    image: "assets/projects/ans-dimashqi-steak-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -145,7 +145,7 @@ const WORK_DATA = [
     isVideo: true,
     url: "https://www.behance.net/gallery/119428049/_",
     external: true,
-    image: "assets/projects/f04_cover.png",
+    image: "assets/projects/first-motion-graphics-work.png",
     width: 404,
     height: 316,
     summary:
@@ -160,8 +160,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/128103663/_",
     external: true,
-    image: "assets/projects/f05_cover.jpg",
-    imageSmall: "assets/projects/f05_cover-900.jpg",
+    image: "assets/projects/taher-printing-brand-identity.jpg",
+    imageSmall: "assets/projects/taher-printing-brand-identity-900.jpg",
     width: 1400,
     height: 1192,
     summary:
@@ -176,7 +176,7 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/148210723/_",
     external: true,
-    image: "assets/projects/f06_cover.jpg",
+    image: "assets/projects/harvard-education-center-brand.jpg",
     width: 404,
     height: 316,
     summary:
@@ -191,8 +191,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/148215371/ULTRA-GROW",
     external: true,
-    image: "assets/projects/f07_cover.jpg",
-    imageSmall: "assets/projects/f07_cover-900.jpg",
+    image: "assets/projects/ultra-grow-brand-packaging.jpg",
+    imageSmall: "assets/projects/ultra-grow-brand-packaging-900.jpg",
     width: 1400,
     height: 964,
     summary:
@@ -207,8 +207,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/194077839/ULTRA-GROW-2",
     external: true,
-    image: "assets/projects/f08_cover.jpg",
-    imageSmall: "assets/projects/f08_cover-900.jpg",
+    image: "assets/projects/ultra-grow-2-brand-system.jpg",
+    imageSmall: "assets/projects/ultra-grow-2-brand-system-900.jpg",
     width: 1400,
     height: 980,
     summary:
@@ -223,7 +223,7 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/228287151/_",
     external: true,
-    image: "assets/projects/f09_cover.png",
+    image: "assets/projects/social-media-design-collection.png",
     width: 404,
     height: 316,
     summary:
@@ -238,8 +238,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/194077395/_",
     external: true,
-    image: "assets/projects/f10_cover.jpg",
-    imageSmall: "assets/projects/f10_cover-900.jpg",
+    image: "assets/projects/filler-injection-ad-design.jpg",
+    imageSmall: "assets/projects/filler-injection-ad-design-900.jpg",
     width: 1400,
     height: 1400,
     summary:
@@ -254,7 +254,7 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/175994775/INSTA-WATCHES",
     external: true,
-    image: "assets/projects/f11_cover.jpg",
+    image: "assets/projects/insta-watches-ad-design.jpg",
     width: 404,
     height: 316,
     summary:
@@ -269,7 +269,7 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/194077227/_",
     external: true,
-    image: "assets/projects/f12_cover.jpg",
+    image: "assets/projects/nature-secret-ad-design.jpg",
     width: 404,
     height: 316,
     summary:
@@ -284,9 +284,9 @@ const WORK_DATA = [
     isVideo: false,
     url: "",
     external: false,
-    image: "assets/projects/f13_cover.jpg",
-    imageSmall: "assets/projects/f13_cover-900.jpg",
-    imageMedium: "assets/projects/f13_cover-1400.jpg",
+    image: "assets/projects/admission-gateway-rollup.jpg",
+    imageSmall: "assets/projects/admission-gateway-rollup-900.jpg",
+    imageMedium: "assets/projects/admission-gateway-rollup-1400.jpg",
     width: 2314,
     height: 3069,
     summary:
@@ -302,7 +302,7 @@ const WORK_DATA = [
     video: "assets/projects/f14_beginnings-yasser.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f14_cover.jpg",
+    image: "assets/projects/beginnings-motion-graphic.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -318,7 +318,7 @@ const WORK_DATA = [
     video: "assets/projects/f15_alhakum-altakathur.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f15_cover.jpg",
+    image: "assets/projects/alhakum-altakathur-motion.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -334,7 +334,7 @@ const WORK_DATA = [
     video: "assets/projects/f16_logo-reveal.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f16_cover.jpg",
+    image: "assets/projects/en-serv-logo-animation.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -350,7 +350,7 @@ const WORK_DATA = [
     video: "assets/projects/f17_elzain-restaurant.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f17_cover.jpg",
+    image: "assets/projects/elzain-restaurant-video.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -366,7 +366,7 @@ const WORK_DATA = [
     video: "assets/projects/f18_elmaqsoud-generators.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f18_cover.jpg",
+    image: "assets/projects/elmaqsoud-generators-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -382,7 +382,7 @@ const WORK_DATA = [
     video: "assets/projects/f19_bdeel-car.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f19_cover.jpg",
+    image: "assets/projects/bdeel-car-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -398,7 +398,7 @@ const WORK_DATA = [
     video: "assets/projects/f20_alwathba-building.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f20_cover.jpg",
+    image: "assets/projects/alwathba-real-estate-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -414,7 +414,7 @@ const WORK_DATA = [
     video: "assets/projects/f21_ans-dimashqi-pie.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f21_cover.jpg",
+    image: "assets/projects/ans-dimashqi-pie-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -429,8 +429,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "",
     external: false,
-    image: "assets/projects/f22_almenissy-1448.jpg",
-    imageSmall: "assets/projects/f22_almenissy-1448-900.jpg",
+    image: "assets/projects/almenissy-hijri-1448-greeting.jpg",
+    imageSmall: "assets/projects/almenissy-hijri-1448-greeting-900.jpg",
     width: 1200,
     height: 1204,
     summary:
@@ -445,8 +445,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "",
     external: false,
-    image: "assets/projects/f23_grm-1448.jpg",
-    imageSmall: "assets/projects/f23_grm-1448-900.jpg",
+    image: "assets/projects/grm-hijri-1448-greeting.jpg",
+    imageSmall: "assets/projects/grm-hijri-1448-greeting-900.jpg",
     width: 1400,
     height: 1841,
     summary:

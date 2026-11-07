@@ -843,8 +843,7 @@ function initContactForm() {
   if (!form) return;
 
   const status = $('#formStatus');
-  const submit = $('#formSubmit');
-  const whatsappBtn = $('#formWhatsapp');
+  const emailBtn = $('#formEmail');
 
   const setStatus = (stateName, message, link) => {
     if (!status) return;
@@ -960,26 +959,20 @@ function initContactForm() {
 
   const whatsappUrl = () => `${whatsappBase()}?text=${encodeURIComponent(buildMessage())}`;
 
+  const mailtoUrl = () => {
+    const subject = 'طلب مشروع جديد — من الموقع الشخصي';
+    return `mailto:${SITE_DATA.email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(buildMessage())}`;
+  };
+
   const openWhatsApp = () => {
     const url = whatsappUrl();
     if (!url) return;
     window.open(url, '_blank', 'noopener');
   };
 
-  whatsappBtn?.addEventListener('click', () => {
-    if (!validateAll()) {
-      setStatus('error', 'راجع الحقول المطلوبة أولاً حتى نتمكن من تجهيز رسالتك.');
-      return;
-    }
-    openWhatsApp();
-    setStatus('info', 'تم تجهيز رسالتك على واتساب. أرسلها من تطبيق واتساب لإتمام التواصل.');
-  });
-
-  const isLocal =
-    window.location.protocol === 'file:' ||
-    ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener('submit', (event) => {
     event.preventDefault();
     clearStatus();
 
@@ -988,50 +981,26 @@ function initContactForm() {
       return;
     }
 
-    /* في المعاينة المحلية نجهّز الرسالة على واتساب مباشرة */
-    if (isLocal) {
-      openWhatsApp();
-      setStatus(
-        'info',
-        'هذه معاينة محلية، لذا تم تجهيز رسالتك على واتساب. عند النشر على Netlify سيعمل إرسال النموذج مباشرة.'
-      );
+    openWhatsApp();
+    setStatus(
+      'success',
+      'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق وسأرد عليك في أقرب وقت.'
+    );
+  });
+
+  emailBtn?.addEventListener('click', () => {
+    clearStatus();
+
+    if (!validateAll()) {
+      setStatus('error', 'راجع الحقول المطلوبة أولاً حتى نتمكن من تجهيز رسالتك.');
       return;
     }
 
-    if (submit) {
-      submit.setAttribute('aria-busy', 'true');
-      submit.disabled = true;
-    }
-
-    try {
-      const body = new URLSearchParams(new FormData(form)).toString();
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
-      });
-
-      if (!response.ok) throw new Error('Request failed');
-
-      form.reset();
-      Object.keys(fields).forEach((key) => {
-        fields[key]?.removeAttribute('aria-invalid');
-        if (errors[key]) errors[key].textContent = '';
-      });
-
-      setStatus('success', 'وصل طلبك بنجاح. سأتواصل معك في أقرب وقت ممكن.');
-      showToast('تم إرسال طلبك بنجاح');
-    } catch (error) {
-      setStatus('error', 'تعذّر إرسال النموذج من الخادم. يمكنك إرسال نفس التفاصيل عبر واتساب:', {
-        href: whatsappUrl(),
-        label: 'افتح واتساب',
-      });
-    } finally {
-      if (submit) {
-        submit.removeAttribute('aria-busy');
-        submit.disabled = false;
-      }
-    }
+    window.location.href = mailtoUrl();
+    setStatus(
+      'info',
+      'تم تجهيز رسالتك في تطبيق البريد — راجعها واضغط إرسال. لو لم يفتح تطبيق البريد، استخدم واتساب.'
+    );
   });
 }
 

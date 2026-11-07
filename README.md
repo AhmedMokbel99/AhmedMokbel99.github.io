@@ -18,9 +18,11 @@
 ahmed-mokbel-portfolio/
 │
 ├── index.html              # الصفحة الرئيسية (النسخة الأساسية)
-├── 404.html                # صفحة الخطأ المخصصة (Netlify يقدّمها تلقائيًا)
+├── motion-graphics.html    # صفحة خدمة الموشن جرافيك (ثابتة — SEO)
+├── brand-identity.html     # صفحة خدمة الهوية البصرية (ثابتة — SEO)
+├── 404.html                # صفحة الخطأ المخصصة (GitHub Pages يقدّمها تلقائيًا)
 ├── standalone.html         # نسخة ملف واحد مولّدة آليًا — لا تعدّلها يدويًا
-├── build.py                # سكربت بناء standalone.html
+├── build.py                # سكربت بناء standalone.html + بطاقات المشاريع الثابتة
 │
 ├── css/
 │   └── style.css           # نظام التصميم الكامل + التجاوب + تقليل الحركة
@@ -29,7 +31,7 @@ ahmed-mokbel-portfolio/
 │   └── main.js             # التفاعلات: القائمة، الفلترة، النوافذ، النموذج...
 │
 ├── assets/
-│   ├── projects/           # أغلفة المشاريع (13 مشروعًا)
+│   ├── projects/           # أغلفة المشاريع وأسماء وصفية (23 مشروعًا)
 │   ├── ahmed-mokbel.jpg    # الصورة الشخصية (887px)
 │   ├── ahmed-mokbel-480.jpg
 │   ├── ahmed-mokbel-800.jpg
@@ -55,7 +57,7 @@ ahmed-mokbel-portfolio/
 ### 1) فتح مباشر (الأسهل)
 
 افتح `index.html` في المتصفح، أو افتح `standalone.html` للحصول على كل شيء داخل ملف واحد.
-النموذج في هذه الحالة يعمل بوضع المعاينة ويجهّز الرسالة على واتساب.
+النموذج يجهّز الرسالة في واتساب افتراضيًا، أو في تطبيق البريد عند اختيار «أرسل عبر البريد».
 
 ### 2) خادم محلي (موصى به)
 
@@ -103,6 +105,21 @@ const SITE_DATA = {
 - سنة الحقوق في الفوتر تُحدَّث تلقائيًا من تاريخ الجهاز.
 - البطاقات العائمة في الهيرو وملاحظة قسم الأعمال تقرأ نفس القيم، فلا تتعارض أبدًا.
 
+### صفحات الخدمات (SEO)
+
+- `motion-graphics.html` و`brand-identity.html` صفحات ثابتة لا تعتمد على JavaScript، لكل واحدة:
+  عنوان ووصف و`canonical` مستقل، و`H1` بكلمة الخدمة، وبيانات منظمة `Service` + `BreadcrumbList` + `FAQPage`.
+- أي صفحة خدمة جديدة لازم تتضاف إلى `sitemap.xml`، وتُربط من بطاقة الخدمة داخل `index.html` ومن التذييل.
+- عند تغيير تفاصيل خدمة (المدة، نطاق العمل)، عدّل النص الظاهر وأسئلة `FAQPage` معًا حتى يبقى مطابقًا للمحتوى.
+
+### خصوصية البريد وأسماء الصور
+
+- البريد الإلكتروني غير مكتوب كنص في HTML؛ `main.js` يبنيه من `SITE_DATA.email` وقت التشغيل، مع بديل `noscript`.
+  يبقى البريد موجودًا في JSON-LD لأن البيانات المنظمة تحتاجه.
+- أسماء صور المشاريع وصفية بالإنجليزية (مثال: `saudi-founding-day-motion-graphic.jpg`).
+  استخدم نفس النمط عند إضافة مشروع جديد، وحافظ على نسخة `-900` للبطاقات.
+- نموذج التواصل لا يعتمد على خادم: يجهّز الرسالة في واتساب أو البريد الإلكتروني، فيعمل على GitHub Pages بدون أي خدمة مدفوعة.
+
 ### إضافة / تعديل مشروع
 
 ```js
@@ -116,8 +133,8 @@ const SITE_DATA = {
   video: "assets/projects/f14.mp4", // اختياري: يشغّل الفيديو داخل نافذة المشروع
   url: "https://www.behance.net/...",
   external: true,                  // false لإخفاء زر «فتح المشروع»
-  image: "assets/projects/f14_cover.jpg",       // الأكبر (نافذة التفاصيل)
-  imageSmall: "assets/projects/f14_cover-900.jpg", // اختياري لبطاقة أخف
+  image: "assets/projects/beginnings-motion-graphic.jpg",       // الأكبر (نافذة التفاصيل)
+  imageSmall: "assets/projects/beginnings-motion-graphic-900.jpg", // اختياري لبطاقة أخف
   width: 1400,                     // أبعاد الصورة الكبيرة (مهمة لمنع الاهتزاز)
   height: 1000,
   summary: "وصف مختصر يظهر في نافذة تفاصيل المشروع."
@@ -136,8 +153,8 @@ const SITE_DATA = {
 {
   id: "f03",
   videos: [
-    { src: "assets/projects/f16_clip.mp4", poster: "assets/projects/f16_cover.jpg", title: "اسم المقطع الأول" },
-    { src: "assets/projects/f17_clip.mp4", poster: "assets/projects/f17_cover.jpg", title: "اسم المقطع الثاني" }
+    { src: "assets/projects/f16_clip.mp4", poster: "assets/projects/en-serv-logo-animation.jpg", title: "اسم المقطع الأول" },
+    { src: "assets/projects/f17_clip.mp4", poster: "assets/projects/elzain-restaurant-video.jpg", title: "اسم المقطع الثاني" }
   ],
   // باقي الحقول كالمعتاد
 }

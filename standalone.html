@@ -2872,6 +2872,303 @@ body.has-dialog {
     padding-inline: 0.75rem;
   }
 }
+
+/* ------------------------------------------------------------
+   19. Service landing pages (static)
+   ------------------------------------------------------------ */
+.service-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(7, 8, 13, 0.86);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line);
+}
+
+.service-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: var(--nav-h);
+  padding-block: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.service-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  flex-wrap: wrap;
+}
+
+.service-nav a {
+  color: var(--muted);
+  font-size: 0.88rem;
+  transition: color 0.2s ease;
+}
+
+.service-nav a:hover,
+.service-nav a.is-active {
+  color: var(--cyan);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--dim);
+}
+
+.breadcrumb a {
+  color: var(--dim);
+}
+
+.breadcrumb a:hover {
+  color: var(--cyan);
+}
+
+.service-hero {
+  padding-top: clamp(2.8rem, 6vw, 4.6rem);
+}
+
+.service-hero h1 {
+  max-width: 24ch;
+  font-size: clamp(2rem, 4.6vw, 3.25rem);
+  line-height: 1.28;
+  font-weight: 800;
+}
+
+.service-lead {
+  max-width: 44rem;
+  margin-top: 1.1rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.95;
+}
+
+.service-hero .hero-actions {
+  margin-top: 1.9rem;
+}
+
+.service-block {
+  margin-top: 2.2rem;
+}
+
+.service-block h2 {
+  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
+}
+
+.service-block > p {
+  max-width: 46rem;
+  margin-top: 0.8rem;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.service-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem 1.6rem;
+  margin-top: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.service-list li {
+  position: relative;
+  padding-inline-start: 1.6rem;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.8;
+}
+
+.service-list li::before {
+  content: "\2713";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  color: var(--cyan);
+  font-weight: 700;
+}
+
+.service-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.6rem;
+}
+
+.service-card {
+  padding: 1.5rem 1.3rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.022);
+}
+
+.service-card h3 {
+  font-size: 1.02rem;
+  margin-bottom: 0.55rem;
+}
+
+.service-card p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+.service-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1.6rem;
+}
+
+.service-gallery a {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.service-gallery img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+
+.service-gallery a:hover img {
+  transform: scale(1.04);
+}
+
+.service-gallery span {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 0.7rem 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text);
+  background: linear-gradient(0deg, rgba(5, 6, 10, 0.94), rgba(5, 6, 10, 0));
+}
+
+.service-faq {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+
+.service-cta {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.8rem, 4vw, 2.8rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--brand-line);
+  background: linear-gradient(150deg, rgba(139, 92, 246, 0.14), rgba(34, 211, 238, 0.06) 60%, rgba(255, 255, 255, 0.015));
+  text-align: center;
+}
+
+.service-cta h2 {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+.service-cta p {
+  max-width: 34rem;
+  margin: 0.8rem auto 0;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.service-cta .hero-actions {
+  justify-content: center;
+  margin-top: 1.6rem;
+}
+
+.service-footer {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  border-top: 1px solid var(--line);
+  padding-block: 1.6rem;
+  color: var(--dim);
+  font-size: 0.78rem;
+}
+
+.service-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.service-footer a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.service-footer a:hover {
+  color: var(--cyan);
+}
+
+.service__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  color: var(--cyan);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.service__link .icon {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.25s var(--ease);
+}
+
+.service__link:hover .icon {
+  transform: translateX(-3px);
+}
+
+.contact-noscript {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 900px) {
+  .service-cards,
+  .service-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .service-list,
+  .service-cards,
+  .service-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .service-nav {
+    gap: 0.8rem;
+  }
+
+  .service-nav a {
+    font-size: 0.82rem;
+  }
+
+  .service-hero h1 {
+    max-width: none;
+  }
+}
   </style>
 
   <!-- Structured data -->
@@ -3317,6 +3614,10 @@ body.has-dialog {
             </div>
             <h3>موشن جرافيك</h3>
             <p>فيديوهات تعريفية وإعلانية بحركة مدروسة ومؤثرات صوتية، من السيناريو وحتى التصدير النهائي.</p>
+            <a class="service__link" href="motion-graphics.html">
+              تفاصيل خدمة الموشن جرافيك
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
           </article>
 
           <article class="service" data-reveal>
@@ -3326,6 +3627,10 @@ body.has-dialog {
             </div>
             <h3>هوية بصرية كاملة</h3>
             <p>شعار، لوحة ألوان، خطوط، ودليل استخدام متكامل يعكس شخصية علامتك على كافة نقاط التواصل.</p>
+            <a class="service__link" href="brand-identity.html">
+              تفاصيل خدمة الهوية البصرية
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
           </article>
 
           <article class="service" data-reveal>
@@ -3386,8 +3691,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f01" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f01_cover-900.jpg"
-      srcset="assets/projects/f01_cover-900.jpg 900w, assets/projects/f01_cover.jpg 1072w"
+      src="assets/projects/saudi-founding-day-motion-graphic-900.jpg"
+      srcset="assets/projects/saudi-founding-day-motion-graphic-900.jpg 900w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1072"
       height="1344"
@@ -3418,8 +3723,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f02" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f02_cover.png"
-      srcset="assets/projects/f02_cover.png 404w"
+      src="assets/projects/ibn-albasel-motion-graphic.png"
+      srcset="assets/projects/ibn-albasel-motion-graphic.png 404w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="404"
       height="316"
@@ -3450,8 +3755,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f03" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f03_cover.jpg"
-      srcset="assets/projects/f03_cover.jpg 1200w"
+      src="assets/projects/ans-dimashqi-steak-ad.jpg"
+      srcset="assets/projects/ans-dimashqi-steak-ad.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -3482,8 +3787,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f04" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f04_cover.png"
-      srcset="assets/projects/f04_cover.png 404w"
+      src="assets/projects/first-motion-graphics-work.png"
+      srcset="assets/projects/first-motion-graphics-work.png 404w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="404"
       height="316"
@@ -3514,8 +3819,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f05" data-category="brand">
   <div class="project__media">
     <img
-      src="assets/projects/f05_cover-900.jpg"
-      srcset="assets/projects/f05_cover-900.jpg 900w, assets/projects/f05_cover.jpg 1400w"
+      src="assets/projects/taher-printing-brand-identity-900.jpg"
+      srcset="assets/projects/taher-printing-brand-identity-900.jpg 900w, assets/projects/taher-printing-brand-identity.jpg 1400w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1400"
       height="1192"
@@ -3546,8 +3851,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f06" data-category="brand">
   <div class="project__media">
     <img
-      src="assets/projects/f06_cover.jpg"
-      srcset="assets/projects/f06_cover.jpg 404w"
+      src="assets/projects/harvard-education-center-brand.jpg"
+      srcset="assets/projects/harvard-education-center-brand.jpg 404w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="404"
       height="316"
@@ -3578,8 +3883,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f07" data-category="brand">
   <div class="project__media">
     <img
-      src="assets/projects/f07_cover-900.jpg"
-      srcset="assets/projects/f07_cover-900.jpg 900w, assets/projects/f07_cover.jpg 1400w"
+      src="assets/projects/ultra-grow-brand-packaging-900.jpg"
+      srcset="assets/projects/ultra-grow-brand-packaging-900.jpg 900w, assets/projects/ultra-grow-brand-packaging.jpg 1400w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1400"
       height="964"
@@ -3610,8 +3915,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f08" data-category="brand">
   <div class="project__media">
     <img
-      src="assets/projects/f08_cover-900.jpg"
-      srcset="assets/projects/f08_cover-900.jpg 900w, assets/projects/f08_cover.jpg 1400w"
+      src="assets/projects/ultra-grow-2-brand-system-900.jpg"
+      srcset="assets/projects/ultra-grow-2-brand-system-900.jpg 900w, assets/projects/ultra-grow-2-brand-system.jpg 1400w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1400"
       height="980"
@@ -3642,8 +3947,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f09" data-category="digital">
   <div class="project__media">
     <img
-      src="assets/projects/f09_cover.png"
-      srcset="assets/projects/f09_cover.png 404w"
+      src="assets/projects/social-media-design-collection.png"
+      srcset="assets/projects/social-media-design-collection.png 404w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="404"
       height="316"
@@ -3674,8 +3979,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f10" data-category="digital">
   <div class="project__media">
     <img
-      src="assets/projects/f10_cover-900.jpg"
-      srcset="assets/projects/f10_cover-900.jpg 900w, assets/projects/f10_cover.jpg 1400w"
+      src="assets/projects/filler-injection-ad-design-900.jpg"
+      srcset="assets/projects/filler-injection-ad-design-900.jpg 900w, assets/projects/filler-injection-ad-design.jpg 1400w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1400"
       height="1400"
@@ -3706,8 +4011,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f11" data-category="digital">
   <div class="project__media">
     <img
-      src="assets/projects/f11_cover.jpg"
-      srcset="assets/projects/f11_cover.jpg 404w"
+      src="assets/projects/insta-watches-ad-design.jpg"
+      srcset="assets/projects/insta-watches-ad-design.jpg 404w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="404"
       height="316"
@@ -3738,8 +4043,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f12" data-category="digital">
   <div class="project__media">
     <img
-      src="assets/projects/f12_cover.jpg"
-      srcset="assets/projects/f12_cover.jpg 404w"
+      src="assets/projects/nature-secret-ad-design.jpg"
+      srcset="assets/projects/nature-secret-ad-design.jpg 404w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="404"
       height="316"
@@ -3770,8 +4075,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f13" data-category="brand">
   <div class="project__media">
     <img
-      src="assets/projects/f13_cover-900.jpg"
-      srcset="assets/projects/f13_cover-900.jpg 900w, assets/projects/f13_cover.jpg 2314w"
+      src="assets/projects/admission-gateway-rollup-900.jpg"
+      srcset="assets/projects/admission-gateway-rollup-900.jpg 900w, assets/projects/admission-gateway-rollup.jpg 2314w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="2314"
       height="3069"
@@ -3802,8 +4107,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f14" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f14_cover.jpg"
-      srcset="assets/projects/f14_cover.jpg 1200w"
+      src="assets/projects/beginnings-motion-graphic.jpg"
+      srcset="assets/projects/beginnings-motion-graphic.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -3834,8 +4139,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f15" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f15_cover.jpg"
-      srcset="assets/projects/f15_cover.jpg 1200w"
+      src="assets/projects/alhakum-altakathur-motion.jpg"
+      srcset="assets/projects/alhakum-altakathur-motion.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -3866,8 +4171,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f16" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f16_cover.jpg"
-      srcset="assets/projects/f16_cover.jpg 1200w"
+      src="assets/projects/en-serv-logo-animation.jpg"
+      srcset="assets/projects/en-serv-logo-animation.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -3898,8 +4203,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f17" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f17_cover.jpg"
-      srcset="assets/projects/f17_cover.jpg 1200w"
+      src="assets/projects/elzain-restaurant-video.jpg"
+      srcset="assets/projects/elzain-restaurant-video.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -3930,8 +4235,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f18" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f18_cover.jpg"
-      srcset="assets/projects/f18_cover.jpg 1200w"
+      src="assets/projects/elmaqsoud-generators-ad.jpg"
+      srcset="assets/projects/elmaqsoud-generators-ad.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -3962,8 +4267,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f19" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f19_cover.jpg"
-      srcset="assets/projects/f19_cover.jpg 1200w"
+      src="assets/projects/bdeel-car-ad.jpg"
+      srcset="assets/projects/bdeel-car-ad.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -3994,8 +4299,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f20" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f20_cover.jpg"
-      srcset="assets/projects/f20_cover.jpg 1200w"
+      src="assets/projects/alwathba-real-estate-ad.jpg"
+      srcset="assets/projects/alwathba-real-estate-ad.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -4026,8 +4331,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f21" data-category="motion">
   <div class="project__media">
     <img
-      src="assets/projects/f21_cover.jpg"
-      srcset="assets/projects/f21_cover.jpg 1200w"
+      src="assets/projects/ans-dimashqi-pie-ad.jpg"
+      srcset="assets/projects/ans-dimashqi-pie-ad.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="900"
@@ -4058,8 +4363,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f22" data-category="digital">
   <div class="project__media">
     <img
-      src="assets/projects/f22_almenissy-1448-900.jpg"
-      srcset="assets/projects/f22_almenissy-1448-900.jpg 900w, assets/projects/f22_almenissy-1448.jpg 1200w"
+      src="assets/projects/almenissy-hijri-1448-greeting-900.jpg"
+      srcset="assets/projects/almenissy-hijri-1448-greeting-900.jpg 900w, assets/projects/almenissy-hijri-1448-greeting.jpg 1200w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1200"
       height="1204"
@@ -4090,8 +4395,8 @@ body.has-dialog {
 <article class="project" data-reveal data-project-card="f23" data-category="digital">
   <div class="project__media">
     <img
-      src="assets/projects/f23_grm-1448-900.jpg"
-      srcset="assets/projects/f23_grm-1448-900.jpg 900w, assets/projects/f23_grm-1448.jpg 1400w"
+      src="assets/projects/grm-hijri-1448-greeting-900.jpg"
+      srcset="assets/projects/grm-hijri-1448-greeting-900.jpg 900w, assets/projects/grm-hijri-1448-greeting.jpg 1400w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
       width="1400"
       height="1841"
@@ -4232,13 +4537,13 @@ body.has-dialog {
           </p>
 
           <div class="contact-channels">
-            <a class="channel" data-link="email" href="mailto:ahmed01068775125@gmail.com">
+            <a class="channel" data-link="email">
               <span class="channel__icon">
                 <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
               </span>
               <span class="channel__text">
                 <small>البريد الإلكتروني</small>
-                <b data-text="email">ahmed01068775125@gmail.com</b>
+                <b data-text="email"></b>
               </span>
               <svg class="icon channel__arrow" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
             </a>
@@ -4277,6 +4582,12 @@ body.has-dialog {
             </a>
           </div>
 
+          <noscript>
+            <p class="contact-noscript">
+              البريد الإلكتروني: ahmed01068775125 (at) gmail.com
+            </p>
+          </noscript>
+
           <div class="contact-socials">
             <a class="social-btn" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer" aria-label="بيهانس">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-behance"></use></svg>
@@ -4299,19 +4610,7 @@ body.has-dialog {
             <span>RESPONSE &lt; 24H</span>
           </div>
 
-          <form
-            id="contactForm"
-            name="contact"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            novalidate
-          >
-            <input type="hidden" name="form-name" value="contact">
-            <p class="sr-only" aria-hidden="true">
-              <label>لا تملأ هذا الحقل <input name="bot-field" tabindex="-1" autocomplete="off"></label>
-            </p>
-
+          <form id="contactForm" novalidate>
             <div class="form-grid">
               <div class="field">
                 <label for="fieldName">الاسم <span aria-hidden="true">*</span></label>
@@ -4354,17 +4653,19 @@ body.has-dialog {
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn btn--primary" id="formSubmit">
-                إرسال الطلب
-                <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-              </button>
-              <button type="button" class="btn btn--whatsapp" id="formWhatsapp">
+              <button type="submit" class="btn btn--whatsapp" id="formSubmit">
                 <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
-                إرسال عبر واتساب
+                أرسل عبر واتساب
+              </button>
+              <button type="button" class="btn btn--ghost" id="formEmail">
+                <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+                أرسل عبر البريد
               </button>
             </div>
 
-            <p class="form-note">بياناتك تُستخدم للرد على طلبك فقط. لا رسائل تسويقية.</p>
+            <p class="form-note">
+              الرسالة تُجهَّز في واتساب أو البريد الإلكتروني وتراجعها قبل الإرسال. بياناتك تُستخدم للرد على طلبك فقط.
+            </p>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -4389,6 +4690,8 @@ body.has-dialog {
           <nav class="footer-links" aria-label="روابط التذييل">
             <a href="#about">نبذة</a>
             <a href="#services">الخدمات</a>
+            <a href="motion-graphics.html">موشن جرافيك</a>
+            <a href="brand-identity.html">هوية بصرية</a>
             <a href="#work">الأعمال</a>
             <a href="#process">الطريقة</a>
             <a href="#contact">تواصل</a>
@@ -4412,7 +4715,7 @@ body.has-dialog {
             </a>
           </div>
           <div class="footer-links footer-emails">
-            <a data-link="email" href="mailto:ahmed01068775125@gmail.com">ahmed01068775125@gmail.com</a>
+            <a data-link="email" data-text="email"></a>
             <a href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">behance.net/ahmed01068b62e</a>
           </div>
         </div>
@@ -4451,7 +4754,7 @@ body.has-dialog {
 
     <div class="dialog-grid">
       <div class="dialog-media" id="dialogMedia">
-        <img id="dialogImage" src="assets/projects/f01_cover-900.jpg" alt="" width="900" height="1128" loading="lazy" decoding="async">
+        <img id="dialogImage" src="assets/projects/saudi-founding-day-motion-graphic-900.jpg" alt="" width="900" height="1128" loading="lazy" decoding="async">
         <video id="dialogVideo" class="dialog-video" controls playsinline preload="metadata" hidden></video>
       </div>
 
@@ -4620,8 +4923,8 @@ const WORK_DATA = [
     isVideo: true,
     url: "https://www.behance.net/gallery/244580859/_",
     external: true,
-    image: "assets/projects/f01_cover.jpg",
-    imageSmall: "assets/projects/f01_cover-900.jpg",
+    image: "assets/projects/saudi-founding-day-motion-graphic.jpg",
+    imageSmall: "assets/projects/saudi-founding-day-motion-graphic-900.jpg",
     width: 1072,
     height: 1344,
     summary:
@@ -4636,7 +4939,7 @@ const WORK_DATA = [
     isVideo: true,
     url: "https://www.behance.net/gallery/244097521/_",
     external: true,
-    image: "assets/projects/f02_cover.png",
+    image: "assets/projects/ibn-albasel-motion-graphic.png",
     width: 404,
     height: 316,
     summary:
@@ -4652,7 +4955,7 @@ const WORK_DATA = [
     video: "assets/projects/f03_ans-dimashqi-steak.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f03_cover.jpg",
+    image: "assets/projects/ans-dimashqi-steak-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4667,7 +4970,7 @@ const WORK_DATA = [
     isVideo: true,
     url: "https://www.behance.net/gallery/119428049/_",
     external: true,
-    image: "assets/projects/f04_cover.png",
+    image: "assets/projects/first-motion-graphics-work.png",
     width: 404,
     height: 316,
     summary:
@@ -4682,8 +4985,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/128103663/_",
     external: true,
-    image: "assets/projects/f05_cover.jpg",
-    imageSmall: "assets/projects/f05_cover-900.jpg",
+    image: "assets/projects/taher-printing-brand-identity.jpg",
+    imageSmall: "assets/projects/taher-printing-brand-identity-900.jpg",
     width: 1400,
     height: 1192,
     summary:
@@ -4698,7 +5001,7 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/148210723/_",
     external: true,
-    image: "assets/projects/f06_cover.jpg",
+    image: "assets/projects/harvard-education-center-brand.jpg",
     width: 404,
     height: 316,
     summary:
@@ -4713,8 +5016,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/148215371/ULTRA-GROW",
     external: true,
-    image: "assets/projects/f07_cover.jpg",
-    imageSmall: "assets/projects/f07_cover-900.jpg",
+    image: "assets/projects/ultra-grow-brand-packaging.jpg",
+    imageSmall: "assets/projects/ultra-grow-brand-packaging-900.jpg",
     width: 1400,
     height: 964,
     summary:
@@ -4729,8 +5032,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/194077839/ULTRA-GROW-2",
     external: true,
-    image: "assets/projects/f08_cover.jpg",
-    imageSmall: "assets/projects/f08_cover-900.jpg",
+    image: "assets/projects/ultra-grow-2-brand-system.jpg",
+    imageSmall: "assets/projects/ultra-grow-2-brand-system-900.jpg",
     width: 1400,
     height: 980,
     summary:
@@ -4745,7 +5048,7 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/228287151/_",
     external: true,
-    image: "assets/projects/f09_cover.png",
+    image: "assets/projects/social-media-design-collection.png",
     width: 404,
     height: 316,
     summary:
@@ -4760,8 +5063,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/194077395/_",
     external: true,
-    image: "assets/projects/f10_cover.jpg",
-    imageSmall: "assets/projects/f10_cover-900.jpg",
+    image: "assets/projects/filler-injection-ad-design.jpg",
+    imageSmall: "assets/projects/filler-injection-ad-design-900.jpg",
     width: 1400,
     height: 1400,
     summary:
@@ -4776,7 +5079,7 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/175994775/INSTA-WATCHES",
     external: true,
-    image: "assets/projects/f11_cover.jpg",
+    image: "assets/projects/insta-watches-ad-design.jpg",
     width: 404,
     height: 316,
     summary:
@@ -4791,7 +5094,7 @@ const WORK_DATA = [
     isVideo: false,
     url: "https://www.behance.net/gallery/194077227/_",
     external: true,
-    image: "assets/projects/f12_cover.jpg",
+    image: "assets/projects/nature-secret-ad-design.jpg",
     width: 404,
     height: 316,
     summary:
@@ -4806,9 +5109,9 @@ const WORK_DATA = [
     isVideo: false,
     url: "",
     external: false,
-    image: "assets/projects/f13_cover.jpg",
-    imageSmall: "assets/projects/f13_cover-900.jpg",
-    imageMedium: "assets/projects/f13_cover-1400.jpg",
+    image: "assets/projects/admission-gateway-rollup.jpg",
+    imageSmall: "assets/projects/admission-gateway-rollup-900.jpg",
+    imageMedium: "assets/projects/admission-gateway-rollup-1400.jpg",
     width: 2314,
     height: 3069,
     summary:
@@ -4824,7 +5127,7 @@ const WORK_DATA = [
     video: "assets/projects/f14_beginnings-yasser.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f14_cover.jpg",
+    image: "assets/projects/beginnings-motion-graphic.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4840,7 +5143,7 @@ const WORK_DATA = [
     video: "assets/projects/f15_alhakum-altakathur.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f15_cover.jpg",
+    image: "assets/projects/alhakum-altakathur-motion.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4856,7 +5159,7 @@ const WORK_DATA = [
     video: "assets/projects/f16_logo-reveal.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f16_cover.jpg",
+    image: "assets/projects/en-serv-logo-animation.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4872,7 +5175,7 @@ const WORK_DATA = [
     video: "assets/projects/f17_elzain-restaurant.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f17_cover.jpg",
+    image: "assets/projects/elzain-restaurant-video.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4888,7 +5191,7 @@ const WORK_DATA = [
     video: "assets/projects/f18_elmaqsoud-generators.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f18_cover.jpg",
+    image: "assets/projects/elmaqsoud-generators-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4904,7 +5207,7 @@ const WORK_DATA = [
     video: "assets/projects/f19_bdeel-car.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f19_cover.jpg",
+    image: "assets/projects/bdeel-car-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4920,7 +5223,7 @@ const WORK_DATA = [
     video: "assets/projects/f20_alwathba-building.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f20_cover.jpg",
+    image: "assets/projects/alwathba-real-estate-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4936,7 +5239,7 @@ const WORK_DATA = [
     video: "assets/projects/f21_ans-dimashqi-pie.mp4",
     url: "",
     external: false,
-    image: "assets/projects/f21_cover.jpg",
+    image: "assets/projects/ans-dimashqi-pie-ad.jpg",
     width: 1200,
     height: 900,
     summary:
@@ -4951,8 +5254,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "",
     external: false,
-    image: "assets/projects/f22_almenissy-1448.jpg",
-    imageSmall: "assets/projects/f22_almenissy-1448-900.jpg",
+    image: "assets/projects/almenissy-hijri-1448-greeting.jpg",
+    imageSmall: "assets/projects/almenissy-hijri-1448-greeting-900.jpg",
     width: 1200,
     height: 1204,
     summary:
@@ -4967,8 +5270,8 @@ const WORK_DATA = [
     isVideo: false,
     url: "",
     external: false,
-    image: "assets/projects/f23_grm-1448.jpg",
-    imageSmall: "assets/projects/f23_grm-1448-900.jpg",
+    image: "assets/projects/grm-hijri-1448-greeting.jpg",
+    imageSmall: "assets/projects/grm-hijri-1448-greeting-900.jpg",
     width: 1400,
     height: 1841,
     summary:
@@ -5822,8 +6125,7 @@ function initContactForm() {
   if (!form) return;
 
   const status = $('#formStatus');
-  const submit = $('#formSubmit');
-  const whatsappBtn = $('#formWhatsapp');
+  const emailBtn = $('#formEmail');
 
   const setStatus = (stateName, message, link) => {
     if (!status) return;
@@ -5939,26 +6241,20 @@ function initContactForm() {
 
   const whatsappUrl = () => `${whatsappBase()}?text=${encodeURIComponent(buildMessage())}`;
 
+  const mailtoUrl = () => {
+    const subject = 'طلب مشروع جديد — من الموقع الشخصي';
+    return `mailto:${SITE_DATA.email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(buildMessage())}`;
+  };
+
   const openWhatsApp = () => {
     const url = whatsappUrl();
     if (!url) return;
     window.open(url, '_blank', 'noopener');
   };
 
-  whatsappBtn?.addEventListener('click', () => {
-    if (!validateAll()) {
-      setStatus('error', 'راجع الحقول المطلوبة أولاً حتى نتمكن من تجهيز رسالتك.');
-      return;
-    }
-    openWhatsApp();
-    setStatus('info', 'تم تجهيز رسالتك على واتساب. أرسلها من تطبيق واتساب لإتمام التواصل.');
-  });
-
-  const isLocal =
-    window.location.protocol === 'file:' ||
-    ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener('submit', (event) => {
     event.preventDefault();
     clearStatus();
 
@@ -5967,50 +6263,26 @@ function initContactForm() {
       return;
     }
 
-    /* في المعاينة المحلية نجهّز الرسالة على واتساب مباشرة */
-    if (isLocal) {
-      openWhatsApp();
-      setStatus(
-        'info',
-        'هذه معاينة محلية، لذا تم تجهيز رسالتك على واتساب. عند النشر على Netlify سيعمل إرسال النموذج مباشرة.'
-      );
+    openWhatsApp();
+    setStatus(
+      'success',
+      'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق وسأرد عليك في أقرب وقت.'
+    );
+  });
+
+  emailBtn?.addEventListener('click', () => {
+    clearStatus();
+
+    if (!validateAll()) {
+      setStatus('error', 'راجع الحقول المطلوبة أولاً حتى نتمكن من تجهيز رسالتك.');
       return;
     }
 
-    if (submit) {
-      submit.setAttribute('aria-busy', 'true');
-      submit.disabled = true;
-    }
-
-    try {
-      const body = new URLSearchParams(new FormData(form)).toString();
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
-      });
-
-      if (!response.ok) throw new Error('Request failed');
-
-      form.reset();
-      Object.keys(fields).forEach((key) => {
-        fields[key]?.removeAttribute('aria-invalid');
-        if (errors[key]) errors[key].textContent = '';
-      });
-
-      setStatus('success', 'وصل طلبك بنجاح. سأتواصل معك في أقرب وقت ممكن.');
-      showToast('تم إرسال طلبك بنجاح');
-    } catch (error) {
-      setStatus('error', 'تعذّر إرسال النموذج من الخادم. يمكنك إرسال نفس التفاصيل عبر واتساب:', {
-        href: whatsappUrl(),
-        label: 'افتح واتساب',
-      });
-    } finally {
-      if (submit) {
-        submit.removeAttribute('aria-busy');
-        submit.disabled = false;
-      }
-    }
+    window.location.href = mailtoUrl();
+    setStatus(
+      'info',
+      'تم تجهيز رسالتك في تطبيق البريد — راجعها واضغط إرسال. لو لم يفتح تطبيق البريد، استخدم واتساب.'
+    );
   });
 }
 
