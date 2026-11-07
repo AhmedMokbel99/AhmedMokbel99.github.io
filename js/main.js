@@ -141,12 +141,14 @@ function initSiteData() {
   const workTotal = $('#workTotal');
   if (workTotal) workTotal.textContent = String(work.length);
 
-  const behanceCount = $('#behanceCount');
-  if (behanceCount) behanceCount.textContent = String(behanceProjects.length);
-
   const since = $('#behanceSince');
   if (since && SITE_DATA.behanceSince) {
     since.textContent = String(SITE_DATA.behanceSince);
+  }
+
+  const careerSince = $('#careerSince');
+  if (careerSince && SITE_DATA.careerStart) {
+    careerSince.textContent = String(SITE_DATA.careerStart);
   }
 
   const year = $('#year');

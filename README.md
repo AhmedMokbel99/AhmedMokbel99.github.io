@@ -8,7 +8,7 @@
 - **واتساب:** +20 122 808 4197
 - **بيهانس:** https://www.behance.net/ahmed01068b62e
 - **فيسبوك:** https://www.facebook.com/profile.php?id=61581319508233
-- **إكس:** https://twitter.com/ahmed0106877
+- **إكس:** https://x.com/ahmed0106877
 
 ---
 
@@ -85,7 +85,7 @@ const SITE_DATA = {
   whatsapp: "201228084197", // بدون + وبدون مسافات
   behance: "https://www.behance.net/ahmed01068b62e",
   facebook: "https://www.facebook.com/profile.php?id=61581319508233",
-  twitter: "https://twitter.com/ahmed0106877",
+  twitter: "https://x.com/ahmed0106877",
   // ... الأدوات، المهارات، الإحصائيات، العبارات المتحركة
   careerStart: 2013,   // تُحسب سنوات الخبرة تلقائيًا = السنة الحالية - careerStart
   behanceSince: "2015",
@@ -162,10 +162,15 @@ python build.py
 
 يقوم السكربت بـ:
 
-1. دمج `css/style.css` داخل وسم `<style>`.
-2. دمج `js/data.js` و`js/main.js` قبل `</body>` بالترتيب الصحيح.
-3. إزالة أي مراجع خارجية متبقية.
-4. كتابة `standalone.html` بترميز UTF-8 وإضافة `noindex` لمنع تكرار الفهرسة.
+1. قراءة `WORK_DATA` من `js/data.js` وإعادة كتابة بطاقات المشاريع الثابتة داخل `index.html`
+   بين `<!-- static-projects:start -->` و`<!-- static-projects:end -->` (محتوى يظهر لمحركات البحث بدون JavaScript).
+2. دمج `css/style.css` داخل وسم `<style>`.
+3. دمج `js/data.js` و`js/main.js` قبل `</body>` بالترتيب الصحيح.
+4. إزالة أي مراجع خارجية متبقية.
+5. كتابة `standalone.html` بترميز UTF-8 وإضافة `noindex` لمنع تكرار الفهرسة.
+
+> بطاقات المشاريع الثابتة تُولَّد آليًا من `js/data.js` — لا تعدّلها يدويًا داخل `index.html`.
+> أي تعديل على `projectMarkup()` في `js/main.js` يجب أن يُطابَق في `project_card()` داخل `build.py`.
 
 > بعد أي تعديل على CSS أو JS، غيّر رقم الإصدار في `index.html`
 > (`css/style.css?v=5` و`js/data.js?v=5`) لكسر التخزين المؤقت للمتصفح.

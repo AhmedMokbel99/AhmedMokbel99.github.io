@@ -671,6 +671,15 @@ body.has-dialog {
   margin-top: 0.35rem;
 }
 
+.hero h1 .h1-role {
+  display: block;
+  margin-bottom: 0.85rem;
+  font-size: clamp(0.8rem, 1.35vw, 0.98rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--cyan);
+}
+
 .hero h1 .grad-text {
   display: inline;
   padding-bottom: 0.06em;
@@ -727,9 +736,11 @@ body.has-dialog {
 .hero-meta li {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   color: var(--dim);
   font-size: 0.86rem;
+  line-height: 1.5;
 }
 
 .hero-meta .icon {
@@ -912,7 +923,7 @@ body.has-dialog {
   font-family: var(--font-display);
   font-size: 1.05rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.42);
+  color: rgba(255, 255, 255, 0.56);
   white-space: nowrap;
 }
 
@@ -1075,8 +1086,9 @@ body.has-dialog {
   flex-wrap: wrap;
 }
 
-.agency-card__head h3 {
+.agency-card__head .agency-card__title {
   font-size: 1.05rem;
+  font-weight: 700;
 }
 
 .agency-card__head span {
@@ -2112,7 +2124,10 @@ body.has-dialog {
 }
 
 .footer-bottom a {
-  color: var(--muted);
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: rgba(34, 211, 238, 0.55);
+  text-underline-offset: 0.22em;
   transition: color 0.2s ease;
 }
 

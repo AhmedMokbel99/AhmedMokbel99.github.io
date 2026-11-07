@@ -41,7 +41,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=12">
+  <link rel="stylesheet" href="css/style.css?v=13">
 
   <!-- Structured data -->
   <script type="application/ld+json">
@@ -71,7 +71,7 @@
         "sameAs": [
           "https://www.behance.net/ahmed01068b62e",
           "https://www.facebook.com/profile.php?id=61581319508233",
-          "https://twitter.com/ahmed0106877"
+          "https://x.com/ahmed0106877"
         ],
         "knowsAbout": [
           "Graphic Design",
@@ -88,13 +88,99 @@
         "name": "أحمد مقبل — بورتفوليو",
         "inLanguage": "ar",
         "publisher": { "@id": "https://ahmedmokbel99.github.io/#person" }
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://ahmedmokbel99.github.io/#service",
+        "name": "أحمد مقبل — DOT Media",
+        "description": "خدمات تصميم الجرافيك والموشن جرافيك والهوية البصرية والإنتاج الإعلامي من المنصورة، مصر.",
+        "url": "https://ahmedmokbel99.github.io/",
+        "image": "https://ahmedmokbel99.github.io/assets/og-image.jpg",
+        "telephone": "+201228084197",
+        "email": "mailto:ahmed01068775125@gmail.com",
+        "priceRange": "$$",
+        "founder": { "@id": "https://ahmedmokbel99.github.io/#person" },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "المنصورة",
+          "addressCountry": "EG"
+        },
+        "areaServed": [
+          { "@type": "City", "name": "المنصورة" },
+          { "@type": "Country", "name": "مصر" }
+        ],
+        "sameAs": [
+          "https://www.behance.net/ahmed01068b62e",
+          "https://www.facebook.com/profile.php?id=61581319508233",
+          "https://x.com/ahmed0106877"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "خدمات التصميم والموشن جرافيك",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": { "@type": "Service", "name": "موشن جرافيك" }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": { "@type": "Service", "name": "هوية بصرية" }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": { "@type": "Service", "name": "تصميم رقمي وطباعي" }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": { "@type": "Service", "name": "إنتاج محتوى تجاري" }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ahmedmokbel99.github.io/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "كم يستغرق تنفيذ المشروع؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "المدة تُحدد بعد جلسة الاكتشاف بحسب نطاق العمل وعدد المراجعات. ستحصل على جدول زمني واضح قبل بدء التنفيذ، مع نقاط مراجعة محددة."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "هل تعمل مع عملاء خارج مصر؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نعم. أعمل عن بُعد مع عملاء داخل مصر وخارجها، والتواصل يتم عبر واتساب أو البريد الإلكتروني مع اجتماعات أونلاين عند الحاجة."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "ماذا أستلم في نهاية المشروع؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "نسخًا جاهزة للنشر أو الطباعة، ودليل استخدام مبسّط عند تسليم هوية بصرية كاملة."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "كيف أبدأ؟",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "أرسل تفاصيل مشروعك من خلال النموذج أو واتساب: النشاط، الهدف، والخدمة المطلوبة. سأرد عليك لتحديد الخطوة التالية والموعد المناسب."
+            }
+          }
+        ]
       }
     ]
   }
   </script>
 
-  <script src="js/data.js?v=12" defer></script>
-  <script src="js/main.js?v=12" defer></script>
+  <script src="js/data.js?v=13" defer></script>
+  <script src="js/main.js?v=13" defer></script>
 </head>
 <body>
 
@@ -186,7 +272,7 @@
   <!-- ═══ Header ═══ -->
   <header class="site-header" id="siteHeader">
     <div class="wrap nav">
-      <a href="#main" class="brand" aria-label="أحمد مقبل — الرئيسية">
+      <a href="#main" class="brand">
         <span class="brand__mark" aria-hidden="true">AM</span>
         <span>أحمد مقبل</span>
       </a>
@@ -230,6 +316,7 @@
           </div>
 
           <h1 id="heroTitle">
+            <span class="h1-role">مصمم جرافيك وموشن جرافيك</span>
             أحمد مقبل
             <span class="h1-sub">يحوّل الفكرة إلى <span class="grad-text">حركة وهوية بصرية</span></span>
           </h1>
@@ -260,7 +347,8 @@
             </li>
             <li>
               <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
-              يعمل على بيهانس منذ <strong id="behanceSince">2015</strong>
+              خبرة في التصميم منذ <strong id="careerSince">2013</strong> — على بيهانس منذ
+              <strong id="behanceSince">2015</strong>
             </li>
             <li>
               <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
@@ -335,7 +423,7 @@
           <div class="agency-card" data-reveal>
             <div>
               <div class="agency-card__head">
-                <h3>وكالة D●T Media</h3>
+                <div class="agency-card__title">وكالة D●T Media</div>
                 <span>Creative Production</span>
               </div>
               <p>وكالة إنتاج إعلامي وإعلاني متكاملة متخصصة في إنتاج المحتوى التجاري وتطوير الهويات البصرية.</p>
@@ -461,12 +549,752 @@
         <div class="filters" id="filters" role="group" aria-label="تصفية الأعمال"></div>
         <p class="sr-only" id="workLive" aria-live="polite"></p>
 
-        <div class="work-grid" id="workGrid" data-reveal-group></div>
+        <div class="work-grid" id="workGrid" data-reveal-group>
+          <!-- static-projects:start -->
+<article class="project" data-reveal data-project-card="f01" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f01_cover-900.jpg"
+      srcset="assets/projects/f01_cover-900.jpg 900w, assets/projects/f01_cover.jpg 1072w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1072"
+      height="1344"
+      alt="يوم التأسيس السعودي — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F01</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">يوم التأسيس السعودي</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f01"
+    aria-label="عرض تفاصيل مشروع يوم التأسيس السعودي — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f02" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f02_cover.png"
+      srcset="assets/projects/f02_cover.png 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="404"
+      height="316"
+      alt="ابن الباسل — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F02</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">ابن الباسل</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f02"
+    aria-label="عرض تفاصيل مشروع ابن الباسل — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f03" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f03_cover.jpg"
+      srcset="assets/projects/f03_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F03</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">إعلان مطعم</span>
+    <h3 class="project__title">آنس الدمشقي — إعلان طبق اللحم</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f03"
+    aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان طبق اللحم — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f04" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f04_cover.png"
+      srcset="assets/projects/f04_cover.png 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="404"
+      height="316"
+      alt="أول أعمالي في الموشن جرافيك — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F04</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">أول أعمالي في الموشن جرافيك</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f04"
+    aria-label="عرض تفاصيل مشروع أول أعمالي في الموشن جرافيك — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f05" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/f05_cover-900.jpg"
+      srcset="assets/projects/f05_cover-900.jpg 900w, assets/projects/f05_cover.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1400"
+      height="1192"
+      alt="طاهر للطباعة — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F05</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title">طاهر للطباعة</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f05"
+    aria-label="عرض تفاصيل مشروع طاهر للطباعة — هوية وطباعة"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f06" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/f06_cover.jpg"
+      srcset="assets/projects/f06_cover.jpg 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="404"
+      height="316"
+      alt="مركز هارفارد التعليمي — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F06</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title">مركز هارفارد التعليمي</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f06"
+    aria-label="عرض تفاصيل مشروع مركز هارفارد التعليمي — هوية وطباعة"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f07" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/f07_cover-900.jpg"
+      srcset="assets/projects/f07_cover-900.jpg 900w, assets/projects/f07_cover.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1400"
+      height="964"
+      alt="ULTRA GROW — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F07</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title">ULTRA GROW</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f07"
+    aria-label="عرض تفاصيل مشروع ULTRA GROW — هوية وطباعة"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f08" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/f08_cover-900.jpg"
+      srcset="assets/projects/f08_cover-900.jpg 900w, assets/projects/f08_cover.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1400"
+      height="980"
+      alt="ULTRA GROW 2 — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F08</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title">ULTRA GROW 2</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f08"
+    aria-label="عرض تفاصيل مشروع ULTRA GROW 2 — هوية وطباعة"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f09" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/f09_cover.png"
+      srcset="assets/projects/f09_cover.png 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="404"
+      height="316"
+      alt="تصميمات — تصميم رقمي"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F09</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصميم رقمي</span>
+    <h3 class="project__title">تصميمات</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f09"
+    aria-label="عرض تفاصيل مشروع تصميمات — تصميم رقمي"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f10" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/f10_cover-900.jpg"
+      srcset="assets/projects/f10_cover-900.jpg 900w, assets/projects/f10_cover.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1400"
+      height="1400"
+      alt="حقن فيلر — تصميم رقمي"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F10</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصميم رقمي</span>
+    <h3 class="project__title">حقن فيلر</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f10"
+    aria-label="عرض تفاصيل مشروع حقن فيلر — تصميم رقمي"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f11" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/f11_cover.jpg"
+      srcset="assets/projects/f11_cover.jpg 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="404"
+      height="316"
+      alt="INSTA WATCHES — تصميم رقمي"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F11</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصميم رقمي</span>
+    <h3 class="project__title">INSTA WATCHES</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f11"
+    aria-label="عرض تفاصيل مشروع INSTA WATCHES — تصميم رقمي"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f12" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/f12_cover.jpg"
+      srcset="assets/projects/f12_cover.jpg 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="404"
+      height="316"
+      alt="سر الطبيعة — تصميم رقمي"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F12</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصميم رقمي</span>
+    <h3 class="project__title">سر الطبيعة</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f12"
+    aria-label="عرض تفاصيل مشروع سر الطبيعة — تصميم رقمي"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f13" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/f13_cover-900.jpg"
+      srcset="assets/projects/f13_cover-900.jpg 900w, assets/projects/f13_cover.jpg 2314w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="2314"
+      height="3069"
+      alt="بوابة القبول — تصميم طباعي"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F13</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصميم طباعي</span>
+    <h3 class="project__title">بوابة القبول</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f13"
+    aria-label="عرض تفاصيل مشروع بوابة القبول — هوية وطباعة"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f14" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f14_cover.jpg"
+      srcset="assets/projects/f14_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="البدايات — ياسر الحزيمي — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F14</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">البدايات — ياسر الحزيمي</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f14"
+    aria-label="عرض تفاصيل مشروع البدايات — ياسر الحزيمي — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f15" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f15_cover.jpg"
+      srcset="assets/projects/f15_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F15</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">ألهاكم التكاثر — الشيخ أمجد سمير</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f15"
+    aria-label="عرض تفاصيل مشروع ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f16" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f16_cover.jpg"
+      srcset="assets/projects/f16_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="EN-SERV — تحريك شعار — تحريك شعار"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F16</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تحريك شعار</span>
+    <h3 class="project__title">EN-SERV — تحريك شعار</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f16"
+    aria-label="عرض تفاصيل مشروع EN-SERV — تحريك شعار — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f17" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f17_cover.jpg"
+      srcset="assets/projects/f17_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="الزين — مطعم سوري — تصوير ومونتاج"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F17</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصوير ومونتاج</span>
+    <h3 class="project__title">الزين — مطعم سوري</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f17"
+    aria-label="عرض تفاصيل مشروع الزين — مطعم سوري — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f18" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f18_cover.jpg"
+      srcset="assets/projects/f18_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="المقصود للمولدات — إعلان الشركة — إعلان شركة"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F18</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">إعلان شركة</span>
+    <h3 class="project__title">المقصود للمولدات — إعلان الشركة</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f18"
+    aria-label="عرض تفاصيل مشروع المقصود للمولدات — إعلان الشركة — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f19" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f19_cover.jpg"
+      srcset="assets/projects/f19_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="بديل — إعلان سيارة — إعلان سيارات"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F19</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">إعلان سيارات</span>
+    <h3 class="project__title">بديل — إعلان سيارة</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f19"
+    aria-label="عرض تفاصيل مشروع بديل — إعلان سيارة — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f20" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f20_cover.jpg"
+      srcset="assets/projects/f20_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="الوثبة العقارية — مشروع سكني — إعلان عقاري"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F20</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">إعلان عقاري</span>
+    <h3 class="project__title">الوثبة العقارية — مشروع سكني</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f20"
+    aria-label="عرض تفاصيل مشروع الوثبة العقارية — مشروع سكني — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f21" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/f21_cover.jpg"
+      srcset="assets/projects/f21_cover.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="900"
+      alt="آنس الدمشقي — إعلان الفطيرة — إعلان مطعم"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F21</span>
+      <span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>فيديو</span>
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">إعلان مطعم</span>
+    <h3 class="project__title">آنس الدمشقي — إعلان الفطيرة</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f21"
+    aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان الفطيرة — موشن جرافيك"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f22" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/f22_almenissy-1448-900.jpg"
+      srcset="assets/projects/f22_almenissy-1448-900.jpg 900w, assets/projects/f22_almenissy-1448.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1200"
+      height="1204"
+      alt="تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F22</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">سوشيال ميديا</span>
+    <h3 class="project__title">تهنئة العام الهجري 1448 — Almenissy</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f22"
+    aria-label="عرض تفاصيل مشروع تهنئة العام الهجري 1448 — Almenissy — تصميم رقمي"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f23" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/f23_grm-1448-900.jpg"
+      srcset="assets/projects/f23_grm-1448-900.jpg 900w, assets/projects/f23_grm-1448.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      width="1400"
+      height="1841"
+      alt="تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      <span class="project__code">F23</span>
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">سوشيال ميديا</span>
+    <h3 class="project__title">تهنئة العام الهجري 1448 — GRM Developments</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f23"
+    aria-label="عرض تفاصيل مشروع تهنئة العام الهجري 1448 — GRM Developments — تصميم رقمي"
+  ></button>
+</article>
+<!-- static-projects:end -->
+        </div>
         <p class="work-empty" id="workEmpty" hidden>لا توجد مشاريع في هذا التصنيف حاليًا.</p>
 
         <noscript>
           <p class="work-empty">
-            لعرض معرض الأعمال يرجى تفعيل JavaScript، أو زيارة
+            جميع المشاريع معروضة أعلاه. لفتح تفاصيل أي مشروع أو تصفية الأعمال حسب التصنيف، يرجى تفعيل
+            JavaScript — أو زيارة
             <a href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">صفحتي على بيهانس</a>.
           </p>
         </noscript>
@@ -624,7 +1452,7 @@
             <a class="social-btn" data-link="facebook" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg>
             </a>
-            <a class="social-btn" data-link="twitter" href="https://twitter.com/ahmed0106877" target="_blank" rel="noopener noreferrer" aria-label="إكس (تويتر)">
+            <a class="social-btn" data-link="twitter" href="https://x.com/ahmed0106877" target="_blank" rel="noopener noreferrer" aria-label="إكس (تويتر)">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-x"></use></svg>
             </a>
             <a class="social-btn" data-link="whatsapp" href="https://wa.me/201228084197" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
@@ -717,7 +1545,7 @@
     <div class="wrap">
       <div class="footer-top">
         <div class="footer-brand">
-          <a href="#main" class="brand" aria-label="أحمد مقبل — الرئيسية">
+          <a href="#main" class="brand">
             <span class="brand__mark" aria-hidden="true">AM</span>
             <span>أحمد مقبل</span>
           </a>
@@ -744,7 +1572,7 @@
             <a class="social-btn" data-link="facebook" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer" aria-label="فيسبوك">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg>
             </a>
-            <a class="social-btn" data-link="twitter" href="https://twitter.com/ahmed0106877" target="_blank" rel="noopener noreferrer" aria-label="إكس (تويتر)">
+            <a class="social-btn" data-link="twitter" href="https://x.com/ahmed0106877" target="_blank" rel="noopener noreferrer" aria-label="إكس (تويتر)">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-x"></use></svg>
             </a>
             <a class="social-btn" data-link="whatsapp" href="https://wa.me/201228084197" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
@@ -822,7 +1650,7 @@
         </dl>
 
         <div class="dialog-cta">
-          <a class="btn btn--primary" id="dialogLink" href="#" target="_blank" rel="noopener noreferrer">
+          <a class="btn btn--primary" id="dialogLink" target="_blank" rel="noopener noreferrer" hidden>
             عرض المشروع على بيهانس
             <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
           </a>
