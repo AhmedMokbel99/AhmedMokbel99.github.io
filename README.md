@@ -139,6 +139,7 @@ Invoke-RestMethod -Uri "https://api.indexnow.org/indexnow" -Method Post -Content
 
 - `llms.txt` يقدّم ملخصًا للموقع وروابطه لمحركات الذكاء الاصطناعي، بدون أي تكلفة.
 - Google لا يدعم IndexNow؛ الفهرسة عنده تتم عبر `sitemap.xml` في Search Console.
+- خطوات تفعيل Search Console وGoogle Business Profile بالتفصيل في [`docs/seo-setup.md`](docs/seo-setup.md).
 
 ### إضافة / تعديل مشروع
 
