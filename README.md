@@ -41,6 +41,8 @@ ahmed-mokbel-portfolio/
 │
 ├── robots.txt              # توجيهات محركات البحث
 ├── sitemap.xml             # خريطة الموقع
+├── llms.txt                # ملخص الموقع لمحركات الذكاء الاصطناعي
+├── a7f3c9d24b6e8f105c3d7a9b2e4f6081.txt  # مفتاح IndexNow (Bing/Yandex)
 ├── site.webmanifest        # بيانات PWA / أيقونات التثبيت
 ├── netlify.toml            # رؤوس الأمان والتخزين المؤقت + إعدادات النشر
 └── README.md
@@ -119,6 +121,24 @@ const SITE_DATA = {
 - أسماء صور المشاريع وصفية بالإنجليزية (مثال: `saudi-founding-day-motion-graphic.jpg`).
   استخدم نفس النمط عند إضافة مشروع جديد، وحافظ على نسخة `-900` للبطاقات.
 - نموذج التواصل لا يعتمد على خادم: يجهّز الرسالة في واتساب أو البريد الإلكتروني، فيعمل على GitHub Pages بدون أي خدمة مدفوعة.
+
+### الفهرسة السريعة (IndexNow)
+
+- ملف المفتاح `a7f3c9d24b6e8f105c3d7a9b2e4f6081.txt` في جذر الموقع يثبت ملكية النطاق لمحركات Bing وYandex.
+- بعد نشر صفحة جديدة، أرسلها فورًا:
+
+```powershell
+$body = @{
+  host = "ahmedmokbel99.github.io"
+  key = "a7f3c9d24b6e8f105c3d7a9b2e4f6081"
+  keyLocation = "https://ahmedmokbel99.github.io/a7f3c9d24b6e8f105c3d7a9b2e4f6081.txt"
+  urlList = @("https://ahmedmokbel99.github.io/")
+} | ConvertTo-Json
+Invoke-RestMethod -Uri "https://api.indexnow.org/indexnow" -Method Post -ContentType "application/json" -Body $body
+```
+
+- `llms.txt` يقدّم ملخصًا للموقع وروابطه لمحركات الذكاء الاصطناعي، بدون أي تكلفة.
+- Google لا يدعم IndexNow؛ الفهرسة عنده تتم عبر `sitemap.xml` في Search Console.
 
 ### إضافة / تعديل مشروع
 
