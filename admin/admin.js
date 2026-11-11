@@ -32,6 +32,8 @@ const state = {
   pendingDeletes: new Set(),
   draft: null,
   draftPreview: '',
+  draftUploads: [],
+  draftOriginal: null,
   tab: 'projects',
   pollTimer: null,
   search: '',
@@ -367,11 +369,21 @@ function moveProject(index, dir) {
 }
 
 function nextProjectCode() {
-  return `F${String(state.projects.length + 1).padStart(2, '0')}`;
+  let max = 0;
+  state.projects.forEach((project) => {
+    const match = String(project.code || project.id || '').match(/(\d+)\s*$/);
+    if (match) max = Math.max(max, Number(match[1]));
+  });
+  return `F${String(max + 1).padStart(2, '0')}`;
 }
 
 function blankProject() {
-  const id = `f${String(state.projects.length + 1).padStart(2, '0')}`;
+  let maxId = 0;
+  state.projects.forEach((project) => {
+    const match = String(project.id || '').match(/(\d+)\s*$/);
+    if (match) maxId = Math.max(maxId, Number(match[1]));
+  });
+  const id = `f${String(maxId + 1).padStart(2, '0')}`;
   return {
     id,
     code: nextProjectCode(),
@@ -398,6 +410,15 @@ function openProjectEditor(index) {
   state.draft = isNew ? blankProject() : clone(state.projects[index]);
   state.draftIndex = isNew ? -1 : index;
   state.draftPreview = '';
+  state.draftUploads = [];
+  state.draftOriginal = {
+    image: state.draft.image || '',
+    imageSmall: state.draft.imageSmall || '',
+    video: state.draft.video || '',
+  };
+  if (!state.draft.alt) {
+    state.draft.alt = [state.draft.title, state.draft.tag].filter(Boolean).join(' — ');
+  }
   state.draftImageName = state.draft.image
     ? state.draft.image.split('/').pop().replace(/\.[a-z0-9]+$/i, '').replace(/-900$/, '')
     : `project-${state.draft.id}`;
@@ -410,10 +431,21 @@ function openProjectEditor(index) {
 }
 
 function closeProjectModal() {
+  /* إزالة الصور/الفيديوهات التي رُفعت في هذا المحرّر ولم تُستخدم */
+  const stillUsed = (path) =>
+    state.projects.some(
+      (project) => project.image === path || project.imageSmall === path || project.video === path
+    );
+  (state.draftUploads || []).forEach((path) => {
+    if (!stillUsed(path)) state.pendingUploads.delete(path);
+  });
+
   $('#projectModal').hidden = true;
   document.body.style.overflow = '';
   state.draft = null;
   state.draftPreview = '';
+  state.draftUploads = [];
+  state.draftOriginal = null;
 }
 
 function projectPreviewSrc() {
@@ -590,6 +622,7 @@ async function attachImage(file) {
 
     state.pendingUploads.set(fullPath, prepared.full);
     state.pendingUploads.set(smallPath, prepared.small);
+    state.draftUploads.push(fullPath, smallPath);
 
     state.draft.image = fullPath;
     state.draft.imageSmall = smallPath;
@@ -614,6 +647,7 @@ async function attachVideo(file) {
     const path = `assets/projects/${base}.mp4`;
     const buffer = await file.arrayBuffer();
     state.pendingUploads.set(path, base64FromBuffer(buffer));
+    state.draftUploads.push(path);
     state.draft.video = path;
     state.draft.youtube = '';
     state.draft.isVideo = true;
@@ -674,12 +708,25 @@ function base64FromBuffer(buffer) {
 
 function saveProjectDraft() {
   const draft = state.draft;
-  if (!draft.title.trim()) return toast('اسم المشروع مطلوب', 'err');
+  if (!String(draft.title || '').trim()) return toast('اسم المشروع مطلوب', 'err');
   if (!draft.image) return toast('صورة الغلاف مطلوبة', 'err');
-  if (!draft.alt.trim()) return toast('النص البديل (Alt) مطلوب لمحركات البحث', 'err');
+  if (!String(draft.alt || '').trim())
+    return toast('النص البديل (Alt) مطلوب لمحركات البحث', 'err');
   if (!draft.isVideo && (draft.video || draft.youtube)) draft.isVideo = true;
   if (draft.isVideo && !draft.video && !draft.youtube) {
     draft.isVideo = false;
+  }
+
+  /* حذف الصورة/الفيديو القديم لو استُبدل ولم يعد مستخدمًا في مشروع آخر */
+  const original = state.draftOriginal;
+  if (state.draftIndex >= 0 && original) {
+    const others = state.projects.filter((_, index) => index !== state.draftIndex);
+    const orphan = (path) =>
+      path && !others.some((item) => item.image === path || item.imageSmall === path || item.video === path);
+    if (original.image !== draft.image && orphan(original.image)) state.pendingDeletes.add(original.image);
+    if (original.imageSmall !== draft.imageSmall && orphan(original.imageSmall))
+      state.pendingDeletes.add(original.imageSmall);
+    if (original.video !== draft.video && orphan(original.video)) state.pendingDeletes.add(original.video);
   }
 
   if (state.draftIndex < 0) {
