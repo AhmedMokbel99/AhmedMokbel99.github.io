@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css?v=2">
+  <link rel="stylesheet" href="admin.css?v=3">
 </head>
 <body>
 
@@ -23,39 +23,62 @@
         <span class="brand-mark">AM</span>
         <div>
           <h1>لوحة التحكم</h1>
-          <p>تحكم كامل في نصوص الموقع ومشاريعه</p>
+          <p>تعديل نصوص الموقع ومشاريعه من المتصفح مباشرة</p>
         </div>
       </div>
 
+      <ol class="steps">
+        <li class="steps__item">
+          <span class="steps__num">١</span>
+          <div>
+            <b>افتح صفحة إنشاء التوكن</b>
+            <p>الصلاحيات والمستودع مختارين جاهزين. سجّل دخول بحساب <span dir="ltr">AhmedMokbel99</span> لو طلب منك. لو مش مختارين، فعّل <span dir="ltr">Contents: Read and write</span> و<span dir="ltr">Actions: Read</span>.</p>
+            <a class="btn btn--ghost btn--sm" href="https://github.com/settings/personal-access-tokens/new?name=AM%20Admin&description=Portfolio%20admin%20panel&target_name=AhmedMokbel99&contents=write&actions=read" target="_blank" rel="noopener">فتح GitHub ←</a>
+          </div>
+        </li>
+        <li class="steps__item">
+          <span class="steps__num">٢</span>
+          <div>
+            <b>دوس <span dir="ltr">Generate token</span> وانسخه</b>
+            <p>هيظهر مرة واحدة بس، شكله <code dir="ltr">github_pat_…</code> — انسخه كله.</p>
+          </div>
+        </li>
+        <li class="steps__item">
+          <span class="steps__num">٣</span>
+          <div>
+            <b>الصقه تحت ودوس «دخول»</b>
+            <p>يتحفظ في المتصفح ده لوحده، ومش هتحتاجه تاني على نفس الجهاز.</p>
+          </div>
+        </li>
+      </ol>
+
       <label class="field">
-        <span>GitHub Token</span>
-        <input id="tokenInput" type="password" placeholder="github_pat_..." spellcheck="false" autocomplete="off" required>
+        <span>التوكن <span class="field__note">(يبدأ بـ <span dir="ltr">github_pat_</span>)</span></span>
+        <div class="field__inline">
+          <input id="tokenInput" type="password" placeholder="github_pat_..." spellcheck="false" autocomplete="off" required>
+          <button class="btn btn--ghost btn--sm" type="button" id="pasteBtn">لصق</button>
+        </div>
       </label>
-
-      <div class="grid-2">
-        <label class="field">
-          <span>المستخدم / المنظمة</span>
-          <input id="ownerInput" type="text" value="AhmedMokbel99" spellcheck="false" required>
-        </label>
-        <label class="field">
-          <span>المستودع</span>
-          <input id="repoInput" type="text" value="AhmedMokbel99.github.io" spellcheck="false" required>
-        </label>
-      </div>
-
-      <details class="help">
-        <summary>إزاي أعمل التوكن؟ (مرة واحدة — مجاني)</summary>
-        <ol>
-          <li>افتح <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained tokens</a>.</li>
-          <li>اختار <b>Only select repositories</b> وحدد مستودع الموقع فقط.</li>
-          <li>من <b>Repository permissions</b> فعّل <b>Contents: Read and write</b> و<b>Metadata: Read</b>.</li>
-          <li>حدد مدة صلاحية (سنة مثلاً)، ثم <b>Generate token</b> وانسخه هنا.</li>
-        </ol>
-        <p class="hint">التوكن بيتخزن في متصفحك فقط، مش في الموقع ولا في المستودع.</p>
-      </details>
 
       <button class="btn btn--primary" type="submit" id="loginBtn">دخول</button>
       <p class="form-error" id="loginError" role="alert"></p>
+
+      <details class="help">
+        <summary>إعدادات متقدمة — اسم المستودع</summary>
+        <div class="grid-2">
+          <label class="field">
+            <span>المستخدم / المنظمة</span>
+            <input id="ownerInput" type="text" value="AhmedMokbel99" spellcheck="false" required>
+          </label>
+          <label class="field">
+            <span>المستودع</span>
+            <input id="repoInput" type="text" value="AhmedMokbel99.github.io" spellcheck="false" required>
+          </label>
+        </div>
+        <p class="hint">غيّرها فقط لو نقلت الموقع لمستودع تاني. لو مش متأكد سيبها زي ما هي.</p>
+      </details>
+
+      <a class="login__back" href="../index.html">← رجوع للموقع</a>
     </form>
   </main>
 
@@ -125,6 +148,6 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="admin.js?v=5"></script>
+  <script src="admin.js?v=6"></script>
 </body>
 </html>

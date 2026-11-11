@@ -147,7 +147,7 @@ button, input, select, textarea { font: inherit; }
 
 .login__card {
   position: relative;
-  width: min(100%, 34rem);
+  width: min(100%, 36rem);
   padding: clamp(1.4rem, 3vw, 2.2rem);
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -211,7 +211,60 @@ button, input, select, textarea { font: inherit; }
 
 .form-error { min-height: 1.2rem; margin: 0.6rem 0 0; color: var(--red); font-size: 0.84rem; }
 
-.login__card .btn { width: 100%; margin-top: 0.4rem; }
+.login__card .btn--primary { width: 100%; margin-top: 0.4rem; }
+
+/* ---------- خطوات الدخول ---------- */
+.steps {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0 0 1.3rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.steps__item {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.steps__num {
+  flex: 0 0 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  margin-top: 0.1rem;
+  border-radius: 50%;
+  background: var(--grad);
+  color: #06070c;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.steps__item b { font-size: 0.9rem; }
+.steps__item p { margin: 0.25rem 0 0; color: var(--dim); font-size: 0.79rem; line-height: 1.7; }
+.steps__item .btn { margin-top: 0.55rem; }
+.steps__item code { font-family: var(--mono); font-size: 0.74rem; color: var(--cyan); }
+
+.field__note { color: var(--dim); font-size: 0.74rem; font-weight: 400; }
+
+.field__inline { display: flex; align-items: stretch; gap: 0.5rem; }
+.field__inline input { flex: 1 1 auto; min-width: 0; }
+.field__inline .btn { flex: 0 0 auto; margin-top: 0; }
+
+.login__back {
+  display: inline-block;
+  margin-top: 0.7rem;
+  color: var(--dim);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.login__back:hover { color: var(--cyan); }
 
 /* ---------- التخطيط ---------- */
 .app { min-height: 100vh; display: flex; flex-direction: column; }

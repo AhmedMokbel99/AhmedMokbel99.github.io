@@ -161,12 +161,34 @@ async function loadContent() {
 }
 
 /* ---------------- الدخول ---------------- */
+function loginMessage(error, step, owner, repo) {
+  if (error && error.readonly) {
+    return 'التوكن بيقرأ بس ومش قادر يحفظ. لازم يكون فيه صلاحية Contents: Read and write.';
+  }
+  if (error && error.status === 401) {
+    return 'التوكن غلط أو اتمسح أو انتهت صلاحيته. اعمل واحد جديد من الخطوة ١.';
+  }
+  if (error && error.status === 403) {
+    return 'GitHub رفض الطلب (403). غالبًا التوكن مش عنده صلاحية Contents: Read and write على المستودع.';
+  }
+  if (error && error.status === 404) {
+    if (step === 'repo') {
+      return `مش لاقي المستودع ${owner}/${repo}. راجع الاسم من «إعدادات متقدمة»، وتأكد إن التوكن مسموح له بالمستودع ده.`;
+    }
+    return 'دخلنا على المستودع، لكن ملفات content مش موجودة أو مش متاحة للتوكن.';
+  }
+  if (error instanceof TypeError) {
+    return 'مفيش اتصال بالإنترنت أو GitHub مش متاح دلوقتي. جرّب تاني بعد شوية.';
+  }
+  return `حصل خطأ: ${error.message}`;
+}
+
 async function login(event) {
   event.preventDefault();
   const errorBox = $('#loginError');
   errorBox.textContent = '';
 
-  const token = $('#tokenInput').value.trim();
+  const token = $('#tokenInput').value.replace(/\s+/g, '');
   const owner = $('#ownerInput').value.trim();
   const repo = $('#repoInput').value.trim();
 
@@ -175,31 +197,47 @@ async function login(event) {
     return;
   }
 
+  if (token.length < 20) {
+    errorBox.textContent =
+      'ده مش شكل توكن GitHub. انسخ التوكن كامل من صفحة GitHub (بيبدأ بـ github_pat_).';
+    return;
+  }
+
   const button = $('#loginBtn');
   button.disabled = true;
-  button.textContent = 'جاري التحقق…';
+  button.textContent = 'بنفحص التوكن…';
 
   state.token = token;
   state.owner = owner;
   state.repo = repo;
 
+  let step = 'user';
   try {
     state.user = await api('/user');
+
+    step = 'repo';
     const repoInfo = await api(`/repos/${owner}/${repo}`);
     state.branch = repoInfo.default_branch || 'main';
+
+    if (repoInfo.permissions && repoInfo.permissions.push === false) {
+      const error = new Error('read-only token');
+      error.status = 403;
+      error.readonly = true;
+      throw error;
+    }
+
+    step = 'content';
     await loadContent();
 
     localStorage.setItem(LS.token, token);
     localStorage.setItem(LS.owner, owner);
     localStorage.setItem(LS.repo, repo);
 
+    errorBox.textContent = '';
     showApp(repoInfo);
-    toast(`مرحبًا ${state.user.login}`, 'ok');
+    toast(`مرحبًا ${state.user.login} — كل حاجة جاهزة`, 'ok');
   } catch (error) {
-    errorBox.textContent =
-      error.status === 401
-        ? 'التوكن غير صالح أو منتهي. أنشئ توكنًا جديدًا وحاول مرة أخرى.'
-        : `تعذّر الاتصال: ${error.message}`;
+    errorBox.textContent = loginMessage(error, step, owner, repo);
     state.token = '';
   } finally {
     button.disabled = false;
@@ -1372,6 +1410,12 @@ function renderSettings() {
         <p>التوكن محفوظ في هذا المتصفح فقط. لو فقدته أو شككت في تسريبه، اعمل Revoke من GitHub وأنشئ واحدًا جديدًا.</p>
         <button class="btn btn--danger btn--sm" type="button" id="logoutBtn2">تسجيل الخروج</button>
       </div>
+
+      <div class="card">
+        <h3>محتاج مساعدة؟</h3>
+        <p>الدليل الكامل (التوكن، إضافة مشروع، تعديل نص، النشر) موجود في المستودع.</p>
+        <a class="btn btn--ghost btn--sm" href="https://github.com/${h(state.owner)}/${h(state.repo)}/blob/${encodeURIComponent(state.branch)}/docs/admin-guide.md" target="_blank" rel="noopener">فتح الدليل</a>
+      </div>
     </div>
   `;
 
@@ -1431,6 +1475,21 @@ async function checkDeploy(manual = false) {
       toast(label, cls === 'is-ok' ? 'ok' : 'err');
     }
   } catch (error) {
+    const denied = error.status === 403 || error.status === 404;
+    if (denied) {
+      chips.forEach((chip) => {
+        chip.hidden = false;
+        chip.className = 'deploy';
+        chip.textContent = 'النشر في الخلفية';
+      });
+      if (manual) {
+        toast(
+          'التوكن مش مسموح له يقرأ حالة النشر (محتاج Actions: Read). الحفظ نفسه شغّال — افتح الموقع بعد دقيقتين.',
+          'ok'
+        );
+      }
+      return;
+    }
     if (manual) toast(`تعذّر قراءة الحالة: ${error.message}`, 'err');
   }
 }
@@ -1538,6 +1597,24 @@ async function commitFiles(files, deletions, message) {
 /* ---------------- التهيئة ---------------- */
 function bindGlobal() {
   $('#loginForm').addEventListener('submit', login);
+
+  $('#pasteBtn')?.addEventListener('click', async () => {
+    const input = $('#tokenInput');
+    try {
+      const text = (await navigator.clipboard.readText()).trim();
+      if (!text) {
+        toast('الحافظة فاضية — انسخ التوكن من GitHub الأول.', 'err');
+        return;
+      }
+      input.value = text;
+      input.focus();
+      toast('تم اللصق — دوس «دخول».', 'ok');
+    } catch (error) {
+      input.focus();
+      toast('المتصفح منع القراءة من الحافظة — الصق يدويًا بـ Ctrl+V.', 'err');
+    }
+  });
+
   $('#logoutBtn').addEventListener('click', logout);
   $('#saveBtn').addEventListener('click', saveAll);
   $('#projectSaveBtn').addEventListener('click', saveProjectDraft);
@@ -1583,9 +1660,12 @@ async function init() {
     $('#loginError').textContent = '';
     showApp(repoInfo);
   } catch (error) {
-    $('#loginError').textContent = '';
     state.token = '';
     localStorage.removeItem(LS.token);
+    $('#loginError').textContent =
+      error.status === 404
+        ? 'الجلسة السابقة مش متاحة للمستودع ده. الصق التوكن من جديد.'
+        : 'الجلسة السابقة انتهت (التوكن اتغير أو انتهت صلاحيته). الصق توكن جديد من الخطوة ١.';
   }
 }
 
