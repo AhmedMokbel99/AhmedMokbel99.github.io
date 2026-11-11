@@ -21,7 +21,7 @@
     "firstName": "أحمد",
     "jobTitle": "مصمم جرافيك وموشن جرافيك",
     "initials": "AM",
-    "location": "المنصورة، مصر",
+    "location": "مدينة الجمالية، مركز الجمالية، محافظة الدقهلية",
     "careerStart": 2013,
     "behanceSince": "2015"
   },
@@ -147,10 +147,28 @@
     "Lightroom"
   ],
   "stats": [
-    { "key": "experience", "suffix": "+", "label": "سنوات خبرة" },
-    { "key": "projects", "value": 160, "suffix": "+", "label": "مشروع منجز" },
-    { "key": "clients", "value": 80, "suffix": "+", "label": "عميل راضٍ" },
-    { "key": "selected", "suffix": "", "label": "مشروع مختار من مسيرتي" }
+    {
+      "key": "experience",
+      "suffix": "+",
+      "label": "سنوات خبرة"
+    },
+    {
+      "key": "projects",
+      "value": 160,
+      "suffix": "+",
+      "label": "مشروع منجز"
+    },
+    {
+      "key": "clients",
+      "value": 80,
+      "suffix": "+",
+      "label": "عميل راضٍ"
+    },
+    {
+      "key": "selected",
+      "suffix": "",
+      "label": "مشروع مختار من مسيرتي"
+    }
   ],
   "workSection": {
     "eyebrow": "الأعمال",
@@ -240,10 +258,26 @@
     ]
   },
   "channels": [
-    { "type": "email", "label": "البريد الإلكتروني", "value": "" },
-    { "type": "whatsapp", "label": "واتساب", "value": "محادثة مباشرة" },
-    { "type": "behance", "label": "بيهانس", "value": "معرض الأعمال الكامل" },
-    { "type": "facebook", "label": "فيسبوك — DOT Media", "value": "صفحة الوكالة" }
+    {
+      "type": "email",
+      "label": "البريد الإلكتروني",
+      "value": ""
+    },
+    {
+      "type": "whatsapp",
+      "label": "واتساب",
+      "value": "محادثة مباشرة"
+    },
+    {
+      "type": "behance",
+      "label": "بيهانس",
+      "value": "معرض الأعمال الكامل"
+    },
+    {
+      "type": "facebook",
+      "label": "فيسبوك — DOT Media",
+      "value": "صفحة الوكالة"
+    }
   ],
   "footer": {
     "about": "مصمم جرافيك وموشن جرافيك من المنصورة، ومؤسس DOT Media للإنتاج الإبداعي. أصنع هويات بصرية وحكايات حركية تخدم أهداف العلامات.",
@@ -258,9 +292,21 @@
     "rights": "جميع الحقوق محفوظة."
   },
   "categories": [
-    { "id": "all", "label": "الكل" },
-    { "id": "motion", "label": "موشن جرافيك" },
-    { "id": "brand", "label": "هوية وطباعة" },
-    { "id": "digital", "label": "تصميم رقمي" }
+    {
+      "id": "all",
+      "label": "الكل"
+    },
+    {
+      "id": "motion",
+      "label": "موشن جرافيك"
+    },
+    {
+      "id": "brand",
+      "label": "هوية وطباعة"
+    },
+    {
+      "id": "digital",
+      "label": "تصميم رقمي"
+    }
   ]
 }
