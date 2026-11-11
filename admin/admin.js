@@ -331,9 +331,13 @@ function renderProjects() {
 
   $('#addProjectBtn').addEventListener('click', () => openProjectEditor(null));
   $('#projectSearch').addEventListener('input', (event) => {
+    const caret = event.target.selectionStart;
     state.search = event.target.value;
     renderProjects();
-    $('#projectSearch').focus();
+    const input = $('#projectSearch');
+    input.focus();
+    const position = caret == null ? input.value.length : caret;
+    input.setSelectionRange(position, position);
   });
   $('#projectFilter').addEventListener('change', (event) => {
     state.filter = event.target.value;
