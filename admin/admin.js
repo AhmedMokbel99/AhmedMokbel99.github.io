@@ -1412,6 +1412,17 @@ function renderSettings() {
       </div>
 
       <div class="card">
+        <h3>تثبيت اللوحة كتطبيق</h3>
+        <p>عشان تدخل بضغطة واحدة من غير ما تفتكر الرابط:</p>
+        <ol class="mini-list">
+          <li>من الكمبيوتر (كروم/إيدج): <b>⋮</b> ثم <b>تثبيت / Install app</b>.</li>
+          <li>من الموبايل: <b>إضافة إلى الشاشة الرئيسية</b>.</li>
+          <li>أو احفظ الرابط في المفضلة: <code dir="ltr">ahmedmokbel99.github.io/admin/</code></li>
+        </ol>
+        <p class="hint">اللوحة بتفتح على طول بدون تسجيل دخول، طالما نفس المتصفح والتوكن لسه صالح.</p>
+      </div>
+
+      <div class="card">
         <h3>محتاج مساعدة؟</h3>
         <p>الدليل الكامل (التوكن، إضافة مشروع، تعديل نص، النشر) موجود في المستودع.</p>
         <a class="btn btn--ghost btn--sm" href="https://github.com/${h(state.owner)}/${h(state.repo)}/blob/${encodeURIComponent(state.branch)}/docs/admin-guide.md" target="_blank" rel="noopener">فتح الدليل</a>

@@ -492,6 +492,9 @@ button, input, select, textarea { font: inherit; }
 .card h3 { margin: 0 0 0.6rem; font-family: var(--display); font-size: 1rem; }
 .card p { color: var(--muted); font-size: 0.84rem; margin: 0 0 0.8rem; }
 .card .btn { margin-top: 0.4rem; }
+.card .mini-list { margin: 0 0 0.7rem; padding-inline-start: 1.1rem; color: var(--muted); font-size: 0.83rem; line-height: 1.9; }
+.card .mini-list b { color: var(--text); font-weight: 600; }
+.card code { font-family: var(--mono); font-size: 0.76rem; color: var(--cyan); }
 .kv { display: grid; gap: 0.35rem; font-size: 0.82rem; color: var(--muted); }
 .kv b { color: var(--text); font-weight: 600; }
 
