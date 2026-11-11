@@ -747,9 +747,17 @@ function deleteProject(index) {
   if (!confirm(`حذف مشروع «${project.title}»؟`)) return;
 
   const stillUsed = (path) => state.projects.some((p, i) => i !== index && p.image === path);
-  if (project.image && !stillUsed(project.image)) state.pendingDeletes.add(project.image);
-  if (project.imageSmall && !stillUsed(project.imageSmall)) state.pendingDeletes.add(project.imageSmall);
-  if (project.video) state.pendingDeletes.add(project.video);
+
+  /* الملفات التي لم تُرفع بعد تُلغى من الرفع، والموجودة تُجدول للحذف */
+  const drop = (path) => {
+    if (!path) return;
+    if (state.pendingUploads.has(path)) state.pendingUploads.delete(path);
+    else state.pendingDeletes.add(path);
+  };
+
+  if (project.image && !stillUsed(project.image)) drop(project.image);
+  if (project.imageSmall && !stillUsed(project.imageSmall)) drop(project.imageSmall);
+  if (project.video) drop(project.video);
 
   state.projects.splice(index, 1);
   markDirty();
