@@ -17,17 +17,30 @@
 ```text
 ahmed-mokbel-portfolio/
 │
-├── index.html              # الصفحة الرئيسية (النسخة الأساسية)
-├── motion-graphics.html    # صفحة خدمة الموشن جرافيك (ثابتة — SEO)
-├── brand-identity.html     # صفحة خدمة الهوية البصرية (ثابتة — SEO)
+├── index.html              # الصفحة الرئيسية (مولّدة من content/site.json)
+├── motion-graphics.html    # صفحة خدمة الموشن جرافيك (مولّدة من content/pages.json)
+├── brand-identity.html     # صفحة خدمة الهوية البصرية (مولّدة من content/pages.json)
 ├── 404.html                # صفحة الخطأ المخصصة (GitHub Pages يقدّمها تلقائيًا)
 ├── standalone.html         # نسخة ملف واحد مولّدة آليًا — لا تعدّلها يدويًا
-├── build.py                # سكربت بناء standalone.html + بطاقات المشاريع الثابتة
+├── build.py                # مولّد الموقع من ملفات content/
+│
+├── content/
+│   ├── site.json           # كل نصوص الصفحة الرئيسية + التواصل + الخدمات + الأسئلة
+│   ├── projects.json       # المشاريع (بديل WORK_DATA)
+│   └── pages.json          # نصوص صفحتي الخدمات
+│
+├── admin/
+│   ├── index.html          # لوحة التحكم (noindex وغير مربوطة من الموقع)
+│   ├── admin.css
+│   └── admin.js            # GitHub API + قص وضغط الصور في المتصفح
+│
+├── .github/workflows/
+│   └── deploy.yml          # بناء ونشر تلقائي على GitHub Pages
 │
 ├── css/
 │   └── style.css           # نظام التصميم الكامل + التجاوب + تقليل الحركة
 ├── js/
-│   ├── data.js             # كل البيانات القابلة للتعديل (المعلومات + المشاريع)
+│   ├── data.js             # مولّد آليًا من content/ — لا تعدّله يدويًا
 │   └── main.js             # التفاعلات: القائمة، الفلترة، النوافذ، النموذج...
 │
 ├── assets/
@@ -76,24 +89,61 @@ python -m http.server 8000
 
 ## ✏️ تخصيص المحتوى
 
-كل المحتوى القابل للتعديل موجود في **`js/data.js`**.
+المصدر الوحيد للمحتوى هو ملفات **`content/`**، و`build.py` يولّد منها كل صفحات الموقع.
+تقدر تعدّل من **لوحة التحكم** (الأسهل) أو من الملفات مباشرة، والنتيجة واحدة.
+
+```text
+content/site.json      ← نصوص الرئيسية، التواصل، الخدمات، خطوات العمل، الأسئلة، الإحصائيات
+content/projects.json  ← المشاريع
+content/pages.json     ← صفحتا الخدمات
+        │
+        ▼  python build.py
+js/data.js · index.html · motion-graphics.html · brand-identity.html · sitemap.xml · standalone.html
+```
+
+> **مهم:** لا تعدّل `js/data.js` أو `index.html` يدويًا — أي تعديل يدوي سيُستبدل في
+> أول بناء. عدّل `content/*.json` ثم شغّل `python build.py`.
+
+### لوحة التحكم (بدون سيرفر وبدون تكلفة)
+
+اللوحة على: `https://ahmedmokbel99.github.io/admin/` — غير مربوطة من الموقع
+و`noindex` وممنوعة في `robots.txt`.
+
+1. أنشئ **Fine-grained token** من GitHub:
+   [Settings → Fine-grained tokens](https://github.com/settings/personal-access-tokens/new)
+   بصلاحية **Contents: Read and write** على مستودع الموقع فقط (ومدة صلاحية تحددها).
+2. الصق التوكن في شاشة الدخول — يُخزَّن في `localStorage` على جهازك فقط.
+3. عدّل المشاريع أو النصوص، ثم اضغط **حفظ ونشر**.
+4. اللوحة ترفع الملفات عبر GitHub API، وGitHub Actions يبني الموقع وينشره تلقائيًا
+   خلال دقائق.
+
+ما تدعمه اللوحة:
+
+- **المشاريع:** إضافة/تعديل/حذف/ترتيب، إظهار أو إخفاء، رفع صورة (قص وضغط تلقائي
+  حتى 1600px + نسخة 900px للبطاقة)، ورفض أي صورة أكبر من 3MB، مع **Alt إجباري**.
+- **الفيديو:** رفع مقطع MP4 حتى 8MB، أو رابط يوتيوب (غير مدرج) — يُعرض داخل الصفحة
+  عبر `youtube-nocookie.com`، أو رابط يوتيوب يُفتح في تاب جديد لو المتصفح قديم.
+- **نصوص الموقع:** 84 نصًا في الرئيسية (هيرو، نبذة، خدمات، أرقام، خطوات، أسئلة، نموذج،
+  تذييل) + المهارات والأدوات والتصنيفات.
+- **صفحات الخدمات:** كل نصوص صفحتي الموشن جرافيك والهوية البصرية.
+- **الإعدادات:** حالة النشر، إعادة تحميل المحتوى، تسجيل الخروج.
+
+حدود اللوحة: التغيير يظهر بعد دقائق (بناء + نشر)، والتوكن يُدخل مرة على كل جهاز.
 
 ### بيانات التواصل والمعلومات العامة
 
-```js
-const SITE_DATA = {
-  name: "أحمد مقبل",
-  title: "مصمم جرافيك وموشن جرافيك",
-  location: "المنصورة، مصر",
-  email: "ahmed01068775125@gmail.com",
-  whatsapp: "201228084197", // بدون + وبدون مسافات
-  behance: "https://www.behance.net/ahmed01068b62e",
-  facebook: "https://www.facebook.com/profile.php?id=61581319508233",
-  twitter: "https://x.com/ahmed0106877",
-  // ... الأدوات، المهارات، الإحصائيات، العبارات المتحركة
-  careerStart: 2013,   // تُحسب سنوات الخبرة تلقائيًا = السنة الحالية - careerStart
-  behanceSince: "2015",
-};
+```json
+{
+  "brand": { "name": "أحمد مقبل", "jobTitle": "مصمم جرافيك وموشن جرافيك", "location": "المنصورة، مصر",
+             "careerStart": 2013, "behanceSince": "2015" },
+  "contact": {
+    "email": "ahmed01068775125@gmail.com",
+    "whatsapp": "201228084197",
+    "behance": "https://www.behance.net/ahmed01068b62e",
+    "facebook": "https://www.facebook.com/profile.php?id=61581319508233",
+    "twitter": "https://x.com/ahmed0106877"
+  }
+}
 ```
 
 ### الإحصائيات والأرقام
@@ -101,7 +151,7 @@ const SITE_DATA = {
 كل الأرقام مربوطة ببعضها من مصدر واحد:
 
 - **سنوات الخبرة** = السنة الحالية − `careerStart` (تتحدّث تلقائيًا كل عام).
-- **المشاريع المختارة** (`key: "selected"`) = إجمالي عدد المشاريع في `WORK_DATA` — يزيد تلقائيًا مع كل مشروع جديد.
+- **المشاريع المختارة** (`key: "selected"`) = إجمالي عدد المشاريع في `content/projects.json` — يزيد تلقائيًا مع كل مشروع جديد.
 - **عدد المشاريع على بيهانس** (`key: "behance"`) = عدد المشاريع التي لها `external: true` ورابط فعلي (متاح لو رجعت للاستخدام).
 - **إجمالي المشاريع وعدد العملاء** قيم ثابتة تُعدَّل يدويًا في `stats`.
 - سنة الحقوق في الفوتر تُحدَّث تلقائيًا من تاريخ الجهاز.
@@ -109,10 +159,10 @@ const SITE_DATA = {
 
 ### صفحات الخدمات (SEO)
 
-- `motion-graphics.html` و`brand-identity.html` صفحات ثابتة لا تعتمد على JavaScript، لكل واحدة:
+- `motion-graphics.html` و`brand-identity.html` يولّدهما `build.py` من `content/pages.json`، فلا تعدّلهما يدويًا. لكل صفحة:
   عنوان ووصف و`canonical` مستقل، و`H1` بكلمة الخدمة، وبيانات منظمة `Service` + `BreadcrumbList` + `FAQPage`.
-- أي صفحة خدمة جديدة لازم تتضاف إلى `sitemap.xml`، وتُربط من بطاقة الخدمة داخل `index.html` ومن التذييل.
-- عند تغيير تفاصيل خدمة (المدة، نطاق العمل)، عدّل النص الظاهر وأسئلة `FAQPage` معًا حتى يبقى مطابقًا للمحتوى.
+- صفحة خدمة جديدة = عنصر جديد في `content/pages.json` بنفس الحقول، وسيُبنى ملف HTML بالاسم المحدد في `slug`.
+  بعدها أضِف الرابط في `sitemap.xml` واربطه من بطاقة الخدمة داخل `content/site.json`.
 
 ### خصوصية البريد وأسماء الصور
 
@@ -143,28 +193,50 @@ Invoke-RestMethod -Uri "https://api.indexnow.org/indexnow" -Method Post -Content
 
 ### إضافة / تعديل مشروع
 
-```js
+عدّل `content/projects.json` (أو من اللوحة) بهذا الشكل:
+
+```json
 {
-  id: "f14",                       // معرّف فريد
-  code: "F14",                     // الكود الظاهر على البطاقة
-  title: "اسم المشروع",
-  cat: "brand",                    // motion | brand | digital
-  tag: "هوية وطباعة",
-  isVideo: false,                  // لإظهار أيقونة الفيديو
-  video: "assets/projects/f14.mp4", // اختياري: يشغّل الفيديو داخل نافذة المشروع
-  url: "https://www.behance.net/...",
-  external: true,                  // false لإخفاء زر «فتح المشروع»
-  image: "assets/projects/beginnings-motion-graphic.jpg",       // الأكبر (نافذة التفاصيل)
-  imageSmall: "assets/projects/beginnings-motion-graphic-900.jpg", // اختياري لبطاقة أخف
-  width: 1400,                     // أبعاد الصورة الكبيرة (مهمة لمنع الاهتزاز)
-  height: 1000,
-  summary: "وصف مختصر يظهر في نافذة تفاصيل المشروع."
+  "id": "f14",
+  "code": "F14",
+  "title": "اسم المشروع",
+  "cat": "brand",
+  "tag": "هوية وطباعة",
+  "isVideo": false,
+  "url": "https://www.behance.net/...",
+  "external": true,
+  "image": "assets/projects/beginnings-motion-graphic.jpg",
+  "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg",
+  "width": 1400,
+  "height": 1000,
+  "alt": "وصف الصورة لمحركات البحث",
+  "summary": "وصف مختصر يظهر في نافذة تفاصيل المشروع.",
+  "visible": true
 }
 ```
 
-- عدّادات الفلاتر وقائمة «الكل» تُحسب تلقائيًا من `WORK_DATA`.
-- التصنيفات نفسها معرّفة في `CATEGORIES` أعلى الملف.
+- `visible: false` يخفي المشروع من الموقع بدون حذفه.
+- `alt` مطلوب (اللوحة تفرضه) — يُستخدم في البطاقة ونافذة التفاصيل.
+- عدّادات الفلاتر وقائمة «الكل» تُحسب تلقائيًا من نفس الملف.
+- التصنيفات معرّفة في `categories` داخل `content/site.json`.
 - الصور تُحمَّل كسولًا (lazy) داخل البطاقات.
+
+### فيديو المشروع
+
+مقطع داخل المستودع (حتى 8MB من اللوحة):
+
+```json
+{ "isVideo": true, "video": "assets/projects/f14.mp4" }
+```
+
+أو يوتيوب غير مدرج (أي صيغة رابط: `youtu.be/ID` أو `watch?v=ID` أو `shorts/ID`):
+
+```json
+{ "isVideo": true, "youtube": "https://youtu.be/XXXXXXXXXXX" }
+```
+
+- يوتيوب يُعرض داخل نافذة المشروع عبر `youtube-nocookie.com` بدون أي إضافات.
+- ملفات الفيديو الكبيرة ارفعها على يوتيوب؛ حدّ GitHub هو 100MB للملف لكن الأفضل 8MB.
 
 #### مشروع بأكثر من فيديو (قائمة تشغيل)
 
@@ -192,7 +264,7 @@ Invoke-RestMethod -Uri "https://api.indexnow.org/indexnow" -Method Post -Content
 
 ---
 
-## 🧱 بناء نسخة الملف الواحد
+## 🧱 البناء
 
 ```bash
 python build.py
@@ -200,30 +272,34 @@ python build.py
 
 يقوم السكربت بـ:
 
-1. قراءة `WORK_DATA` من `js/data.js` وإعادة كتابة بطاقات المشاريع الثابتة داخل `index.html`
-   بين `<!-- static-projects:start -->` و`<!-- static-projects:end -->` (محتوى يظهر لمحركات البحث بدون JavaScript).
-2. دمج `css/style.css` داخل وسم `<style>`.
-3. دمج `js/data.js` و`js/main.js` قبل `</body>` بالترتيب الصحيح.
-4. إزالة أي مراجع خارجية متبقية.
-5. كتابة `standalone.html` بترميز UTF-8 وإضافة `noindex` لمنع تكرار الفهرسة.
+1. قراءة `content/site.json` و`content/projects.json` و`content/pages.json` والتحقق منها.
+2. توليد `js/data.js` (`SITE_DATA` + `CATEGORIES` + `WORK_DATA`) — لا تعدّله يدويًا.
+3. وضع كل النصوص في `index.html` عبر مفاتيح `data-cms`، وتوليد بطاقات الخدمات وخطوات
+   العمل والأسئلة وقنوات التواصل وخيارات النموذج.
+4. توليد بطاقات المشاريع الثابتة بين `<!-- static-projects:start -->` و`<!-- static-projects:end -->`
+   (محتوى يظهر لمحركات البحث بدون JavaScript) + تحديث عدّادات المشاريع.
+5. تحديث `title` و`description` وOpen Graph وTwitter وJSON-LD من `site.json`.
+6. توليد `motion-graphics.html` و`brand-identity.html` من `pages.json`.
+7. تحديث `lastmod` في `sitemap.xml`.
+8. بناء `standalone.html` (CSS وJS مدموجان داخل ملف واحد + `noindex`).
 
-> بطاقات المشاريع الثابتة تُولَّد آليًا من `js/data.js` — لا تعدّلها يدويًا داخل `index.html`.
+> `build.py` يفشل برسالة واضحة لو نقص مفتاح نص أو حقل مشروع — لا يبني نسخة ناقصة.
+
 > أي تعديل على `projectMarkup()` في `js/main.js` يجب أن يُطابَق في `project_card()` داخل `build.py`.
-
-> بعد أي تعديل على CSS أو JS، غيّر رقم الإصدار في `index.html`
-> (`css/style.css?v=5` و`js/data.js?v=5`) لكسر التخزين المؤقت للمتصفح.
 
 ---
 
 ## 🌐 النشر
 
-### GitHub Pages (الاستضافة الحالية — مجانية ودائمة)
+### GitHub Pages + GitHub Actions (الاستضافة الحالية — مجانية ودائمة)
 
 الموقع منشور على: **https://ahmedmokbel99.github.io/**
 
 - الريبو: `AhmedMokbel99/AhmedMokbel99.github.io`
-- النشر تلقائي من الفرع `main` (Settings → Pages → Deploy from a branch → `main` / root).
-- كل `git push` إلى `main` يحدّث الموقع خلال دقيقة تقريبًا.
+- النشر عبر `.github/workflows/deploy.yml`: كل `push` إلى `main` يشغّل `build.py`
+  ثم يرفع الناتج إلى Pages (Settings → Pages → Source = **GitHub Actions**).
+- استخدمنا Actions بدل النشر من الفرع لأن اللوحة تعدّل `content/*.json` فقط،
+  والبناء يحوّلها إلى HTML ثابت قبل النشر.
 - لا توجد مدة تجريبية ولا حدّ زمني؛ GitHub Pages مجاني للمستودعات العامة.
 
 ```bash
@@ -232,8 +308,8 @@ git commit -m "وصف التعديل"
 git push
 ```
 
-> **مهم:** نموذج التواصل لا يعمل على GitHub Pages (لا يوجد خادم يستقبل `POST`).
-> عند فشل الإرسال يعرض الموقع زر «افتح واتساب» مع كل التفاصيل تلقائيًا.
+> **مهم:** نموذج التواصل لا يحتاج خادمًا ولا خدمة خارجية: يجهّز الرسالة ويفتحها في
+> واتساب، أو في تطبيق البريد عند اختيار «أرسل عبر البريد».
 
 ### Netlify (بديل اختياري)
 
@@ -266,8 +342,8 @@ git push
 - **SEO:** عنوان ووصف، Open Graph وTwitter، بيانات منظّمة JSON-LD، sitemap، robots،
   وصفحة 404 مخصصة.
 - **الأمان:** رؤوس CSP و`nosniff` و`Referrer-Policy` و`Permissions-Policy`.
-- **النموذج:** تحقق فوري من الحقول، رسائل خطأ مرتبطة بالحقول، إرسال عبر Netlify،
-  وبديل واتساب تلقائي عند تعذّر الإرسال.
+- **النموذج:** تحقق فوري من الحقول، رسائل خطأ مرتبطة بالحقول، وإرسال عبر واتساب أو
+  البريد الإلكتروني — يعمل على أي استضافة ثابتة بدون خادم.
 
 ---
 

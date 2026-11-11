@@ -671,6 +671,10 @@ body.has-dialog {
   margin-top: 0.35rem;
 }
 
+.hero h1 .h1-name {
+  display: block;
+}
+
 .hero h1 .h1-role {
   display: block;
   margin-bottom: 0.85rem;
@@ -2315,6 +2319,14 @@ body.has-dialog {
   height: 100%;
   max-height: min(90dvh, 860px);
   object-fit: contain;
+  background: #000;
+}
+
+.dialog-media .dialog-youtube {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: min(90dvh, 860px);
+  border: 0;
   background: #000;
 }
 

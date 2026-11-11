@@ -451,6 +451,24 @@ const state = {
   videoIndex: 0,
 };
 
+/* استخراج معرّف فيديو يوتيوب من أي صيغة رابط */
+function youtubeId(url) {
+  if (!url) return '';
+  const value = String(url).trim();
+  const patterns = [
+    /youtu\.be\/([\w-]{6,})/i,
+    /youtube\.com\/watch\?(?:.*&)?v=([\w-]{6,})/i,
+    /youtube\.com\/embed\/([\w-]{6,})/i,
+    /youtube\.com\/shorts\/([\w-]{6,})/i,
+    /youtube\.com\/live\/([\w-]{6,})/i,
+  ];
+  for (const pattern of patterns) {
+    const match = value.match(pattern);
+    if (match) return match[1];
+  }
+  return /^[\w-]{11}$/.test(value) ? value : '';
+}
+
 /* قائمة فيديوهات المشروع: إما مشروع بمقطع واحد أو مشروع بعدة مقاطع */
 function projectVideos(project) {
   if (!project) return [];
@@ -470,6 +488,7 @@ function projectVideos(project) {
 function projectMarkup(project) {
   const category = categoryLabel(project.cat);
   const fallback = project.imageSmall || project.image;
+  const alt = project.alt || `${project.title} — ${project.tag}`;
 
   return `
     <article class="project" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
@@ -480,7 +499,7 @@ function projectMarkup(project) {
           sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
           width="${project.width}"
           height="${project.height}"
-          alt="${project.title} — ${project.tag}"
+          alt="${alt}"
           loading="lazy"
           decoding="async"
         >
@@ -645,6 +664,8 @@ function renderDialog() {
 
   const videos = projectVideos(project);
   const hasVideo = videos.length > 0;
+  const ytId = youtubeId(project.youtube);
+  const hasYoutube = !hasVideo && Boolean(ytId);
   state.videoIndex = 0;
 
   const playlist = $('#dialogPlaylist');
@@ -686,8 +707,32 @@ function renderDialog() {
     }
   }
 
+  /* فيديو يوتيوب غير المدرج: عرض داخل الصفحة عبر iframe */
+  if (media) {
+    let frame = $('#dialogYoutube');
+
+    if (hasYoutube) {
+      if (!frame) {
+        frame = document.createElement('iframe');
+        frame.id = 'dialogYoutube';
+        frame.className = 'dialog-youtube';
+        frame.loading = 'lazy';
+        frame.allow =
+          'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        frame.setAttribute('allowfullscreen', '');
+        media.append(frame);
+      }
+      frame.src = `https://www.youtube-nocookie.com/embed/${ytId}?rel=0`;
+      frame.title = `فيديو مشروع ${project.title}`;
+      frame.hidden = false;
+    } else if (frame) {
+      frame.hidden = true;
+      frame.removeAttribute('src');
+    }
+  }
+
   if (image) {
-    image.hidden = hasVideo;
+    image.hidden = hasVideo || hasYoutube;
 
     if (!hasVideo) {
       image.src = project.imageMedium || project.imageSmall || project.image;
@@ -776,7 +821,9 @@ function openProject(id) {
   if (typeof HTMLDialogElement === 'undefined' || !dialog.showModal) {
     const project = state.visible[index];
     const fallbackVideo = projectVideos(project)[0];
+    const ytId = youtubeId(project?.youtube);
     if (fallbackVideo) window.open(fallbackVideo.src, '_blank', 'noopener');
+    else if (ytId) window.open(`https://youtu.be/${ytId}`, '_blank', 'noopener');
     else if (project?.url) window.open(project.url, '_blank', 'noopener');
     return;
   }
@@ -815,6 +862,9 @@ function initProjectDialog() {
       video.pause();
       video.currentTime = 0;
     }
+
+    const frame = $('#dialogYoutube');
+    if (frame) frame.removeAttribute('src');
   });
 
   dialog.addEventListener('keydown', (event) => {

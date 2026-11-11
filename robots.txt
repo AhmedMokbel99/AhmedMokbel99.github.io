@@ -5,5 +5,6 @@ Allow: /
 # نسخة الملف الواحد مخصّصة للاستخدام المحلي فقط
 Disallow: /standalone.html
 Disallow: /404.html
+Disallow: /admin/
 
 Sitemap: https://ahmedmokbel99.github.io/sitemap.xml
