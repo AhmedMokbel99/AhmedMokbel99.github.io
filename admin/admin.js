@@ -1653,6 +1653,12 @@ function bindGlobal() {
 async function init() {
   bindGlobal();
 
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('sw.js').catch(() => {
+      /* التثبيت كتطبيق اختياري — لو فشل مفيش أي تأثير على اللوحة */
+    });
+  }
+
   state.token = localStorage.getItem(LS.token) || '';
   state.owner = localStorage.getItem(LS.owner) || state.owner;
   state.repo = localStorage.getItem(LS.repo) || state.repo;
