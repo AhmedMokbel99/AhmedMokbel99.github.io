@@ -1425,12 +1425,13 @@ async function saveAll() {
 }
 
 async function commitFiles(files, deletions, message) {
-  const ref = await api(`/git/ref/heads/${encodeURIComponent(state.branch)}`);
-  const base = await api(`/git/commits/${ref.object.sha}`);
+  const repo = `/repos/${state.owner}/${state.repo}`;
+  const ref = await api(`${repo}/git/ref/heads/${encodeURIComponent(state.branch)}`);
+  const base = await api(`${repo}/git/commits/${ref.object.sha}`);
 
   const blobs = [];
   for (const file of files) {
-    const blob = await api('/git/blobs', {
+    const blob = await api(`${repo}/git/blobs`, {
       method: 'POST',
       body: JSON.stringify(
         file.base64
@@ -1447,21 +1448,31 @@ async function commitFiles(files, deletions, message) {
     type: 'blob',
     sha: blobs[index],
   }));
-  deletions.forEach((path) => {
-    tree.push({ path, mode: '100644', type: 'blob', sha: null });
-  });
 
-  const newTree = await api('/git/trees', {
+  /* الحذف يُقبل فقط للملفات الموجودة فعلًا، وإلا رفض GitHub الشجرة */
+  for (const path of deletions) {
+    if (files.some((file) => file.path === path)) continue;
+    try {
+      await api(
+        `${repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(state.branch)}`
+      );
+      tree.push({ path, mode: '100644', type: 'blob', sha: null });
+    } catch (error) {
+      if (error.status !== 404) throw error;
+    }
+  }
+
+  const newTree = await api(`${repo}/git/trees`, {
     method: 'POST',
     body: JSON.stringify({ base_tree: base.tree.sha, tree }),
   });
 
-  const commit = await api('/git/commits', {
+  const commit = await api(`${repo}/git/commits`, {
     method: 'POST',
     body: JSON.stringify({ message, tree: newTree.sha, parents: [base.sha] }),
   });
 
-  await api(`/git/refs/heads/${encodeURIComponent(state.branch)}`, {
+  await api(`${repo}/git/refs/heads/${encodeURIComponent(state.branch)}`, {
     method: 'PATCH',
     body: JSON.stringify({ sha: commit.sha, force: false }),
   });
