@@ -33,9 +33,11 @@ const state = {
   draft: null,
   draftPreview: '',
   draftUploads: [],
+  draftGalleryPreviews: new Map(),
   draftOriginal: null,
   tab: 'projects',
   pollTimer: null,
+  lastRunId: null,
   search: '',
   filter: 'all',
 };
@@ -97,6 +99,13 @@ function slugify(value) {
 
 function rawUrl(path) {
   return `https://raw.githubusercontent.com/${state.owner}/${state.repo}/${state.branch}/${path}`;
+}
+
+/* كل مسارات صور الجاليري لمشروع */
+function galleryPaths(project) {
+  return (project && project.gallery ? project.gallery : []).flatMap((item) =>
+    [item && item.src, item && item.small].filter(Boolean)
+  );
 }
 
 /* ---------------- GitHub API ---------------- */
@@ -440,6 +449,7 @@ function blankProject() {
     visible: true,
     video: '',
     youtube: '',
+    gallery: [],
   };
 }
 
@@ -449,10 +459,13 @@ function openProjectEditor(index) {
   state.draftIndex = isNew ? -1 : index;
   state.draftPreview = '';
   state.draftUploads = [];
+  state.draftGalleryPreviews = new Map();
+  if (!Array.isArray(state.draft.gallery)) state.draft.gallery = [];
   state.draftOriginal = {
     image: state.draft.image || '',
     imageSmall: state.draft.imageSmall || '',
     video: state.draft.video || '',
+    gallery: clone(state.draft.gallery),
   };
   if (!state.draft.alt) {
     state.draft.alt = [state.draft.title, state.draft.tag].filter(Boolean).join(' — ');
@@ -472,7 +485,11 @@ function closeProjectModal() {
   /* إزالة الصور/الفيديوهات التي رُفعت في هذا المحرّر ولم تُستخدم */
   const stillUsed = (path) =>
     state.projects.some(
-      (project) => project.image === path || project.imageSmall === path || project.video === path
+      (project) =>
+        project.image === path ||
+        project.imageSmall === path ||
+        project.video === path ||
+        galleryPaths(project).includes(path)
     );
   (state.draftUploads || []).forEach((path) => {
     if (!stillUsed(path)) state.pendingUploads.delete(path);
@@ -566,6 +583,37 @@ function renderProjectForm() {
     </div>
 
     <div class="form-section">
+      <h4>صور إضافية (جاليري)</h4>
+      <input type="file" id="galleryInput" accept="image/jpeg,image/png,image/webp" multiple>
+      <p class="hint" style="margin:.45rem 0 .7rem">
+        ارفع أي عدد من الصور. كل صورة تتضغط ويتولّد منها نسخة 900px، وتظهر تحت الصورة الأساسية في نافذة المشروع.
+      </p>
+      <div class="gallery-editor" id="galleryEditor">
+        ${
+          (draft.gallery || []).length
+            ? draft.gallery
+                .map((item, index) => {
+                  const thumb =
+                    state.draftGalleryPreviews.get(item.src) || rawUrl(item.small || item.src);
+                  return `<div class="gallery-item">
+                    <img src="${h(thumb)}" alt="" loading="lazy">
+                    <div class="gallery-item__body">
+                      <input type="text" value="${h(item.alt || '')}" data-gal-alt="${index}" placeholder="وصف الصورة (Alt)">
+                      <div class="gallery-item__actions">
+                        <button type="button" class="link-btn" data-gal-move="${index}" data-dir="-1"${index === 0 ? ' disabled' : ''}>▲ أعلى</button>
+                        <button type="button" class="link-btn" data-gal-move="${index}" data-dir="1"${index === draft.gallery.length - 1 ? ' disabled' : ''}>▼ أسفل</button>
+                        <button type="button" class="link-btn link-btn--danger" data-gal-remove="${index}">حذف</button>
+                      </div>
+                    </div>
+                  </div>`;
+                })
+                .join('')
+            : '<p class="hint">مفيش صور إضافية لسه.</p>'
+        }
+      </div>
+    </div>
+
+    <div class="form-section">
       <h4>الفيديو (اختياري)</h4>
       <div class="seg" id="videoMode">
         <button type="button" data-video-mode="none" class="${videoMode === 'none' ? 'is-active' : ''}">بدون فيديو</button>
@@ -640,6 +688,35 @@ function renderProjectForm() {
     if (file) await attachImage(file);
   });
 
+  $('#galleryInput')?.addEventListener('change', async (event) => {
+    const files = Array.from(event.target.files || []);
+    event.target.value = '';
+    for (const file of files) {
+      await attachGalleryImage(file);
+    }
+  });
+
+  $$('[data-gal-alt]', $('#projectForm')).forEach((input) =>
+    input.addEventListener('input', () => {
+      const index = Number(input.dataset.galAlt);
+      if (state.draft.gallery && state.draft.gallery[index]) {
+        state.draft.gallery[index].alt = input.value;
+      }
+    })
+  );
+
+  $('#galleryEditor')?.addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (!button) return;
+    if (button.dataset.galRemove != null) {
+      removeGalleryItem(Number(button.dataset.galRemove));
+      return;
+    }
+    if (button.dataset.galMove != null) {
+      moveGalleryItem(Number(button.dataset.galMove), Number(button.dataset.dir));
+    }
+  });
+
   $('#videoInput')?.addEventListener('change', async (event) => {
     const file = event.target.files[0];
     if (file) await attachVideo(file);
@@ -674,6 +751,83 @@ async function attachImage(file) {
   } catch (error) {
     toast(error.message || 'تعذّر تجهيز الصورة', 'err');
   }
+}
+
+async function attachGalleryImage(file) {
+  try {
+    if (file.size > MAX_IMAGE) throw new Error('الصورة أكبر من 3MB. اضغطها قبل الرفع.');
+    if (!Array.isArray(state.draft.gallery)) state.draft.gallery = [];
+
+    const prepared = await prepareImage(file);
+    const base = slugify(state.draftImageName) || `project-${state.draft.id}`;
+
+    let counter = state.draft.gallery.length + 1;
+    let src = '';
+    let small = '';
+    do {
+      src = `assets/projects/${base}-g${counter}.jpg`;
+      small = `assets/projects/${base}-g${counter}-900.jpg`;
+      counter += 1;
+    } while (
+      state.pendingUploads.has(src) ||
+      state.draft.gallery.some((item) => item.src === src) ||
+      state.projects.some((project) => galleryPaths(project).includes(src))
+    );
+
+    state.pendingUploads.set(src, prepared.full);
+    state.pendingUploads.set(small, prepared.small);
+    state.draftUploads.push(src, small);
+
+    state.draft.gallery.push({
+      src,
+      small,
+      width: prepared.width,
+      height: prepared.height,
+      alt: `${state.draft.title || 'مشروع'} — ${state.draft.tag || ''}`.trim(),
+    });
+    state.draftGalleryPreviews.set(src, URL.createObjectURL(prepared.fullBlob));
+
+    renderProjectForm();
+    toast('تمت إضافة الصورة للجاليري — اضغط «تأكيد المشروع» ثم «حفظ ونشر».', 'ok');
+  } catch (error) {
+    toast(error.message || 'تعذّر تجهيز الصورة', 'err');
+  }
+}
+
+function moveGalleryItem(index, direction) {
+  const list = state.draft && state.draft.gallery;
+  if (!list) return;
+  const next = index + direction;
+  if (next < 0 || next >= list.length) return;
+  const [item] = list.splice(index, 1);
+  list.splice(next, 0, item);
+  renderProjectForm();
+}
+
+function removeGalleryItem(index) {
+  const list = state.draft && state.draft.gallery;
+  const item = list && list[index];
+  if (!item) return;
+
+  list.splice(index, 1);
+
+  [item.src, item.small].filter(Boolean).forEach((path) => {
+    const uploadedNow = state.draftUploads.includes(path);
+    state.pendingUploads.delete(path);
+    state.draftUploads = state.draftUploads.filter((entry) => entry !== path);
+    if (uploadedNow) return;
+
+    const usedElsewhere =
+      list.some((entry) => entry.src === path || entry.small === path) ||
+      state.projects.some(
+        (project, projectIndex) =>
+          projectIndex !== state.draftIndex && galleryPaths(project).includes(path)
+      );
+    if (!usedElsewhere) state.pendingDeletes.add(path);
+  });
+
+  state.draftGalleryPreviews.delete(item.src);
+  renderProjectForm();
 }
 
 async function attachVideo(file) {
@@ -750,6 +904,17 @@ function saveProjectDraft() {
   if (!draft.image) return toast('صورة الغلاف مطلوبة', 'err');
   if (!String(draft.alt || '').trim())
     return toast('النص البديل (Alt) مطلوب لمحركات البحث', 'err');
+
+  draft.gallery = (draft.gallery || []).map((item) => ({
+    src: item.src,
+    small: item.small || '',
+    width: item.width || 1200,
+    height: item.height || 900,
+    alt:
+      String(item.alt || '').trim() ||
+      `${draft.title || 'مشروع'} — ${draft.tag || ''}`.trim(),
+  }));
+
   if (!draft.isVideo && (draft.video || draft.youtube)) draft.isVideo = true;
   if (draft.isVideo && !draft.video && !draft.youtube) {
     draft.isVideo = false;
@@ -760,11 +925,25 @@ function saveProjectDraft() {
   if (state.draftIndex >= 0 && original) {
     const others = state.projects.filter((_, index) => index !== state.draftIndex);
     const orphan = (path) =>
-      path && !others.some((item) => item.image === path || item.imageSmall === path || item.video === path);
+      path &&
+      !others.some(
+        (item) =>
+          item.image === path ||
+          item.imageSmall === path ||
+          item.video === path ||
+          galleryPaths(item).includes(path)
+      );
     if (original.image !== draft.image && orphan(original.image)) state.pendingDeletes.add(original.image);
     if (original.imageSmall !== draft.imageSmall && orphan(original.imageSmall))
       state.pendingDeletes.add(original.imageSmall);
     if (original.video !== draft.video && orphan(original.video)) state.pendingDeletes.add(original.video);
+
+    (original.gallery || []).forEach((item) => {
+      if (draft.gallery.some((kept) => kept.src === item.src)) return;
+      [item.src, item.small].filter(Boolean).forEach((path) => {
+        if (orphan(path)) state.pendingDeletes.add(path);
+      });
+    });
   }
 
   if (state.draftIndex < 0) {
@@ -784,7 +963,12 @@ function deleteProject(index) {
   if (!project) return;
   if (!confirm(`حذف مشروع «${project.title}»؟`)) return;
 
-  const stillUsed = (path) => state.projects.some((p, i) => i !== index && p.image === path);
+  const stillUsed = (path) =>
+    state.projects.some(
+      (p, i) =>
+        i !== index &&
+        (p.image === path || p.imageSmall === path || p.video === path || galleryPaths(p).includes(path))
+    );
 
   /* الملفات التي لم تُرفع بعد تُلغى من الرفع، والموجودة تُجدول للحذف */
   const drop = (path) => {
@@ -796,6 +980,9 @@ function deleteProject(index) {
   if (project.image && !stillUsed(project.image)) drop(project.image);
   if (project.imageSmall && !stillUsed(project.imageSmall)) drop(project.imageSmall);
   if (project.video) drop(project.video);
+  galleryPaths(project).forEach((path) => {
+    if (!stillUsed(path)) drop(path);
+  });
 
   state.projects.splice(index, 1);
   markDirty();
@@ -1401,7 +1588,7 @@ function renderSettings() {
 
       <div class="card">
         <h3>النشر</h3>
-        <p>بعد الحفظ يبني GitHub الموقع تلقائيًا وينشره خلال 2–5 دقائق تقريبًا.</p>
+        <p>بعد الحفظ يبني GitHub الموقع وينشره تلقائيًا في حوالي دقيقة — مفيش أي خطوة عليك.</p>
         <div class="deploy" id="deployStatusSettings">لم يتم الفحص بعد</div>
         <button class="btn btn--ghost btn--sm" type="button" id="checkDeployBtn">تحديث الحالة</button>
         <a class="btn btn--ghost btn--sm" href="https://github.com/${h(state.owner)}/${h(state.repo)}/actions" target="_blank" rel="noopener">سجل النشر</a>
@@ -1483,7 +1670,12 @@ async function checkDeploy(manual = false) {
 
     if (run.status === 'queued' || run.status === 'in_progress') {
       clearTimeout(state.pollTimer);
-      state.pollTimer = setTimeout(() => checkDeploy(), 15000);
+      state.pollTimer = setTimeout(() => checkDeploy(), 12000);
+    } else if (run.status === 'completed' && run.conclusion === 'success') {
+      if (state.lastRunId !== run.id) {
+        state.lastRunId = run.id;
+        toast('تم نشر التعديلات على الموقع ✅ — اضغط «معاينة الموقع»', 'ok');
+      }
     } else if (manual) {
       toast(label, cls === 'is-ok' ? 'ok' : 'err');
     }
@@ -1497,7 +1689,7 @@ async function checkDeploy(manual = false) {
       });
       if (manual) {
         toast(
-          'التوكن مش مسموح له يقرأ حالة النشر (محتاج Actions: Read). الحفظ نفسه شغّال — افتح الموقع بعد دقيقتين.',
+          'التوكن مش مسموح له يقرأ حالة النشر (محتاج Actions: Read). الحفظ نفسه شغّال — افتح الموقع بعد دقيقة.',
           'ok'
         );
       }
@@ -1540,7 +1732,7 @@ async function saveAll() {
     state.dirty = false;
     await loadContent();
     renderAll();
-    toast('تم الحفظ. GitHub يبني الموقع الآن — تابع الحالة بالأعلى.', 'ok');
+    toast('تم الحفظ ✅ — GitHub يبني الموقع الآن تلقائيًا (حوالي دقيقة).', 'ok');
     setTimeout(() => checkDeploy(), 4000);
   } catch (error) {
     toast(`فشل الحفظ: ${error.message}`, 'err');
@@ -1610,6 +1802,11 @@ async function commitFiles(files, deletions, message) {
 /* ---------------- التهيئة ---------------- */
 function bindGlobal() {
   $('#loginForm').addEventListener('submit', login);
+
+  $('#previewLink')?.addEventListener('click', () => {
+    const link = $('#previewLink');
+    link.href = `${link.href.split('?')[0]}?v=${Date.now()}`;
+  });
 
   $('#pasteBtn')?.addEventListener('click', async () => {
     const input = $('#tokenInput');

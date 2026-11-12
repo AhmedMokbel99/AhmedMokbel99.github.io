@@ -691,6 +691,59 @@ function renderDialog() {
     }
   }
 
+  /* جاليري الصور: الغلاف + الصور الإضافية */
+  const galleryWrap = $('#dialogGallery');
+
+  if (galleryWrap) {
+    const items = [];
+
+    if (project.image) {
+      items.push({
+        src: project.image,
+        small: project.imageSmall || project.image,
+        width: project.width,
+        height: project.height,
+        alt: project.alt || `${project.title} — ${project.tag}`,
+      });
+    }
+
+    (project.gallery || []).forEach((item) => {
+      if (item && item.src) items.push(item);
+    });
+
+    const showGallery = !hasVideo && !hasYoutube && items.length > 1;
+    galleryWrap.innerHTML = '';
+    galleryWrap.hidden = !showGallery;
+
+    if (showGallery) {
+      items.forEach((item, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'dialog-gallery__item';
+        button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
+        button.setAttribute('aria-label', item.alt || `صورة ${index + 1}`);
+        button.innerHTML = `<img src="${item.small || item.src}" alt="" width="80" height="80" loading="lazy" decoding="async">`;
+
+        button.addEventListener('click', () => {
+          if (!image) return;
+          image.src = item.small || item.src;
+          image.srcset = item.small
+            ? `${item.small} 900w, ${item.src} ${item.width || 1200}w`
+            : '';
+          image.sizes = '(max-width: 680px) 92vw, 50vw';
+          image.alt = item.alt || `${project.title} — ${project.tag}`;
+          if (item.width) image.width = item.width;
+          if (item.height) image.height = item.height;
+          Array.from(galleryWrap.children).forEach((node) =>
+            node.setAttribute('aria-current', node === button ? 'true' : 'false')
+          );
+        });
+
+        galleryWrap.append(button);
+      });
+    }
+  }
+
   if (video) {
     if (hasVideo) {
       const first = videos[0];

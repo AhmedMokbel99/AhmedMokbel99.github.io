@@ -44,7 +44,7 @@ CSS_FILE = ROOT / "css" / "style.css"
 STANDALONE = ROOT / "standalone.html"
 SITEMAP = ROOT / "sitemap.xml"
 
-ASSET_VERSION = "15"
+ASSET_VERSION = "16"
 
 # توكِنات تتغيّر تلقائيًا داخل أي نص: {location} و{city}
 TOKENS: dict[str, str] = {}
@@ -843,6 +843,14 @@ def main() -> None:
         for key in ("id", "code", "title", "cat", "tag", "image"):
             if not project.get(key):
                 fail(f"المشروع رقم {index} ينقصه الحقل: {key}")
+        gallery = project.get("gallery") or []
+        if not isinstance(gallery, list):
+            fail(f"المشروع {project.get('code')}: gallery يجب أن تكون قائمة.")
+        for item_index, item in enumerate(gallery, start=1):
+            if not isinstance(item, dict) or not item.get("src"):
+                fail(f"المشروع {project.get('code')}: صورة الجاليري {item_index} ينقصها src.")
+            if not item.get("alt"):
+                fail(f"المشروع {project.get('code')}: صورة الجاليري {item_index} ينقصها alt.")
 
     # 1) js/data.js
     write(DATA_JS, build_data_js(site, projects))

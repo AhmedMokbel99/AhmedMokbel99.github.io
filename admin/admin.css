@@ -546,6 +546,43 @@ button, input, select, textarea { font: inherit; }
 .image-preview img { width: 100%; height: 100%; object-fit: cover; }
 .image-controls { display: grid; gap: 0.55rem; }
 
+.gallery-editor { display: grid; gap: 0.55rem; }
+.gallery-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+}
+.gallery-item img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--surface);
+}
+.gallery-item__body { display: grid; gap: 0.35rem; min-width: 0; }
+.gallery-item__body input {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--text);
+  font-size: 0.82rem;
+}
+.gallery-item__body input:focus {
+  outline: none;
+  border-color: var(--cyan);
+}
+.gallery-item__actions { display: flex; gap: 0.7rem; flex-wrap: wrap; font-size: 0.76rem; }
+.gallery-item__actions .link-btn { font-size: 0.76rem; }
+.gallery-item__actions .link-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.link-btn--danger { color: var(--red); }
+
 .check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.86rem; color: var(--muted); cursor: pointer; }
 .check input { width: 18px; height: 18px; accent-color: var(--violet); }
 

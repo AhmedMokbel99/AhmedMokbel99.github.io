@@ -2424,6 +2424,52 @@ body.has-dialog {
   line-height: 1.4;
 }
 
+/* جاليري صور المشروع داخل النافذة */
+.dialog-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 0.45rem;
+  margin-top: 1.1rem;
+}
+
+.dialog-gallery[hidden] {
+  display: none;
+}
+
+.dialog-gallery__item {
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #06070b;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dialog-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+  transition: opacity 0.2s ease;
+}
+
+.dialog-gallery__item:hover img,
+.dialog-gallery__item[aria-current="true"] img {
+  opacity: 1;
+}
+
+.dialog-gallery__item[aria-current="true"] {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px var(--cyan);
+}
+
+.dialog-gallery__item:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
 .dialog-facts {
   display: grid;
   grid-template-columns: 1fr 1fr;
