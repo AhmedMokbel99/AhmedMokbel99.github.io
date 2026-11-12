@@ -88,6 +88,8 @@ function markDirty() {
   state.dirty = true;
   const btn = $('#saveBtn');
   btn.disabled = false;
+  const bar = $('#dirtyBar');
+  if (bar) bar.hidden = false;
 }
 
 function slugify(value) {
@@ -346,6 +348,8 @@ function logout() {
   $('#loginView').hidden = false;
   $('#tokenInput').value = '';
   $('#saveBtn').disabled = true;
+  const bar = $('#dirtyBar');
+  if (bar) bar.hidden = true;
 }
 
 /* ---------------- التبويبات ---------------- */
@@ -509,6 +513,8 @@ function blankProject() {
     height: 900,
     alt: '',
     summary: '',
+    details: '',
+    facts: [],
     visible: true,
     video: '',
     youtube: '',
@@ -524,6 +530,7 @@ function openProjectEditor(index) {
   state.draftUploads = [];
   state.draftGalleryPreviews = new Map();
   if (!Array.isArray(state.draft.gallery)) state.draft.gallery = [];
+  if (!Array.isArray(state.draft.facts)) state.draft.facts = [];
   state.draftOriginal = {
     image: state.draft.image || '',
     imageSmall: state.draft.imageSmall || '',
@@ -610,6 +617,10 @@ function renderProjectForm() {
           <textarea data-draft="summary" rows="3">${h(draft.summary)}</textarea>
         </label>
         <label class="field" style="grid-column:1/-1">
+          <span>الوصف الكامل (اختياري)</span>
+          <textarea data-draft="details" rows="5" placeholder="تفاصيل المشروع والهدف منه… سطر فاضي بين كل فقرة">${h(draft.details)}</textarea>
+        </label>
+        <label class="field" style="grid-column:1/-1">
           <span>رابط المشروع على بيهانس (اختياري)</span>
           <input type="url" value="${h(draft.url)}" data-draft="url" placeholder="https://www.behance.net/gallery/...">
         </label>
@@ -622,6 +633,28 @@ function renderProjectForm() {
           إظهار المشروع في الموقع
         </label>
       </div>
+    </div>
+
+    <div class="form-section">
+      <h4>بيانات إضافية (اختياري)</h4>
+      <p class="hint" style="margin:0 0 .6rem">زي سنة المشروع، المجال، نوع المشروع، والخدمات — تظهر تحت وصف المشروع.</p>
+      <div class="facts-editor" id="factsEditor">
+        ${
+          (draft.facts || []).length
+            ? draft.facts
+                .map(
+                  (fact, index) => `
+                  <div class="fact-row">
+                    <input type="text" value="${h(fact.label)}" data-fact-label="${index}" placeholder="العنوان (مثال: سنة المشروع)">
+                    <input type="text" value="${h(fact.value)}" data-fact-value="${index}" placeholder="القيمة (مثال: 2026)">
+                    <button type="button" class="icon-btn" data-fact-remove="${index}" title="حذف البيان">✕</button>
+                  </div>`
+                )
+                .join('')
+            : '<p class="hint" style="margin:0">مفيش بيانات إضافية.</p>'
+        }
+      </div>
+      <button type="button" class="link-btn" id="addFactBtn" style="margin-top:.55rem">+ إضافة بيان</button>
     </div>
 
     <div class="form-section">
@@ -778,6 +811,33 @@ function renderProjectForm() {
     if (button.dataset.galMove != null) {
       moveGalleryItem(Number(button.dataset.galMove), Number(button.dataset.dir));
     }
+  });
+
+  $('#addFactBtn')?.addEventListener('click', () => {
+    if (!Array.isArray(state.draft.facts)) state.draft.facts = [];
+    state.draft.facts.push({ label: '', value: '' });
+    renderProjectForm();
+  });
+
+  $$('[data-fact-label]', $('#projectForm')).forEach((input) =>
+    input.addEventListener('input', () => {
+      const fact = state.draft.facts[Number(input.dataset.factLabel)];
+      if (fact) fact.label = input.value;
+    })
+  );
+
+  $$('[data-fact-value]', $('#projectForm')).forEach((input) =>
+    input.addEventListener('input', () => {
+      const fact = state.draft.facts[Number(input.dataset.factValue)];
+      if (fact) fact.value = input.value;
+    })
+  );
+
+  $('#factsEditor')?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-fact-remove]');
+    if (!button) return;
+    state.draft.facts.splice(Number(button.dataset.factRemove), 1);
+    renderProjectForm();
   });
 
   $('#videoInput')?.addEventListener('change', async (event) => {
@@ -1073,6 +1133,27 @@ function saveProjectDraft() {
   if (!String(draft.alt || '').trim())
     return toast('النص البديل (Alt) مطلوب لمحركات البحث', 'err');
 
+  if (state.draftIndex < 0) {
+    const title = String(draft.title || '').trim();
+    const same = state.projects.find((project) => String(project.title || '').trim() === title);
+    if (
+      same &&
+      !confirm(
+        `فيه مشروع تاني بنفس الاسم «${title}» موجود بالفعل.\n\n` +
+          'لو ده مشروع جديد فعلًا اضغط «موافق»، ولو كنت بتعدّل القديم اضغط «إلغاء» وعدّله من القائمة بدل ما تضيف نسخة.'
+      )
+    )
+      return;
+  }
+
+  draft.details = String(draft.details || '').trim();
+  draft.facts = (Array.isArray(draft.facts) ? draft.facts : [])
+    .map((fact) => ({
+      label: String((fact && fact.label) || '').trim(),
+      value: String((fact && fact.value) || '').trim(),
+    }))
+    .filter((fact) => fact.label && fact.value);
+
   draft.gallery = (draft.gallery || []).map((item) => ({
     src: item.src,
     small: item.small || '',
@@ -1123,7 +1204,7 @@ function saveProjectDraft() {
   closeProjectModal();
   markDirty();
   renderProjects();
-  toast('تم تحديث المشروع. اضغط «حفظ ونشر» لتطبيقه على الموقع.', 'ok');
+  toast('اتسجل في اللوحة بس — اضغط «حفظ ونشر» دلوقتي عشان يظهر للناس.', 'ok');
 }
 
 function deleteProject(index) {
@@ -1868,6 +1949,8 @@ async function reloadContent() {
     state.pendingDeletes.clear();
     state.dirty = false;
     $('#saveBtn').disabled = true;
+    const bar = $('#dirtyBar');
+    if (bar) bar.hidden = true;
     await loadContent();
     renderAll();
     toast('تم تحميل أحدث نسخة من المستودع.', 'ok');
@@ -1983,6 +2066,8 @@ async function saveAll() {
     state.pendingUploads.clear();
     state.pendingDeletes.clear();
     state.dirty = false;
+    const bar = $('#dirtyBar');
+    if (bar) bar.hidden = true;
     await loadContent();
     renderAll();
     toast('تم الحفظ ✅ — GitHub يبني الموقع الآن تلقائيًا (حوالي دقيقة).', 'ok');
@@ -2080,6 +2165,7 @@ function bindGlobal() {
 
   $('#logoutBtn').addEventListener('click', logout);
   $('#saveBtn').addEventListener('click', saveAll);
+  $('#dirtySaveBtn')?.addEventListener('click', saveAll);
   $('#projectSaveBtn').addEventListener('click', saveProjectDraft);
 
   $$('.tab').forEach((btn) =>

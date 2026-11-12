@@ -645,6 +645,8 @@ function renderDialog() {
   const kicker = $('#dialogKicker');
   const title = $('#dialogTitle');
   const summary = $('#dialogSummary');
+  const details = $('#dialogDetails');
+  const factsList = $('#dialogFacts');
   const category = $('#dialogCategory');
   const type = $('#dialogType');
   const tag = $('#dialogTag');
@@ -657,6 +659,30 @@ function renderDialog() {
   if (title) title.textContent = project.title;
   if (kicker) kicker.textContent = `${project.code} · ${project.tag}`;
   if (summary) summary.textContent = project.summary;
+
+  if (details) {
+    const text = String(project.details || '').trim();
+    details.textContent = text;
+    details.hidden = !text;
+  }
+
+  if (factsList) {
+    factsList.querySelectorAll('[data-extra-fact]').forEach((node) => node.remove());
+    (Array.isArray(project.facts) ? project.facts : []).forEach((fact) => {
+      const label = fact && String(fact.label || '').trim();
+      const value = fact && String(fact.value || '').trim();
+      if (!label || !value) return;
+      const row = document.createElement('div');
+      row.dataset.extraFact = '';
+      const dt = document.createElement('dt');
+      const dd = document.createElement('dd');
+      dt.textContent = label;
+      dd.textContent = value;
+      row.append(dt, dd);
+      factsList.append(row);
+    });
+  }
+
   if (category) category.textContent = categoryLabel(project.cat);
   if (type) type.textContent = project.isVideo ? 'فيديو / موشن' : 'تصميم ثابت';
   if (tag) tag.textContent = project.tag;

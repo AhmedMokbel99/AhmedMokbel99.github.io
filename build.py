@@ -44,7 +44,7 @@ CSS_FILE = ROOT / "css" / "style.css"
 STANDALONE = ROOT / "standalone.html"
 SITEMAP = ROOT / "sitemap.xml"
 
-ASSET_VERSION = "17"
+ASSET_VERSION = "18"
 
 # توكِنات تتغيّر تلقائيًا داخل أي نص: {location} و{city}
 TOKENS: dict[str, str] = {}
@@ -931,6 +931,13 @@ def main() -> None:
             if not item.get("alt"):
                 fail(f"المشروع {project.get('code')}: صورة الجاليري {item_index} ينقصها alt.")
 
+        facts = project.get("facts") or []
+        if not isinstance(facts, list):
+            fail(f"المشروع {project.get('code')}: facts يجب أن تكون قائمة.")
+        for fact_index, fact in enumerate(facts, start=1):
+            if not isinstance(fact, dict) or not fact.get("label") or not fact.get("value"):
+                fail(f"المشروع {project.get('code')}: البيان الإضافي {fact_index} يحتاج label و value.")
+
     # 1) js/data.js
     write(DATA_JS, build_data_js(site, projects))
     visible = [p for p in projects if p.get("visible", True) is not False]
@@ -1048,3 +1055,4 @@ if __name__ == "__main__":
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     main()
+
