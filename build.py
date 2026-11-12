@@ -44,7 +44,7 @@ CSS_FILE = ROOT / "css" / "style.css"
 STANDALONE = ROOT / "standalone.html"
 SITEMAP = ROOT / "sitemap.xml"
 
-ASSET_VERSION = "16"
+ASSET_VERSION = "17"
 
 # توكِنات تتغيّر تلقائيًا داخل أي نص: {location} و{city}
 TOKENS: dict[str, str] = {}
@@ -85,6 +85,45 @@ def apply_tokens(value):
     if isinstance(value, dict):
         return {key: apply_tokens(item) for key, item in value.items()}
     return value
+
+
+def _number(value, default: int) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def site_images(site: dict) -> dict:
+    """صور الموقع القابلة للتعديل من اللوحة (البروفايل + صورة المشاركة)."""
+    brand = site["brand"]
+    fallback_alt = f'{brand["name"]} — {brand["jobTitle"]}'
+    images = site.get("images") or {}
+    portrait = images.get("portrait") or {}
+    og = images.get("og") or {}
+    meta = site.get("meta") or {}
+
+    portrait = {
+        "src": portrait.get("src") or "assets/ahmed-mokbel.jpg",
+        "width": _number(portrait.get("width"), 887),
+        "height": _number(portrait.get("height"), 1024),
+        "medium": portrait.get("medium") or "",
+        "mediumWidth": _number(portrait.get("mediumWidth"), 800),
+        "mediumHeight": _number(portrait.get("mediumHeight"), 924),
+        "small": portrait.get("small") or "",
+        "smallWidth": _number(portrait.get("smallWidth"), 480),
+        "smallHeight": _number(portrait.get("smallHeight"), 554),
+        "alt": portrait.get("alt") or fallback_alt,
+    }
+
+    og = {
+        "src": og.get("src") or meta.get("ogImage") or "assets/og-image.jpg",
+        "width": _number(og.get("width"), 1200),
+        "height": _number(og.get("height"), 630),
+        "alt": og.get("alt") or fallback_alt,
+    }
+
+    return {"portrait": portrait, "og": og}
 
 
 def fail(message: str) -> None:
@@ -397,6 +436,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
     contact = site["contact"]
     brand = site["brand"]
     agency = site["agency"]
+    images = site_images(site)
     person_id = f"{base}/#person"
 
     person = {
@@ -406,7 +446,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         "jobTitle": brand["jobTitle"],
         "description": f'{brand["jobTitle"]} من {brand["location"]}، ومؤسس وكالة {agency["name"]} للإنتاج الإبداعي.',
         "url": base + "/",
-        "image": f'{base}/assets/ahmed-mokbel.jpg',
+        "image": f'{base}/{images["portrait"]["src"]}',
         "email": f'mailto:{contact["email"]}',
         "telephone": f'+{contact["whatsapp"]}',
         "address": {
@@ -442,7 +482,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         "name": f'{brand["name"]} — {agency["name"]}',
         "description": f'خدمات تصميم الجرافيك والموشن جرافيك والهوية البصرية والإنتاج الإعلامي من {brand["location"]}، مصر.',
         "url": base + "/",
-        "image": f'{base}/assets/og-image.jpg',
+        "image": f'{base}/{images["og"]["src"]}',
         "telephone": f'+{contact["whatsapp"]}',
         "email": f'mailto:{contact["email"]}',
         "priceRange": "$$",
@@ -501,6 +541,7 @@ def service_page(page: dict, site: dict, other: dict) -> str:
     base = site["meta"]["siteUrl"].rstrip("/")
     brand = site["brand"]
     contact = site["contact"]
+    images = site_images(site)
     url = f'{base}/{page["slug"]}'
     whatsapp = f'https://wa.me/{contact["whatsapp"]}'
     phone_display = f'+{contact["whatsapp"]}'
@@ -601,15 +642,16 @@ def service_page(page: dict, site: dict, other: dict) -> str:
   <meta property="og:url" content="{esc(url)}">
   <meta property="og:title" content="{esc(page["ogTitle"])}">
   <meta property="og:description" content="{esc(page["ogDescription"])}">
-  <meta property="og:image" content="{esc(base)}/{esc(site["meta"]["ogImage"])}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{esc(brand["name"])} — {esc(brand["jobTitle"])}">
+  <meta property="og:image" content="{esc(base)}/{esc(images["og"]["src"])}">
+  <meta property="og:image:width" content="{images["og"]["width"]}">
+  <meta property="og:image:height" content="{images["og"]["height"]}">
+  <meta property="og:image:alt" content="{esc(images["og"]["alt"])}">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{esc(page["ogTitle"])}">
   <meta name="twitter:description" content="{esc(page["ogDescription"])}">
-  <meta name="twitter:image" content="{esc(base)}/{esc(site["meta"]["ogImage"])}">
+  <meta name="twitter:image" content="{esc(base)}/{esc(images["og"]["src"])}">
+  <meta name="twitter:image:alt" content="{esc(images["og"]["alt"])}">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -792,6 +834,8 @@ def set_attr(html: str, pattern: str, value: str) -> str:
 def update_head(html: str, site: dict) -> str:
     meta = site["meta"]
     base = meta["siteUrl"].rstrip("/")
+    images = site_images(site)
+    og = images["og"]
 
     html = re.sub(r"<title>.*?</title>", lambda m: f"<title>{esc(meta['title'])}</title>", html, count=1, flags=re.S)
     html = set_attr(html, r'(<meta name="description" content=")[^"]*(")', meta["description"])
@@ -801,18 +845,53 @@ def update_head(html: str, site: dict) -> str:
     html = set_attr(html, r'(<meta property="og:url" content=")[^"]*(")', base + "/")
     html = set_attr(html, r'(<meta property="og:title" content=")[^"]*(")', meta["ogTitle"])
     html = set_attr(html, r'(<meta property="og:description" content=")[^"]*(")', meta["ogDescription"])
-    html = set_attr(html, r'(<meta property="og:image" content=")[^"]*(")', f'{base}/{meta["ogImage"]}')
-    html = set_attr(html, r'(<meta property="og:image:alt" content=")[^"]*(")', f'{site["brand"]["name"]} — {site["brand"]["jobTitle"]}')
+    html = set_attr(html, r'(<meta property="og:image" content=")[^"]*(")', f'{base}/{og["src"]}')
+    html = set_attr(html, r'(<meta property="og:image:width" content=")[^"]*(")', str(og["width"]))
+    html = set_attr(html, r'(<meta property="og:image:height" content=")[^"]*(")', str(og["height"]))
+    html = set_attr(html, r'(<meta property="og:image:alt" content=")[^"]*(")', og["alt"])
     html = set_attr(html, r'(<meta name="twitter:url" content=")[^"]*(")', base + "/")
     html = set_attr(html, r'(<meta name="twitter:title" content=")[^"]*(")', meta["ogTitle"])
     html = set_attr(html, r'(<meta name="twitter:description" content=")[^"]*(")', meta["ogDescription"])
-    html = set_attr(html, r'(<meta name="twitter:image" content=")[^"]*(")', f'{base}/{meta["ogImage"]}')
-    html = set_attr(html, r'(<meta name="twitter:image:alt" content=")[^"]*(")', f'{site["brand"]["name"]} — {site["brand"]["jobTitle"]}')
+    html = set_attr(html, r'(<meta name="twitter:image" content=")[^"]*(")', f'{base}/{og["src"]}')
+    html = set_attr(html, r'(<meta name="twitter:image:alt" content=")[^"]*(")', og["alt"])
 
     block = re.compile(r'  <script type="application/ld\+json">.*?  </script>', re.S)
     if not block.search(html):
         fail("لم يتم العثور على بيانات JSON-LD داخل index.html.")
     return block.sub(lambda m: "", html, count=1)
+
+
+def portrait_tag(images: dict) -> str:
+    portrait = images["portrait"]
+    srcset = []
+    if portrait["small"]:
+        srcset.append(f'{portrait["small"]} {portrait["smallWidth"]}w')
+    if portrait["medium"]:
+        srcset.append(f'{portrait["medium"]} {portrait["mediumWidth"]}w')
+    srcset.append(f'{portrait["src"]} {portrait["width"]}w')
+
+    return (
+        "<img\n"
+        '                data-site-image="portrait"\n'
+        f'                src="{esc(portrait["src"])}"\n'
+        f'                srcset="{esc(", ".join(srcset))}"\n'
+        '                sizes="(max-width: 900px) 340px, 430px"\n'
+        f'                width="{portrait["width"]}"\n'
+        f'                height="{portrait["height"]}"\n'
+        f'                alt="{esc(portrait["alt"])}"\n'
+        "                loading=\"eager\"\n"
+        "                decoding=\"async\"\n"
+        "                fetchpriority=\"high\"\n"
+        "              >"
+    )
+
+
+def update_portrait(html: str, site: dict) -> str:
+    pattern = re.compile(r'<img\b[^>]*\bdata-site-image="portrait"[^>]*>', re.S)
+    new, count = pattern.subn(lambda m: portrait_tag(site_images(site)), html, count=1)
+    if count != 1:
+        fail("لم يتم العثور على صورة البروفايل (data-site-image=\"portrait\") داخل index.html.")
+    return new
 
 
 def update_assets_version(html: str) -> str:
@@ -869,6 +948,7 @@ def main() -> None:
     html, text_count = apply_cms(html, site)
 
     html = update_head(html, site)
+    html = update_portrait(html, site)
 
     # أعد إدراج JSON-LD بعد تنظيف الوسم القديم
     html = html.replace("</head>", home_jsonld(site, projects) + "\n</head>", 1)

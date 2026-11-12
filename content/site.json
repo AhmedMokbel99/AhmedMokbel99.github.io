@@ -16,6 +16,26 @@
       "DOT Media"
     ]
   },
+  "images": {
+    "portrait": {
+      "src": "assets/ahmed-mokbel.jpg",
+      "width": 887,
+      "height": 1024,
+      "medium": "assets/ahmed-mokbel-800.jpg",
+      "mediumWidth": 800,
+      "mediumHeight": 924,
+      "small": "assets/ahmed-mokbel-480.jpg",
+      "smallWidth": 480,
+      "smallHeight": 554,
+      "alt": "أحمد مقبل — مصمم جرافيك وموشن جرافيك"
+    },
+    "og": {
+      "src": "assets/og-image.jpg",
+      "width": 1200,
+      "height": 630,
+      "alt": "أحمد مقبل — مصمم جرافيك وموشن جرافيك"
+    }
+  },
   "brand": {
     "name": "أحمد مقبل",
     "firstName": "أحمد",

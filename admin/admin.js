@@ -35,6 +35,7 @@ const state = {
   draftUploads: [],
   draftGalleryPreviews: new Map(),
   draftOriginal: null,
+  imagePreviews: {},
   tab: 'projects',
   pollTimer: null,
   lastRunId: null,
@@ -108,6 +109,48 @@ function galleryPaths(project) {
   );
 }
 
+/* صور الموقع: البروفايل وصورة المشاركة */
+const DEFAULT_IMAGES = {
+  portrait: {
+    src: 'assets/ahmed-mokbel.jpg',
+    width: 887,
+    height: 1024,
+    medium: 'assets/ahmed-mokbel-800.jpg',
+    mediumWidth: 800,
+    mediumHeight: 924,
+    small: 'assets/ahmed-mokbel-480.jpg',
+    smallWidth: 480,
+    smallHeight: 554,
+  },
+  og: {
+    src: 'assets/og-image.jpg',
+    width: 1200,
+    height: 630,
+  },
+};
+
+function normalizeSiteImages(site) {
+  const images = site.images || {};
+  const fallbackAlt = [site.brand && site.brand.name, site.brand && site.brand.jobTitle]
+    .filter(Boolean)
+    .join(' — ');
+
+  site.images = {
+    portrait: {
+      ...DEFAULT_IMAGES.portrait,
+      ...(images.portrait || {}),
+      alt: (images.portrait && images.portrait.alt) || fallbackAlt,
+    },
+    og: {
+      ...DEFAULT_IMAGES.og,
+      ...(images.og || {}),
+      alt: (images.og && images.og.alt) || fallbackAlt,
+    },
+  };
+
+  if (site.meta) site.meta.ogImage = site.images.og.src;
+}
+
 /* ---------------- GitHub API ---------------- */
 async function api(path, options = {}) {
   const response = await fetch(`https://api.github.com${path}`, {
@@ -167,6 +210,8 @@ async function loadContent() {
   state.site = JSON.parse(siteRaw);
   state.projects = JSON.parse(projectsRaw);
   state.pages = JSON.parse(pagesRaw);
+  normalizeSiteImages(state.site);
+  state.imagePreviews = {};
 }
 
 /* هل اتغيّر المحتوى على GitHub بعد ما فتحنا اللوحة؟ */
@@ -307,7 +352,7 @@ function logout() {
 function switchTab(tab) {
   state.tab = tab;
   $$('.tab').forEach((btn) => btn.classList.toggle('is-active', btn.dataset.tab === tab));
-  ['projects', 'texts', 'pages', 'settings'].forEach((name) => {
+  ['projects', 'texts', 'images', 'pages', 'settings'].forEach((name) => {
     $(`#panel-${name}`).hidden = name !== tab;
   });
 }
@@ -315,6 +360,7 @@ function switchTab(tab) {
 function renderAll() {
   renderProjects();
   renderTexts();
+  renderImages();
   renderPages();
   renderSettings();
 }
@@ -867,31 +913,35 @@ async function attachVideo(file) {
   }
 }
 
+async function resizeBitmap(bitmap, maxWidth, quality = 0.85) {
+  const scale = Math.min(1, maxWidth / bitmap.width, maxWidth / bitmap.height);
+  const width = Math.max(1, Math.round(bitmap.width * scale));
+  const height = Math.max(1, Math.round(bitmap.height * scale));
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, width, height);
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(bitmap, 0, 0, width, height);
+  return { blob: await canvasToJpeg(canvas, quality), width, height };
+}
+
+function canvasToJpeg(canvas, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => (blob ? resolve(blob) : reject(new Error('فشل الضغط'))),
+      'image/jpeg',
+      quality
+    );
+  });
+}
+
 async function prepareImage(file) {
   const bitmap = await createImageBitmap(file);
-  const make = (maxWidth) => {
-    const scale = Math.min(1, maxWidth / bitmap.width, maxWidth / bitmap.height);
-    const width = Math.max(1, Math.round(bitmap.width * scale));
-    const height = Math.max(1, Math.round(bitmap.height * scale));
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, width, height);
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(bitmap, 0, 0, width, height);
-    return new Promise((resolve, reject) => {
-      canvas.toBlob(
-        (blob) => (blob ? resolve({ blob, width, height }) : reject(new Error('فشل الضغط'))),
-        'image/jpeg',
-        0.85
-      );
-    });
-  };
-
-  const full = await make(1600);
-  const small = await make(900);
+  const full = await resizeBitmap(bitmap, 1600);
+  const small = await resizeBitmap(bitmap, 900);
   const fullB64 = base64FromBuffer(await full.blob.arrayBuffer());
   const smallB64 = base64FromBuffer(await small.blob.arrayBuffer());
   bitmap.close?.();
@@ -903,6 +953,107 @@ async function prepareImage(file) {
     height: full.height,
     fullBlob: full.blob,
   };
+}
+
+async function preparePortraitImage(file) {
+  const bitmap = await createImageBitmap(file);
+  const full = await resizeBitmap(bitmap, 1600);
+  const medium = await resizeBitmap(bitmap, 800);
+  const small = await resizeBitmap(bitmap, 480);
+  bitmap.close?.();
+
+  const stamp = Date.now().toString(36);
+  const data = {
+    src: `assets/site/portrait-${stamp}.jpg`,
+    width: full.width,
+    height: full.height,
+    medium: `assets/site/portrait-${stamp}-800.jpg`,
+    mediumWidth: medium.width,
+    mediumHeight: medium.height,
+    small: `assets/site/portrait-${stamp}-480.jpg`,
+    smallWidth: small.width,
+    smallHeight: small.height,
+  };
+
+  const uploads = [
+    [data.src, base64FromBuffer(await full.blob.arrayBuffer())],
+    [data.medium, base64FromBuffer(await medium.blob.arrayBuffer())],
+    [data.small, base64FromBuffer(await small.blob.arrayBuffer())],
+  ];
+
+  return { data, uploads, preview: URL.createObjectURL(full.blob) };
+}
+
+async function prepareOgImage(file) {
+  const bitmap = await createImageBitmap(file);
+  const width = 1200;
+  const height = 630;
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  const scale = Math.max(width / bitmap.width, height / bitmap.height);
+  const drawWidth = bitmap.width * scale;
+  const drawHeight = bitmap.height * scale;
+  ctx.fillStyle = '#07080d';
+  ctx.fillRect(0, 0, width, height);
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(bitmap, (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);
+  bitmap.close?.();
+
+  const blob = await canvasToJpeg(canvas, 0.9);
+  const stamp = Date.now().toString(36);
+  const data = { src: `assets/site/og-${stamp}.jpg`, width, height };
+
+  return {
+    data,
+    uploads: [[data.src, base64FromBuffer(await blob.arrayBuffer())]],
+    preview: URL.createObjectURL(blob),
+  };
+}
+
+async function attachSiteImage(key, file) {
+  try {
+    if (file.size > MAX_IMAGE) throw new Error('الصورة أكبر من 3MB. اضغطها قبل الرفع.');
+
+    const prepared =
+      key === 'portrait' ? await preparePortraitImage(file) : await prepareOgImage(file);
+    const previous = state.site.images[key] || {};
+    const previousPaths = [previous.src, previous.medium, previous.small].filter(Boolean);
+
+    prepared.uploads.forEach(([path, base64]) => state.pendingUploads.set(path, base64));
+
+    state.site.images[key] = {
+      ...prepared.data,
+      alt:
+        previous.alt ||
+        [state.site.brand && state.site.brand.name, state.site.brand && state.site.brand.jobTitle]
+          .filter(Boolean)
+          .join(' — '),
+    };
+    if (key === 'og' && state.site.meta) state.site.meta.ogImage = prepared.data.src;
+
+    previousPaths.forEach((path) => {
+      if (prepared.uploads.some(([newPath]) => newPath === path)) return;
+      if (state.pendingUploads.has(path)) {
+        state.pendingUploads.delete(path);
+        return;
+      }
+      if (path.startsWith('assets/site/')) state.pendingDeletes.add(path);
+    });
+
+    state.imagePreviews[key] = prepared.preview;
+    markDirty();
+    renderImages();
+    toast(
+      key === 'portrait'
+        ? 'تم تجهيز صورة البروفايل — اضغط «حفظ ونشر».'
+        : 'تم تجهيز صورة المشاركة — اضغط «حفظ ونشر».',
+      'ok'
+    );
+  } catch (error) {
+    toast(error.message || 'تعذّر تجهيز الصورة', 'err');
+  }
 }
 
 function base64FromBuffer(buffer) {
@@ -1376,6 +1527,76 @@ function renderTexts() {
   `;
 
   bindEditors(panel, 'site');
+}
+
+/* ---------------- صور الموقع ---------------- */
+function imagePreviewSrc(key) {
+  if (state.imagePreviews[key]) return state.imagePreviews[key];
+  const item = state.site.images[key];
+  return item && item.src ? rawUrl(item.src) : '';
+}
+
+function imageCard(key, title, hint) {
+  const item = state.site.images[key];
+  const src = imagePreviewSrc(key);
+  const previewClass = key === 'portrait' ? ' image-preview--portrait' : ' image-preview--wide';
+  return `<div class="card">
+    <h3>${h(title)}</h3>
+    <div class="image-picker">
+      <div class="image-preview${previewClass}">${src ? `<img src="${h(src)}" alt="">` : 'بدون صورة'}</div>
+      <div class="image-controls">
+        <input type="file" id="${key}Input" accept="image/jpeg,image/png,image/webp">
+        <label class="field">
+          <span>النص البديل (Alt) *</span>
+          <input type="text" value="${h(item.alt || '')}" data-image-alt="${key}" placeholder="وصف الصورة لمحركات البحث">
+        </label>
+        <p class="hint" style="margin:0">${hint}</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderImages() {
+  const panel = $('#panel-images');
+  panel.innerHTML = `
+    <div class="panel-head">
+      <div>
+        <h2>صور الموقع</h2>
+        <p>صورتك الشخصية وصورة المشاركة على السوشيال. أي تغيير هنا يظهر على الموقع بعد «حفظ ونشر».</p>
+      </div>
+    </div>
+
+    <div class="settings-grid">
+      ${imageCard(
+        'portrait',
+        'صورة البروفايل',
+        'تظهر في أول الصفحة الرئيسية. الأفضل صورة رأسية واضحة، وأقصى حجم 3MB — يتم ضغطها وتوليد نسخ 800px و480px تلقائيًا.'
+      )}
+      ${imageCard(
+        'og',
+        'صورة المشاركة (OG)',
+        'تظهر عند مشاركة الموقع على واتساب وفيسبوك وتويتر. أي صورة تتحول تلقائيًا إلى 1200×630.'
+      )}
+    </div>
+
+    <p class="note">بعد رفع الصورة اضغط «حفظ ونشر» بالأعلى. الصورة القديمة اللي اترفعت من اللوحة بتتشال من المستودع تلقائيًا.</p>
+  `;
+
+  ['portrait', 'og'].forEach((key) => {
+    const input = $(`#${key}Input`);
+    input?.addEventListener('change', async (event) => {
+      const file = event.target.files[0];
+      event.target.value = '';
+      if (file) await attachSiteImage(key, file);
+    });
+  });
+
+  $$('[data-image-alt]', panel).forEach((input) =>
+    input.addEventListener('input', () => {
+      state.site.images[input.dataset.imageAlt].alt = input.value;
+      markDirty();
+    })
+  );
 }
 
 /* ---------------- صفحات الخدمات ---------------- */
