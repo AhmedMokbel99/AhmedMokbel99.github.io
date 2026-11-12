@@ -169,6 +169,23 @@ async function loadContent() {
   state.pages = JSON.parse(pagesRaw);
 }
 
+/* هل اتغيّر المحتوى على GitHub بعد ما فتحنا اللوحة؟ */
+async function remoteChanged() {
+  const results = await Promise.all(
+    CONTENT_FILES.map(async (path) => {
+      try {
+        const data = await api(
+          `/repos/${state.owner}/${state.repo}/contents/${encodeURI(path)}?ref=${encodeURIComponent(state.branch)}`
+        );
+        return data.sha !== state.shas[path];
+      } catch (error) {
+        return true;
+      }
+    })
+  );
+  return results.some(Boolean);
+}
+
 /* ---------------- الدخول ---------------- */
 function loginMessage(error, step, owner, repo) {
   if (error && error.readonly) {
@@ -1706,6 +1723,21 @@ async function saveAll() {
   button.textContent = 'جاري الحفظ…';
 
   try {
+    /* حماية من كتابة نسخة قديمة فوق تعديلات أحدث (تاب مفتوح من زمان) */
+    const stale = await remoteChanged();
+    if (stale) {
+      const proceed = confirm(
+        'فيه تعديلات أحدث اتحفظت على GitHub من تاب/جهاز تاني.\n\n' +
+          'اضغط «حسنًا» لو عايز تكمل وتكتب نسخة اللوحة الحالية فوقها،\n' +
+          'أو «إلغاء» لإعادة تحميل أحدث نسخة (تعديلاتك غير المحفوظة هتضيع).'
+      );
+      if (!proceed) {
+        await reloadContent();
+        button.disabled = true;
+        return;
+      }
+    }
+
     const files = CONTENT_FILES.map((path) => {
       const data =
         path.endsWith('site.json')
