@@ -46,6 +46,9 @@ SITEMAP = ROOT / "sitemap.xml"
 
 ASSET_VERSION = "15"
 
+# توكِنات تتغيّر تلقائيًا داخل أي نص: {location} و{city}
+TOKENS: dict[str, str] = {}
+
 CATEGORY_FALLBACK = {
     "motion": "موشن جرافيك",
     "brand": "هوية وطباعة",
@@ -61,7 +64,27 @@ CHANNEL_ICONS = {
 
 
 def esc(value) -> str:
-    return html_lib.escape(str(value), quote=True)
+    text = str(value)
+    if TOKENS and "{" in text:
+        for token, replacement in TOKENS.items():
+            if token in text:
+                text = text.replace(token, replacement)
+    return html_lib.escape(text, quote=True)
+
+
+def apply_tokens(value):
+    """يستبدل {city} و{location} داخل أي نص أو قائمة أو كائن."""
+    if isinstance(value, str):
+        text = value
+        for token, replacement in TOKENS.items():
+            if token in text:
+                text = text.replace(token, replacement)
+        return text
+    if isinstance(value, list):
+        return [apply_tokens(item) for item in value]
+    if isinstance(value, dict):
+        return {key: apply_tokens(item) for key, item in value.items()}
+    return value
 
 
 def fail(message: str) -> None:
@@ -130,6 +153,9 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
     }
 
     visible = [p for p in projects if p.get("visible", True) is not False]
+
+    site_data = apply_tokens(site_data)
+    visible = apply_tokens(visible)
 
     header = (
         "/**\n"
@@ -802,6 +828,16 @@ def main() -> None:
         fail("projects.json يجب أن يحتوي على قائمة مشاريع غير فارغة.")
     if not isinstance(pages, list) or len(pages) < 2:
         fail("pages.json يحتاج صفحتي الخدمات على الأقل.")
+
+    location = str(site.get("brand", {}).get("location", "")).strip()
+    if not location:
+        fail("site.json: brand.location مطلوب (يُستخدم في بيانات البحث والفوتر).")
+    TOKENS.update(
+        {
+            "{location}": location,
+            "{city}": location.split("،")[0].strip(),
+        }
+    )
 
     for index, project in enumerate(projects, start=1):
         for key in ("id", "code", "title", "cat", "tag", "image"):

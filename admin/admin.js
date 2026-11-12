@@ -830,7 +830,7 @@ const TEXT_GROUPS = [
       ['hero.lead', 'النص التعريفي', 'textarea'],
       ['hero.roleFallback', 'سطر الدور بدون جافاسكريبت', 'text'],
       ['hero.specialty', 'نص التخصص لقارئ الشاشة', 'text'],
-      ['hero.location', 'المكان', 'text'],
+      ['hero.location', 'المكان في شارة البداية', 'text'],
       ['hero.experiencePrefix', 'نص الخبرة', 'text'],
       ['hero.behancePrefix', 'نص بيهانس', 'text'],
       ['hero.remote', 'نص العمل عن بُعد', 'text'],
@@ -841,11 +841,12 @@ const TEXT_GROUPS = [
   {
     id: 'brand',
     title: 'الهوية والروابط',
+    hint: 'المدينة هنا بتتحدّث في الفوتر وبيانات البحث — شارة البداية ليها حقل لوحدها',
     fields: [
       ['brand.name', 'الاسم الظاهر', 'text'],
       ['brand.firstName', 'الاسم الأول', 'text'],
       ['brand.jobTitle', 'المسمى', 'text'],
-      ['brand.location', 'المدينة', 'text'],
+      ['brand.location', 'المدينة (لبيانات البحث والفوتر)', 'text'],
       ['brand.initials', 'الحروف المختصرة', 'text'],
       ['brand.careerStart', 'سنة بداية المسيرة', 'number'],
       ['brand.behanceSince', 'سنة الانضمام لبيهانس', 'text'],
@@ -1140,6 +1141,7 @@ function renderTexts() {
       <div>
         <h2>نصوص الموقع</h2>
         <p>كل النصوص هنا. عدّل أي حقل واضغط «حفظ ونشر» — التغييرات تظهر بعد دقائق.</p>
+        <p class="hint">معلومة سريعة: في أي نص تقدر تكتب <code>{city}</code> أو <code>{location}</code> وهيتم استبدالهم بالمدينة اللي في «الهوية والروابط» تلقائيًا.</p>
       </div>
     </div>
     ${groups}
