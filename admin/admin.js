@@ -1000,7 +1000,7 @@ function canvasToJpeg(canvas, quality = 0.85) {
 
 async function prepareImage(file) {
   const bitmap = await createImageBitmap(file);
-  const full = await resizeBitmap(bitmap, 1600);
+  const full = await resizeBitmap(bitmap, 2000);
   const small = await resizeBitmap(bitmap, 900);
   const fullB64 = base64FromBuffer(await full.blob.arrayBuffer());
   const smallB64 = base64FromBuffer(await small.blob.arrayBuffer());

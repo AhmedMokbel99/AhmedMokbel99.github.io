@@ -41,13 +41,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=18-90e983ed">
+  <link rel="stylesheet" href="css/style.css?v=18-145bf145">
 
   <!-- Structured data -->
 
 
-  <script src="js/data.js?v=18-90e983ed" defer></script>
-  <script src="js/main.js?v=18-90e983ed" defer></script>
+  <script src="js/data.js?v=18-145bf145" defer></script>
+  <script src="js/main.js?v=18-145bf145" defer></script>
+
+
+
+
+
+
 
 
 
@@ -265,6 +271,9 @@
     </symbol>
     <symbol id="i-external" viewBox="0 0 24 24">
       <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>
+    </symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24">
+      <path d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/>
     </symbol>
     <symbol id="i-mail" viewBox="0 0 24 24">
       <rect x="3" y="5" width="18" height="14" rx="2"/>
@@ -1717,6 +1726,10 @@
       <div class="dialog-media" id="dialogMedia">
         <img id="dialogImage" src="assets/projects/saudi-founding-day-motion-graphic-900.jpg" alt="" width="900" height="1128" loading="lazy" decoding="async">
         <video id="dialogVideo" class="dialog-video" controls playsinline preload="metadata" hidden></video>
+        <button class="dialog-zoom" id="dialogZoom" type="button" aria-label="عرض الصورة بالحجم الكامل">
+          <svg class="icon" aria-hidden="true"><use href="#i-expand"></use></svg>
+          <span>تكبير</span>
+        </button>
       </div>
 
       <div class="dialog-body">
@@ -1768,6 +1781,28 @@
         </div>
       </div>
     </div>
+  </dialog>
+
+  <!-- ═══ Lightbox (عرض الصور بالحجم الكامل) ═══ -->
+  <dialog class="lightbox" id="lightbox" aria-label="عرض الصور بالحجم الكامل">
+    <div class="lightbox__bar">
+      <span class="lightbox__count" id="lightboxCount">1 / 1</span>
+      <button class="lightbox__btn" id="lightboxClose" type="button" aria-label="إغلاق العرض">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+    </div>
+
+    <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" type="button" aria-label="الصورة السابقة">
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+    </button>
+
+    <img class="lightbox__image" id="lightboxImage" alt="" decoding="async">
+
+    <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" type="button" aria-label="الصورة التالية">
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </button>
+
+    <p class="lightbox__caption" id="lightboxCaption"></p>
   </dialog>
 
   <!-- ═══ Toast ═══ -->

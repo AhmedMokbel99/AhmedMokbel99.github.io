@@ -906,10 +906,14 @@ def main() -> None:
     projects = load_json(PROJECTS_FILE, "projects.json")
     pages = load_json(PAGES_FILE, "pages.json")
 
-    # بصمة المحتوى: تتغيّر مع أي تعديل من اللوحة، فتكسر كاش data.js عند الزوار
-    content_hash = hashlib.sha1(
-        json.dumps([site, projects, pages], ensure_ascii=False, sort_keys=True).encode("utf-8")
-    ).hexdigest()[:8]
+    # بصمة المحتوى: تتغيّر مع أي تعديل من اللوحة أو أي تعديل في التصميم/البرمجة،
+    # فتكسر كاش data.js و style.css و main.js عند الزوار
+    cache_sources = [
+        json.dumps([site, projects, pages], ensure_ascii=False, sort_keys=True),
+        CSS_FILE.read_text(encoding="utf-8"),
+        MAIN_JS.read_text(encoding="utf-8"),
+    ]
+    content_hash = hashlib.sha1("".join(cache_sources).encode("utf-8")).hexdigest()[:8]
     ASSET_VERSION = f"{ASSET_VERSION}-{content_hash}"
 
     if not isinstance(projects, list) or not projects:

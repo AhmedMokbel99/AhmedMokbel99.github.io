@@ -449,6 +449,9 @@ const state = {
   visible: [],
   dialogIndex: 0,
   videoIndex: 0,
+  dialogImages: [],
+  dialogImageIndex: 0,
+  lightboxIndex: 0,
 };
 
 /* استخراج معرّف فيديو يوتيوب من أي صيغة رابط */
@@ -741,6 +744,9 @@ function renderDialog() {
     galleryWrap.innerHTML = '';
     galleryWrap.hidden = !showGallery;
 
+    state.dialogImages = items;
+    state.dialogImageIndex = 0;
+
     if (showGallery) {
       items.forEach((item, index) => {
         const button = document.createElement('button');
@@ -752,11 +758,12 @@ function renderDialog() {
 
         button.addEventListener('click', () => {
           if (!image) return;
+          state.dialogImageIndex = index;
           image.src = item.small || item.src;
           image.srcset = item.small
             ? `${item.small} 900w, ${item.src} ${item.width || 1200}w`
             : '';
-          image.sizes = '(max-width: 680px) 92vw, 50vw';
+          image.sizes = '(max-width: 680px) 92vw, 58vw';
           image.alt = item.alt || `${project.title} — ${project.tag}`;
           if (item.width) image.width = item.width;
           if (item.height) image.height = item.height;
@@ -769,6 +776,9 @@ function renderDialog() {
       });
     }
   }
+
+  const zoom = $('#dialogZoom');
+  if (zoom) zoom.hidden = hasVideo || hasYoutube || !project.image;
 
   if (video) {
     if (hasVideo) {
@@ -818,7 +828,7 @@ function renderDialog() {
       image.srcset = project.imageSmall
         ? `${project.imageSmall} 900w, ${project.image} ${project.width}w`
         : '';
-      image.sizes = '(max-width: 680px) 92vw, 50vw';
+      image.sizes = '(max-width: 680px) 92vw, 58vw';
       image.alt = `${project.title} — ${project.tag}`;
       image.width = project.width;
       image.height = project.height;
@@ -962,6 +972,129 @@ function initProjectDialog() {
   $('#dialogImage')?.addEventListener('error', () => {
     $('#dialogMedia')?.classList.add('is-missing');
   });
+
+  const openZoom = () => {
+    if (!$('#dialogImage') || $('#dialogImage').hidden) return;
+    openLightbox(state.dialogImageIndex);
+  };
+
+  $('#dialogImage')?.addEventListener('click', openZoom);
+  $('#dialogZoom')?.addEventListener('click', openZoom);
+}
+
+/* ------------------------------------------------------------
+   9b) عرض الصور بالحجم الكامل
+------------------------------------------------------------ */
+function lightboxList() {
+  return Array.isArray(state.dialogImages) ? state.dialogImages : [];
+}
+
+function renderLightbox() {
+  const items = lightboxList();
+  const item = items[state.lightboxIndex];
+  if (!item) return;
+
+  const img = $('#lightboxImage');
+  if (img) {
+    img.src = item.src;
+    img.srcset = item.small ? `${item.small} 900w, ${item.src} ${item.width || 1600}w` : '';
+    img.sizes = '100vw';
+    img.alt = item.alt || '';
+  }
+
+  const count = $('#lightboxCount');
+  if (count) count.textContent = `${state.lightboxIndex + 1} / ${items.length}`;
+
+  const caption = $('#lightboxCaption');
+  if (caption) caption.textContent = item.alt || '';
+
+  const single = items.length < 2;
+  const prev = $('#lightboxPrev');
+  const next = $('#lightboxNext');
+  if (prev) prev.hidden = single;
+  if (next) next.hidden = single;
+}
+
+function moveLightbox(delta) {
+  const items = lightboxList();
+  if (items.length < 2) return;
+  state.lightboxIndex = (state.lightboxIndex + delta + items.length) % items.length;
+  renderLightbox();
+}
+
+function openLightbox(index) {
+  const box = $('#lightbox');
+  const items = lightboxList();
+  if (!box || !items.length) return;
+
+  state.lightboxIndex = Math.max(0, Math.min(Number(index) || 0, items.length - 1));
+  renderLightbox();
+
+  if (typeof HTMLDialogElement === 'undefined' || !box.showModal) {
+    window.open(items[state.lightboxIndex].src, '_blank', 'noopener');
+    return;
+  }
+
+  if (!box.open) box.showModal();
+  $('#lightboxClose')?.focus({ preventScroll: true });
+}
+
+function initLightbox() {
+  const box = $('#lightbox');
+  if (!box) return;
+
+  $('#lightboxClose')?.addEventListener('click', () => box.close());
+  $('#lightboxPrev')?.addEventListener('click', () => moveLightbox(-1));
+  $('#lightboxNext')?.addEventListener('click', () => moveLightbox(1));
+
+  box.addEventListener('click', (event) => {
+    if (event.target === box) box.close();
+  });
+
+  box.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      moveLightbox(1);
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      moveLightbox(-1);
+    }
+  });
+
+  /* Esc يقفل العرض الكامل بس، ويسيب نافذة المشروع مفتوحة */
+  document.addEventListener(
+    'keydown',
+    (event) => {
+      if (event.key !== 'Escape' || !box.open) return;
+      event.preventDefault();
+      event.stopPropagation();
+      box.close();
+    },
+    true
+  );
+
+  box.addEventListener('close', () => {
+    $('#dialogZoom')?.focus({ preventScroll: true });
+  });
+
+  let startX = null;
+  box.addEventListener(
+    'touchstart',
+    (event) => {
+      startX = event.touches[0]?.clientX ?? null;
+    },
+    { passive: true }
+  );
+  box.addEventListener(
+    'touchend',
+    (event) => {
+      if (startX === null) return;
+      const dx = (event.changedTouches[0]?.clientX ?? startX) - startX;
+      startX = null;
+      if (Math.abs(dx) > 45) moveLightbox(dx < 0 ? 1 : -1);
+    },
+    { passive: true }
+  );
 }
 
 /* ------------------------------------------------------------
@@ -1157,6 +1290,7 @@ function init() {
   renderProjects();
   initWork();
   initProjectDialog();
+  initLightbox();
   initCounters();
   initTyping();
   initContactForm();
