@@ -18,11 +18,13 @@ ROOT = Path(__file__).resolve().parent.parent
 PROJECTS = ROOT / "assets" / "projects"
 
 EXTS = {".jpg", ".jpeg", ".png"}
-SUFFIX = re.compile(r"-(900|1200|1400|thumb)$", re.IGNORECASE)
+SUFFIX = re.compile(r"-(640|900|1200|1400|thumb)$", re.IGNORECASE)
 
 THUMB_EDGE = 360
+GRID_EDGE = 640
 MEDIUM_EDGE = 1200
 THUMB_QUALITY = 74
+GRID_QUALITY = 76
 MEDIUM_QUALITY = 80
 FULL_QUALITY = 82
 RECOMPRESS_OVER = 240 * 1024
@@ -87,10 +89,12 @@ def main() -> int:
             save_jpeg(fit(img, THUMB_EDGE), thumb_path, THUMB_QUALITY)
             thumbs += 1
 
+            # نسخة كروت الأعمال في الصفحة الرئيسية
+            save_jpeg(fit(img, GRID_EDGE), PROJECTS / f"{base}-640.jpg", GRID_QUALITY)
+
             # نسخة متوسطة للنافذة (أوضح من 900px وأخف من الأصل)
-            if max(img.size) > MEDIUM_EDGE:
-                save_jpeg(fit(img, MEDIUM_EDGE), PROJECTS / f"{base}-1200.jpg", MEDIUM_QUALITY)
-                mediums += 1
+            save_jpeg(fit(img, MEDIUM_EDGE), PROJECTS / f"{base}-1200.jpg", MEDIUM_QUALITY)
+            mediums += 1
 
     print(f"مصغّرات: {thumbs} · متوسطة: {mediums} · صور مضغوطة: {heavy}")
     print(f"تم توفير {saved / 1048576:.1f} ميجابايت من الصور الأصلية")

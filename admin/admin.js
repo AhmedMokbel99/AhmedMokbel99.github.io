@@ -117,12 +117,12 @@ function variantPaths(path) {
   const match = String(path).match(/(-900)?\.(jpe?g|png|webp)$/i);
   if (!match) return [];
   const base = String(path).replace(/(-900)?\.(jpe?g|png|webp)$/i, '');
-  return [`${base}-thumb.jpg`, `${base}-1200.jpg`];
+  return [`${base}-thumb.jpg`, `${base}-640.jpg`, `${base}-1200.jpg`];
 }
 
 /* المسار الأصلي لأي نسخة خفيفة */
 function mainPathOf(path) {
-  return String(path || '').replace(/-(thumb|1200)(\.(jpe?g|png|webp))$/i, '$2');
+  return String(path || '').replace(/-(thumb|640|1200)(\.(jpe?g|png|webp))$/i, '$2');
 }
 
 /* صور الموقع: البروفايل وصورة المشاركة */
@@ -873,13 +873,15 @@ async function attachImage(file) {
     const base = slugify(state.draftImageName) || `project-${state.draft.id}`;
     const fullPath = `assets/projects/${base}.jpg`;
     const smallPath = `assets/projects/${base}-900.jpg`;
+    const gridPath = `assets/projects/${base}-640.jpg`;
     const thumbPath = `assets/projects/${base}-thumb.jpg`;
     const mediumPath = `assets/projects/${base}-1200.jpg`;
 
     state.pendingUploads.set(fullPath, prepared.full);
     state.pendingUploads.set(smallPath, prepared.small);
+    state.pendingUploads.set(gridPath, prepared.grid);
     state.pendingUploads.set(thumbPath, prepared.thumb);
-    state.draftUploads.push(fullPath, smallPath, thumbPath);
+    state.draftUploads.push(fullPath, smallPath, gridPath, thumbPath);
 
     if (prepared.medium) {
       state.pendingUploads.set(mediumPath, prepared.medium);
@@ -926,9 +928,11 @@ async function attachGalleryImage(file) {
     state.draftUploads.push(src, small);
 
     const galleryThumb = `${base}-g${counter - 1}-thumb.jpg`;
+    const galleryGrid = `${base}-g${counter - 1}-640.jpg`;
     const galleryMedium = `${base}-g${counter - 1}-1200.jpg`;
     state.pendingUploads.set(galleryThumb, prepared.thumb);
-    state.draftUploads.push(galleryThumb);
+    state.pendingUploads.set(galleryGrid, prepared.grid);
+    state.draftUploads.push(galleryThumb, galleryGrid);
     if (prepared.medium) {
       state.pendingUploads.set(galleryMedium, prepared.medium);
       state.draftUploads.push(galleryMedium);
@@ -1040,13 +1044,12 @@ async function prepareImage(file) {
   const bitmap = await createImageBitmap(file);
   const full = await resizeBitmap(bitmap, 2000);
   const small = await resizeBitmap(bitmap, 900);
+  const grid = await resizeBitmap(bitmap, 640, 0.76);
   const thumb = await resizeBitmap(bitmap, 360, 0.74);
-  const medium =
-    Math.max(bitmap.width, bitmap.height) > 1200
-      ? await resizeBitmap(bitmap, 1200, 0.8)
-      : null;
+  const medium = await resizeBitmap(bitmap, 1200, 0.8);
   const fullB64 = base64FromBuffer(await full.blob.arrayBuffer());
   const smallB64 = base64FromBuffer(await small.blob.arrayBuffer());
+  const gridB64 = base64FromBuffer(await grid.blob.arrayBuffer());
   const thumbB64 = base64FromBuffer(await thumb.blob.arrayBuffer());
   const mediumB64 = medium ? base64FromBuffer(await medium.blob.arrayBuffer()) : '';
   bitmap.close?.();
@@ -1054,6 +1057,7 @@ async function prepareImage(file) {
   return {
     full: fullB64,
     small: smallB64,
+    grid: gridB64,
     thumb: thumbB64,
     medium: mediumB64,
     width: full.width,

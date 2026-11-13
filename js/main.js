@@ -452,6 +452,8 @@ const state = {
   dialogImages: [],
   dialogImageIndex: 0,
   lightboxIndex: 0,
+  shown: 8,
+  filter: 'all',
 };
 
 /* نسخ الصورة الخفيفة: -thumb للشريط الصغير و -1200 لنافذة العرض */
@@ -466,13 +468,16 @@ function thumbOf(item) {
 }
 
 function hasMedium(item) {
-  if (!item || item.medium) return Boolean(item && item.medium);
-  return Math.max(Number(item.width) || 0, Number(item.height) || 0) > 1200;
+  if (!item) return false;
+  if (item.medium) return true;
+  return /-900\.(jpe?g|png|webp)$/i.test(item.small || '');
 }
 
 function mediumOf(item) {
   if (!item) return '';
-  return item.medium || (hasMedium(item) ? variantPath(item.small || item.src, '-1200') : '');
+  if (item.medium) return item.medium;
+  if (!hasMedium(item)) return '';
+  return String(item.small).replace(/-900(\.(jpe?g|png|webp))$/i, '-1200$1');
 }
 
 /* تحميل مسبق هادئ للصور المجاورة عشان التنقل يبان فوري */
@@ -513,6 +518,8 @@ function applyDialogImage(item, alt) {
     image.src = small || item.src;
     image.srcset = '';
   }
+
+  image.dataset.small = small || '';
 
   image.sizes = '(max-width: 680px) 100vw, 1022px';
   if (item.width) image.width = item.width;
@@ -557,14 +564,24 @@ function projectMarkup(project) {
   const category = categoryLabel(project.cat);
   const fallback = project.imageSmall || project.image;
   const alt = project.alt || `${project.title} — ${project.tag}`;
+  const gridSmall = project.image
+    ? String(project.image).replace(/\.(jpe?g|png|webp)$/i, '-640.jpg')
+    : '';
+  const srcset = [
+    project.image && /^assets\//.test(project.image) ? `${gridSmall} 640w` : '',
+    project.imageSmall ? `${project.imageSmall} 900w` : '',
+    `${project.image} ${project.width}w`,
+  ]
+    .filter(Boolean)
+    .join(', ');
 
   return `
     <article class="project" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
       <div class="project__media">
         <img
           src="${fallback}"
-          srcset="${project.imageSmall ? `${project.imageSmall} 900w, ` : ''}${project.image} ${project.width}w"
-          sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+          srcset="${srcset}"
+          sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
           width="${project.width}"
           height="${project.height}"
           alt="${alt}"
@@ -634,11 +651,65 @@ function renderProjects() {
     card.style.setProperty('--reveal-delay', `${Math.min(index, 7) * 60}ms`);
   });
 
+  initGridImages(grid);
   renderFilters();
   observeReveals(grid);
+  ensureWorkMore(grid);
+  updateWorkMore();
 
   const counter = $('#workTotal');
   if (counter) counter.textContent = String(state.projects.length);
+}
+
+/* إظهار الصور بهدوء عند جهوزها بدل ما تنط في الشاشة */
+function initGridImages(scope) {
+  $$('.project__media img', scope).forEach((img) => {
+    if (img.classList.contains('is-ready')) return;
+    const ready = () => {
+      img.classList.add('is-ready');
+      img.closest('.project__media')?.classList.add('is-ready');
+    };
+    if (img.complete && img.naturalWidth) ready();
+    else img.addEventListener('load', ready, { once: true });
+  });
+}
+
+/* زر «عرض المزيد» — أول 8 مشاريع بس، والباقي عند الطلب */
+function ensureWorkMore(grid) {
+  if ($('#workMore')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'work-more';
+  wrap.id = 'workMore';
+  wrap.innerHTML = `
+    <button class="btn btn--ghost work-more__btn" id="workMoreBtn" type="button">
+      <span>عرض المزيد من الأعمال</span>
+      <span class="work-more__count" id="workMoreCount"></span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg>
+    </button>`;
+  grid.after(wrap);
+  wrap.addEventListener('click', () => {
+    state.shown = Math.min(state.projects.length, state.shown + 8);
+    updateWorkMore();
+  });
+}
+
+function updateWorkMore() {
+  const grid = $('#workGrid');
+  const more = $('#workMore');
+  if (!grid || !more) return;
+
+  const all = state.filter === 'all';
+  $$('[data-project-card]', grid).forEach((card) => {
+    const position = state.projects.findIndex((p) => p.id === card.dataset.projectCard);
+    card.classList.toggle('is-deferred', all && position >= state.shown);
+  });
+
+  const remaining = all ? Math.max(0, state.projects.length - state.shown) : 0;
+  more.hidden = remaining === 0;
+  const count = $('#workMoreCount');
+  if (count) count.textContent = remaining ? `(${remaining})` : '';
+
+  initGridImages(grid);
 }
 
 function initWork() {
@@ -654,6 +725,7 @@ function initWork() {
       if (!button) return;
 
       const filter = button.dataset.filter;
+      state.filter = filter;
       $$('.filter', filters).forEach((b) =>
         b.setAttribute('aria-pressed', String(b === button))
       );
@@ -669,6 +741,8 @@ function initWork() {
           card.classList.add('is-enter');
         }
       });
+
+      updateWorkMore();
 
       const empty = $('#workEmpty');
       if (empty) empty.hidden = state.visible.length !== 0;
@@ -1001,7 +1075,14 @@ function initProjectDialog() {
   const dialogImage = $('#dialogImage');
   const settleImage = () => dialogImage?.classList.remove('is-loading');
   dialogImage?.addEventListener('load', settleImage);
-  dialogImage?.addEventListener('error', settleImage);
+  dialogImage?.addEventListener('error', () => {
+    const small = dialogImage?.dataset.small;
+    if (small && dialogImage && !dialogImage.src.endsWith(small)) {
+      dialogImage.src = small;
+      dialogImage.srcset = '';
+    }
+    settleImage();
+  });
 
   /* لو المصغّرة مش موجودة نرجع للنسخة 900 */
   $('#dialogGallery')?.addEventListener(

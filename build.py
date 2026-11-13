@@ -281,7 +281,20 @@ def project_card(project: dict) -> str:
     width = int(project.get("width") or 1200)
     height = int(project.get("height") or 900)
     fallback = image_small or image
-    srcset = (f"{image_small} 900w, " if image_small else "") + f"{image} {width}w"
+    grid_small = (
+        re.sub(r"\.(?:jpe?g|png|webp)$", "-640.jpg", image, flags=re.I)
+        if image.startswith("assets/")
+        else ""
+    )
+    srcset = ", ".join(
+        part
+        for part in (
+            f"{grid_small} 640w" if grid_small else "",
+            f"{image_small} 900w" if image_small else "",
+            f"{image} {width}w",
+        )
+        if part
+    )
     alt = project.get("alt") or f'{project["title"]} — {project["tag"]}'
 
     badge = (
@@ -298,7 +311,7 @@ def project_card(project: dict) -> str:
     <img
       src="{esc(fallback)}"
       srcset="{esc(srcset)}"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="{width}"
       height="{height}"
       alt="{esc(alt)}"
@@ -654,10 +667,9 @@ def service_page(page: dict, site: dict, other: dict) -> str:
   <meta name="twitter:image" content="{esc(base)}/{esc(images["og"]["src"])}">
   <meta name="twitter:image:alt" content="{esc(images["og"]["alt"])}">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v={ASSET_VERSION}">
+  <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css?v={ASSET_VERSION}">
 
 {jsonld_script(graph)}
 </head>

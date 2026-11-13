@@ -38,11 +38,166 @@
   <meta name="twitter:image:alt" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك">
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <style>
+/* fonts:start — خطوط مستضافة محليًا، لا تعدّل هذا القسم يدويًا */
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-mono-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-mono-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-mono-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-arabic-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-arabic-500-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-arabic-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-arabic-600-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-arabic-600-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-arabic-700-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans Arabic';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/ibm-plex-sans-arabic-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/tajawal-500-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/tajawal-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/tajawal-700-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../assets/fonts/tajawal-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../assets/fonts/tajawal-800-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC7, U+10EC9-10EEE, U+10EF0-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+
+@font-face {
+  font-family: 'Tajawal';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../assets/fonts/tajawal-800-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* fonts:end */
+
 /* ============================================================
    أحمد مقبل — Portfolio
    Design system / Layout / Components
@@ -388,10 +543,8 @@ body.has-dialog {
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: rgba(7, 8, 13, 0.72);
+  background: rgba(7, 8, 13, 0.94);
   border-bottom: 1px solid transparent;
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
   transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1405,6 +1558,39 @@ body.has-dialog {
   gap: 1.6rem;
 }
 
+/* المشاريع الزيادة تتخبى لحد ما المستخدم يطلبها */
+.project.is-deferred {
+  display: none;
+}
+
+.work-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.2rem;
+}
+
+.work-more[hidden] {
+  display: none;
+}
+
+.work-more__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.work-more__btn .icon {
+  width: 16px;
+  height: 16px;
+  transform: rotate(180deg);
+}
+
+.work-more__count {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--cyan);
+}
+
 .project {
   position: relative;
   display: flex;
@@ -1455,7 +1641,39 @@ body.has-dialog {
   object-fit: cover;
   object-position: center;
   filter: brightness(0.94) saturate(1.02);
-  transition: transform 0.75s var(--ease), filter 0.4s ease;
+  transition: transform 0.75s var(--ease), filter 0.4s ease, opacity 0.45s ease;
+}
+
+html.js .project__media img {
+  opacity: 0;
+}
+
+html.js .project__media img.is-ready {
+  opacity: 1;
+}
+
+/* هيكل خفيف يبان مكان الصورة وهي بتُحمّل */
+.project__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, var(--surface-2) 25%, #1c2231 45%, var(--surface-2) 65%);
+  background-size: 240% 100%;
+  animation: media-shimmer 1.5s linear infinite;
+  opacity: 0;
+}
+
+html.js .project__media::before {
+  opacity: 1;
+}
+
+html.js .project__media.is-ready::before {
+  display: none;
+}
+
+@keyframes media-shimmer {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
 }
 
 .project:hover .project__media img {
@@ -3600,6 +3818,10 @@ body.has-dialog {
 
 
 
+
+
+
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -4153,8 +4375,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/project-f24-900.jpg"
-      srcset="assets/projects/project-f24-900.jpg 900w, assets/projects/project-f24.jpg 1600w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/project-f24-640.jpg 640w, assets/projects/project-f24-900.jpg 900w, assets/projects/project-f24.jpg 1600w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1600"
       height="1600"
       alt="مركز هارفارد التعليمي 2026 — هوية وطباعة"
@@ -4185,8 +4407,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/saudi-founding-day-motion-graphic-900.jpg"
-      srcset="assets/projects/saudi-founding-day-motion-graphic-900.jpg 900w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/saudi-founding-day-motion-graphic-640.jpg 640w, assets/projects/saudi-founding-day-motion-graphic-900.jpg 900w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1072"
       height="1344"
       alt="يوم التأسيس السعودي — موشن جرافيك"
@@ -4217,8 +4439,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/ibn-albasel-motion-graphic.png"
-      srcset="assets/projects/ibn-albasel-motion-graphic.png 404w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/ibn-albasel-motion-graphic-640.jpg 640w, assets/projects/ibn-albasel-motion-graphic.png 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="404"
       height="316"
       alt="ابن الباسل — موشن جرافيك"
@@ -4249,8 +4471,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/ans-dimashqi-steak-ad.jpg"
-      srcset="assets/projects/ans-dimashqi-steak-ad.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/ans-dimashqi-steak-ad-640.jpg 640w, assets/projects/ans-dimashqi-steak-ad.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
@@ -4281,8 +4503,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/first-motion-graphics-work.png"
-      srcset="assets/projects/first-motion-graphics-work.png 404w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/first-motion-graphics-work-640.jpg 640w, assets/projects/first-motion-graphics-work.png 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="404"
       height="316"
       alt="أول أعمالي في الموشن جرافيك — موشن جرافيك"
@@ -4313,8 +4535,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/taher-printing-brand-identity-900.jpg"
-      srcset="assets/projects/taher-printing-brand-identity-900.jpg 900w, assets/projects/taher-printing-brand-identity.jpg 1400w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/taher-printing-brand-identity-640.jpg 640w, assets/projects/taher-printing-brand-identity-900.jpg 900w, assets/projects/taher-printing-brand-identity.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1400"
       height="1192"
       alt="طاهر للطباعة — هوية وطباعة"
@@ -4345,8 +4567,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/harvard-education-center-brand.jpg"
-      srcset="assets/projects/harvard-education-center-brand.jpg 404w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/harvard-education-center-brand-640.jpg 640w, assets/projects/harvard-education-center-brand.jpg 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="404"
       height="316"
       alt="مركز هارفارد التعليمي — هوية وطباعة"
@@ -4377,8 +4599,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/ultra-grow-brand-packaging-900.jpg"
-      srcset="assets/projects/ultra-grow-brand-packaging-900.jpg 900w, assets/projects/ultra-grow-brand-packaging.jpg 1400w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/ultra-grow-brand-packaging-640.jpg 640w, assets/projects/ultra-grow-brand-packaging-900.jpg 900w, assets/projects/ultra-grow-brand-packaging.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1400"
       height="964"
       alt="ULTRA GROW — هوية وطباعة"
@@ -4409,8 +4631,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/ultra-grow-2-brand-system-900.jpg"
-      srcset="assets/projects/ultra-grow-2-brand-system-900.jpg 900w, assets/projects/ultra-grow-2-brand-system.jpg 1400w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/ultra-grow-2-brand-system-640.jpg 640w, assets/projects/ultra-grow-2-brand-system-900.jpg 900w, assets/projects/ultra-grow-2-brand-system.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1400"
       height="980"
       alt="ULTRA GROW 2 — هوية وطباعة"
@@ -4441,8 +4663,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/social-media-design-collection.png"
-      srcset="assets/projects/social-media-design-collection.png 404w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/social-media-design-collection-640.jpg 640w, assets/projects/social-media-design-collection.png 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="404"
       height="316"
       alt="تصميمات — تصميم رقمي"
@@ -4473,8 +4695,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/filler-injection-ad-design-900.jpg"
-      srcset="assets/projects/filler-injection-ad-design-900.jpg 900w, assets/projects/filler-injection-ad-design.jpg 1400w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/filler-injection-ad-design-640.jpg 640w, assets/projects/filler-injection-ad-design-900.jpg 900w, assets/projects/filler-injection-ad-design.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1400"
       height="1400"
       alt="حقن فيلر — تصميم رقمي"
@@ -4505,8 +4727,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/insta-watches-ad-design.jpg"
-      srcset="assets/projects/insta-watches-ad-design.jpg 404w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/insta-watches-ad-design-640.jpg 640w, assets/projects/insta-watches-ad-design.jpg 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="404"
       height="316"
       alt="INSTA WATCHES — تصميم رقمي"
@@ -4537,8 +4759,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/nature-secret-ad-design.jpg"
-      srcset="assets/projects/nature-secret-ad-design.jpg 404w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/nature-secret-ad-design-640.jpg 640w, assets/projects/nature-secret-ad-design.jpg 404w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="404"
       height="316"
       alt="سر الطبيعة — تصميم رقمي"
@@ -4569,8 +4791,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/admission-gateway-rollup-900.jpg"
-      srcset="assets/projects/admission-gateway-rollup-900.jpg 900w, assets/projects/admission-gateway-rollup.jpg 2314w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/admission-gateway-rollup-640.jpg 640w, assets/projects/admission-gateway-rollup-900.jpg 900w, assets/projects/admission-gateway-rollup.jpg 2314w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="2314"
       height="3069"
       alt="بوابة القبول — تصميم طباعي"
@@ -4601,8 +4823,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/beginnings-motion-graphic.jpg"
-      srcset="assets/projects/beginnings-motion-graphic.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/beginnings-motion-graphic-640.jpg 640w, assets/projects/beginnings-motion-graphic.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="البدايات — ياسر الحزيمي — موشن جرافيك"
@@ -4633,8 +4855,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/alhakum-altakathur-motion.jpg"
-      srcset="assets/projects/alhakum-altakathur-motion.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/alhakum-altakathur-motion-640.jpg 640w, assets/projects/alhakum-altakathur-motion.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك"
@@ -4665,8 +4887,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/en-serv-logo-animation.jpg"
-      srcset="assets/projects/en-serv-logo-animation.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/en-serv-logo-animation-640.jpg 640w, assets/projects/en-serv-logo-animation.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="EN-SERV — تحريك شعار — تحريك شعار"
@@ -4697,8 +4919,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/elzain-restaurant-video.jpg"
-      srcset="assets/projects/elzain-restaurant-video.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/elzain-restaurant-video-640.jpg 640w, assets/projects/elzain-restaurant-video.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="الزين — مطعم سوري — تصوير ومونتاج"
@@ -4729,8 +4951,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/elmaqsoud-generators-ad.jpg"
-      srcset="assets/projects/elmaqsoud-generators-ad.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/elmaqsoud-generators-ad-640.jpg 640w, assets/projects/elmaqsoud-generators-ad.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="المقصود للمولدات — إعلان الشركة — إعلان شركة"
@@ -4761,8 +4983,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/bdeel-car-ad.jpg"
-      srcset="assets/projects/bdeel-car-ad.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/bdeel-car-ad-640.jpg 640w, assets/projects/bdeel-car-ad.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="بديل — إعلان سيارة — إعلان سيارات"
@@ -4793,8 +5015,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/alwathba-real-estate-ad.jpg"
-      srcset="assets/projects/alwathba-real-estate-ad.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/alwathba-real-estate-ad-640.jpg 640w, assets/projects/alwathba-real-estate-ad.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="الوثبة العقارية — مشروع سكني — إعلان عقاري"
@@ -4825,8 +5047,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/ans-dimashqi-pie-ad.jpg"
-      srcset="assets/projects/ans-dimashqi-pie-ad.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/ans-dimashqi-pie-ad-640.jpg 640w, assets/projects/ans-dimashqi-pie-ad.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
       alt="آنس الدمشقي — إعلان الفطيرة — إعلان مطعم"
@@ -4857,8 +5079,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/almenissy-hijri-1448-greeting-900.jpg"
-      srcset="assets/projects/almenissy-hijri-1448-greeting-900.jpg 900w, assets/projects/almenissy-hijri-1448-greeting.jpg 1200w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/almenissy-hijri-1448-greeting-640.jpg 640w, assets/projects/almenissy-hijri-1448-greeting-900.jpg 900w, assets/projects/almenissy-hijri-1448-greeting.jpg 1200w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="1204"
       alt="تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا"
@@ -4889,8 +5111,8 @@ body.has-dialog {
   <div class="project__media">
     <img
       src="assets/projects/grm-hijri-1448-greeting-900.jpg"
-      srcset="assets/projects/grm-hijri-1448-greeting-900.jpg 900w, assets/projects/grm-hijri-1448-greeting.jpg 1400w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+      srcset="assets/projects/grm-hijri-1448-greeting-640.jpg 640w, assets/projects/grm-hijri-1448-greeting-900.jpg 900w, assets/projects/grm-hijri-1448-greeting.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1400"
       height="1841"
       alt="تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا"
@@ -6427,6 +6649,8 @@ const state = {
   dialogImages: [],
   dialogImageIndex: 0,
   lightboxIndex: 0,
+  shown: 8,
+  filter: 'all',
 };
 
 /* نسخ الصورة الخفيفة: -thumb للشريط الصغير و -1200 لنافذة العرض */
@@ -6441,13 +6665,16 @@ function thumbOf(item) {
 }
 
 function hasMedium(item) {
-  if (!item || item.medium) return Boolean(item && item.medium);
-  return Math.max(Number(item.width) || 0, Number(item.height) || 0) > 1200;
+  if (!item) return false;
+  if (item.medium) return true;
+  return /-900\.(jpe?g|png|webp)$/i.test(item.small || '');
 }
 
 function mediumOf(item) {
   if (!item) return '';
-  return item.medium || (hasMedium(item) ? variantPath(item.small || item.src, '-1200') : '');
+  if (item.medium) return item.medium;
+  if (!hasMedium(item)) return '';
+  return String(item.small).replace(/-900(\.(jpe?g|png|webp))$/i, '-1200$1');
 }
 
 /* تحميل مسبق هادئ للصور المجاورة عشان التنقل يبان فوري */
@@ -6488,6 +6715,8 @@ function applyDialogImage(item, alt) {
     image.src = small || item.src;
     image.srcset = '';
   }
+
+  image.dataset.small = small || '';
 
   image.sizes = '(max-width: 680px) 100vw, 1022px';
   if (item.width) image.width = item.width;
@@ -6532,14 +6761,24 @@ function projectMarkup(project) {
   const category = categoryLabel(project.cat);
   const fallback = project.imageSmall || project.image;
   const alt = project.alt || `${project.title} — ${project.tag}`;
+  const gridSmall = project.image
+    ? String(project.image).replace(/\.(jpe?g|png|webp)$/i, '-640.jpg')
+    : '';
+  const srcset = [
+    project.image && /^assets\//.test(project.image) ? `${gridSmall} 640w` : '',
+    project.imageSmall ? `${project.imageSmall} 900w` : '',
+    `${project.image} ${project.width}w`,
+  ]
+    .filter(Boolean)
+    .join(', ');
 
   return `
     <article class="project" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
       <div class="project__media">
         <img
           src="${fallback}"
-          srcset="${project.imageSmall ? `${project.imageSmall} 900w, ` : ''}${project.image} ${project.width}w"
-          sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 30vw"
+          srcset="${srcset}"
+          sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
           width="${project.width}"
           height="${project.height}"
           alt="${alt}"
@@ -6609,11 +6848,65 @@ function renderProjects() {
     card.style.setProperty('--reveal-delay', `${Math.min(index, 7) * 60}ms`);
   });
 
+  initGridImages(grid);
   renderFilters();
   observeReveals(grid);
+  ensureWorkMore(grid);
+  updateWorkMore();
 
   const counter = $('#workTotal');
   if (counter) counter.textContent = String(state.projects.length);
+}
+
+/* إظهار الصور بهدوء عند جهوزها بدل ما تنط في الشاشة */
+function initGridImages(scope) {
+  $$('.project__media img', scope).forEach((img) => {
+    if (img.classList.contains('is-ready')) return;
+    const ready = () => {
+      img.classList.add('is-ready');
+      img.closest('.project__media')?.classList.add('is-ready');
+    };
+    if (img.complete && img.naturalWidth) ready();
+    else img.addEventListener('load', ready, { once: true });
+  });
+}
+
+/* زر «عرض المزيد» — أول 8 مشاريع بس، والباقي عند الطلب */
+function ensureWorkMore(grid) {
+  if ($('#workMore')) return;
+  const wrap = document.createElement('div');
+  wrap.className = 'work-more';
+  wrap.id = 'workMore';
+  wrap.innerHTML = `
+    <button class="btn btn--ghost work-more__btn" id="workMoreBtn" type="button">
+      <span>عرض المزيد من الأعمال</span>
+      <span class="work-more__count" id="workMoreCount"></span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg>
+    </button>`;
+  grid.after(wrap);
+  wrap.addEventListener('click', () => {
+    state.shown = Math.min(state.projects.length, state.shown + 8);
+    updateWorkMore();
+  });
+}
+
+function updateWorkMore() {
+  const grid = $('#workGrid');
+  const more = $('#workMore');
+  if (!grid || !more) return;
+
+  const all = state.filter === 'all';
+  $$('[data-project-card]', grid).forEach((card) => {
+    const position = state.projects.findIndex((p) => p.id === card.dataset.projectCard);
+    card.classList.toggle('is-deferred', all && position >= state.shown);
+  });
+
+  const remaining = all ? Math.max(0, state.projects.length - state.shown) : 0;
+  more.hidden = remaining === 0;
+  const count = $('#workMoreCount');
+  if (count) count.textContent = remaining ? `(${remaining})` : '';
+
+  initGridImages(grid);
 }
 
 function initWork() {
@@ -6629,6 +6922,7 @@ function initWork() {
       if (!button) return;
 
       const filter = button.dataset.filter;
+      state.filter = filter;
       $$('.filter', filters).forEach((b) =>
         b.setAttribute('aria-pressed', String(b === button))
       );
@@ -6644,6 +6938,8 @@ function initWork() {
           card.classList.add('is-enter');
         }
       });
+
+      updateWorkMore();
 
       const empty = $('#workEmpty');
       if (empty) empty.hidden = state.visible.length !== 0;
@@ -6976,7 +7272,14 @@ function initProjectDialog() {
   const dialogImage = $('#dialogImage');
   const settleImage = () => dialogImage?.classList.remove('is-loading');
   dialogImage?.addEventListener('load', settleImage);
-  dialogImage?.addEventListener('error', settleImage);
+  dialogImage?.addEventListener('error', () => {
+    const small = dialogImage?.dataset.small;
+    if (small && dialogImage && !dialogImage.src.endsWith(small)) {
+      dialogImage.src = small;
+      dialogImage.srcset = '';
+    }
+    settleImage();
+  });
 
   /* لو المصغّرة مش موجودة نرجع للنسخة 900 */
   $('#dialogGallery')?.addEventListener(
