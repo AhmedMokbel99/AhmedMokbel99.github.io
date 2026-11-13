@@ -111,6 +111,20 @@ function galleryPaths(project) {
   );
 }
 
+/* النسخ الخفيفة المولّدة تلقائيًا لأي صورة (-thumb و -1200) */
+function variantPaths(path) {
+  if (!path) return [];
+  const match = String(path).match(/(-900)?\.(jpe?g|png|webp)$/i);
+  if (!match) return [];
+  const base = String(path).replace(/(-900)?\.(jpe?g|png|webp)$/i, '');
+  return [`${base}-thumb.jpg`, `${base}-1200.jpg`];
+}
+
+/* المسار الأصلي لأي نسخة خفيفة */
+function mainPathOf(path) {
+  return String(path || '').replace(/-(thumb|1200)(\.(jpe?g|png|webp))$/i, '$2');
+}
+
 /* صور الموقع: البروفايل وصورة المشاركة */
 const DEFAULT_IMAGES = {
   portrait: {
@@ -553,14 +567,16 @@ function openProjectEditor(index) {
 
 function closeProjectModal() {
   /* إزالة الصور/الفيديوهات التي رُفعت في هذا المحرّر ولم تُستخدم */
-  const stillUsed = (path) =>
-    state.projects.some(
+  const stillUsed = (path) => {
+    const main = mainPathOf(path);
+    return state.projects.some(
       (project) =>
-        project.image === path ||
-        project.imageSmall === path ||
+        project.image === main ||
+        project.imageSmall === main ||
         project.video === path ||
-        galleryPaths(project).includes(path)
+        galleryPaths(project).includes(main)
     );
+  };
   (state.draftUploads || []).forEach((path) => {
     if (!stillUsed(path)) state.pendingUploads.delete(path);
   });
@@ -857,10 +873,18 @@ async function attachImage(file) {
     const base = slugify(state.draftImageName) || `project-${state.draft.id}`;
     const fullPath = `assets/projects/${base}.jpg`;
     const smallPath = `assets/projects/${base}-900.jpg`;
+    const thumbPath = `assets/projects/${base}-thumb.jpg`;
+    const mediumPath = `assets/projects/${base}-1200.jpg`;
 
     state.pendingUploads.set(fullPath, prepared.full);
     state.pendingUploads.set(smallPath, prepared.small);
-    state.draftUploads.push(fullPath, smallPath);
+    state.pendingUploads.set(thumbPath, prepared.thumb);
+    state.draftUploads.push(fullPath, smallPath, thumbPath);
+
+    if (prepared.medium) {
+      state.pendingUploads.set(mediumPath, prepared.medium);
+      state.draftUploads.push(mediumPath);
+    }
 
     state.draft.image = fullPath;
     state.draft.imageSmall = smallPath;
@@ -900,6 +924,15 @@ async function attachGalleryImage(file) {
     state.pendingUploads.set(src, prepared.full);
     state.pendingUploads.set(small, prepared.small);
     state.draftUploads.push(src, small);
+
+    const galleryThumb = `${base}-g${counter - 1}-thumb.jpg`;
+    const galleryMedium = `${base}-g${counter - 1}-1200.jpg`;
+    state.pendingUploads.set(galleryThumb, prepared.thumb);
+    state.draftUploads.push(galleryThumb);
+    if (prepared.medium) {
+      state.pendingUploads.set(galleryMedium, prepared.medium);
+      state.draftUploads.push(galleryMedium);
+    }
 
     state.draft.gallery.push({
       src,
@@ -946,7 +979,12 @@ function removeGalleryItem(index) {
         (project, projectIndex) =>
           projectIndex !== state.draftIndex && galleryPaths(project).includes(path)
       );
-    if (!usedElsewhere) state.pendingDeletes.add(path);
+    if (!usedElsewhere) {
+      state.pendingDeletes.add(path);
+      variantPaths(item.src).forEach((variant) => {
+        if (!state.draftUploads.includes(variant)) state.pendingDeletes.add(variant);
+      });
+    }
   });
 
   state.draftGalleryPreviews.delete(item.src);
@@ -1002,13 +1040,22 @@ async function prepareImage(file) {
   const bitmap = await createImageBitmap(file);
   const full = await resizeBitmap(bitmap, 2000);
   const small = await resizeBitmap(bitmap, 900);
+  const thumb = await resizeBitmap(bitmap, 360, 0.74);
+  const medium =
+    Math.max(bitmap.width, bitmap.height) > 1200
+      ? await resizeBitmap(bitmap, 1200, 0.8)
+      : null;
   const fullB64 = base64FromBuffer(await full.blob.arrayBuffer());
   const smallB64 = base64FromBuffer(await small.blob.arrayBuffer());
+  const thumbB64 = base64FromBuffer(await thumb.blob.arrayBuffer());
+  const mediumB64 = medium ? base64FromBuffer(await medium.blob.arrayBuffer()) : '';
   bitmap.close?.();
 
   return {
     full: fullB64,
     small: smallB64,
+    thumb: thumbB64,
+    medium: mediumB64,
     width: full.width,
     height: full.height,
     fullBlob: full.blob,
@@ -1182,9 +1229,14 @@ function saveProjectDraft() {
           item.video === path ||
           galleryPaths(item).includes(path)
       );
-    if (original.image !== draft.image && orphan(original.image)) state.pendingDeletes.add(original.image);
-    if (original.imageSmall !== draft.imageSmall && orphan(original.imageSmall))
+    if (original.image !== draft.image && orphan(original.image)) {
+      state.pendingDeletes.add(original.image);
+      variantPaths(original.image).forEach((variant) => state.pendingDeletes.add(variant));
+    }
+    if (original.imageSmall !== draft.imageSmall && orphan(original.imageSmall)) {
       state.pendingDeletes.add(original.imageSmall);
+      variantPaths(original.imageSmall).forEach((variant) => state.pendingDeletes.add(variant));
+    }
     if (original.video !== draft.video && orphan(original.video)) state.pendingDeletes.add(original.video);
 
     (original.gallery || []).forEach((item) => {

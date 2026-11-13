@@ -454,6 +454,71 @@ const state = {
   lightboxIndex: 0,
 };
 
+/* نسخ الصورة الخفيفة: -thumb للشريط الصغير و -1200 لنافذة العرض */
+function variantPath(path, suffix) {
+  if (!path) return '';
+  return String(path).replace(/(-900)?\.(jpe?g|png|webp)$/i, `${suffix}.$2`);
+}
+
+function thumbOf(item) {
+  if (!item) return '';
+  return item.thumb || variantPath(item.small || item.src, '-thumb');
+}
+
+function hasMedium(item) {
+  if (!item || item.medium) return Boolean(item && item.medium);
+  return Math.max(Number(item.width) || 0, Number(item.height) || 0) > 1200;
+}
+
+function mediumOf(item) {
+  if (!item) return '';
+  return item.medium || (hasMedium(item) ? variantPath(item.small || item.src, '-1200') : '');
+}
+
+/* تحميل مسبق هادئ للصور المجاورة عشان التنقل يبان فوري */
+const preloaded = new Map();
+
+function preloadImage(url) {
+  if (!url || preloaded.has(url)) return;
+  const img = new Image();
+  img.decoding = 'async';
+  img.src = url;
+  preloaded.set(url, img);
+}
+
+function preloadNeighbours(items, index, pick) {
+  if (!Array.isArray(items) || items.length < 2) return;
+  [index + 1, index - 1].forEach((position) => {
+    if (position < 0 || position >= items.length) return;
+    const item = items[position];
+    if (item) preloadImage(pick(item));
+  });
+}
+
+/* تعيين الصورة المعروضة في نافذة المشروع بالنسخة المتوسطة الخفيفة */
+function applyDialogImage(item, alt) {
+  const image = $('#dialogImage');
+  if (!image || !item) return;
+
+  const small = item.small || item.src;
+  const medium = mediumOf(item);
+
+  image.classList.add('is-loading');
+  image.alt = item.alt || alt || '';
+
+  if (medium && small && medium !== small) {
+    image.src = medium;
+    image.srcset = `${small} 900w, ${medium} 1200w`;
+  } else {
+    image.src = small || item.src;
+    image.srcset = '';
+  }
+
+  image.sizes = '(max-width: 680px) 100vw, 1022px';
+  if (item.width) image.width = item.width;
+  if (item.height) image.height = item.height;
+}
+
 /* استخراج معرّف فيديو يوتيوب من أي صيغة رابط */
 function youtubeId(url) {
   if (!url) return '';
@@ -705,7 +770,9 @@ function renderDialog() {
     if (videos.length > 1) {
       videos.forEach((item, index) => {
         const button = document.createElement('button');
-        const poster = item.poster || project.image || '';
+        const poster = item.poster
+          ? thumbOf({ src: item.poster })
+          : thumbOf({ src: project.image, small: project.imageSmall });
         button.type = 'button';
         button.className = 'dialog-playlist__item';
         button.dataset.videoIndex = String(index);
@@ -754,19 +821,13 @@ function renderDialog() {
         button.className = 'dialog-gallery__item';
         button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
         button.setAttribute('aria-label', item.alt || `صورة ${index + 1}`);
-        button.innerHTML = `<img src="${item.small || item.src}" alt="" width="80" height="80" loading="lazy" decoding="async">`;
+        button.innerHTML = `<img src="${thumbOf(item)}" data-fallback="${item.small || item.src}" alt="" width="80" height="80" loading="lazy" decoding="async">`;
 
         button.addEventListener('click', () => {
           if (!image) return;
           state.dialogImageIndex = index;
-          image.src = item.small || item.src;
-          image.srcset = item.small
-            ? `${item.small} 900w, ${item.src} ${item.width || 1200}w`
-            : '';
-          image.sizes = '(max-width: 680px) 92vw, 58vw';
-          image.alt = item.alt || `${project.title} — ${project.tag}`;
-          if (item.width) image.width = item.width;
-          if (item.height) image.height = item.height;
+          applyDialogImage(item, `${project.title} — ${project.tag}`);
+          preloadNeighbours(items, index, (entry) => mediumOf(entry) || entry.small || entry.src);
           Array.from(galleryWrap.children).forEach((node) =>
             node.setAttribute('aria-current', node === button ? 'true' : 'false')
           );
@@ -827,14 +888,14 @@ function renderDialog() {
     image.hidden = hasVideo || hasYoutube;
 
     if (!hasVideo) {
-      image.src = project.imageMedium || project.imageSmall || project.image;
-      image.srcset = project.imageSmall
-        ? `${project.imageSmall} 900w, ${project.image} ${project.width}w`
-        : '';
-      image.sizes = '(max-width: 680px) 92vw, 58vw';
-      image.alt = `${project.title} — ${project.tag}`;
-      image.width = project.width;
-      image.height = project.height;
+      const cover = state.dialogImages[0] || {
+        src: project.image,
+        small: project.imageSmall,
+        width: project.width,
+        height: project.height,
+      };
+      applyDialogImage(cover, `${project.title} — ${project.tag}`);
+      preloadNeighbours(state.dialogImages, 0, (entry) => mediumOf(entry) || entry.small || entry.src);
     }
   }
 
@@ -936,6 +997,27 @@ function initProjectDialog() {
   $('#dialogPrev')?.addEventListener('click', () => moveDialog(-1));
   $('#dialogNext')?.addEventListener('click', () => moveDialog(1));
 
+  /* إزالة تأثير التحميل مع أول صورة جاهزة */
+  const dialogImage = $('#dialogImage');
+  const settleImage = () => dialogImage?.classList.remove('is-loading');
+  dialogImage?.addEventListener('load', settleImage);
+  dialogImage?.addEventListener('error', settleImage);
+
+  /* لو المصغّرة مش موجودة نرجع للنسخة 900 */
+  $('#dialogGallery')?.addEventListener(
+    'error',
+    (event) => {
+      const img = event.target;
+      if (!(img instanceof HTMLImageElement)) return;
+      const fallback = img.dataset.fallback;
+      if (fallback && !img.src.endsWith(fallback)) {
+        img.removeAttribute('data-fallback');
+        img.src = fallback;
+      }
+    },
+    true
+  );
+
   $('#dialogPlaylist')?.addEventListener('click', (event) => {
     const button = event.target.closest('[data-video-index]');
     if (!button) return;
@@ -1018,10 +1100,28 @@ function renderLightbox() {
 
   const img = $('#lightboxImage');
   if (img) {
-    img.src = item.src;
-    img.srcset = item.small ? `${item.small} 900w, ${item.src} ${item.width || 1600}w` : '';
+    const full = item.src;
+    const quick = mediumOf(item) || item.small || full;
+    const serial = (state.lightboxSerial = (state.lightboxSerial || 0) + 1);
+
+    img.decoding = 'async';
+    img.srcset = '';
     img.sizes = '100vw';
+    img.src = quick;
     img.alt = item.alt || '';
+
+    /* الصورة الكاملة توصل في الخلفية وتُستبدل بهدوء */
+    if (full && full !== quick) {
+      const loader = new Image();
+      loader.decoding = 'async';
+      loader.onload = () => {
+        if (state.lightboxSerial !== serial) return;
+        img.src = full;
+      };
+      loader.src = full;
+    }
+
+    preloadNeighbours(items, state.lightboxIndex, (entry) => entry.src);
   }
 
   const count = $('#lightboxCount');

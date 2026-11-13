@@ -2315,6 +2315,11 @@ body.has-dialog {
   max-height: 100%;
   object-fit: contain;
   cursor: zoom-in;
+  transition: opacity 0.22s ease;
+}
+
+.dialog-media img.is-loading {
+  opacity: 0.35;
 }
 
 .dialog-media video {
