@@ -30,6 +30,13 @@ URL = (
 
 KEEP = {"arabic", "latin"}
 
+# الأوزان المستخدمة فعليًا فقط — أي وزن ناقص المتصفح يستخدم أقرب وزن متاح
+KEEP_WEIGHTS = {
+    "IBM Plex Sans Arabic": {"400", "700"},
+    "Tajawal": {"800"},
+    "IBM Plex Mono": {"400", "500"},
+}
+
 
 def slug(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
@@ -53,6 +60,8 @@ def main() -> int:
 
         family = re.search(r"font-family:\s*'([^']+)'", body).group(1)
         weight = re.search(r"font-weight:\s*(\d+)", body).group(1)
+        if weight not in KEEP_WEIGHTS.get(family, set()):
+            continue
         src = re.search(r"url\((https://[^)]+\.woff2)\)", body).group(1)
         unicode_range = re.search(r"unicode-range:\s*([^;]+);", body).group(1).strip()
 
@@ -90,6 +99,14 @@ def main() -> int:
         style = block + "\n\n" + style
 
     STYLE.write_text(style, encoding="utf-8", newline="\n")
+
+    # حذف أي ملف خط قديم مش مستخدم
+    used = {name for _, _, name, _ in faces}
+    for old in FONTS.glob("*.woff2"):
+        if old.name not in used:
+            old.unlink()
+            print(f"حُذف {old.name}")
+
     print(f"خطوط: {len(faces)} ملف · {total / 1024:.0f} كيلوبايت · داخل css/style.css")
     return 0
 

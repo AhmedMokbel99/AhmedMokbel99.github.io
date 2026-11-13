@@ -47,6 +47,9 @@ SITEMAP = ROOT / "sitemap.xml"
 
 ASSET_VERSION = "18"
 
+# عدد المشاريع الظاهرة في الصفحة الرئيسية قبل زر «عرض المزيد»
+INITIAL_CARDS = 8
+
 # توكِنات تتغيّر تلقائيًا داخل أي نص: {location} و{city}
 TOKENS: dict[str, str] = {}
 
@@ -274,7 +277,7 @@ def replace_block(html: str, name: str, inner: str) -> str:
 # ---------------------------------------------------------------------------
 # 3) مكوّنات HTML
 # ---------------------------------------------------------------------------
-def project_card(project: dict) -> str:
+def project_card(project: dict, index: int = 0) -> str:
     """Keep in sync with projectMarkup() in js/main.js."""
     image = project.get("image", "")
     image_small = project.get("imageSmall") or ""
@@ -306,7 +309,7 @@ def project_card(project: dict) -> str:
         else ""
     )
 
-    return f'''<article class="project" data-reveal data-project-card="{esc(project["id"])}" data-category="{esc(project["cat"])}">
+    return f'''<article class="project{" is-deferred" if index >= INITIAL_CARDS else ""}" data-reveal data-project-card="{esc(project["id"])}" data-category="{esc(project["cat"])}">
   <div class="project__media">
     <img
       src="{esc(fallback)}"
@@ -975,7 +978,7 @@ def main() -> None:
     html = replace_block(html, "faq", faq_block(site.get("faq", [])))
     html = replace_block(html, "channels", channels_block(site))
     html = replace_block(html, "service-options", service_options(site))
-    html = replace_block(html, "static-projects", "\n".join(project_card(p) for p in visible))
+    html = replace_block(html, "static-projects", "\n".join(project_card(p, i) for i, p in enumerate(visible)))
 
     html, text_count = apply_cms(html, site)
 
@@ -1040,6 +1043,8 @@ def main() -> None:
 
 def build_standalone(html: str) -> None:
     css = read(CSS_FILE)
+    # standalone.html في جذر الموقع، فمسار الخطوط بيتغيّر
+    css = css.replace("../assets/fonts/", "assets/fonts/")
     data_js = read(DATA_JS)
     main_js = read(MAIN_JS)
 

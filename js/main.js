@@ -231,7 +231,7 @@ function initScrollUI() {
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 
-    if (bar) bar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    if (bar) bar.style.transform = `scaleX(${Math.min(1, Math.max(0, progress / 100))})`;
     if (header) header.classList.toggle('is-scrolled', scrollTop > 8);
     if (topBtn) topBtn.classList.toggle('is-visible', scrollTop > 700);
     ticking = false;
@@ -303,34 +303,9 @@ function initScrollSpy() {
 let revealObserver = null;
 
 function initReveal() {
-  $$('[data-reveal-group]').forEach((group) => {
-    Array.from(group.children).forEach((child, index) => {
-      if (child.hasAttribute('data-reveal')) {
-        child.style.setProperty('--reveal-delay', `${Math.min(index, 7) * 70}ms`);
-      }
-    });
-  });
-
+  /* مفيش إخفاء للمحتوى لحد ما المستخدم ينزل — الصفحة تظهر كاملة فورًا */
   const elements = $$('[data-reveal]');
-  if (!elements.length) return;
-
-  if (!('IntersectionObserver' in window) || reduceMotion.matches) {
-    elements.forEach((el) => el.classList.add('is-in'));
-    return;
-  }
-
-  revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-in');
-        revealObserver.unobserve(entry.target);
-      });
-    },
-    { threshold: 0.12, rootMargin: '0px 0px -40px' }
-  );
-
-  elements.forEach((el) => revealObserver.observe(el));
+  elements.forEach((el) => el.classList.add('is-in'));
 }
 
 function observeReveals(scope) {
@@ -409,11 +384,14 @@ function initTyping() {
   caret.setAttribute('aria-hidden', 'true');
   caret.textContent = '|';
   el.textContent = '';
+
+  /* السطر يظهر كامل من أول لحظة بدل ما يبدأ فاضي ويكتب حرف حرف */
+  text.textContent = phrases[0];
   el.append(text, caret);
 
   let phraseIndex = 0;
-  let charIndex = 0;
-  let deleting = false;
+  let charIndex = phrases[0].length;
+  let deleting = true;
 
   const tick = () => {
     const current = phrases[phraseIndex];
@@ -438,7 +416,7 @@ function initTyping() {
     window.setTimeout(tick, deleting ? 34 : 62);
   };
 
-  window.setTimeout(tick, 1000);
+  window.setTimeout(tick, 2800);
 }
 
 /* ------------------------------------------------------------
@@ -465,6 +443,14 @@ function variantPath(path, suffix) {
 function thumbOf(item) {
   if (!item) return '';
   return item.thumb || variantPath(item.small || item.src, '-thumb');
+}
+
+/* نسخة 640 الخفيفة اللي بتكون محمّلة بالفعل في كارت الصفحة الرئيسية */
+function gridOf(item) {
+  if (!item) return '';
+  const base = item.small || item.src;
+  if (!base || !/^assets\//.test(base)) return base;
+  return String(base).replace(/(-900)?\.(jpe?g|png|webp)$/i, '-640.jpg');
 }
 
 function hasMedium(item) {
@@ -500,30 +486,36 @@ function preloadNeighbours(items, index, pick) {
   });
 }
 
-/* تعيين الصورة المعروضة في نافذة المشروع بالنسخة المتوسطة الخفيفة */
+/* تعيين الصورة المعروضة في نافذة المشروع: تظهر فورًا بنسخة الكارت المحمّلة
+   وبعدين تتبدّل بهدوء للنسخة الأوضح من غير ما الشاشة تفضى */
 function applyDialogImage(item, alt) {
   const image = $('#dialogImage');
   if (!image || !item) return;
 
   const small = item.small || item.src;
   const medium = mediumOf(item);
+  const low = gridOf(item) || small;
+  const hi = medium || small || item.src;
 
-  image.classList.add('is-loading');
   image.alt = item.alt || alt || '';
-
-  if (medium && small && medium !== small) {
-    image.src = medium;
-    image.srcset = `${small} 900w, ${medium} 1200w`;
-  } else {
-    image.src = small || item.src;
-    image.srcset = '';
-  }
-
   image.dataset.small = small || '';
-
+  image.dataset.hi = hi || '';
+  image.classList.remove('is-loading');
   image.sizes = '(max-width: 680px) 100vw, 1022px';
   if (item.width) image.width = item.width;
   if (item.height) image.height = item.height;
+
+  image.srcset = '';
+  if (image.getAttribute('src') !== low) image.src = low;
+
+  if (!hi || hi === low) return;
+
+  const pre = new Image();
+  pre.decoding = 'async';
+  pre.onload = () => {
+    if (image.dataset.hi === hi) image.src = hi;
+  };
+  pre.src = hi;
 }
 
 /* استخراج معرّف فيديو يوتيوب من أي صيغة رابط */
@@ -645,11 +637,17 @@ function renderProjects() {
 
   state.projects = WORK_DATA.slice();
   state.visible = state.projects.slice();
-  grid.innerHTML = state.projects.map(projectMarkup).join('');
 
-  $$('[data-project-card]', grid).forEach((card, index) => {
-    card.style.setProperty('--reveal-delay', `${Math.min(index, 7) * 60}ms`);
-  });
+  /* البطاقات مبنية مسبقًا داخل الـHTML — نستخدمها زي ما هي بدل ما نمسحها
+     ونعيد بناءها (ده كان بيخلي الصور تتحمّل مرتين ويأخر أول رسم) */
+  const existing = $$('[data-project-card]', grid);
+  const inSync =
+    existing.length === state.projects.length &&
+    existing.every(
+      (card, index) => card.dataset.projectCard === state.projects[index].id
+    );
+
+  if (!inSync) grid.innerHTML = state.projects.map(projectMarkup).join('');
 
   initGridImages(grid);
   renderFilters();
@@ -722,6 +720,18 @@ function initWork() {
   const grid = $('#workGrid');
   if (!grid) return;
 
+  /* تحميل مسبق للنسخة الواضحة بمجرد التحويم/اللمس → نافذة المشروع تفتح فورًا */
+  const warm = (event) => {
+    const card = event.target.closest('[data-project-card]');
+    if (!card) return;
+    const project = state.projects.find((p) => p.id === card.dataset.projectCard);
+    if (!project) return;
+    preloadImage(mediumOf(project) || project.imageSmall || project.image);
+  };
+  grid.addEventListener('pointerover', warm, { passive: true });
+  grid.addEventListener('touchstart', warm, { passive: true });
+  grid.addEventListener('focusin', warm);
+
   const filters = $('#filters');
   const live = $('#workLive');
 
@@ -738,14 +748,18 @@ function initWork() {
 
       state.visible = state.projects.filter((p) => filter === 'all' || p.cat === filter);
 
+      const shownNow = [];
       $$('[data-project-card]', grid).forEach((card) => {
         const show = state.visible.some((p) => p.id === card.dataset.projectCard);
         card.hidden = !show;
         card.classList.remove('is-enter');
-        if (show) {
-          void card.offsetWidth;
-          card.classList.add('is-enter');
-        }
+        if (show) shownNow.push(card);
+      });
+
+      /* إعادة تشغيل الأنيميشن دفعة واحدة بعد الرسم — بدون إجبار المتصفح
+         على إعادة حساب التصميم لكل كارت على حدة */
+      window.requestAnimationFrame(() => {
+        shownNow.forEach((card) => card.classList.add('is-enter'));
       });
 
       updateWorkMore();
@@ -911,7 +925,7 @@ function renderDialog() {
           if (!image) return;
           state.dialogImageIndex = index;
           applyDialogImage(item, `${project.title} — ${project.tag}`);
-          preloadNeighbours(items, index, (entry) => mediumOf(entry) || entry.small || entry.src);
+          preloadNeighbours(items, index, (entry) => entry.small || entry.src);
           Array.from(galleryWrap.children).forEach((node) =>
             node.setAttribute('aria-current', node === button ? 'true' : 'false')
           );
@@ -979,7 +993,7 @@ function renderDialog() {
         height: project.height,
       };
       applyDialogImage(cover, `${project.title} — ${project.tag}`);
-      preloadNeighbours(state.dialogImages, 0, (entry) => mediumOf(entry) || entry.small || entry.src);
+      preloadNeighbours(state.dialogImages, 0, (entry) => entry.small || entry.src);
     }
   }
 
@@ -1482,6 +1496,18 @@ function initContactForm() {
 /* ------------------------------------------------------------
    11) روابط إضافية
 ------------------------------------------------------------ */
+/* إيقاف الشريط المتحرك لما يكون خارج الشاشة (توفير معالج وبطارية) */
+function initMarquee() {
+  const marquee = document.querySelector('.marquee');
+  const track = document.querySelector('.marquee__track');
+  if (!marquee || !track || !('IntersectionObserver' in window)) return;
+
+  new IntersectionObserver(
+    ([entry]) => track.classList.toggle('is-paused', !entry.isIntersecting),
+    { rootMargin: '120px 0px' }
+  ).observe(marquee);
+}
+
 function initMisc() {
   const floatingWhatsApp = $('#floatingWhatsapp');
   if (floatingWhatsApp && typeof SITE_DATA !== 'undefined') {
@@ -1500,6 +1526,7 @@ function init() {
   initScrollUI();
   initScrollSpy();
   initReveal();
+  initMarquee();
   renderProjects();
   initWork();
   initProjectDialog();
