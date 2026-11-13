@@ -63,6 +63,9 @@ def subset_unicodes() -> str:
     chars |= {chr(code) for code in range(0x600, 0x700)}
     chars |= {chr(code) for code in range(0x2000, 0x2070)}
     chars |= {chr(code) for code in range(0x20A0, 0x20D0)}
+    chars |= {chr(code) for code in range(0x2190, 0x2200)}
+    chars |= {chr(code) for code in range(0x2500, 0x2580)}
+    chars |= {chr(code) for code in range(0x25A0, 0x2600)}
     chars |= set("﷼٪‰")
     chars = {c for c in chars if ord(c) > 0x1F}
     return ",".join(f"U+{ord(c):04X}" for c in sorted(chars))
