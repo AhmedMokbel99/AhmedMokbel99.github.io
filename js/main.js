@@ -690,6 +690,12 @@ function ensureWorkMore(grid) {
   wrap.addEventListener('click', () => {
     state.shown = Math.min(state.projects.length, state.shown + 8);
     updateWorkMore();
+    const live = $('#workLive');
+    if (live) {
+      live.textContent = `يتم عرض ${Math.min(state.shown, state.projects.length)} من ${
+        state.projects.length
+      } مشروعًا`;
+    }
   });
 }
 
@@ -748,7 +754,11 @@ function initWork() {
       if (empty) empty.hidden = state.visible.length !== 0;
 
       if (live) {
-        live.textContent = `يتم عرض ${state.visible.length} من ${state.projects.length} مشروعًا`;
+        const shownCount =
+          filter === 'all'
+            ? Math.min(state.shown, state.projects.length)
+            : state.visible.length;
+        live.textContent = `يتم عرض ${shownCount} من ${state.projects.length} مشروعًا`;
       }
     });
   }

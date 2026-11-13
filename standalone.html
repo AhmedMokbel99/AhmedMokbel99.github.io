@@ -40,6 +40,7 @@
   <!-- Fonts -->
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/ahmed-mokbel-480.jpg" imagesrcset="assets/ahmed-mokbel-480.jpg 480w, assets/ahmed-mokbel-800.jpg 800w, assets/ahmed-mokbel.jpg 887w" imagesizes="(max-width: 900px) 340px, 430px" fetchpriority="high">
   <style>
 /* fonts:start — خطوط مستضافة محليًا، لا تعدّل هذا القسم يدويًا */
 
@@ -3822,6 +3823,8 @@ html.js .project__media.is-ready::before {
 
 
 
+
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -6887,6 +6890,12 @@ function ensureWorkMore(grid) {
   wrap.addEventListener('click', () => {
     state.shown = Math.min(state.projects.length, state.shown + 8);
     updateWorkMore();
+    const live = $('#workLive');
+    if (live) {
+      live.textContent = `يتم عرض ${Math.min(state.shown, state.projects.length)} من ${
+        state.projects.length
+      } مشروعًا`;
+    }
   });
 }
 
@@ -6945,7 +6954,11 @@ function initWork() {
       if (empty) empty.hidden = state.visible.length !== 0;
 
       if (live) {
-        live.textContent = `يتم عرض ${state.visible.length} من ${state.projects.length} مشروعًا`;
+        const shownCount =
+          filter === 'all'
+            ? Math.min(state.shown, state.projects.length)
+            : state.visible.length;
+        live.textContent = `يتم عرض ${shownCount} من ${state.projects.length} مشروعًا`;
       }
     });
   }
