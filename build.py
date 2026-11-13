@@ -24,6 +24,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import html as html_lib
 import json
 import re
@@ -895,13 +896,21 @@ def update_portrait(html: str, site: dict) -> str:
 
 
 def update_assets_version(html: str) -> str:
-    return re.sub(r"\?v=\d+", f"?v={ASSET_VERSION}", html)
+    return re.sub(r"\?v=[^\"'>\s]+", f"?v={ASSET_VERSION}", html)
 
 
 def main() -> None:
+    global ASSET_VERSION
+
     site = load_json(SITE_FILE, "site.json")
     projects = load_json(PROJECTS_FILE, "projects.json")
     pages = load_json(PAGES_FILE, "pages.json")
+
+    # بصمة المحتوى: تتغيّر مع أي تعديل من اللوحة، فتكسر كاش data.js عند الزوار
+    content_hash = hashlib.sha1(
+        json.dumps([site, projects, pages], ensure_ascii=False, sort_keys=True).encode("utf-8")
+    ).hexdigest()[:8]
+    ASSET_VERSION = f"{ASSET_VERSION}-{content_hash}"
 
     if not isinstance(projects, list) or not projects:
         fail("projects.json يجب أن يحتوي على قائمة مشاريع غير فارغة.")

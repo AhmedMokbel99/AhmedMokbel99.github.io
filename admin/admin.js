@@ -1196,7 +1196,7 @@ function saveProjectDraft() {
   }
 
   if (state.draftIndex < 0) {
-    state.projects.push(clone(draft));
+    state.projects.unshift(clone(draft));
   } else {
     state.projects[state.draftIndex] = clone(draft);
   }

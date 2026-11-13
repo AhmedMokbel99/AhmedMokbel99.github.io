@@ -91,6 +91,155 @@ const CATEGORIES = [
 
 const WORK_DATA = [
   {
+    "id": "f24",
+    "code": "F24",
+    "title": "مركز هارفارد التعليمي 2026",
+    "cat": "brand",
+    "tag": "هوية وطباعة",
+    "isVideo": false,
+    "url": "",
+    "external": false,
+    "image": "assets/projects/project-f24.jpg",
+    "imageSmall": "assets/projects/project-f24-900.jpg",
+    "width": 1600,
+    "height": 1600,
+    "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة",
+    "summary": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي. 2026",
+    "details": "مشروع تصميم الهوية والمواد البصرية لمركز هارفارد التعليمي لعام 2026، بهدف تقديم صورة احترافية وعصرية تعكس قوة المركز ودوره في تقديم خدمات تعليمية متخصصة للطلاب.\n\nالهدف من التصميم:\nبناء حضور بصري قوي ومميز للمركز، يعكس جودة الخدمات التعليمية، ويمنح العلامة التجارية مظهراً احترافياً يليق بمؤسسة تعليمية حديثة في عام 2026\n.",
+    "facts": [],
+    "visible": true,
+    "video": "",
+    "youtube": "",
+    "gallery": [
+      {
+        "src": "assets/projects/project-f24-g1.jpg",
+        "small": "assets/projects/project-f24-g1-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g2.jpg",
+        "small": "assets/projects/project-f24-g2-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g3.jpg",
+        "small": "assets/projects/project-f24-g3-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g4.jpg",
+        "small": "assets/projects/project-f24-g4-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g5.jpg",
+        "small": "assets/projects/project-f24-g5-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g6.jpg",
+        "small": "assets/projects/project-f24-g6-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g7.jpg",
+        "small": "assets/projects/project-f24-g7-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g8.jpg",
+        "small": "assets/projects/project-f24-g8-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g9.jpg",
+        "small": "assets/projects/project-f24-g9-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g10.jpg",
+        "small": "assets/projects/project-f24-g10-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g11.jpg",
+        "small": "assets/projects/project-f24-g11-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g12.jpg",
+        "small": "assets/projects/project-f24-g12-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g13.jpg",
+        "small": "assets/projects/project-f24-g13-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g14.jpg",
+        "small": "assets/projects/project-f24-g14-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g15.jpg",
+        "small": "assets/projects/project-f24-g15-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g16.jpg",
+        "small": "assets/projects/project-f24-g16-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g17.jpg",
+        "small": "assets/projects/project-f24-g17-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      },
+      {
+        "src": "assets/projects/project-f24-g18.jpg",
+        "small": "assets/projects/project-f24-g18-900.jpg",
+        "width": 1600,
+        "height": 1600,
+        "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      }
+    ]
+  },
+  {
     "id": "f01",
     "code": "F01",
     "title": "يوم التأسيس السعودي",
