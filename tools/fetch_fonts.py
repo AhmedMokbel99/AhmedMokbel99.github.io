@@ -1,12 +1,17 @@
-"""تنزيل خطوط الموقع محليًا وتوليد css/fonts.css (بدل الاعتماد على Google Fonts).
+"""تنزيل خطوط الموقع محليًا + قصّها على الحروف المستخدمة، وتوليد @font-face داخل css/style.css.
 
     python tools/fetch_fonts.py
+
+بيحتاج fonttools:
+    python -m pip install fonttools brotli
 """
 
 from __future__ import annotations
 
 import re
+import subprocess
 import sys
+import tempfile
 import urllib.request
 from pathlib import Path
 
@@ -42,6 +47,46 @@ def slug(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
 
 
+def subset_unicodes() -> str:
+    """كل الحروف اللي ممكن يحتاجها الموقع: النصوص الحالية + الحروف العربية
+    واللاتينية الأساسية، عشان أي تعديل من اللوحة يفضل شغال."""
+    text = ""
+    sources = [ROOT / "index.html", ROOT / "404.html"]
+    sources += sorted((ROOT / "content").glob("*.json"))
+    for path in sources:
+        if path.exists():
+            text += path.read_text(encoding="utf-8")
+
+    chars = set(text)
+    chars |= {chr(code) for code in range(0x20, 0x7F)}
+    chars |= {chr(code) for code in range(0xA0, 0x100)}
+    chars |= {chr(code) for code in range(0x600, 0x700)}
+    chars |= {chr(code) for code in range(0x2000, 0x2070)}
+    chars |= {chr(code) for code in range(0x20A0, 0x20D0)}
+    chars |= set("﷼٪‰")
+    chars = {c for c in chars if ord(c) > 0x1F}
+    return ",".join(f"U+{ord(c):04X}" for c in sorted(chars))
+
+
+def subset_font(source: Path, target: Path, unicodes: str) -> bool:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "fontTools.subset",
+            str(source),
+            f"--output-file={target}",
+            "--flavor=woff2",
+            "--layout-features=*",
+            f"--unicodes={unicodes}",
+            "--no-hinting",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    return result.returncode == 0 and target.exists()
+
+
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")
     FONTS.mkdir(parents=True, exist_ok=True)
@@ -52,6 +97,7 @@ def main() -> int:
     blocks = re.findall(r"/\*\s*([^*]+?)\s*\*/\s*@font-face\s*\{(.*?)\}", css, re.S)
     faces = []
     total = 0
+    unicodes = subset_unicodes()
 
     for subset, body in blocks:
         subset = subset.strip()
@@ -67,11 +113,16 @@ def main() -> int:
 
         name = f"{slug(family)}-{weight}-{subset}.woff2"
         target = FONTS / name
-        if not target.exists():
-            data = urllib.request.urlopen(
-                urllib.request.Request(src, headers={"User-Agent": UA}), timeout=60
-            ).read()
+        raw = Path(tempfile.gettempdir()) / f"font-source-{name}"
+        data = urllib.request.urlopen(
+            urllib.request.Request(src, headers={"User-Agent": UA}), timeout=60
+        ).read()
+        raw.write_bytes(data)
+
+        if not subset_font(raw, target, unicodes):
             target.write_bytes(data)
+        raw.unlink(missing_ok=True)
+
         total += target.stat().st_size
         faces.append((family, weight, name, unicode_range))
 
