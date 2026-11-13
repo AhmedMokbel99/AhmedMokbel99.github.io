@@ -780,6 +780,9 @@ function renderDialog() {
   const zoom = $('#dialogZoom');
   if (zoom) zoom.hidden = hasVideo || hasYoutube || !project.image;
 
+  const full = $('#dialogFull');
+  if (full) full.hidden = !(hasVideo || hasYoutube);
+
   if (video) {
     if (hasVideo) {
       const first = videos[0];
@@ -946,6 +949,8 @@ function initProjectDialog() {
   dialog.addEventListener('close', () => {
     document.body.classList.remove('has-dialog');
 
+    if (document.fullscreenElement) document.exitFullscreen?.();
+
     const video = $('#dialogVideo');
     if (video) {
       video.pause();
@@ -980,6 +985,23 @@ function initProjectDialog() {
 
   $('#dialogImage')?.addEventListener('click', openZoom);
   $('#dialogZoom')?.addEventListener('click', openZoom);
+
+  $('#dialogFull')?.addEventListener('click', () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen?.();
+      return;
+    }
+
+    const video = $('#dialogVideo');
+    const frame = $('#dialogYoutube');
+    const target =
+      video && !video.hidden ? video : frame && !frame.hidden ? frame : $('#dialogMedia');
+
+    if (!target || !target.requestFullscreen) return;
+    target.requestFullscreen().catch(() => {
+      $('#dialogMedia')?.requestFullscreen?.().catch(() => {});
+    });
+  });
 }
 
 /* ------------------------------------------------------------
