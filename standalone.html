@@ -3754,6 +3754,7 @@ html.js .project__media.is-ready::before {
 
 
 
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -6607,6 +6608,20 @@ function preloadImage(url) {
   preloaded.set(url, img);
 }
 
+/* أقل نسخة خفيفة متاحة لمشروع من بيانات الموقع */
+function projectLow(project) {
+  if (!project) return '';
+  const base = project.imageSmall || project.image || '';
+  if (!/^assets\//.test(base)) return base;
+  return String(base).replace(/(-900)?\.(jpe?g|png|webp)$/i, '-640.jpg');
+}
+
+/* الصورة اللي الكارت بيعرضها فعلاً — بنفتح بيها النافذة فورًا */
+function cardImageSrc(projectId) {
+  const img = document.querySelector(`[data-project-card="${projectId}"] .project__media img`);
+  return img && img.complete && img.naturalWidth ? img.currentSrc || img.src : '';
+}
+
 function preloadNeighbours(items, index, pick) {
   if (!Array.isArray(items) || items.length < 2) return;
   [index + 1, index - 1].forEach((position) => {
@@ -6618,14 +6633,16 @@ function preloadNeighbours(items, index, pick) {
 
 /* تعيين الصورة المعروضة في نافذة المشروع: تظهر فورًا بنسخة الكارت المحمّلة
    وبعدين تتبدّل بهدوء للنسخة الأوضح من غير ما الشاشة تفضى */
-function applyDialogImage(item, alt) {
+function applyDialogImage(item, alt, immediate) {
   const image = $('#dialogImage');
   if (!image || !item) return;
 
   const small = item.small || item.src;
   const medium = mediumOf(item);
-  const low = gridOf(item) || small;
-  const hi = medium || small || item.src;
+  const low = immediate || gridOf(item) || small;
+  /* على الموبايل نسخة 900 كفاية وواضحة، والـ1200 بتبقى تحميل زيادة بلا داعي */
+  const wide = window.matchMedia('(min-width: 681px)').matches;
+  const hi = wide ? medium || small || item.src : small || item.src;
 
   image.alt = item.alt || alt || '';
   image.dataset.small = small || '';
@@ -6856,12 +6873,7 @@ function initWork() {
     if (!card) return;
     const project = state.projects.find((p) => p.id === card.dataset.projectCard);
     if (!project) return;
-    const base = project.imageSmall || project.image;
-    preloadImage(
-      /^assets\//.test(base || '')
-        ? String(base).replace(/(-900)?\.(jpe?g|png|webp)$/i, '-640.jpg')
-        : base
-    );
+    preloadImage(projectLow(project));
   };
   grid.addEventListener('pointerover', warm, { passive: true });
   grid.addEventListener('touchstart', warm, { passive: true });
@@ -7127,7 +7139,7 @@ function renderDialog() {
         width: project.width,
         height: project.height,
       };
-      applyDialogImage(cover, `${project.title} — ${project.tag}`);
+      applyDialogImage(cover, `${project.title} — ${project.tag}`, cardImageSrc(project.id));
       preloadNeighbours(state.dialogImages, 0, (entry) => gridOf(entry) || entry.small || entry.src);
     }
   }
