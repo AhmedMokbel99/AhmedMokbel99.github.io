@@ -8135,6 +8135,9 @@ function initShowreel() {
     : 'assets/showreel-1080.mp4';
   const connection = navigator.connection;
   const saveData = Boolean(connection && connection.saveData);
+  /* على شبكة 2G/بطيئة منزّلش فيديو كبير تلقائيًا — الصورة تفضل بديل لحد ما يضغط تشغيل */
+  const slowNet = Boolean(connection && /(^|-)2g$/.test(connection.effectiveType || ''));
+  const autoPlay = !(saveData || slowNet || reduceMotion.matches);
   let requested = false;
 
   const setState = (playing) => {
@@ -8156,11 +8159,11 @@ function initShowreel() {
     requested = true;
     video.src = source;
     video.load();
-    if (reduceMotion.matches || saveData) setState(false);
-    else play();
+    if (autoPlay) play();
+    else setState(false);
   };
 
-  if (saveData || reduceMotion.matches) {
+  if (!autoPlay) {
     setState(false);
   } else if ('requestIdleCallback' in window) {
     window.requestIdleCallback(() => window.setTimeout(load, 500), { timeout: 2600 });
