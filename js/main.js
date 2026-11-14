@@ -21,6 +21,20 @@ const formatCount = (n) => new Intl.NumberFormat('en-US').format(n);
 const whatsappBase = () =>
   typeof SITE_DATA !== 'undefined' ? `https://wa.me/${SITE_DATA.whatsapp}` : '';
 
+/* نفس منطق build.py: يشيل التكرار من نص alt */
+const dedupeAlt = (text) => {
+  const out = [];
+  String(text || '')
+    .split(' — ')
+    .forEach((part) => {
+      const value = part.trim();
+      if (value && (!out.length || out[out.length - 1].toLowerCase() !== value.toLowerCase())) {
+        out.push(value);
+      }
+    });
+  return out.join(' — ');
+};
+
 /* ------------------------------------------------------------
    Toast
 ------------------------------------------------------------ */
@@ -33,6 +47,26 @@ function showToast(message) {
   toast.classList.add('is-visible');
   window.clearTimeout(toastTimer);
   toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 5000);
+}
+
+/* حبس التركيز جوه نافذة مفتوحة (Dialog أو Lightbox) */
+function trapTab(event, container) {
+  if (event.key !== 'Tab') return;
+  const focusables = $$(
+    'a[href], button:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])',
+    container
+  ).filter((el) => el.offsetParent !== null);
+  if (!focusables.length) return;
+
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 /* ------------------------------------------------------------
@@ -571,7 +605,7 @@ function projectVideos(project) {
 function projectMarkup(project) {
   const category = categoryLabel(project.cat);
   const fallback = project.imageSmall || project.image;
-  const alt = project.alt || `${project.title} — ${project.tag}`;
+  const alt = dedupeAlt(project.alt || `${project.title} — ${project.tag}`);
   const gridSmall = project.image
     ? String(project.image).replace(/\.(jpe?g|png|webp)$/i, '-640.jpg')
     : '';
@@ -1165,6 +1199,11 @@ function initProjectDialog() {
   });
 
   dialog.addEventListener('keydown', (event) => {
+    if (event.key === 'Tab') {
+      trapTab(event, dialog);
+      return;
+    }
+
     if (event.target.closest?.('video')) return;
 
     if (event.key === 'ArrowLeft') {
@@ -1295,7 +1334,9 @@ function initLightbox() {
   });
 
   box.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') {
+    if (event.key === 'Tab') {
+      trapTab(event, box);
+    } else if (event.key === 'ArrowLeft') {
       event.preventDefault();
       moveLightbox(1);
     } else if (event.key === 'ArrowRight') {
@@ -1348,7 +1389,9 @@ function initContactForm() {
   if (!form) return;
 
   const status = $('#formStatus');
-  const emailBtn = $('#formEmail');
+  const whatsappBtn = $('#formWhatsapp');
+  const submitBtn = $('#formSubmit');
+  const endpoint = form.dataset.endpoint || '';
 
   const setStatus = (stateName, message, link) => {
     if (!status) return;
@@ -1477,7 +1520,7 @@ function initContactForm() {
     window.open(url, '_blank', 'noopener');
   };
 
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     clearStatus();
 
@@ -1486,14 +1529,71 @@ function initContactForm() {
       return;
     }
 
-    openWhatsApp();
-    setStatus(
-      'success',
-      'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق وسأرد عليك في أقرب وقت.'
-    );
+    /* لو المتصفح قديم أو الإرسال المباشر مش متاح، بنرجع لواتساب فورًا */
+    if (!endpoint || typeof window.fetch !== 'function') {
+      openWhatsApp();
+      setStatus(
+        'success',
+        'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق وسأرد عليك في أقرب وقت.'
+      );
+      return;
+    }
+
+    const values = getValues();
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.setAttribute('aria-busy', 'true');
+    }
+    setStatus('info', 'بنرسل طلبك...');
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name: values.name,
+          phone: values.phone,
+          email: values.email,
+          service: values.service,
+          message: values.message,
+          _subject: 'طلب مشروع جديد — من الموقع الشخصي',
+          _template: 'table',
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+      const message = String(data.message || '');
+      const failed = !response.ok || data.success === false || data.success === 'false';
+
+      if (/activat/i.test(message)) {
+        setStatus(
+          'info',
+          'طلبك اتسجل، ومحتاج تفعيل مرة واحدة بس: افتح رسالة التفعيل اللي وصلت على البريد واضغط رابط Activate Form.',
+          { href: mailtoUrl(), label: 'أو ابعت على البريد' }
+        );
+        return;
+      }
+
+      if (failed) throw new Error(message || 'send failed');
+
+      form.reset();
+      setStatus('success', 'وصلني طلبك، وهرد عليك خلال 24 ساعة. لو مستعجل، ابعتلي على واتساب على طول.');
+    } catch (error) {
+      openWhatsApp();
+      setStatus(
+        'info',
+        'تعذّر إرسال الطلب من الموقع، فجهّزتلك نسخة على واتساب — راجعها واضغط إرسال.',
+        { href: mailtoUrl(), label: 'أو ابعت على البريد' }
+      );
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.removeAttribute('aria-busy');
+      }
+    }
   });
 
-  emailBtn?.addEventListener('click', () => {
+  whatsappBtn?.addEventListener('click', () => {
     clearStatus();
 
     if (!validateAll()) {
@@ -1501,10 +1601,10 @@ function initContactForm() {
       return;
     }
 
-    window.location.href = mailtoUrl();
+    openWhatsApp();
     setStatus(
-      'info',
-      'تم تجهيز رسالتك في تطبيق البريد — راجعها واضغط إرسال. لو لم يفتح تطبيق البريد، استخدم واتساب.'
+      'success',
+      'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق.'
     );
   });
 }
@@ -1522,6 +1622,77 @@ function initMarquee() {
     ([entry]) => track.classList.toggle('is-paused', !entry.isIntersecting),
     { rootMargin: '120px 0px' }
   ).observe(marquee);
+}
+
+/* الريل في الهيرو: تحميل مؤجّل عشان مايتأخرش ظهور الصفحة، مع تحكم تشغيل/إيقاف */
+function initShowreel() {
+  const card = $('[data-reel]');
+  const video = $('#heroReel');
+  if (!card || !video) return;
+
+  const toggle = $('#reelToggle');
+  const source = window.matchMedia('(max-width: 699px)').matches
+    ? 'assets/showreel-720.mp4'
+    : 'assets/showreel-1080.mp4';
+  const connection = navigator.connection;
+  const saveData = Boolean(connection && connection.saveData);
+  let requested = false;
+
+  const setState = (playing) => {
+    card.classList.toggle('is-paused', !playing);
+    if (!toggle) return;
+    toggle.setAttribute('aria-pressed', String(playing));
+    toggle.setAttribute('aria-label', playing ? 'إيقاف الريل' : 'تشغيل الريل');
+  };
+
+  const play = () => {
+    const attempt = video.play();
+    if (attempt && typeof attempt.catch === 'function') {
+      attempt.catch(() => setState(false));
+    }
+  };
+
+  const load = () => {
+    if (requested) return;
+    requested = true;
+    video.src = source;
+    video.load();
+    if (reduceMotion.matches || saveData) setState(false);
+    else play();
+  };
+
+  if (saveData || reduceMotion.matches) {
+    setState(false);
+  } else if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(() => window.setTimeout(load, 500), { timeout: 2600 });
+  } else {
+    window.setTimeout(load, 2000);
+  }
+
+  toggle?.addEventListener('click', () => {
+    if (!requested) {
+      load();
+      return;
+    }
+    if (video.paused) play();
+    else video.pause();
+  });
+
+  video.addEventListener('playing', () => setState(true));
+  video.addEventListener('pause', () => setState(false));
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(
+      ([entry]) => {
+        if (requested && !entry.isIntersecting && !video.paused) video.pause();
+      },
+      { threshold: 0.12 }
+    ).observe(card);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && !video.paused) video.pause();
+  });
 }
 
 function initMisc() {
@@ -1543,6 +1714,7 @@ function init() {
   initScrollSpy();
   initReveal();
   initMarquee();
+  initShowreel();
   renderProjects();
   initWork();
   initProjectDialog();

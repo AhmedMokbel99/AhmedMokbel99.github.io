@@ -277,6 +277,21 @@ def replace_block(html: str, name: str, inner: str) -> str:
 # ---------------------------------------------------------------------------
 # 3) مكوّنات HTML
 # ---------------------------------------------------------------------------
+def dedupe_alt(text: str) -> str:
+    """يشيل التكرار في نص الصورة البديل: «اسم — وصف — وصف» -> «اسم — وصف»."""
+    parts = [part.strip() for part in str(text).split(" — ")]
+    out: list[str] = []
+    for part in parts:
+        if part and (not out or out[-1].lower() != part.lower()):
+            out.append(part)
+    return " — ".join(out)
+
+
+def project_alt(project: dict) -> str:
+    fallback = f'{project["title"]} — {project.get("tag", "")}'
+    return dedupe_alt(project.get("alt") or fallback)
+
+
 def project_card(project: dict, index: int = 0) -> str:
     """Keep in sync with projectMarkup() in js/main.js."""
     image = project.get("image", "")
@@ -298,7 +313,7 @@ def project_card(project: dict, index: int = 0) -> str:
         )
         if part
     )
-    alt = project.get("alt") or f'{project["title"]} — {project["tag"]}'
+    alt = project_alt(project)
 
     badge = (
         '<span class="project__type">'
@@ -364,6 +379,20 @@ def services_block(services: list[dict]) -> str:
           </article>'''
         )
     return "\n\n".join(cards)
+
+
+def clients_block(site: dict) -> str:
+    cards = []
+    for client in site.get("clients", []):
+        latin = client.get("latin") or client["name"]
+        cards.append(
+            f'''          <li class="client">
+            <span class="client__mark" aria-hidden="true">{esc(latin[:1].upper())}</span>
+            <span class="client__name">{esc(client["name"])}</span>
+            <span class="client__latin" aria-hidden="true">{esc(latin)}</span>
+          </li>'''
+        )
+    return "\n".join(cards)
 
 
 def process_block(steps: list[dict]) -> str:
@@ -494,7 +523,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
     }
 
     service = {
-        "@type": "ProfessionalService",
+        "@type": ["ProfessionalService", "LocalBusiness"],
         "@id": f"{base}/#service",
         "name": f'{brand["name"]} — {agency["name"]}',
         "description": f'خدمات تصميم الجرافيك والموشن جرافيك والهوية البصرية والإنتاج الإعلامي من {brand["location"]}، مصر.',
@@ -518,7 +547,14 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
             "@type": "OfferCatalog",
             "name": "خدمات التصميم والموشن جرافيك",
             "itemListElement": [
-                {"@type": "Offer", "itemOffered": {"@type": "Service", "name": item["title"]}}
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": item["title"],
+                        **({"url": f'{base}/{item["link"]}'} if item.get("link") else {}),
+                    },
+                }
                 for item in site.get("services", [])
             ],
         },
@@ -554,7 +590,7 @@ def svg_sprite() -> str:
 # ---------------------------------------------------------------------------
 # 5) توليد صفحات الخدمات
 # ---------------------------------------------------------------------------
-def service_page(page: dict, site: dict, other: dict) -> str:
+def service_page(page: dict, site: dict, others: list[dict]) -> str:
     base = site["meta"]["siteUrl"].rstrip("/")
     brand = site["brand"]
     contact = site["contact"]
@@ -635,6 +671,16 @@ def service_page(page: dict, site: dict, other: dict) -> str:
             </details>'''
         for item in faq_items
     )
+    other_links = "\n".join(
+        f'''            <a class="service-cross" href="{esc(item["slug"])}">
+              <span>{esc(item["navLabel"])}</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>'''
+        for item in others
+    )
+    footer_services = " · ".join(
+        f'<a href="{esc(item["slug"])}">{esc(item["navLabel"])}</a>' for item in others
+    )
 
     return f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -690,7 +736,6 @@ def service_page(page: dict, site: dict, other: dict) -> str:
       </a>
       <nav class="service-nav" aria-label="التنقل">
         <a href="index.html">الرئيسية</a>
-        <a href="{esc(other["slug"])}">{esc(other["navLabel"])}</a>
         <a href="index.html#work">الأعمال</a>
         <a href="index.html#contact">تواصل</a>
         <a class="btn btn--primary btn--sm" href="index.html#contact">لنعمل معًا</a>
@@ -799,6 +844,18 @@ def service_page(page: dict, site: dict, other: dict) -> str:
       </div>
     </section>
 
+    <section class="section section--soft">
+      <div class="wrap">
+        <div class="service-block" style="margin-top:0">
+          <p class="eyebrow">خدمات أخرى</p>
+          <h2>تكمل الخدمة دي بخدمات تانية</h2>
+          <div class="service-crosses">
+{other_links}
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
       <div class="wrap">
         <div class="service-cta">
@@ -825,7 +882,7 @@ def service_page(page: dict, site: dict, other: dict) -> str:
       <span>© <span id="year">2026</span> {esc(brand["name"])} — {esc(site["agency"]["name"])}. {esc(site["footer"]["rights"])}</span>
       <span>
         <a href="index.html">الرئيسية</a> ·
-        <a href="{esc(other["slug"])}">{esc(other["navLabel"])}</a> ·
+{footer_services} ·
         <a href="{esc(contact["behance"])}" target="_blank" rel="noopener noreferrer">بيهانس</a>
       </span>
     </div>
@@ -889,15 +946,14 @@ def portrait_tag(images: dict) -> str:
     return (
         "<img\n"
         '                data-site-image="portrait"\n'
-        f'                src="{esc(portrait["src"])}"\n'
+        f'                src="{esc(portrait["small"] or portrait["src"])}"\n'
         f'                srcset="{esc(", ".join(srcset))}"\n'
-        '                sizes="(max-width: 900px) 340px, 430px"\n'
-        f'                width="{portrait["width"]}"\n'
-        f'                height="{portrait["height"]}"\n'
+        '                sizes="72px"\n'
+        '                width="72"\n'
+        '                height="83"\n'
         f'                alt="{esc(portrait["alt"])}"\n'
         "                loading=\"eager\"\n"
         "                decoding=\"async\"\n"
-        "                fetchpriority=\"high\"\n"
         "              >"
     )
 
@@ -974,6 +1030,7 @@ def main() -> None:
     html = read(INDEX)
 
     html = replace_block(html, "services", services_block(site.get("services", [])))
+    html = replace_block(html, "clients", clients_block(site))
     html = replace_block(html, "process", process_block(site.get("process", [])))
     html = replace_block(html, "faq", faq_block(site.get("faq", [])))
     html = replace_block(html, "channels", channels_block(site))
@@ -1008,6 +1065,12 @@ def main() -> None:
         count=1,
     )
     html = re.sub(
+        r'(id="dialogCount">)[^<]*(</span>)',
+        lambda m: m.group(1) + f"1 / {len(visible)}" + m.group(2),
+        html,
+        count=1,
+    )
+    html = re.sub(
         r'(id="pillProjects">)[^<]*(</b>)',
         lambda m: m.group(1)
         + f'+{next((s.get("value") for s in site.get("stats", []) if s.get("key") == "projects"), len(visible))}'
@@ -1016,20 +1079,35 @@ def main() -> None:
         count=1,
     )
     html = update_assets_version(html)
+    # يمنع تراكم الأسطر الفارغة في الهيد مع كل بناء
+    html = re.sub(r"\n{3,}", "\n\n", html)
     write(INDEX, html)
 
     # 3) صفحات الخدمات
     for page in pages:
         others = [p for p in pages if p["slug"] != page["slug"]]
-        other = others[0]
-        write(ROOT / page["slug"], service_page(page, site, other))
+        write(ROOT / page["slug"], service_page(page, site, others))
 
     # 4) sitemap
-    if SITEMAP.is_file():
-        today = dt.date.today().isoformat()
-        sitemap = read(SITEMAP)
-        sitemap = re.sub(r"<lastmod>[^<]*</lastmod>", f"<lastmod>{today}</lastmod>", sitemap)
-        write(SITEMAP, sitemap)
+    today = dt.date.today().isoformat()
+    urls = [(site["meta"]["siteUrl"].rstrip("/") + "/", "1.0")] + [
+        (f'{site["meta"]["siteUrl"].rstrip("/")}/{page["slug"]}', "0.8") for page in pages
+    ]
+    entries = "\n".join(
+        f"""  <url>
+    <loc>{esc(loc)}</loc>
+    <lastmod>{today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>{priority}</priority>
+  </url>"""
+        for loc, priority in urls
+    )
+    write(
+        SITEMAP,
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{entries}\n</urlset>\n",
+    )
 
     # 5) standalone.html
     build_standalone(read(STANDALONE if False else INDEX))
