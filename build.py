@@ -292,6 +292,11 @@ def project_alt(project: dict) -> str:
     return dedupe_alt(project.get("alt") or fallback)
 
 
+def project_has_video(project: dict) -> bool:
+    """هل فيه فيديو فعلي يتشغّل؟ لو لأ منعرضش «شاهد الفيديو» على الفاضي."""
+    return bool(project.get("video") or project.get("youtube") or project.get("videos"))
+
+
 def project_card(project: dict, index: int = 0) -> str:
     """Keep in sync with projectMarkup() in js/main.js."""
     image = project.get("image", "")
@@ -320,7 +325,7 @@ def project_card(project: dict, index: int = 0) -> str:
         '<svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>'
         "فيديو"
         "</span>"
-        if project.get("isVideo")
+        if project_has_video(project)
         else ""
     )
 
@@ -345,7 +350,7 @@ def project_card(project: dict, index: int = 0) -> str:
     <span class="project__tag">{esc(project["tag"])}</span>
     <h3 class="project__title">{esc(project["title"])}</h3>
     <span class="project__more">
-      <span>{"شاهد الفيديو" if project.get("isVideo") else "عرض التفاصيل"}</span>
+      <span>{"شاهد الفيديو" if project_has_video(project) else "عرض التفاصيل"}</span>
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
     </span>
   </div>

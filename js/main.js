@@ -602,6 +602,11 @@ function projectVideos(project) {
   return [];
 }
 
+/* نفس منطق build.py: مشروع «فيديو» من غير ملف فيديو مايعرضش «شاهد الفيديو» */
+function projectHasVideo(project) {
+  return Boolean(project && (project.video || project.youtube || (project.videos && project.videos.length)));
+}
+
 function projectMarkup(project) {
   const category = categoryLabel(project.cat);
   const fallback = project.imageSmall || project.image;
@@ -633,7 +638,7 @@ function projectMarkup(project) {
         <div class="project__badges">
           <span class="project__code">${project.code}</span>
           ${
-            project.isVideo
+            projectHasVideo(project)
               ? `<span class="project__type">
                    <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
                    فيديو
@@ -646,7 +651,7 @@ function projectMarkup(project) {
         <span class="project__tag">${project.tag}</span>
         <h3 class="project__title">${project.title}</h3>
         <span class="project__more">
-          <span>${project.isVideo ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
+          <span>${projectHasVideo(project) ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
           <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
         </span>
       </div>
@@ -900,7 +905,7 @@ function renderDialog() {
   }
 
   if (category) category.textContent = categoryLabel(project.cat);
-  if (type) type.textContent = project.isVideo ? 'فيديو / موشن' : 'تصميم ثابت';
+  if (type) type.textContent = projectHasVideo(project) ? 'فيديو / موشن' : 'تصميم ثابت';
   if (tag) tag.textContent = project.tag;
   if (code) code.textContent = project.code;
 
