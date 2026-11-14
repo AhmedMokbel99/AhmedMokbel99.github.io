@@ -726,7 +726,12 @@ function initWork() {
     if (!card) return;
     const project = state.projects.find((p) => p.id === card.dataset.projectCard);
     if (!project) return;
-    preloadImage(mediumOf(project) || project.imageSmall || project.image);
+    const base = project.imageSmall || project.image;
+    preloadImage(
+      /^assets\//.test(base || '')
+        ? String(base).replace(/(-900)?\.(jpe?g|png|webp)$/i, '-640.jpg')
+        : base
+    );
   };
   grid.addEventListener('pointerover', warm, { passive: true });
   grid.addEventListener('touchstart', warm, { passive: true });
@@ -925,7 +930,7 @@ function renderDialog() {
           if (!image) return;
           state.dialogImageIndex = index;
           applyDialogImage(item, `${project.title} — ${project.tag}`);
-          preloadNeighbours(items, index, (entry) => entry.small || entry.src);
+          preloadNeighbours(items, index, (entry) => gridOf(entry) || entry.small || entry.src);
           Array.from(galleryWrap.children).forEach((node) =>
             node.setAttribute('aria-current', node === button ? 'true' : 'false')
           );
@@ -993,7 +998,7 @@ function renderDialog() {
         height: project.height,
       };
       applyDialogImage(cover, `${project.title} — ${project.tag}`);
-      preloadNeighbours(state.dialogImages, 0, (entry) => entry.small || entry.src);
+      preloadNeighbours(state.dialogImages, 0, (entry) => gridOf(entry) || entry.small || entry.src);
     }
   }
 
