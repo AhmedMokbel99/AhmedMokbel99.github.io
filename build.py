@@ -997,9 +997,21 @@ def main() -> None:
     if not isinstance(pages, list) or len(pages) < 2:
         fail("pages.json يحتاج صفحتي الخدمات على الأقل.")
 
-    location = str(site.get("brand", {}).get("location", "")).strip()
+    location = re.sub(r"\s*،\s*(?:،\s*)+", "، ", str(site.get("brand", {}).get("location", "")).strip())
     if not location:
         fail("site.json: brand.location مطلوب (يُستخدم في بيانات البحث والفوتر).")
+    site.setdefault("brand", {})["location"] = location
+
+    hero = site.get("hero") or {}
+    hero_location = re.sub(r"\s*،\s*(?:،\s*)+", "، ", str(hero.get("location", "")).strip())
+    if hero_location:
+        if hero_location != location:
+            print(
+                f"⚠️  مكان الشارة «{hero_location}» مختلف عن مدينة الفوتر وبيانات البحث «{location}».",
+                file=sys.stderr,
+            )
+        hero["location"] = hero_location
+        site["hero"] = hero
     TOKENS.update(
         {
             "{location}": location,
