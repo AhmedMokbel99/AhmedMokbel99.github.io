@@ -1716,14 +1716,16 @@ function initShowreel() {
   if (!card || !video) return;
 
   const toggle = $('#reelToggle');
-  const source = window.matchMedia('(max-width: 699px)').matches
+  const isMobile = window.matchMedia('(max-width: 699px)').matches;
+  const source = isMobile
     ? 'assets/showreel-720.mp4'
     : 'assets/showreel-1080.mp4';
   const connection = navigator.connection;
   const saveData = Boolean(connection && connection.saveData);
   /* على شبكة 2G/بطيئة منزّلش فيديو كبير تلقائيًا — الصورة تفضل بديل لحد ما يضغط تشغيل */
   const slowNet = Boolean(connection && /(^|-)2g$/.test(connection.effectiveType || ''));
-  const autoPlay = !(saveData || slowNet || reduceMotion.matches);
+  /* على الموبايل الريل بيتحمّل بضغطة الزائر — البوستر بيغني في أول تحميل */
+  const autoPlay = !(saveData || slowNet || reduceMotion.matches || isMobile);
   let requested = false;
 
   const setState = (playing) => {
@@ -1760,6 +1762,8 @@ function initShowreel() {
   toggle?.addEventListener('click', () => {
     if (!requested) {
       load();
+      /* الضغط اليدوي لازم يشغّل من أول مرة (الموبايل مش بيعمل autoplay) */
+      play();
       return;
     }
     if (video.paused) play();

@@ -44,6 +44,8 @@ MAIN_JS = ROOT / "js" / "main.js"
 CSS_FILE = ROOT / "css" / "style.css"
 STANDALONE = ROOT / "standalone.html"
 SITEMAP = ROOT / "sitemap.xml"
+CNAME_FILE = ROOT / "CNAME"
+ROBOTS_FILE = ROOT / "robots.txt"
 
 ASSET_VERSION = "18"
 
@@ -486,8 +488,18 @@ def jsonld_script(graph: list[dict]) -> str:
     )
 
 
+def site_base(site: dict) -> str:
+    """الدومين المخصص لو متسجّل، وإلا رابط GitHub Pages."""
+    meta = site.get("meta", {})
+    domain = (meta.get("customDomain") or "").strip()
+    if domain:
+        domain = domain.split("://", 1)[-1].strip("/")
+        return "https://" + domain
+    return meta["siteUrl"].rstrip("/")
+
+
 def home_jsonld(site: dict, projects: list[dict]) -> str:
-    base = site["meta"]["siteUrl"].rstrip("/")
+    base = site_base(site)
     contact = site["contact"]
     brand = site["brand"]
     agency = site["agency"]
@@ -589,7 +601,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
 
 def portfolio_jsonld(site: dict, projects: list[dict]) -> dict:
     """قائمة الأعمال كـItemList — بتوضّح لمحركات البحث إن دي صفحة بورتفوليو حقيقية."""
-    base = site["meta"]["siteUrl"].rstrip("/")
+    base = site_base(site)
     visible = [p for p in projects if p.get("visible", True) is not False]
     items = []
     for index, project in enumerate(visible, start=1):
@@ -630,7 +642,7 @@ def svg_sprite() -> str:
 # 5) توليد صفحات الخدمات
 # ---------------------------------------------------------------------------
 def service_page(page: dict, site: dict, others: list[dict]) -> str:
-    base = site["meta"]["siteUrl"].rstrip("/")
+    base = site_base(site)
     brand = site["brand"]
     contact = site["contact"]
     images = site_images(site)
@@ -945,7 +957,7 @@ def set_attr(html: str, pattern: str, value: str) -> str:
 
 def update_head(html: str, site: dict) -> str:
     meta = site["meta"]
-    base = meta["siteUrl"].rstrip("/")
+    base = site_base(site)
     images = site_images(site)
     og = images["og"]
 
@@ -1011,7 +1023,7 @@ def update_assets_version(html: str) -> str:
 
 def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
     """llms.txt مولّد من نفس المحتوى — ما يتأخّرش عن الموقع لما الأرقام تتغيّر."""
-    base = site["meta"]["siteUrl"].rstrip("/")
+    base = site_base(site)
     brand = site["brand"]
     contact = site["contact"]
     agency = site["agency"]
@@ -1061,6 +1073,39 @@ def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
     ]
 
     write(ROOT / "llms.txt", "\n".join(lines))
+
+
+def write_cname(site: dict) -> None:
+    """CNAME لمحركات GitHub Pages: يتكتب لو فيه دومين مخصص، ويتشال لو مفيش."""
+    domain = (site.get("meta", {}).get("customDomain") or "").strip()
+    domain = domain.split("://", 1)[-1].strip("/")
+    if domain:
+        write(CNAME_FILE, domain + "\n")
+    elif CNAME_FILE.exists():
+        CNAME_FILE.unlink()
+
+
+def write_robots(site: dict) -> None:
+    """robots.txt مولّد — رابط الـsitemap بيتغيّر مع الدومين أوتوماتيك."""
+    base = site_base(site)
+    write(
+        ROBOTS_FILE,
+        "\n".join(
+            [
+                "# robots.txt — أحمد مقبل | Ahmed Mokbel Portfolio",
+                "User-agent: *",
+                "Allow: /",
+                "",
+                "# نسخة الملف الواحد مخصّصة للاستخدام المحلي فقط",
+                "Disallow: /standalone.html",
+                "Disallow: /404.html",
+                "Disallow: /admin/",
+                "",
+                f"Sitemap: {base}/sitemap.xml",
+                "",
+            ]
+        ),
+    )
 
 
 def main() -> None:
@@ -1195,8 +1240,9 @@ def main() -> None:
 
     # 4) sitemap
     today = dt.date.today().isoformat()
-    urls = [(site["meta"]["siteUrl"].rstrip("/") + "/", "1.0")] + [
-        (f'{site["meta"]["siteUrl"].rstrip("/")}/{page["slug"]}', "0.8") for page in pages
+    base = site_base(site)
+    urls = [(base + "/", "1.0")] + [
+        (f'{base}/{page["slug"]}', "0.8") for page in pages
     ]
     entries = "\n".join(
         f"""  <url>
@@ -1220,12 +1266,20 @@ def main() -> None:
     # 6) llms.txt
     write_llms(site, visible, pages)
 
+    # 7) robots.txt + CNAME (بيتبعوا الدومين المخصص لو موجود)
+    write_robots(site)
+    write_cname(site)
+
     print(f"✓ data.js: {len(visible)} مشروعًا مرئيًا")
     print(f"✓ index.html: {text_count} نصًا محدّثًا من site.json")
     print(f"✓ صفحات الخدمات: {', '.join(p['slug'] for p in pages)}")
     print(f"✓ sitemap.xml: lastmod محدّث")
     print(f"✓ standalone.html: {STANDALONE.stat().st_size / 1024:.1f} KB")
     print("✓ llms.txt: محدّث")
+    print(f"✓ robots.txt: محدّث ({site_base(site)})")
+    domain = (site.get("meta", {}).get("customDomain") or "").strip()
+    if domain:
+        print(f"✓ CNAME: {domain}")
 
 
 def build_standalone(html: str) -> None:

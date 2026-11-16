@@ -2008,7 +2008,7 @@ function renderSettings() {
         <ol class="mini-list">
           <li>من الكمبيوتر (كروم/إيدج): <b>⋮</b> ثم <b>تثبيت / Install app</b>.</li>
           <li>من الموبايل: <b>إضافة إلى الشاشة الرئيسية</b>.</li>
-          <li>أو احفظ الرابط في المفضلة: <code dir="ltr">ahmedmokbel99.github.io/admin/</code></li>
+          <li>أو احفظ الرابط في المفضلة: <code dir="ltr">${location.host}/admin/</code></li>
         </ol>
         <p class="hint">اللوحة بتفتح على طول بدون تسجيل دخول، طالما نفس المتصفح والتوكن لسه صالح.</p>
       </div>
