@@ -233,6 +233,11 @@ def apply_cms(html: str, site: dict) -> tuple[str, int]:
     def repl(match: re.Match) -> str:
         tag, attrs, key = match.group(1), match.group(2), match.group(3)
         value = get(site, key)
+        # العناصر اللي مالهاش محتوى نصي: النص بيتغيّر في الـplaceholder عن طريق data-cms-attr
+        if tag.lower() == "textarea":
+            return f"<{tag}{attrs}></{tag}>"
+        if tag.lower() in {"input", "img", "br", "hr", "source", "track"}:
+            return match.group(0)
         if value is None:
             missed.append(key)
             return match.group(0)
@@ -342,7 +347,6 @@ def project_card(project: dict, index: int = 0) -> str:
       decoding="async"
     >
     <div class="project__badges">
-      <span class="project__code">{esc(project["code"])}</span>
       {badge}
     </div>
   </div>
@@ -578,7 +582,37 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         ],
     }
 
-    return jsonld_script([person, website, service, faq])
+    portfolio = portfolio_jsonld(site, projects)
+
+    return jsonld_script([person, website, service, faq, portfolio])
+
+
+def portfolio_jsonld(site: dict, projects: list[dict]) -> dict:
+    """قائمة الأعمال كـItemList — بتوضّح لمحركات البحث إن دي صفحة بورتفوليو حقيقية."""
+    base = site["meta"]["siteUrl"].rstrip("/")
+    visible = [p for p in projects if p.get("visible", True) is not False]
+    items = []
+    for index, project in enumerate(visible, start=1):
+        work = {
+            "@type": "CreativeWork",
+            "name": project["title"],
+            "url": f"{base}/#work",
+            "genre": project.get("tag") or "",
+            "description": project.get("summary") or "",
+        }
+        if project.get("external") and project.get("url"):
+            work["sameAs"] = project["url"]
+        if project.get("image"):
+            work["image"] = f'{base}/{project["image"]}'
+        items.append({"@type": "ListItem", "position": index, "item": work})
+
+    return {
+        "@type": "ItemList",
+        "@id": f"{base}/#work",
+        "name": "مشاريع مختارة",
+        "numberOfItems": len(items),
+        "itemListElement": items,
+    }
 
 
 def svg_sprite() -> str:
@@ -975,6 +1009,60 @@ def update_assets_version(html: str) -> str:
     return re.sub(r"\?v=[^\"'>\s]+", f"?v={ASSET_VERSION}", html)
 
 
+def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
+    """llms.txt مولّد من نفس المحتوى — ما يتأخّرش عن الموقع لما الأرقام تتغيّر."""
+    base = site["meta"]["siteUrl"].rstrip("/")
+    brand = site["brand"]
+    contact = site["contact"]
+    agency = site["agency"]
+    total = len(projects)
+    services = [p for p in site.get("services", []) if p.get("title")]
+
+    lines = [
+        f"# {brand['name']} — Ahmed Mokbel",
+        "",
+        f"> {brand['jobTitle']} من {brand['location']}، مؤسس وكالة {agency['name']} للإنتاج الإبداعي.",
+        f"> {agency['description']}",
+        "",
+        "## الصفحات",
+        "",
+        f"- [الرئيسية]({base}/): نبذة، {total} مشروعًا مختارًا، الخدمات، طريقة العمل، وأسئلة شائعة.",
+    ]
+
+    for page in pages:
+        desc = apply_tokens(page.get("description", ""))
+        lines.append(f"- [{page['navLabel']}]({base}/{page['slug']}): {desc}")
+
+    lines += [
+        "",
+        "## حقائق سريعة",
+        "",
+        f"- الموقع: {brand['location']}، مصر. يعمل عن بُعد مع عملاء داخل مصر وخارجها.",
+        f"- الخبرة: في التصميم منذ {brand['careerStart']}، وعلى Behance منذ {brand['behanceSince']}.",
+        f"- المشاريع المعروضة: {total} مشروعًا مختارًا (موشن جرافيك، هوية وطباعة، تصميم رقمي).",
+        f"- الوكالة: {agency['name']} — {agency['description']}",
+    ]
+
+    if services:
+        lines += ["", "## الخدمات", ""]
+        lines += [f"- {esc(service['title'])}" for service in services]
+
+    lines += [
+        "",
+        "## التواصل",
+        "",
+        f"- واتساب: https://wa.me/{contact['whatsapp']}",
+        f"- البريد: {contact['email']}",
+        f"- Behance: {contact['behance']}",
+        f"- Facebook (DOT Media): {contact['facebook']}",
+        f"- X: {contact['twitter']}",
+        f"- صفحة التواصل: {base}/#contact",
+        "",
+    ]
+
+    write(ROOT / "llms.txt", "\n".join(lines))
+
+
 def main() -> None:
     global ASSET_VERSION
 
@@ -1129,11 +1217,15 @@ def main() -> None:
     # 5) standalone.html
     build_standalone(read(STANDALONE if False else INDEX))
 
+    # 6) llms.txt
+    write_llms(site, visible, pages)
+
     print(f"✓ data.js: {len(visible)} مشروعًا مرئيًا")
     print(f"✓ index.html: {text_count} نصًا محدّثًا من site.json")
     print(f"✓ صفحات الخدمات: {', '.join(p['slug'] for p in pages)}")
     print(f"✓ sitemap.xml: lastmod محدّث")
     print(f"✓ standalone.html: {STANDALONE.stat().st_size / 1024:.1f} KB")
+    print("✓ llms.txt: محدّث")
 
 
 def build_standalone(html: str) -> None:

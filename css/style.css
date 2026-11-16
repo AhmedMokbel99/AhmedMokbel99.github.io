@@ -293,7 +293,7 @@ body.has-dialog {
   transform: translateX(50%);
   z-index: 3000;
   padding: 0.7rem 1.5rem;
-  background: var(--brand);
+  background: var(--brand-deep);
   color: #fff;
   border-radius: 0 0 12px 12px;
   font-weight: 600;
@@ -427,7 +427,7 @@ body.has-dialog {
 }
 
 .site-header.is-scrolled {
-  background: rgba(7, 8, 13, 0.92);
+  background: rgba(7, 8, 13, 0.97);
   border-bottom-color: var(--line);
   box-shadow: 0 18px 40px -32px #000;
 }
@@ -2313,6 +2313,38 @@ html.js .project__media.is-ready::before {
   margin-top: 1.1rem;
 }
 
+/* حالة الإرسال: النقطة بتلف مكان أيقونة الإرسال */
+.btn[aria-busy="true"] {
+  cursor: progress;
+}
+
+.btn[aria-busy="true"] .icon {
+  display: none;
+}
+
+.btn[aria-busy="true"]::before {
+  content: "";
+  width: 1em;
+  height: 1em;
+  margin-inline-end: 0.45rem;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: btn-spin 0.75s linear infinite;
+}
+
+@keyframes btn-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn[aria-busy="true"]::before {
+    animation-duration: 2.5s;
+  }
+}
+
 .form-actions .btn {
   flex: 1 1 12rem;
 }
@@ -2404,6 +2436,7 @@ html.js .project__media.is-ready::before {
 .footer-links a {
   color: var(--muted);
   font-size: 0.87rem;
+  padding-block: 0.16rem;
   transition: color 0.2s ease, padding 0.2s ease;
 }
 
@@ -2417,6 +2450,8 @@ html.js .project__media.is-ready::before {
 }
 
 .footer-emails a {
+  display: inline-block;
+  padding-block: 0.24rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   overflow-wrap: anywhere;
@@ -2602,10 +2637,19 @@ html.js .project__media.is-ready::before {
 
 .dialog-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+  grid-template-columns: minmax(340px, 440px) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr);
   height: calc(100dvh - 1rem);
   max-height: calc(100dvh - 1rem);
+}
+
+/* النصوص على يمين النافذة (بداية القراءة)، والوسائط على الشمال */
+.dialog-body {
+  grid-area: 1 / 1;
+}
+
+.dialog-media {
+  grid-area: 1 / 2;
 }
 
 .dialog-media {
@@ -2620,7 +2664,23 @@ html.js .project__media.is-ready::before {
   overflow: hidden;
 }
 
+/* خلفية ضبابية من نفس الصورة تملأ الفراغ حول الأبعاد المختلفة */
+.dialog-media::after {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  z-index: 0;
+  background-image: var(--media-bg, none);
+  background-position: center;
+  background-size: cover;
+  filter: blur(30px) saturate(1.15) brightness(0.55);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
 .dialog-media img {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   max-height: 100%;
@@ -2634,6 +2694,8 @@ html.js .project__media.is-ready::before {
 }
 
 .dialog-media video {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   max-height: 100%;
@@ -2642,6 +2704,8 @@ html.js .project__media.is-ready::before {
 }
 
 .dialog-media .dialog-youtube {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
   max-height: 100%;
@@ -2742,7 +2806,12 @@ html.js .project__media.is-ready::before {
   min-height: 0;
   padding: clamp(1.5rem, 3vw, 2.3rem);
   overflow-y: auto;
-  border-inline-start: 1px solid var(--line);
+  border-inline-end: 1px solid var(--line);
+}
+
+/* منع ضغط المحتوى: الجسم بيسكرول بدل ما يقصّر البلوكات */
+.dialog-body > * {
+  flex: 0 0 auto;
 }
 
 .dialog-kicker {
@@ -2765,6 +2834,67 @@ html.js .project__media.is-ready::before {
   color: var(--muted);
   font-size: 0.93rem;
   line-height: 1.9;
+}
+
+/* دراسة الحالة: التحدي / الدور / النتيجة / الأدوات */
+.case {
+  display: grid;
+  margin-top: 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: #0a0c13;
+  overflow: hidden;
+}
+
+.case[hidden] {
+  display: none;
+}
+
+.case__item {
+  padding: 0.8rem 1rem;
+}
+
+.case__item + .case__item {
+  border-top: 1px solid var(--line);
+}
+
+.case__label {
+  margin: 0 0 0.3rem;
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.case__text {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.855rem;
+  line-height: 1.85;
+}
+
+.case__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case__tools li {
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--brand-line);
+  border-radius: 999px;
+  background: var(--brand-soft);
+  color: var(--text);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.case__item--wide {
+  grid-column: 1 / -1;
 }
 
 .dialog-details {
@@ -2889,7 +3019,7 @@ html.js .project__media.is-ready::before {
 
 .dialog-facts {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
   gap: 0.7rem;
   margin-top: 1.5rem;
   padding-top: 1.4rem;
@@ -3166,7 +3296,7 @@ html.js .project__media.is-ready::before {
   .dialog-body {
     flex: 1 1 auto;
     min-height: 0;
-    border-inline-start: 0;
+    border-inline-end: 0;
     border-top: 1px solid var(--line);
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -3362,12 +3492,13 @@ html.js .project__media.is-ready::before {
 
   .hero-copy {
     text-align: start;
+    order: 1;
   }
 
   .hero-visual {
     max-width: 340px;
     margin-inline: auto;
-    order: 0;
+    order: 2;
   }
 
   .hero h1 {
@@ -3508,6 +3639,18 @@ html.js .project__media.is-ready::before {
 
   .floating__tip {
     display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  /* مساحة لمس أريح للروابط النصية الصغيرة */
+  .service__link,
+  .about-link {
+    min-height: 44px;
+  }
+
+  .brand {
+    min-height: 44px;
   }
 }
 

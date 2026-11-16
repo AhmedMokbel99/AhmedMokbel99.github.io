@@ -636,7 +636,6 @@ function projectMarkup(project) {
           decoding="async"
         >
         <div class="project__badges">
-          <span class="project__code">${project.code}</span>
           ${
             projectHasVideo(project)
               ? `<span class="project__type">
@@ -871,15 +870,48 @@ function renderDialog() {
   const category = $('#dialogCategory');
   const type = $('#dialogType');
   const tag = $('#dialogTag');
-  const code = $('#dialogCode');
   const link = $('#dialogLink');
   const count = $('#dialogCount');
   const prev = $('#dialogPrev');
   const next = $('#dialogNext');
 
   if (title) title.textContent = project.title;
-  if (kicker) kicker.textContent = `${project.code} · ${project.tag}`;
+  if (kicker) kicker.textContent = project.tag;
   if (summary) summary.textContent = project.summary;
+
+  const caseBlock = $('#dialogCase');
+  const caseFields = {
+    challenge: $('#dialogChallenge'),
+    role: $('#dialogRole'),
+    result: $('#dialogResult'),
+  };
+  let hasCase = false;
+
+  Object.entries(caseFields).forEach(([key, node]) => {
+    if (!node) return;
+    const value = String(project[key] || '').trim();
+    node.textContent = value;
+    if (node.parentElement) node.parentElement.hidden = !value;
+    if (value) hasCase = true;
+  });
+
+  const tools = $('#dialogTools');
+  if (tools) {
+    tools.innerHTML = '';
+    String(project.tools || '')
+      .split('–')
+      .map((item) => item.trim())
+      .filter(Boolean)
+      .forEach((item) => {
+        const chip = document.createElement('li');
+        chip.textContent = item;
+        tools.append(chip);
+      });
+    if (tools.children.length) hasCase = true;
+    if (tools.parentElement) tools.parentElement.hidden = !tools.children.length;
+  }
+
+  if (caseBlock) caseBlock.hidden = !hasCase;
 
   if (details) {
     const text = String(project.details || '').trim();
@@ -905,9 +937,8 @@ function renderDialog() {
   }
 
   if (category) category.textContent = categoryLabel(project.cat);
-  if (type) type.textContent = projectHasVideo(project) ? 'فيديو / موشن' : 'تصميم ثابت';
+  if (type) type.textContent = projectHasVideo(project) || project.isVideo ? 'فيديو / موشن' : 'تصميم ثابت';
   if (tag) tag.textContent = project.tag;
-  if (code) code.textContent = project.code;
 
   const videos = projectVideos(project);
   const hasVideo = videos.length > 0;
@@ -1052,7 +1083,17 @@ function renderDialog() {
     }
   }
 
-  if (media) media.classList.remove('is-missing');
+  if (media) {
+    const backdrop = project.imageMedium || project.imageSmall || project.image || '';
+    if (backdrop) {
+      /* لازم رابط مطلق: المتغيّر بيتقرأ جوه CSS فالمسار النسبي بيتحسب من مكان الستايل */
+      const absolute = new URL(backdrop, document.baseURI).href;
+      media.style.setProperty('--media-bg', `url("${absolute}")`);
+    } else {
+      media.style.removeProperty('--media-bg');
+    }
+    media.classList.remove('is-missing');
+  }
 
   if (link) {
     if (project.external && project.url) {
@@ -1149,6 +1190,32 @@ function initProjectDialog() {
   $('#dialogClose')?.addEventListener('click', () => dialog.close());
   $('#dialogPrev')?.addEventListener('click', () => moveDialog(-1));
   $('#dialogNext')?.addEventListener('click', () => moveDialog(1));
+
+  /* زر «اطلب مشروعاً مشابهاً»: يقفل النافذة ويفتح مسار التواصل جاهز */
+  $('#dialogCta')?.addEventListener('click', (event) => {
+    const project = state.visible[state.dialogIndex];
+    event.preventDefault();
+    dialog.close();
+
+    const contact = $('#contact');
+    if (contact) {
+      contact.scrollIntoView({
+        behavior: reduceMotion.matches ? 'auto' : 'smooth',
+        block: 'start',
+      });
+      history.replaceState(null, '', '#contact');
+    }
+
+    const message = $('#fieldMessage');
+    if (project && message && !message.value.trim()) {
+      message.value = `شفت مشروع «${project.title}» وحابب أعمل حاجة شبيهة.`;
+    }
+
+    window.setTimeout(
+      () => $('#fieldName')?.focus({ preventScroll: true }),
+      reduceMotion.matches ? 120 : 600
+    );
+  });
 
   /* إزالة تأثير التحميل مع أول صورة جاهزة */
   const dialogImage = $('#dialogImage');
@@ -1545,16 +1612,24 @@ function initContactForm() {
     }
 
     const values = getValues();
+    const submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
+    const originalLabel = submitLabel ? submitLabel.textContent : '';
+    /* لو النت بطيء أو السيرفر علّق، منخليش الزائر مستني للأبد */
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.setAttribute('aria-busy', 'true');
     }
+    if (submitLabel) submitLabel.textContent = 'جارٍ الإرسال…';
     setStatus('info', 'بنرسل طلبك...');
 
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({
           name: values.name,
           phone: values.phone,
@@ -1584,13 +1659,18 @@ function initContactForm() {
       form.reset();
       setStatus('success', 'وصلني طلبك، وهرد عليك خلال 24 ساعة. لو مستعجل، ابعتلي على واتساب على طول.');
     } catch (error) {
+      const timedOut = error && error.name === 'AbortError';
       openWhatsApp();
       setStatus(
         'info',
-        'تعذّر إرسال الطلب من الموقع، فجهّزتلك نسخة على واتساب — راجعها واضغط إرسال.',
+        timedOut
+          ? 'الإرسال خد وقت أطول من المتوقع، فجهّزتلك نسخة على واتساب — راجعها واضغط إرسال.'
+          : 'تعذّر إرسال الطلب من الموقع، فجهّزتلك نسخة على واتساب — راجعها واضغط إرسال.',
         { href: mailtoUrl(), label: 'أو ابعت على البريد' }
       );
     } finally {
+      window.clearTimeout(timeout);
+      if (submitLabel) submitLabel.textContent = originalLabel;
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.removeAttribute('aria-busy');

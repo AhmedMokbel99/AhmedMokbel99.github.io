@@ -528,6 +528,10 @@ function blankProject() {
     alt: '',
     summary: '',
     details: '',
+    challenge: '',
+    role: '',
+    result: '',
+    tools: '',
     facts: [],
     visible: true,
     video: '',
@@ -625,8 +629,8 @@ function renderProjectForm() {
           </select>
         </label>
         <label class="field">
-          <span>الكود الظاهر</span>
-          <input type="text" value="${h(draft.code)}" data-draft="code">
+          <span>كود داخلي (لا يظهر في الموقع)</span>
+          <input type="text" value="${h(draft.code)}" data-draft="code" dir="ltr">
         </label>
         <label class="field" style="grid-column:1/-1">
           <span>وصف المشروع</span>
@@ -647,6 +651,29 @@ function renderProjectForm() {
         <label class="check" style="grid-column:1/-1">
           <input type="checkbox" data-draft="visible"${draft.visible !== false ? ' checked' : ''}>
           إظهار المشروع في الموقع
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h4>دراسة الحالة (تظهر داخل نافذة المشروع)</h4>
+      <p class="hint" style="margin:0 0 .6rem">اكتب اللي تعرفه فعلاً. لو حقل فاضي مش هيظهر للزائر — من غير اختراع أرقام أو نتائج.</p>
+      <div class="grid-2">
+        <label class="field" style="grid-column:1/-1">
+          <span>التحدي</span>
+          <textarea data-draft="challenge" rows="2" placeholder="المشكلة أو المطلوب البصري قبل التصميم">${h(draft.challenge || '')}</textarea>
+        </label>
+        <label class="field" style="grid-column:1/-1">
+          <span>دوري في المشروع</span>
+          <textarea data-draft="role" rows="2" placeholder="اللي عملته بنفسك: تصميم، تحريك، مونتاج…">${h(draft.role || '')}</textarea>
+        </label>
+        <label class="field" style="grid-column:1/-1">
+          <span>النتيجة</span>
+          <textarea data-draft="result" rows="2" placeholder="اللي اتسلّم للعميل — من غير أرقام غير مؤكدة">${h(draft.result || '')}</textarea>
+        </label>
+        <label class="field" style="grid-column:1/-1">
+          <span>الأدوات والخدمات</span>
+          <input type="text" value="${h(draft.tools || '')}" data-draft="tools" placeholder="موشن جرافيك – تحريك – مونتاج">
         </label>
       </div>
     </div>
