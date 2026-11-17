@@ -395,12 +395,14 @@ def services_block(services: list[dict]) -> str:
 def clients_block(site: dict) -> str:
     cards = []
     for client in site.get("clients", []):
-        latin = client.get("latin") or client["name"]
+        latin = (client.get("latin") or client["name"]).strip()
+        # لو الاسم اللاتيني هو نفسه اسم العلامة، ما نكرّرش السطر تحته
+        same = latin.casefold() == client["name"].strip().casefold()
+        hidden = ' aria-hidden="true"' if not same else ""
+        label = "" if same else f'\n            <span class="client__name">{esc(client["name"])}</span>'
         cards.append(
             f'''          <li class="client">
-            <span class="client__mark" aria-hidden="true">{esc(latin[:1].upper())}</span>
-            <span class="client__name">{esc(client["name"])}</span>
-            <span class="client__latin" aria-hidden="true">{esc(latin)}</span>
+            <span class="client__wordmark"{hidden}>{esc(latin)}</span>{label}
           </li>'''
         )
     return "\n".join(cards)
@@ -419,7 +421,7 @@ def process_block(steps: list[dict]) -> str:
     return "\n".join(cards)
 
 
-def faq_block(items: list[dict]) -> str:
+def faq_block(items: list[dict], terms: list[dict], terms_title: str) -> str:
     cards = []
     for item in items:
         cards.append(
@@ -431,6 +433,18 @@ def faq_block(items: list[dict]) -> str:
             <p>{esc(item["a"])}</p>
           </details>'''
         )
+    if terms:
+        cards.append(f'          <p class="faq__group" data-reveal>{esc(terms_title)}</p>')
+        for item in terms:
+            cards.append(
+                f'''          <details class="faq" data-reveal>
+            <summary>
+              {esc(item["q"])}
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <p>{esc(item["a"])}</p>
+          </details>'''
+            )
     return "\n\n".join(cards)
 
 
@@ -511,7 +525,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         "@id": person_id,
         "name": brand["name"],
         "jobTitle": brand["jobTitle"],
-        "description": f'{brand["jobTitle"]} من {brand["location"]}، ومؤسس وكالة {agency["name"]} للإنتاج الإبداعي.',
+        "description": f'{brand["jobTitle"]} من {brand["location"]}، ومؤسس {agency["name"]} للإنتاج الإبداعي.',
         "url": base + "/",
         "image": f'{base}/{images["portrait"]["src"]}',
         "email": f'mailto:{contact["email"]}',
@@ -838,32 +852,6 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
     <section class="section">
       <div class="wrap">
         <div class="service-block" style="margin-top:0">
-          <p class="eyebrow">{esc(page["process"]["eyebrow"])}</p>
-          <h2>{esc(page["process"]["title"])}</h2>
-
-          <div class="process-grid" style="margin-top:1.8rem">
-{steps}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--soft">
-      <div class="wrap">
-        <div class="service-block" style="margin-top:0">
-          <p class="eyebrow">{esc(page["audience"]["eyebrow"])}</p>
-          <h2>{esc(page["audience"]["title"])}</h2>
-
-          <div class="service-cards">
-{audience}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="wrap">
-        <div class="service-block" style="margin-top:0">
           <p class="eyebrow">{esc(page["gallery"]["eyebrow"])}</p>
           <h2>{esc(page["gallery"]["title"])}</h2>
           <p>{esc(page["gallery"]["intro"])}</p>
@@ -885,6 +873,32 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
     <section class="section section--soft">
       <div class="wrap">
         <div class="service-block" style="margin-top:0">
+          <p class="eyebrow">{esc(page["process"]["eyebrow"])}</p>
+          <h2>{esc(page["process"]["title"])}</h2>
+
+          <div class="process-grid" style="margin-top:1.8rem">
+{steps}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="service-block" style="margin-top:0">
+          <p class="eyebrow">{esc(page["audience"]["eyebrow"])}</p>
+          <h2>{esc(page["audience"]["title"])}</h2>
+
+          <div class="service-cards">
+{audience}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft">
+      <div class="wrap">
+        <div class="service-block" style="margin-top:0">
           <p class="eyebrow">{esc(page["faq"]["eyebrow"])}</p>
           <h2>{esc(page["faq"]["title"])}</h2>
 
@@ -895,11 +909,11 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
       </div>
     </section>
 
-    <section class="section section--soft">
+    <section class="section">
       <div class="wrap">
         <div class="service-block" style="margin-top:0">
           <p class="eyebrow">خدمات أخرى</p>
-          <h2>تكمل الخدمة دي بخدمات تانية</h2>
+          <h2>خدمات مكمّلة</h2>
           <div class="service-crosses">
 {other_links}
           </div>
@@ -907,7 +921,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--soft">
       <div class="wrap">
         <div class="service-cta">
           <h2>{esc(page["cta"]["title"])}</h2>
@@ -930,7 +944,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
 
   <footer class="service-footer">
     <div class="wrap service-footer__inner">
-      <span>© <span id="year">2026</span> {esc(brand["name"])} — {esc(site["agency"]["name"])}. {esc(site["footer"]["rights"])}</span>
+      <span>© <span id="year">2026</span> {esc(brand["name"])}. {esc(site["footer"]["rights"])}</span>
       <span>
         <a href="index.html">الرئيسية</a> ·
 {footer_services} ·
@@ -1033,7 +1047,7 @@ def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
     lines = [
         f"# {brand['name']} — Ahmed Mokbel",
         "",
-        f"> {brand['jobTitle']} من {brand['location']}، مؤسس وكالة {agency['name']} للإنتاج الإبداعي.",
+        f"> {brand['jobTitle']} من {brand['location']}، مؤسس {agency['name']} للإنتاج الإبداعي.",
         f"> {agency['description']}",
         "",
         "## الصفحات",
@@ -1052,7 +1066,7 @@ def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
         f"- الموقع: {brand['location']}، مصر. يعمل عن بُعد مع عملاء داخل مصر وخارجها.",
         f"- الخبرة: في التصميم منذ {brand['careerStart']}، وعلى Behance منذ {brand['behanceSince']}.",
         f"- المشاريع المعروضة: {total} مشروعًا مختارًا (موشن جرافيك، هوية وطباعة، تصميم رقمي).",
-        f"- الوكالة: {agency['name']} — {agency['description']}",
+        f"- الاستوديو: {agency['name']} — {agency['description']}",
     ]
 
     if services:
@@ -1182,7 +1196,11 @@ def main() -> None:
     html = replace_block(html, "services", services_block(site.get("services", [])))
     html = replace_block(html, "clients", clients_block(site))
     html = replace_block(html, "process", process_block(site.get("process", [])))
-    html = replace_block(html, "faq", faq_block(site.get("faq", [])))
+    html = replace_block(html, "faq", faq_block(
+        site.get("faq", []),
+        site.get("terms", []),
+        (site.get("faqSection") or {}).get("termsTitle") or "شروط العمل",
+    ))
     html = replace_block(html, "channels", channels_block(site))
     html = replace_block(html, "service-options", service_options(site))
     html = replace_block(html, "static-projects", "\n".join(project_card(p, i) for i, p in enumerate(visible)))

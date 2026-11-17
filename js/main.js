@@ -122,7 +122,7 @@ function initSiteData() {
   /* شريط الماركي */
   const track = $('#marqueeTrack');
   if (track) {
-    const words = [...SITE_DATA.skills, SITE_DATA.agency?.name || 'DOT Media'];
+    const words = [...SITE_DATA.skills];
     const set = words.map((w) => `<span class="marquee__item">${w}</span>`).join('');
     track.innerHTML = set + set;
   }
@@ -397,60 +397,6 @@ function initCounters() {
   );
 
   counters.forEach((el) => observer.observe(el));
-}
-
-/* ------------------------------------------------------------
-   7) الكتابة الآلية لسطر الدور
------------------------------------------------------------- */
-function initTyping() {
-  const el = $('#heroRole');
-  if (!el || typeof SITE_DATA === 'undefined' || !SITE_DATA.roles?.length) return;
-
-  const phrases = SITE_DATA.roles;
-  if (reduceMotion.matches) {
-    el.textContent = phrases[0];
-    return;
-  }
-
-  const text = document.createElement('span');
-  const caret = document.createElement('span');
-  caret.className = 'caret';
-  caret.setAttribute('aria-hidden', 'true');
-  caret.textContent = '|';
-  el.textContent = '';
-
-  /* السطر يظهر كامل من أول لحظة بدل ما يبدأ فاضي ويكتب حرف حرف */
-  text.textContent = phrases[0];
-  el.append(text, caret);
-
-  let phraseIndex = 0;
-  let charIndex = phrases[0].length;
-  let deleting = true;
-
-  const tick = () => {
-    const current = phrases[phraseIndex];
-
-    if (!deleting) {
-      charIndex += 1;
-      text.textContent = current.slice(0, charIndex);
-      if (charIndex === current.length) {
-        deleting = true;
-        window.setTimeout(tick, 1900);
-        return;
-      }
-    } else {
-      charIndex -= 1;
-      text.textContent = current.slice(0, charIndex);
-      if (charIndex === 0) {
-        deleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-      }
-    }
-
-    window.setTimeout(tick, deleting ? 34 : 62);
-  };
-
-  window.setTimeout(tick, 2800);
 }
 
 /* ------------------------------------------------------------
@@ -1495,6 +1441,7 @@ function initContactForm() {
     phone: $('#fieldPhone'),
     email: $('#fieldEmail'),
     service: $('#fieldService'),
+    budget: $('#fieldBudget'),
     message: $('#fieldMessage'),
   };
 
@@ -1503,6 +1450,7 @@ function initContactForm() {
     phone: $('#errorPhone'),
     email: $('#errorEmail'),
     service: $('#errorService'),
+    budget: $('#errorBudget'),
     message: $('#errorMessage'),
   };
 
@@ -1515,7 +1463,9 @@ function initContactForm() {
         : 'اكتب رقم هاتف صحيحًا (8 إلى 15 رقمًا).';
     },
     email: (v) =>
-      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'اكتب بريدًا إلكترونيًا صحيحًا.',
+      !v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())
+        ? ''
+        : 'اكتب بريدًا إلكترونيًا صحيحًا أو اتركه فارغًا.',
     service: (v) => (v ? '' : 'اختر نوع الخدمة المطلوبة.'),
     message: (v) =>
       v.trim().length >= 10 ? '' : 'اكتب وصفًا مختصرًا للمشروع (10 أحرف على الأقل).',
@@ -1559,6 +1509,7 @@ function initContactForm() {
     phone: fields.phone?.value.trim() || '',
     email: fields.email?.value.trim() || '',
     service: fields.service?.value || '',
+    budget: fields.budget?.value.trim() || '',
     message: fields.message?.value.trim() || '',
   });
 
@@ -1569,8 +1520,9 @@ function initContactForm() {
       '',
       `الاسم: ${v.name}`,
       `الهاتف: ${v.phone}`,
-      `البريد: ${v.email}`,
+      `البريد: ${v.email || 'غير مذكور'}`,
       `نوع الخدمة: ${v.service}`,
+      `الميزانية التقديرية: ${v.budget || 'غير محددة'}`,
       '',
       'تفاصيل المشروع:',
       v.message,
@@ -1635,6 +1587,7 @@ function initContactForm() {
           phone: values.phone,
           email: values.email,
           service: values.service,
+          budget: values.budget,
           message: values.message,
           _subject: 'طلب مشروع جديد — من الموقع الشخصي',
           _template: 'table',
@@ -1648,8 +1601,8 @@ function initContactForm() {
       if (/activat/i.test(message)) {
         setStatus(
           'info',
-          'طلبك اتسجل، ومحتاج تفعيل مرة واحدة بس: افتح رسالة التفعيل اللي وصلت على البريد واضغط رابط Activate Form.',
-          { href: mailtoUrl(), label: 'أو ابعت على البريد' }
+          'سُجّل طلبك، ويحتاج تفعيلًا لمرة واحدة: افتح رسالة التفعيل على البريد واضغط رابط Activate Form.',
+          { href: mailtoUrl(), label: 'أو أرسل عبر البريد' }
         );
         return;
       }
@@ -1657,16 +1610,16 @@ function initContactForm() {
       if (failed) throw new Error(message || 'send failed');
 
       form.reset();
-      setStatus('success', 'وصلني طلبك، وهرد عليك خلال 24 ساعة. لو مستعجل، ابعتلي على واتساب على طول.');
+      setStatus('success', 'وصلني طلبك، وسأرد عليك خلال 24 ساعة. للاستعجال، أرسل رسالة على واتساب.');
     } catch (error) {
       const timedOut = error && error.name === 'AbortError';
       openWhatsApp();
       setStatus(
         'info',
         timedOut
-          ? 'الإرسال خد وقت أطول من المتوقع، فجهّزتلك نسخة على واتساب — راجعها واضغط إرسال.'
-          : 'تعذّر إرسال الطلب من الموقع، فجهّزتلك نسخة على واتساب — راجعها واضغط إرسال.',
-        { href: mailtoUrl(), label: 'أو ابعت على البريد' }
+          ? 'استغرق الإرسال وقتًا أطول من المتوقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.'
+          : 'تعذّر إرسال الطلب من الموقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.',
+        { href: mailtoUrl(), label: 'أو أرسل عبر البريد' }
       );
     } finally {
       window.clearTimeout(timeout);
@@ -1689,7 +1642,7 @@ function initContactForm() {
     openWhatsApp();
     setStatus(
       'success',
-      'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق.'
+      'جُهّزت رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق.'
     );
   });
 }
@@ -1812,7 +1765,6 @@ function init() {
   initProjectDialog();
   initLightbox();
   initCounters();
-  initTyping();
   initContactForm();
   initMisc();
 }

@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-  <title>أحمد مقبل — مصمم جرافيك وموشن جرافيك | DOT Media</title>
-  <meta name="description" content="أحمد مقبل، مصمم جرافيك وموشن جرافيك من مدينة الجمالية ومؤسس وكالة DOT Media. هويات بصرية وإعلانات فيديو لمطاعم وشركات وعيادات داخل مصر وخارجها.">
+  <title>أحمد مقبل — تصميم وموشن جرافيك وتصوير | مصمم ومخرج بصري</title>
+  <meta name="description" content="أحمد مقبل، مصمم ومخرج بصري من مدينة الجمالية، محافظة الدقهلية. هويات بصرية، موشن جرافيك، تصوير ومونتاج إعلانات للعلامات داخل مصر وخارجها.">
   <meta name="author" content="أحمد مقبل">
   <meta name="theme-color" content="#07080d">
   <meta name="color-scheme" content="dark">
@@ -22,21 +22,21 @@
   <meta property="og:site_name" content="أحمد مقبل">
   <meta property="og:locale" content="ar_EG">
   <meta property="og:url" content="https://ahmedmokbel99.github.io/">
-  <meta property="og:title" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك | DOT Media">
-  <meta property="og:description" content="هوية بصرية، موشن جرافيك، تصميم رقمي وطباعي، وإنتاج محتوى تجاري من مدينة الجمالية، محافظة الدقهلية. أعمال لمطاعم وشركات ومؤسسات تعليمية وعقارية.">
+  <meta property="og:title" content="أحمد مقبل — تصميم وموشن جرافيك وتصوير | مصمم ومخرج بصري">
+  <meta property="og:description" content="أعمال مختارة في الهوية البصرية والموشن جرافيك والتصوير وإنتاج الفيديو، من مدينة الجمالية، محافظة الدقهلية.">
   <meta property="og:image" content="https://ahmedmokbel99.github.io/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك">
+  <meta property="og:image:alt" content="أحمد مقبل — تصميم وموشن جرافيك وتصوير">
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:url" content="https://ahmedmokbel99.github.io/">
-  <meta name="twitter:title" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك | DOT Media">
-  <meta name="twitter:description" content="هوية بصرية، موشن جرافيك، تصميم رقمي وطباعي، وإنتاج محتوى تجاري من مدينة الجمالية، محافظة الدقهلية. أعمال لمطاعم وشركات ومؤسسات تعليمية وعقارية.">
+  <meta name="twitter:title" content="أحمد مقبل — تصميم وموشن جرافيك وتصوير | مصمم ومخرج بصري">
+  <meta name="twitter:description" content="أعمال مختارة في الهوية البصرية والموشن جرافيك والتصوير وإنتاج الفيديو، من مدينة الجمالية، محافظة الدقهلية.">
   <meta name="twitter:image" content="https://ahmedmokbel99.github.io/assets/og-image.jpg">
-  <meta name="twitter:image:alt" content="أحمد مقبل — مصمم جرافيك وموشن جرافيك">
+  <meta name="twitter:image:alt" content="أحمد مقبل — تصميم وموشن جرافيك وتصوير">
 
   <!-- Fonts -->
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
@@ -781,10 +781,20 @@ body.has-dialog {
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 5.4vw, 4.25rem);
-  line-height: 1.24;
+  font-size: clamp(2.8rem, 6.2vw, 5rem);
+  line-height: 1.16;
   font-weight: 800;
   letter-spacing: 0;
+}
+
+.hero h1 .h1-disciplines {
+  display: block;
+  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.1vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--cyan);
 }
 
 .hero h1 .h1-sub {
@@ -1088,9 +1098,12 @@ body.has-dialog {
 
 .client {
   display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.8rem 0.95rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.28rem;
+  min-height: 84px;
+  padding: 1rem 1.15rem;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.02);
@@ -1103,34 +1116,19 @@ body.has-dialog {
   transform: translateY(-2px);
 }
 
-.client__mark {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  border: 1px solid var(--brand-line);
-  background: var(--brand-soft);
-  color: #cbb7ff;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+.client__wordmark {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  text-transform: uppercase;
 }
 
 .client__name {
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--text);
-}
-
-.client__latin {
-  margin-inline-start: auto;
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.1em;
+  font-size: 0.76rem;
+  font-weight: 400;
   color: var(--dim);
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .float-pill {
@@ -1997,6 +1995,17 @@ html.js .project__media.is-ready::before {
   gap: 0.7rem;
 }
 
+.faq__group {
+  margin: 1.3rem 0 0.1rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
 .faq {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -2282,6 +2291,12 @@ html.js .project__media.is-ready::before {
 
 .field label span {
   color: var(--cyan);
+}
+
+.field label .field__optional {
+  color: var(--dim);
+  font-weight: 400;
+  font-size: 0.74rem;
 }
 
 .field input,
@@ -3547,7 +3562,12 @@ html.js .project__media.is-ready::before {
   }
 
   .hero h1 {
-    font-size: clamp(2.3rem, 8.5vw, 3.4rem);
+    font-size: clamp(2.6rem, 9.5vw, 3.4rem);
+  }
+
+  .hero h1 .h1-disciplines {
+    margin-top: 0.6rem;
+    font-size: 1.02rem;
   }
 
   .hero-meta {
@@ -4060,8 +4080,8 @@ html.js .project__media.is-ready::before {
       "@type": "Person",
       "@id": "https://ahmedmokbel99.github.io/#person",
       "name": "أحمد مقبل",
-      "jobTitle": "مصمم جرافيك وموشن جرافيك",
-      "description": "مصمم جرافيك وموشن جرافيك من مدينة الجمالية، محافظة الدقهلية، ومؤسس وكالة DOT Media للإنتاج الإبداعي.",
+      "jobTitle": "مصمم ومخرج بصري",
+      "description": "مصمم ومخرج بصري من مدينة الجمالية، محافظة الدقهلية، ومؤسس DOT Media للإنتاج الإبداعي.",
       "url": "https://ahmedmokbel99.github.io/",
       "image": "https://ahmedmokbel99.github.io/assets/ahmed-mokbel.jpg",
       "email": "mailto:ahmed01068775125@gmail.com",
@@ -4202,7 +4222,7 @@ html.js .project__media.is-ready::before {
           "name": "كم يستغرق تنفيذ المشروع؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "المدة تُحدد بعد جلسة الاكتشاف بحسب نطاق العمل وعدد المراجعات. ستحصل على جدول زمني واضح قبل بدء التنفيذ، مع نقاط مراجعة محددة."
+            "text": "تُحدد المدة بعد جلسة الاكتشاف بحسب نطاق العمل وعدد المراجعات. يصلك جدول زمني واضح قبل بدء التنفيذ، مع نقاط مراجعة محددة."
           }
         },
         {
@@ -4210,7 +4230,7 @@ html.js .project__media.is-ready::before {
           "name": "هل تعمل مع عملاء خارج مصر؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "نعم. أعمل عن بُعد مع عملاء داخل مصر وخارجها، والتواصل يتم عبر واتساب أو البريد الإلكتروني مع اجتماعات أونلاين عند الحاجة."
+            "text": "نعم. أعمل عن بُعد مع عملاء داخل مصر وخارجها، والتواصل عبر واتساب أو البريد الإلكتروني، مع اجتماعات أونلاين عند الحاجة."
           }
         },
         {
@@ -4218,15 +4238,7 @@ html.js .project__media.is-ready::before {
           "name": "ماذا أستلم في نهاية المشروع؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "نسخًا جاهزة للنشر أو الطباعة، ودليل استخدام مبسّط عند تسليم هوية بصرية كاملة."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "كم عدد المراجعات في المشروع؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "جولتا مراجعة داخل نطاق العمل المتفق عليه. أي تغيير في الاتجاه بعد اعتماد النسخة النهائية يُحسب كمرحلة إضافية بسعر منفصل، ونوضح ذلك كتابةً قبل البدء."
+            "text": "ملفات جاهزة للنشر أو الطباعة، ودليل استخدام مبسّط عند تسليم هوية بصرية كاملة."
           }
         },
         {
@@ -4234,15 +4246,7 @@ html.js .project__media.is-ready::before {
           "name": "كيف أبدأ؟",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "أرسل تفاصيل مشروعك من خلال النموذج أو واتساب: النشاط، الهدف، والخدمة المطلوبة. سأرد عليك لتحديد الخطوة التالية والموعد المناسب."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "كيف تتم عملية الدفع؟",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "الدفع على دفعتين: مقدمة عند بدء العمل والباقي عند التسليم. تفاصيل وسيلة التحويل تُحدد في عرض السعر، ويصلك إيصال بكل دفعة."
+            "text": "أرسل تفاصيل مشروعك من النموذج أو واتساب: النشاط، الهدف، والخدمة المطلوبة. سأعود إليك لتحديد الخطوة التالية والموعد المناسب."
           }
         }
       ]
@@ -4258,18 +4262,6 @@ html.js .project__media.is-ready::before {
           "position": 1,
           "item": {
             "@type": "CreativeWork",
-            "name": "هارفارد 2026 — هوية العام الجديد",
-            "url": "https://ahmedmokbel99.github.io/#work",
-            "genre": "هوية وطباعة",
-            "description": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي. 2026",
-            "image": "https://ahmedmokbel99.github.io/assets/projects/project-f24.jpg"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "item": {
-            "@type": "CreativeWork",
             "name": "يوم التأسيس السعودي",
             "url": "https://ahmedmokbel99.github.io/#work",
             "genre": "موشن جرافيك",
@@ -4280,7 +4272,7 @@ html.js .project__media.is-ready::before {
         },
         {
           "@type": "ListItem",
-          "position": 3,
+          "position": 2,
           "item": {
             "@type": "CreativeWork",
             "name": "ابن الباسل",
@@ -4293,7 +4285,7 @@ html.js .project__media.is-ready::before {
         },
         {
           "@type": "ListItem",
-          "position": 4,
+          "position": 3,
           "item": {
             "@type": "CreativeWork",
             "name": "آنس الدمشقي — إعلان طبق اللحم",
@@ -4305,33 +4297,7 @@ html.js .project__media.is-ready::before {
         },
         {
           "@type": "ListItem",
-          "position": 5,
-          "item": {
-            "@type": "CreativeWork",
-            "name": "تجربة موشن جرافيك — البدايات",
-            "url": "https://ahmedmokbel99.github.io/#work",
-            "genre": "موشن جرافيك",
-            "description": "من أوائل مشاريع الموشن جرافيك التي نفذتها؛ بداية المسار في التحريك والتصميم الحركي.",
-            "sameAs": "https://www.behance.net/gallery/119428049/_",
-            "image": "https://ahmedmokbel99.github.io/assets/projects/first-motion-graphics-work.jpg"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 6,
-          "item": {
-            "@type": "CreativeWork",
-            "name": "طاهر للطباعة",
-            "url": "https://ahmedmokbel99.github.io/#work",
-            "genre": "هوية وطباعة",
-            "description": "هوية بصرية وتصميمات طباعية لمطبعة طاهر، تشمل الشعار والمطبوعات وتطبيقات الهوية.",
-            "sameAs": "https://www.behance.net/gallery/128103663/_",
-            "image": "https://ahmedmokbel99.github.io/assets/projects/taher-printing-brand-identity.jpg"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 7,
+          "position": 4,
           "item": {
             "@type": "CreativeWork",
             "name": "هارفارد — الهوية البصرية الأساسية",
@@ -4344,7 +4310,7 @@ html.js .project__media.is-ready::before {
         },
         {
           "@type": "ListItem",
-          "position": 8,
+          "position": 5,
           "item": {
             "@type": "CreativeWork",
             "name": "ULTRA GROW — تغليف المنتجات",
@@ -4357,7 +4323,58 @@ html.js .project__media.is-ready::before {
         },
         {
           "@type": "ListItem",
+          "position": 6,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "INSTA WATCHES",
+            "url": "https://ahmedmokbel99.github.io/#work",
+            "genre": "تصميم رقمي",
+            "description": "تصميمات رقمية لعلامة ساعات، تركّز على إبراز المنتج بإضاءة وتفاصيل فاخرة.",
+            "sameAs": "https://www.behance.net/gallery/175994775/INSTA-WATCHES",
+            "image": "https://ahmedmokbel99.github.io/assets/projects/insta-watches-ad-design.jpg"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 7,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "هارفارد 2026 — هوية العام الجديد",
+            "url": "https://ahmedmokbel99.github.io/#work",
+            "genre": "هوية وطباعة",
+            "description": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي. 2026",
+            "image": "https://ahmedmokbel99.github.io/assets/projects/project-f24.jpg"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 8,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "طاهر للطباعة",
+            "url": "https://ahmedmokbel99.github.io/#work",
+            "genre": "هوية وطباعة",
+            "description": "هوية بصرية وتصميمات طباعية لمطبعة طاهر، تشمل الشعار والمطبوعات وتطبيقات الهوية.",
+            "sameAs": "https://www.behance.net/gallery/128103663/_",
+            "image": "https://ahmedmokbel99.github.io/assets/projects/taher-printing-brand-identity.jpg"
+          }
+        },
+        {
+          "@type": "ListItem",
           "position": 9,
+          "item": {
+            "@type": "CreativeWork",
+            "name": "تجربة موشن جرافيك — البدايات",
+            "url": "https://ahmedmokbel99.github.io/#work",
+            "genre": "موشن جرافيك",
+            "description": "من أوائل مشاريع الموشن جرافيك التي نفذتها؛ بداية المسار في التحريك والتصميم الحركي.",
+            "sameAs": "https://www.behance.net/gallery/119428049/_",
+            "image": "https://ahmedmokbel99.github.io/assets/projects/first-motion-graphics-work.jpg"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 10,
           "item": {
             "@type": "CreativeWork",
             "name": "ULTRA GROW — النظام البصري",
@@ -4370,7 +4387,7 @@ html.js .project__media.is-ready::before {
         },
         {
           "@type": "ListItem",
-          "position": 10,
+          "position": 11,
           "item": {
             "@type": "CreativeWork",
             "name": "مختارات سوشيال ميديا — تغذية بصرية",
@@ -4383,7 +4400,7 @@ html.js .project__media.is-ready::before {
         },
         {
           "@type": "ListItem",
-          "position": 11,
+          "position": 12,
           "item": {
             "@type": "CreativeWork",
             "name": "حقن فيلر",
@@ -4392,19 +4409,6 @@ html.js .project__media.is-ready::before {
             "description": "تصميم إعلاني لخدمة حقن الفيلر للدكتورة لينا بعّاد، بأسلوب ناعم يعتمد على درجات الوردي وعناصر الطبيعة.",
             "sameAs": "https://www.behance.net/gallery/194077395/_",
             "image": "https://ahmedmokbel99.github.io/assets/projects/filler-injection-ad-design.jpg"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 12,
-          "item": {
-            "@type": "CreativeWork",
-            "name": "INSTA WATCHES",
-            "url": "https://ahmedmokbel99.github.io/#work",
-            "genre": "تصميم رقمي",
-            "description": "تصميمات رقمية لعلامة ساعات، تركّز على إبراز المنتج بإضاءة وتفاصيل فاخرة.",
-            "sameAs": "https://www.behance.net/gallery/175994775/INSTA-WATCHES",
-            "image": "https://ahmedmokbel99.github.io/assets/projects/insta-watches-ad-design.jpg"
           }
         },
         {
@@ -4734,13 +4738,13 @@ html.js .project__media.is-ready::before {
                 sizes="72px"
                 width="72"
                 height="83"
-                alt="أحمد مقبل — مصمم جرافيك وموشن جرافيك"
+                alt="أحمد مقبل — مصمم ومخرج بصري"
                 loading="eager"
                 decoding="async"
               >
               <span class="reel-card__meta">
                 <b data-cms="hero.name">أحمد مقبل</b>
-                <small data-cms="hero.role">مصمم جرافيك وموشن جرافيك</small>
+                <small data-cms="hero.role">مصمم ومخرج بصري</small>
               </span>
             </div>
           </div>
@@ -4758,34 +4762,27 @@ html.js .project__media.is-ready::before {
           <div class="badges-row">
             <span class="badge">
               <span class="badge__dot" aria-hidden="true"></span>
-              <span data-cms="hero.availability">متاح للعمل والتعاقد</span>
+              <span data-cms="hero.availability">متاح لمشاريع جديدة</span>
             </span>
-            <a class="badge badge--agency" data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">
-              <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
-              <span data-cms="hero.agencyLabel">وكالة DOT Media للإنتاج الإبداعي</span>
-              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
-            </a>
           </div>
 
           <h1 id="heroTitle">
-            <span class="h1-role" data-cms="hero.role">مصمم جرافيك وموشن جرافيك</span>
             <span class="h1-name" data-cms="hero.name">أحمد مقبل</span>
-            <span class="h1-sub"><span data-cms="hero.taglinePrefix">يحوّل الفكرة إلى</span> <span class="grad-text" data-cms="hero.taglineAccent">حركة وهوية بصرية</span></span>
+            <span class="h1-disciplines" data-cms="hero.disciplines">تصميم · موشن جرافيك · تصوير · فيديو</span>
           </h1>
 
-          <p class="hero-role" id="heroRole" aria-hidden="true" data-cms="hero.roleFallback">موشن جرافيك وهوية بصرية — مؤسس وكالة DOT Media</p>
-          <span class="sr-only" data-cms="hero.specialty">التخصص: موشن جرافيك، هوية بصرية، وإنتاج إعلاني</span>
+          <span class="sr-only" data-cms="hero.specialty">التخصص: تصميم، موشن جرافيك، تصوير، ومونتاج.</span>
 
-          <p class="hero-lead" data-cms="hero.lead">من مدينة الجمالية، أنا مصمم جرافيك وموشن جرافيك ومؤسس وكالة DOT Media. أصنع هويات بصرية وإعلانات فيديو لمطاعم وشركات وعيادات — من الفكرة والسيناريو حتى الملف الجاهز للنشر.</p>
+          <p class="hero-lead" data-cms="hero.lead">مصمم ومخرج بصري من مدينة الجمالية، أعمل على الهوية البصرية والموشن جرافيك والتصوير وإنتاج الفيديو — من الفكرة والسيناريو حتى الملف الجاهز للنشر.</p>
 
           <div class="hero-actions">
             <a href="#work" class="btn btn--primary">
-              <span data-cms="hero.ctaWork">تصفح الأعمال</span>
+              <span data-cms="hero.ctaWork">شاهد الأعمال</span>
               <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
             </a>
             <a href="#contact" class="btn btn--ghost">
               <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
-              <span data-cms="hero.ctaContact">تواصل معي</span>
+              <span data-cms="hero.ctaContact">ابدأ مشروعك</span>
             </a>
           </div>
 
@@ -4819,70 +4816,55 @@ html.js .project__media.is-ready::before {
       <div class="wrap">
         <div class="clients__head">
           <p class="eyebrow" data-cms="clientsSection.eyebrow">عملاء</p>
-          <h2 id="clientsTitle" data-cms="clientsSection.title">علامات ومؤسسات اشتغلت معاها</h2>
-          <p class="clients__lead" data-cms="clientsSection.lead">مختارات من الجهات التي نفّذت لها هويات وإعلانات — التفاصيل الكاملة داخل الأعمال.</p>
+          <h2 id="clientsTitle" data-cms="clientsSection.title">علامات تعاونت معها</h2>
+          <p class="clients__lead" data-cms="clientsSection.lead">جهات نفّذت لها هويات وحملات — الأسماء كما هي، والأعمال داخل قسم المشاريع.</p>
         </div>
         <ul class="clients__grid">
 <!-- clients:start -->
           <li class="client">
-            <span class="client__mark" aria-hidden="true">H</span>
+            <span class="client__wordmark" aria-hidden="true">HARVARD</span>
             <span class="client__name">مركز هارفارد التعليمي</span>
-            <span class="client__latin" aria-hidden="true">HARVARD</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">U</span>
-            <span class="client__name">ULTRA GROW</span>
-            <span class="client__latin" aria-hidden="true">ULTRA GROW</span>
+            <span class="client__wordmark">ULTRA GROW</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">A</span>
+            <span class="client__wordmark" aria-hidden="true">ANS DIMASHQI</span>
             <span class="client__name">آنس الدمشقي</span>
-            <span class="client__latin" aria-hidden="true">ANS DIMASHQI</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">T</span>
+            <span class="client__wordmark" aria-hidden="true">TAHER</span>
             <span class="client__name">طاهر للطباعة</span>
-            <span class="client__latin" aria-hidden="true">TAHER</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">E</span>
+            <span class="client__wordmark" aria-hidden="true">ELZAIN</span>
             <span class="client__name">الزين — مطعم سوري</span>
-            <span class="client__latin" aria-hidden="true">ELZAIN</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">E</span>
+            <span class="client__wordmark" aria-hidden="true">ELMAQSOUD</span>
             <span class="client__name">المقصود للمولدات</span>
-            <span class="client__latin" aria-hidden="true">ELMAQSOUD</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">A</span>
+            <span class="client__wordmark" aria-hidden="true">ALWATHBA</span>
             <span class="client__name">الوثبة العقارية</span>
-            <span class="client__latin" aria-hidden="true">ALWATHBA</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">I</span>
-            <span class="client__name">INSTA WATCHES</span>
-            <span class="client__latin" aria-hidden="true">INSTA WATCHES</span>
+            <span class="client__wordmark">INSTA WATCHES</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">N</span>
+            <span class="client__wordmark" aria-hidden="true">NATURE SECRET</span>
             <span class="client__name">سر الطبيعة</span>
-            <span class="client__latin" aria-hidden="true">NATURE SECRET</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">B</span>
+            <span class="client__wordmark" aria-hidden="true">BDEEL</span>
             <span class="client__name">بديل</span>
-            <span class="client__latin" aria-hidden="true">BDEEL</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">A</span>
-            <span class="client__name">Almenissy</span>
-            <span class="client__latin" aria-hidden="true">ALMENISSY</span>
+            <span class="client__wordmark">ALMENISSY</span>
           </li>
           <li class="client">
-            <span class="client__mark" aria-hidden="true">G</span>
+            <span class="client__wordmark" aria-hidden="true">GRM</span>
             <span class="client__name">GRM Developments</span>
-            <span class="client__latin" aria-hidden="true">GRM</span>
           </li>
 <!-- clients:end -->
         </ul>
@@ -4895,8 +4877,8 @@ html.js .project__media.is-ready::before {
         <div class="work-head">
           <div class="section-head" data-reveal>
             <div class="eyebrow" data-cms="workSection.eyebrow">الأعمال</div>
-            <h2 data-cms="workSection.title">مشاريع مختارة من مسيرتي</h2>
-            <p data-cms="workSection.lead">مختارات من أعمالي — اضغط على أي بطاقة لعرض تفاصيل المشروع وصورته كاملة.</p>
+            <h2 data-cms="workSection.title">أعمال مختارة</h2>
+            <p data-cms="workSection.lead">مختارات من مشاريعي في الهوية البصرية والموشن جرافيك والتصوير. اضغط على أي مشروع لعرض دراسة الحالة كاملة.</p>
           </div>
         </div>
 
@@ -4906,37 +4888,6 @@ html.js .project__media.is-ready::before {
         <div class="work-grid" id="workGrid" data-reveal-group>
           <noscript><style>.project.is-deferred{display:block}</style></noscript>
           <!-- static-projects:start -->
-<article class="project" data-reveal data-project-card="f24" data-category="brand">
-  <div class="project__media">
-    <img
-      src="assets/projects/project-f24-900.jpg"
-      srcset="assets/projects/project-f24-640.jpg 640w, assets/projects/project-f24-900.jpg 900w, assets/projects/project-f24.jpg 1600w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
-      width="1600"
-      height="1600"
-      alt="مركز هارفارد التعليمي 2026 — هوية وطباعة"
-      loading="lazy"
-      decoding="async"
-    >
-    <div class="project__badges">
-      
-    </div>
-  </div>
-  <div class="project__body">
-    <span class="project__tag">هوية وطباعة</span>
-    <h3 class="project__title">هارفارد 2026 — هوية العام الجديد</h3>
-    <span class="project__more">
-      <span>عرض التفاصيل</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f24"
-    aria-label="عرض تفاصيل مشروع هارفارد 2026 — هوية العام الجديد — هوية وطباعة"
-  ></button>
-</article>
 <article class="project" data-reveal data-project-card="f01" data-category="motion">
   <div class="project__media">
     <img
@@ -5030,68 +4981,6 @@ html.js .project__media.is-ready::before {
     aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان طبق اللحم — موشن جرافيك"
   ></button>
 </article>
-<article class="project" data-reveal data-project-card="f04" data-category="motion">
-  <div class="project__media">
-    <img
-      src="assets/projects/first-motion-graphics-work-900.jpg"
-      srcset="assets/projects/first-motion-graphics-work-640.jpg 640w, assets/projects/first-motion-graphics-work-900.jpg 900w, assets/projects/first-motion-graphics-work.jpg 1600w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
-      width="1600"
-      height="1200"
-      alt="تجربة موشن جرافيك من بدايات المسار — موشن جرافيك"
-      loading="lazy"
-      decoding="async"
-    >
-    <div class="project__badges">
-      
-    </div>
-  </div>
-  <div class="project__body">
-    <span class="project__tag">موشن جرافيك</span>
-    <h3 class="project__title">تجربة موشن جرافيك — البدايات</h3>
-    <span class="project__more">
-      <span>عرض التفاصيل</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f04"
-    aria-label="عرض تفاصيل مشروع تجربة موشن جرافيك — البدايات — موشن جرافيك"
-  ></button>
-</article>
-<article class="project" data-reveal data-project-card="f05" data-category="brand">
-  <div class="project__media">
-    <img
-      src="assets/projects/taher-printing-brand-identity-900.jpg"
-      srcset="assets/projects/taher-printing-brand-identity-640.jpg 640w, assets/projects/taher-printing-brand-identity-900.jpg 900w, assets/projects/taher-printing-brand-identity.jpg 1400w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
-      width="1400"
-      height="1192"
-      alt="طاهر للطباعة — هوية وطباعة"
-      loading="lazy"
-      decoding="async"
-    >
-    <div class="project__badges">
-      
-    </div>
-  </div>
-  <div class="project__body">
-    <span class="project__tag">هوية وطباعة</span>
-    <h3 class="project__title">طاهر للطباعة</h3>
-    <span class="project__more">
-      <span>عرض التفاصيل</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f05"
-    aria-label="عرض تفاصيل مشروع طاهر للطباعة — هوية وطباعة"
-  ></button>
-</article>
 <article class="project" data-reveal data-project-card="f06" data-category="brand">
   <div class="project__media">
     <img
@@ -5152,6 +5041,130 @@ html.js .project__media.is-ready::before {
     class="project__open"
     data-project-open="f07"
     aria-label="عرض تفاصيل مشروع ULTRA GROW — تغليف المنتجات — هوية وطباعة"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f11" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/insta-watches-ad-design-900.jpg"
+      srcset="assets/projects/insta-watches-ad-design-640.jpg 640w, assets/projects/insta-watches-ad-design-900.jpg 900w, assets/projects/insta-watches-ad-design.jpg 1600w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
+      width="1600"
+      height="1200"
+      alt="INSTA WATCHES — تصميم رقمي"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصميم رقمي</span>
+    <h3 class="project__title">INSTA WATCHES</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f11"
+    aria-label="عرض تفاصيل مشروع INSTA WATCHES — تصميم رقمي"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f24" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/project-f24-900.jpg"
+      srcset="assets/projects/project-f24-640.jpg 640w, assets/projects/project-f24-900.jpg 900w, assets/projects/project-f24.jpg 1600w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
+      width="1600"
+      height="1600"
+      alt="مركز هارفارد التعليمي 2026 — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title">هارفارد 2026 — هوية العام الجديد</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f24"
+    aria-label="عرض تفاصيل مشروع هارفارد 2026 — هوية العام الجديد — هوية وطباعة"
+  ></button>
+</article>
+<article class="project" data-reveal data-project-card="f05" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/taher-printing-brand-identity-900.jpg"
+      srcset="assets/projects/taher-printing-brand-identity-640.jpg 640w, assets/projects/taher-printing-brand-identity-900.jpg 900w, assets/projects/taher-printing-brand-identity.jpg 1400w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
+      width="1400"
+      height="1192"
+      alt="طاهر للطباعة — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title">طاهر للطباعة</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f05"
+    aria-label="عرض تفاصيل مشروع طاهر للطباعة — هوية وطباعة"
+  ></button>
+</article>
+<article class="project is-deferred" data-reveal data-project-card="f04" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/first-motion-graphics-work-900.jpg"
+      srcset="assets/projects/first-motion-graphics-work-640.jpg 640w, assets/projects/first-motion-graphics-work-900.jpg 900w, assets/projects/first-motion-graphics-work.jpg 1600w"
+      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
+      width="1600"
+      height="1200"
+      alt="تجربة موشن جرافيك من بدايات المسار — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+    <div class="project__badges">
+      
+    </div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">تجربة موشن جرافيك — البدايات</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f04"
+    aria-label="عرض تفاصيل مشروع تجربة موشن جرافيك — البدايات — موشن جرافيك"
   ></button>
 </article>
 <article class="project is-deferred" data-reveal data-project-card="f08" data-category="brand">
@@ -5245,37 +5258,6 @@ html.js .project__media.is-ready::before {
     class="project__open"
     data-project-open="f10"
     aria-label="عرض تفاصيل مشروع حقن فيلر — تصميم رقمي"
-  ></button>
-</article>
-<article class="project is-deferred" data-reveal data-project-card="f11" data-category="digital">
-  <div class="project__media">
-    <img
-      src="assets/projects/insta-watches-ad-design-900.jpg"
-      srcset="assets/projects/insta-watches-ad-design-640.jpg 640w, assets/projects/insta-watches-ad-design-900.jpg 900w, assets/projects/insta-watches-ad-design.jpg 1600w"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
-      width="1600"
-      height="1200"
-      alt="INSTA WATCHES — تصميم رقمي"
-      loading="lazy"
-      decoding="async"
-    >
-    <div class="project__badges">
-      
-    </div>
-  </div>
-  <div class="project__body">
-    <span class="project__tag">تصميم رقمي</span>
-    <h3 class="project__title">INSTA WATCHES</h3>
-    <span class="project__more">
-      <span>عرض التفاصيل</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f11"
-    aria-label="عرض تفاصيل مشروع INSTA WATCHES — تصميم رقمي"
   ></button>
 </article>
 <article class="project is-deferred" data-reveal data-project-card="f12" data-category="digital">
@@ -5662,7 +5644,7 @@ html.js .project__media.is-ready::before {
         </noscript>
 
         <p class="work-note">
-          <span id="workTotal">24</span> <span data-cms="workSection.note">مشروعًا مختارًا من مسيرتي في التصميم والموشن جرافيك.</span>
+          <span id="workTotal">24</span> <span data-cms="workSection.note">مشروعًا مختارًا من مسيرتي في التصميم والموشن والتصوير.</span>
         </p>
       </div>
     </section>
@@ -5679,13 +5661,13 @@ html.js .project__media.is-ready::before {
         <div class="about-aside">
           <div class="quote-card" data-reveal>
             <blockquote>
-              <span data-cms="about.quoteA">التصميم الاستثنائي لا يُقاس بجمال المظهر فقط، بل بقدرته على</span>
-              <mark data-cms="about.quoteMark">بناء ثقة فورية</mark> <span data-cms="about.quoteB">ودفع العميل لخطوة واضحة.</span>
+              <span data-cms="about.quoteA">الهوية القوية ليست شعارًا جميلًا، بل</span>
+              <mark data-cms="about.quoteMark">نظام واضح</mark> <span data-cms="about.quoteB">يُعرف به العمل في كل نقطة تواصل.</span>
             </blockquote>
             <div class="quote-card__sign">
               <div>
                 <b data-cms="about.signName">أحمد مقبل</b>
-                <span data-cms="about.signRole">مؤسس DOT Media</span>
+                <span data-cms="about.signRole">مصمم ومخرج بصري</span>
               </div>
               <svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg>
             </div>
@@ -5694,13 +5676,13 @@ html.js .project__media.is-ready::before {
           <div class="agency-card" data-reveal>
             <div>
               <div class="agency-card__head">
-                <div class="agency-card__title" data-cms="about.agencyTitle">وكالة DOT Media</div>
-                <span data-cms="about.agencyTagline">Creative Production</span>
+                <div class="agency-card__title" data-cms="about.agencyTitle">DOT Media</div>
+                <span data-cms="about.agencyTagline">استوديو إنتاج إبداعي</span>
               </div>
-              <p data-cms="about.agencyDesc">وكالة إنتاج إعلامي وإعلاني متكاملة متخصصة في إنتاج المحتوى التجاري وتطوير الهويات البصرية.</p>
+              <p data-cms="about.agencyDesc">استوديو إنتاج أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو مع فريق مستقل.</p>
             </div>
             <a class="btn btn--ghost btn--sm" data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">
-              <span data-cms="about.agencyCta">زيارة الصفحة</span>
+              <span data-cms="about.agencyCta">صفحة الاستوديو</span>
               <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
             </a>
           </div>
@@ -5708,13 +5690,13 @@ html.js .project__media.is-ready::before {
 
         <div class="about-body">
           <div class="eyebrow" data-reveal data-cms="about.eyebrow">نبذة</div>
-          <h2 data-reveal data-cms="about.title">أصنع هوية بصرية وإعلانات فيديو تدفع العميل لخطوة واضحة</h2>
+          <h2 data-reveal data-cms="about.title">هوية بصرية وصورة واضحة لكل علامة</h2>
           <p data-reveal>
-            <span data-cms="about.p1a">بدأت رحلتي في التصميم من مدينة الجمالية، وبنيت مسيرتي عبر سنوات من الشغف والعمل الدؤوب: من فيديوهات الموشن جرافيك الأولى، إلى تأسيس</span>
-            <strong data-cms="about.p1strong">وكالة DOT Media</strong>
-            <span data-cms="about.p1b">لتقديم حلول متكاملة في إنتاج المحتوى التجاري، الهويات البصرية، وتصميم الحملات الإعلانية للشركات والعيادات والمؤسسات الكبرى.</span>
+            <span data-cms="about.p1a">بدأت العمل في التصميم عام 2013 من مدينة الجمالية، وتطوّرت المسيرة من المطبوعات إلى الموشن جرافيك، ثم إلى التصوير وإنتاج الفيديو. أؤسس من خلال</span>
+            <strong data-cms="about.p1strong">DOT Media</strong>
+            <span data-cms="about.p1b">مساحة عمل للإنتاج الإبداعي، أنفّذ من خلالها مشاريع الهوية والحملات مع فريق إنتاج.</span>
           </p>
-          <p data-reveal data-cms="about.p2">أؤمن أن التصميم الاستثنائي لا يُقاس بجمال المظهر فقط، بل بقدرته على بناء ثقة فورية ودفع العميل لخطوة واضحة: زيارة، اتصال، أو طلب.</p>
+          <p data-reveal data-cms="about.p2">أعمل على أن يكون لكل مشروع سبب واضح: رسالة محددة، جمهور معروف، وقرار بصري يخدم الهدف — لا مجرد شكل جميل.</p>
 
           <div class="about-lists" data-reveal>
             <div>
@@ -5740,8 +5722,8 @@ html.js .project__media.is-ready::before {
       <div class="wrap">
         <div class="section-head" data-reveal>
           <div class="eyebrow" data-cms="servicesSection.eyebrow">الخدمات</div>
-          <h2 data-cms="servicesSection.title">خدمات إبداعية وإنتاج متكامل</h2>
-          <p data-cms="servicesSection.lead">من الفكرة الأولى والسيناريو المرئي وحتى التصدير النهائي الجاهز للنشر والطباعة والحملات الإعلانية.</p>
+          <h2 data-cms="servicesSection.title">من الفكرة إلى الملف النهائي</h2>
+          <p data-cms="servicesSection.lead">هوية بصرية، موشن جرافيك، تصميم رقمي وطباعي، وتصوير وإنتاج — كل خدمة بمعايير تسليم واضحة ومراجعات محددة.</p>
         </div>
 
         <div class="services-grid" data-reveal-group>
@@ -5804,7 +5786,7 @@ html.js .project__media.is-ready::before {
               <svg class="icon" aria-hidden="true"><use href="#i-ads"></use></svg>
             </div>
             <h3>إعلانات السوشيال ميديا</h3>
-            <p>تصميمات مخصصة ترفع نسب التفاعل والمبيعات، مبنية على سيكولوجية الجذب البصري لا القوالب المستهلكة.</p>
+            <p>تصميمات مبنية على هدف واضح ورسالة محددة، تُنفَّذ خصيصًا لكل علامة بدل القوالب الجاهزة.</p>
             <a class="service__link" href="social-media-ads.html">
               تفاصيل خدمة إعلانات السوشيال ميديا
               <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -5833,8 +5815,8 @@ html.js .project__media.is-ready::before {
       <div class="wrap">
         <div class="section-head" data-reveal>
           <div class="eyebrow" data-cms="processSection.eyebrow">الطريقة</div>
-          <h2 data-cms="processSection.title">كيف نصل من الفكرة إلى نتيجة تليق بعلامتك</h2>
-          <p data-cms="processSection.lead">عملية واضحة تقلّل المفاجآت وتضمن أن كل قرار بصري يخدم هدفًا تجاريًا محددًا.</p>
+          <h2 data-cms="processSection.title">كيف يعمل المشروع من البداية إلى التسليم</h2>
+          <p data-cms="processSection.lead">خطوات واضحة تقلّل المفاجآت، وتضمن أن كل قرار بصري يخدم هدف المشروع.</p>
         </div>
 
         <div class="process-grid" data-reveal-group>
@@ -5869,8 +5851,8 @@ html.js .project__media.is-ready::before {
       <div class="wrap faq-grid">
         <div class="section-head" data-reveal>
           <div class="eyebrow" data-cms="faqSection.eyebrow">أسئلة شائعة</div>
-          <h2 id="faqTitle" data-cms="faqSection.title">قبل أن نبدأ</h2>
-          <p data-cms="faqSection.lead">إجابات سريعة على أكثر ما يُسأل عنه قبل بدء المشروع. لديك سؤال آخر؟ راسلني مباشرة.</p>
+          <h2 id="faqTitle" data-cms="faqSection.title">الأسئلة الشائعة</h2>
+          <p data-cms="faqSection.lead">إجابات مباشرة على ما يُسأل عنه قبل بدء المشروع. لأي سؤال آخر، راسلني مباشرة.</p>
           <a href="#contact" class="btn btn--ghost btn--sm faq-cta">
             <span data-cms="faqSection.cta">اسأل عن مشروعك</span>
             <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -5884,7 +5866,7 @@ html.js .project__media.is-ready::before {
               كم يستغرق تنفيذ المشروع؟
               <span class="faq__icon" aria-hidden="true"></span>
             </summary>
-            <p>المدة تُحدد بعد جلسة الاكتشاف بحسب نطاق العمل وعدد المراجعات. ستحصل على جدول زمني واضح قبل بدء التنفيذ، مع نقاط مراجعة محددة.</p>
+            <p>تُحدد المدة بعد جلسة الاكتشاف بحسب نطاق العمل وعدد المراجعات. يصلك جدول زمني واضح قبل بدء التنفيذ، مع نقاط مراجعة محددة.</p>
           </details>
 
           <details class="faq" data-reveal>
@@ -5892,7 +5874,7 @@ html.js .project__media.is-ready::before {
               هل تعمل مع عملاء خارج مصر؟
               <span class="faq__icon" aria-hidden="true"></span>
             </summary>
-            <p>نعم. أعمل عن بُعد مع عملاء داخل مصر وخارجها، والتواصل يتم عبر واتساب أو البريد الإلكتروني مع اجتماعات أونلاين عند الحاجة.</p>
+            <p>نعم. أعمل عن بُعد مع عملاء داخل مصر وخارجها، والتواصل عبر واتساب أو البريد الإلكتروني، مع اجتماعات أونلاين عند الحاجة.</p>
           </details>
 
           <details class="faq" data-reveal>
@@ -5900,15 +5882,7 @@ html.js .project__media.is-ready::before {
               ماذا أستلم في نهاية المشروع؟
               <span class="faq__icon" aria-hidden="true"></span>
             </summary>
-            <p>نسخًا جاهزة للنشر أو الطباعة، ودليل استخدام مبسّط عند تسليم هوية بصرية كاملة.</p>
-          </details>
-
-          <details class="faq" data-reveal>
-            <summary>
-              كم عدد المراجعات في المشروع؟
-              <span class="faq__icon" aria-hidden="true"></span>
-            </summary>
-            <p>جولتا مراجعة داخل نطاق العمل المتفق عليه. أي تغيير في الاتجاه بعد اعتماد النسخة النهائية يُحسب كمرحلة إضافية بسعر منفصل، ونوضح ذلك كتابةً قبل البدء.</p>
+            <p>ملفات جاهزة للنشر أو الطباعة، ودليل استخدام مبسّط عند تسليم هوية بصرية كاملة.</p>
           </details>
 
           <details class="faq" data-reveal>
@@ -5916,7 +5890,17 @@ html.js .project__media.is-ready::before {
               كيف أبدأ؟
               <span class="faq__icon" aria-hidden="true"></span>
             </summary>
-            <p>أرسل تفاصيل مشروعك من خلال النموذج أو واتساب: النشاط، الهدف، والخدمة المطلوبة. سأرد عليك لتحديد الخطوة التالية والموعد المناسب.</p>
+            <p>أرسل تفاصيل مشروعك من النموذج أو واتساب: النشاط، الهدف، والخدمة المطلوبة. سأعود إليك لتحديد الخطوة التالية والموعد المناسب.</p>
+          </details>
+
+          <p class="faq__group" data-reveal>شروط العمل</p>
+
+          <details class="faq" data-reveal>
+            <summary>
+              كم عدد المراجعات في المشروع؟
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <p>جولتان للمراجعة داخل نطاق العمل المتفق عليه. أي تغيير في الاتجاه بعد اعتماد النسخة النهائية يُحسب كمرحلة إضافية بسعر منفصل، ويُوضح كتابةً قبل البدء.</p>
           </details>
 
           <details class="faq" data-reveal>
@@ -5924,7 +5908,7 @@ html.js .project__media.is-ready::before {
               كيف تتم عملية الدفع؟
               <span class="faq__icon" aria-hidden="true"></span>
             </summary>
-            <p>الدفع على دفعتين: مقدمة عند بدء العمل والباقي عند التسليم. تفاصيل وسيلة التحويل تُحدد في عرض السعر، ويصلك إيصال بكل دفعة.</p>
+            <p>الدفع على دفعتين: مقدمة عند بدء العمل، والباقي عند التسليم. تُحدد وسيلة التحويل في عرض السعر، ويصلك إيصال بكل دفعة.</p>
           </details>
 <!-- faq:end -->
         </div>
@@ -5936,8 +5920,8 @@ html.js .project__media.is-ready::before {
       <div class="wrap contact-grid">
         <div class="contact-copy" data-reveal>
           <div class="eyebrow" data-cms="contactSection.eyebrow">تواصل</div>
-          <h2 data-cms="contactSection.title">جاهز نبدأ مشروعك القادم معًا؟</h2>
-          <p data-cms="contactSection.lead">أخبرني بفكرتك ونوع الخدمة المطلوبة، وسأعود إليك بخطة واضحة للبدء. أو تواصل مباشرة عبر واتساب إن كنت تفضّل الحديث السريع.</p>
+          <h2 data-cms="contactSection.title">لنبدأ مشروعك القادم</h2>
+          <p data-cms="contactSection.lead">أرسل تفاصيل المشروع ونوع الخدمة المطلوبة، وسأعود إليك بخطة واضحة للبدء. أو تواصل مباشرة عبر واتساب.</p>
 
           <div class="contact-channels">
             <!-- channels:start -->
@@ -5979,8 +5963,8 @@ html.js .project__media.is-ready::before {
                 <svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg>
               </span>
               <span class="channel__text">
-                <small>فيسبوك — DOT Media</small>
-                <b>صفحة الوكالة</b>
+                <small>فيسبوك</small>
+                <b>متابعة الأعمال</b>
               </span>
               <svg class="icon channel__arrow" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
             </a>
@@ -6012,7 +5996,7 @@ html.js .project__media.is-ready::before {
         <div class="form-card" data-reveal>
           <div class="form-card__head">
             <h3 data-cms="contactSection.formTitle">أرسل تفاصيل مشروعك</h3>
-            <span data-cms="contactSection.formBadge">رد خلال 24 ساعة</span>
+            <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
           <form id="contactForm" novalidate action="https://formsubmit.co/ahmed01068775125@gmail.com" method="POST" data-endpoint="https://formsubmit.co/ajax/ahmed01068775125@gmail.com">
@@ -6035,8 +6019,8 @@ html.js .project__media.is-ready::before {
               </div>
 
               <div class="field">
-                <label for="fieldEmail"><span data-cms="form.emailLabel">البريد الإلكتروني</span> <span aria-hidden="true">*</span></label>
-                <input id="fieldEmail" name="email" type="email" placeholder="name@example.com" data-cms-attr="placeholder" data-cms="form.emailPlaceholder" autocomplete="email" dir="ltr" maxlength="120" aria-describedby="errorEmail" required>
+                <label for="fieldEmail"><span data-cms="form.emailLabel">البريد الإلكتروني</span> <span class="field__optional" data-cms="form.optional">اختياري</span></label>
+                <input id="fieldEmail" name="email" type="email" placeholder="name@example.com" data-cms-attr="placeholder" data-cms="form.emailPlaceholder" autocomplete="email" dir="ltr" maxlength="120" aria-describedby="errorEmail">
                 <span class="field__error" id="errorEmail" aria-live="polite"></span>
               </div>
 
@@ -6059,8 +6043,14 @@ html.js .project__media.is-ready::before {
 
               <div class="field field--full">
                 <label for="fieldMessage"><span data-cms="form.messageLabel">تفاصيل المشروع</span> <span aria-hidden="true">*</span></label>
-                <textarea id="fieldMessage" name="message" rows="4" placeholder="اكتب نبذة عن نشاطك، هدف المشروع، والمدة المطلوبة..." data-cms-attr="placeholder" data-cms="form.messagePlaceholder" maxlength="2000" aria-describedby="errorMessage" required></textarea>
+                <textarea id="fieldMessage" name="message" rows="4" placeholder="اكتب نبذة عن النشاط، هدف المشروع، والمدة المطلوبة..." data-cms-attr="placeholder" data-cms="form.messagePlaceholder" maxlength="2000" aria-describedby="errorMessage" required></textarea>
                 <span class="field__error" id="errorMessage" aria-live="polite"></span>
+              </div>
+
+              <div class="field field--full">
+                <label for="fieldBudget"><span data-cms="form.budgetLabel">الميزانية التقديرية</span> <span class="field__optional" data-cms="form.optional">اختياري</span></label>
+                <input id="fieldBudget" name="budget" type="text" placeholder="اختياري — مثال: 10,000 ج.م" data-cms-attr="placeholder" data-cms="form.budgetPlaceholder" maxlength="60" aria-describedby="errorBudget">
+                <span class="field__error" id="errorBudget" aria-live="polite"></span>
               </div>
             </div>
 
@@ -6075,7 +6065,7 @@ html.js .project__media.is-ready::before {
               </button>
             </div>
 
-            <p class="form-note" data-cms="contactSection.formNote">الطلب يوصلني مباشرة من الموقع. لو تعذّر الإرسال، بنجهّز نسخة على واتساب تلقائيًا. بياناتك تُستخدم للرد على طلبك فقط.</p>
+            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب إلى بريدي مباشرة. إن تعذّر الإرسال، يمكنك إرساله عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -6092,7 +6082,7 @@ html.js .project__media.is-ready::before {
             <span class="brand__mark" aria-hidden="true">AM</span>
             <span data-cms="brand.name">أحمد مقبل</span>
           </a>
-          <p data-cms="footer.about">مصمم جرافيك وموشن جرافيك من مدينة الجمالية، ومؤسس DOT Media للإنتاج الإبداعي. أصنع هويات بصرية وإعلانات فيديو تخدم أهداف العلامات.</p>
+          <p data-cms="footer.about">مصمم ومخرج بصري من مدينة الجمالية، يعمل على الهوية البصرية والموشن جرافيك والتصوير وإنتاج الفيديو للعلامات داخل مصر وخارجها.</p>
         </div>
 
         <div>
@@ -6132,8 +6122,8 @@ html.js .project__media.is-ready::before {
       </div>
 
       <div class="footer-bottom">
-        <span>© <span id="year">2026</span> <span data-cms="brand.name">أحمد مقبل</span> — <a data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">DOT Media</a>. <span data-cms="footer.rights">جميع الحقوق محفوظة.</span></span>
-        <span data-cms="footer.madeIn">صُنع بعناية في مدينة الجمالية، مصر.</span>
+        <span>© <span id="year">2026</span> <span data-cms="brand.name">أحمد مقبل</span>. <span data-cms="footer.rights">جميع الحقوق محفوظة.</span></span>
+        <span data-cms="footer.madeIn">متاح للمشاريع عن بُعد</span>
       </div>
     </div>
   </footer>
@@ -6294,11 +6284,11 @@ html.js .project__media.is-ready::before {
 const SITE_DATA = {
   "name": "أحمد مقبل",
   "firstName": "أحمد",
-  "title": "مصمم جرافيك وموشن جرافيك",
+  "title": "مصمم ومخرج بصري",
   "location": "مدينة الجمالية، محافظة الدقهلية",
   "careerStart": 2013,
   "behanceSince": "2015",
-  "lead": "من مدينة الجمالية، أنا مصمم جرافيك وموشن جرافيك ومؤسس وكالة DOT Media. أصنع هويات بصرية وإعلانات فيديو لمطاعم وشركات وعيادات — من الفكرة والسيناريو حتى الملف الجاهز للنشر.",
+  "lead": "مصمم ومخرج بصري من مدينة الجمالية، أعمل على الهوية البصرية والموشن جرافيك والتصوير وإنتاج الفيديو — من الفكرة والسيناريو حتى الملف الجاهز للنشر.",
   "roles": [
     "موشن جرافيك وهوية بصرية",
     "إعلانات فيديو للمطاعم والشركات",
@@ -6309,7 +6299,7 @@ const SITE_DATA = {
     "name": "DOT Media",
     "tagline": "Creative Production",
     "url": "https://www.facebook.com/profile.php?id=61581319508233",
-    "description": "وكالة إنتاج إعلامي وإعلاني متكاملة متخصصة في إنتاج المحتوى التجاري وتطوير الهويات البصرية."
+    "description": "استوديو إنتاج إبداعي متخصص في إنتاج المحتوى التجاري وتطوير الهويات البصرية."
   },
   "email": "ahmed01068775125@gmail.com",
   "whatsapp": "201228084197",
@@ -6380,6 +6370,156 @@ const CATEGORIES = [
 ];
 
 const WORK_DATA = [
+  {
+    "id": "f01",
+    "code": "F02",
+    "title": "يوم التأسيس السعودي",
+    "cat": "motion",
+    "tag": "موشن جرافيك",
+    "isVideo": true,
+    "url": "https://www.behance.net/gallery/244580859/_",
+    "external": true,
+    "image": "assets/projects/saudi-founding-day-motion-graphic.jpg",
+    "imageSmall": "assets/projects/saudi-founding-day-motion-graphic-900.jpg",
+    "width": 1072,
+    "height": 1344,
+    "summary": "عمل بصري بمناسبة يوم التأسيس السعودي لصالح TECHIFAY، يجمع بين التراث السعودي والهوية الخضراء والذهبية في تكوين مهيب.",
+    "challenge": "مناسبة وطنية بتفاصيل تراثية كثيرة، والمطلوب تكوين مهيب يوصل الفكرة بسرعة من غير ازدحام بصري.",
+    "role": "تصميم المشاهد والتحريك والمونتاج، وضبط الإيقاع البصري مع الموسيقى.",
+    "result": "عمل بصري جاهز للنشر على منصات المناسبة، بهوية خضراء وذهبية واضحة.",
+    "tools": "موشن جرافيك – تصميم مشاهد – مونتاج",
+    "alt": "يوم التأسيس السعودي — موشن جرافيك",
+    "featured": true
+  },
+  {
+    "id": "f02",
+    "code": "F03",
+    "title": "ابن الباسل",
+    "cat": "motion",
+    "tag": "موشن جرافيك",
+    "isVideo": true,
+    "url": "https://www.behance.net/gallery/244097521/_",
+    "external": true,
+    "image": "assets/projects/ibn-albasel-motion-graphic.jpg",
+    "width": 1600,
+    "height": 1200,
+    "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
+    "challenge": "تقديم اسم «ابن الباسل» بأسلوب سينمائي يبني شخصية العلامة من أول ثانية.",
+    "role": "بناء التسلسل البصري والتحريك وضبط الإيقاع حتى النسخة النهائية.",
+    "result": "فيديو موشن جرافيك جاهز للنشر على السوشيال ميديا.",
+    "tools": "موشن جرافيك – تحريك – مونتاج",
+    "alt": "ابن الباسل — موشن جرافيك",
+    "imageSmall": "assets/projects/ibn-albasel-motion-graphic-900.jpg",
+    "imageMedium": "assets/projects/ibn-albasel-motion-graphic-1200.jpg",
+    "featured": true
+  },
+  {
+    "id": "f03",
+    "code": "F04",
+    "title": "آنس الدمشقي — إعلان طبق اللحم",
+    "cat": "motion",
+    "tag": "إعلان مطعم",
+    "isVideo": true,
+    "video": "assets/projects/f03_ans-dimashqi-steak.mp4",
+    "url": "",
+    "external": false,
+    "image": "assets/projects/ans-dimashqi-steak-ad.jpg",
+    "width": 1200,
+    "height": 900,
+    "summary": "إعلان طعام لمطعم «آنس الدمشقي»: تصوير للطبق بإضاءة دافئة تُبرز تفاصيل اللحم والصوص والخضار، وينتهي برقم الطلب — إنتاج DOT Media.",
+    "challenge": "إعلان طعام لازم يخلّي الطبق نفسه هو البطل، ويوصل رقم الطلب في آخر ثانية.",
+    "role": "الإخراج البصري، تنسيق التصوير، والمونتاج واختيار الموسيقى.",
+    "result": "إعلان قصير جاهز للنشر، ينتهي برقم الطلب.",
+    "tools": "إنتاج فيديو – تصوير – مونتاج",
+    "alt": "آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم",
+    "imageSmall": "assets/projects/ans-dimashqi-steak-ad-900.jpg",
+    "featured": true
+  },
+  {
+    "id": "f06",
+    "code": "F07",
+    "title": "هارفارد — الهوية البصرية الأساسية",
+    "cat": "brand",
+    "tag": "هوية وطباعة",
+    "isVideo": false,
+    "url": "https://www.behance.net/gallery/148210723/_",
+    "external": true,
+    "image": "assets/projects/harvard-education-center-brand.jpg",
+    "width": 1600,
+    "height": 1200,
+    "summary": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي.",
+    "challenge": "بناء هوية أساسية لمركز تعليمي بأسلوب واضح يسهّل تطبيقه على المواد اليومية.",
+    "role": "تصميم الشعار والنظام البصري وتطبيقاته الأساسية.",
+    "result": "نظام هوية أساسي جاهز للاستخدام في المطبوعات والرقمي.",
+    "tools": "هوية بصرية – شعار – نظام بصري",
+    "details": "مشروع تصميم الهوية والمواد البصرية لمركز هارفارد التعليمي لعام 2023، بهدف تقديم صورة احترافية وعصرية تعكس قوة المركز ودوره في تقديم خدمات تعليمية متخصصة للطلاب.\n\nالهدف من التصميم:\nبناء حضور بصري قوي ومميز للمركز، يعكس جودة الخدمات التعليمية، ويمنح العلامة التجارية مظهراً احترافياً يليق بمؤسسة تعليمية حديثة في عام 2023.",
+    "facts": [
+      {
+        "label": "سنة المشروع",
+        "value": "2023"
+      },
+      {
+        "label": "المجال",
+        "value": "التعليم والتدريب"
+      },
+      {
+        "label": "نوع المشروع",
+        "value": "Branding & Graphic Design"
+      },
+      {
+        "label": "الخدمات",
+        "value": "الهوية البصرية – التصميم الإعلاني – المواد التسويقية – المحتوى البصري"
+      }
+    ],
+    "gallery": [],
+    "alt": "مركز هارفارد التعليمي — هوية وطباعة",
+    "imageSmall": "assets/projects/harvard-education-center-brand-900.jpg",
+    "imageMedium": "assets/projects/harvard-education-center-brand-1200.jpg",
+    "featured": true
+  },
+  {
+    "id": "f07",
+    "code": "F08",
+    "title": "ULTRA GROW — تغليف المنتجات",
+    "cat": "brand",
+    "tag": "هوية وطباعة",
+    "isVideo": false,
+    "url": "https://www.behance.net/gallery/148215371/ULTRA-GROW",
+    "external": true,
+    "image": "assets/projects/ultra-grow-brand-packaging.jpg",
+    "imageSmall": "assets/projects/ultra-grow-brand-packaging-900.jpg",
+    "width": 1400,
+    "height": 964,
+    "summary": "هوية بصرية وتغليف لعلامة ULTRA GROW بأسلوب عصري جريء يمنح المنتج حضورًا واضحًا على الرف.",
+    "challenge": "منتج لازم يوصل على الرف ويوقف النظر في ثوانٍ، وسط منتجات متشابهة.",
+    "role": "تصميم الهوية والتغليف وتطبيقاته على العبوة.",
+    "result": "عبوة بهوية واضحة وحضور قوي على الرف.",
+    "tools": "هوية – تغليف – تصميم طباعي",
+    "alt": "ULTRA GROW — تغليف المنتجات — هوية وطباعة",
+    "featured": true
+  },
+  {
+    "id": "f11",
+    "code": "F12",
+    "title": "INSTA WATCHES",
+    "cat": "digital",
+    "tag": "تصميم رقمي",
+    "isVideo": false,
+    "url": "https://www.behance.net/gallery/175994775/INSTA-WATCHES",
+    "external": true,
+    "image": "assets/projects/insta-watches-ad-design.jpg",
+    "width": 1600,
+    "height": 1200,
+    "summary": "تصميمات رقمية لعلامة ساعات، تركّز على إبراز المنتج بإضاءة وتفاصيل فاخرة.",
+    "challenge": "منتج ساعات فاخر، والمطلوب إبراز التفاصيل المعدنية والزجاج من غير تشتيت.",
+    "role": "تصميم المجموعة واختيار الإضاءة والخلفيات المناسبة للمنتج.",
+    "result": "تصميمات رقمية تركّز على المنتج وتفاصيله.",
+    "tools": "تصميم رقمي – إعلان منتج",
+    "alt": "INSTA WATCHES — تصميم رقمي",
+    "imageSmall": "assets/projects/insta-watches-ad-design-900.jpg",
+    "imageMedium": "assets/projects/insta-watches-ad-design-1200.jpg",
+    "featured": true
+  },
   {
     "id": "f24",
     "code": "F01",
@@ -6551,66 +6691,24 @@ const WORK_DATA = [
     ]
   },
   {
-    "id": "f01",
-    "code": "F02",
-    "title": "يوم التأسيس السعودي",
-    "cat": "motion",
-    "tag": "موشن جرافيك",
-    "isVideo": true,
-    "url": "https://www.behance.net/gallery/244580859/_",
+    "id": "f05",
+    "code": "F06",
+    "title": "طاهر للطباعة",
+    "cat": "brand",
+    "tag": "هوية وطباعة",
+    "isVideo": false,
+    "url": "https://www.behance.net/gallery/128103663/_",
     "external": true,
-    "image": "assets/projects/saudi-founding-day-motion-graphic.jpg",
-    "imageSmall": "assets/projects/saudi-founding-day-motion-graphic-900.jpg",
-    "width": 1072,
-    "height": 1344,
-    "summary": "عمل بصري بمناسبة يوم التأسيس السعودي لصالح TECHIFAY، يجمع بين التراث السعودي والهوية الخضراء والذهبية في تكوين مهيب.",
-    "challenge": "مناسبة وطنية بتفاصيل تراثية كثيرة، والمطلوب تكوين مهيب يوصل الفكرة بسرعة من غير ازدحام بصري.",
-    "role": "تصميم المشاهد والتحريك والمونتاج، وضبط الإيقاع البصري مع الموسيقى.",
-    "result": "عمل بصري جاهز للنشر على منصات المناسبة، بهوية خضراء وذهبية واضحة.",
-    "tools": "موشن جرافيك – تصميم مشاهد – مونتاج",
-    "alt": "يوم التأسيس السعودي — موشن جرافيك"
-  },
-  {
-    "id": "f02",
-    "code": "F03",
-    "title": "ابن الباسل",
-    "cat": "motion",
-    "tag": "موشن جرافيك",
-    "isVideo": true,
-    "url": "https://www.behance.net/gallery/244097521/_",
-    "external": true,
-    "image": "assets/projects/ibn-albasel-motion-graphic.jpg",
-    "width": 1600,
-    "height": 1200,
-    "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
-    "challenge": "تقديم اسم «ابن الباسل» بأسلوب سينمائي يبني شخصية العلامة من أول ثانية.",
-    "role": "بناء التسلسل البصري والتحريك وضبط الإيقاع حتى النسخة النهائية.",
-    "result": "فيديو موشن جرافيك جاهز للنشر على السوشيال ميديا.",
-    "tools": "موشن جرافيك – تحريك – مونتاج",
-    "alt": "ابن الباسل — موشن جرافيك",
-    "imageSmall": "assets/projects/ibn-albasel-motion-graphic-900.jpg",
-    "imageMedium": "assets/projects/ibn-albasel-motion-graphic-1200.jpg"
-  },
-  {
-    "id": "f03",
-    "code": "F04",
-    "title": "آنس الدمشقي — إعلان طبق اللحم",
-    "cat": "motion",
-    "tag": "إعلان مطعم",
-    "isVideo": true,
-    "video": "assets/projects/f03_ans-dimashqi-steak.mp4",
-    "url": "",
-    "external": false,
-    "image": "assets/projects/ans-dimashqi-steak-ad.jpg",
-    "width": 1200,
-    "height": 900,
-    "summary": "إعلان طعام لمطعم «آنس الدمشقي»: تصوير للطبق بإضاءة دافئة تُبرز تفاصيل اللحم والصوص والخضار، وينتهي برقم الطلب — إنتاج DOT Media.",
-    "challenge": "إعلان طعام لازم يخلّي الطبق نفسه هو البطل، ويوصل رقم الطلب في آخر ثانية.",
-    "role": "الإخراج البصري، تنسيق التصوير، والمونتاج واختيار الموسيقى.",
-    "result": "إعلان قصير جاهز للنشر، ينتهي برقم الطلب.",
-    "tools": "إنتاج فيديو – تصوير – مونتاج",
-    "alt": "آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم",
-    "imageSmall": "assets/projects/ans-dimashqi-steak-ad-900.jpg"
+    "image": "assets/projects/taher-printing-brand-identity.jpg",
+    "imageSmall": "assets/projects/taher-printing-brand-identity-900.jpg",
+    "width": 1400,
+    "height": 1192,
+    "summary": "هوية بصرية وتصميمات طباعية لمطبعة طاهر، تشمل الشعار والمطبوعات وتطبيقات الهوية.",
+    "challenge": "مطبعة تحتاج هوية تفرّقها عن المنافسين، وتشتغل على الورق وفي نفس الوقت على الرقمي.",
+    "role": "تصميم الشعار والنظام الطباعي والمطبوعات وتطبيقات الهوية.",
+    "result": "هوية ومطبوعات جاهزة للتطبيق داخل المطبعة.",
+    "tools": "هوية بصرية – تصميم طباعي – مطبوعات",
+    "alt": "طاهر للطباعة — هوية وطباعة"
   },
   {
     "id": "f04",
@@ -6632,87 +6730,6 @@ const WORK_DATA = [
     "alt": "تجربة موشن جرافيك من بدايات المسار — موشن جرافيك",
     "imageSmall": "assets/projects/first-motion-graphics-work-900.jpg",
     "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg"
-  },
-  {
-    "id": "f05",
-    "code": "F06",
-    "title": "طاهر للطباعة",
-    "cat": "brand",
-    "tag": "هوية وطباعة",
-    "isVideo": false,
-    "url": "https://www.behance.net/gallery/128103663/_",
-    "external": true,
-    "image": "assets/projects/taher-printing-brand-identity.jpg",
-    "imageSmall": "assets/projects/taher-printing-brand-identity-900.jpg",
-    "width": 1400,
-    "height": 1192,
-    "summary": "هوية بصرية وتصميمات طباعية لمطبعة طاهر، تشمل الشعار والمطبوعات وتطبيقات الهوية.",
-    "challenge": "مطبعة تحتاج هوية تفرّقها عن المنافسين، وتشتغل على الورق وفي نفس الوقت على الرقمي.",
-    "role": "تصميم الشعار والنظام الطباعي والمطبوعات وتطبيقات الهوية.",
-    "result": "هوية ومطبوعات جاهزة للتطبيق داخل المطبعة.",
-    "tools": "هوية بصرية – تصميم طباعي – مطبوعات",
-    "alt": "طاهر للطباعة — هوية وطباعة"
-  },
-  {
-    "id": "f06",
-    "code": "F07",
-    "title": "هارفارد — الهوية البصرية الأساسية",
-    "cat": "brand",
-    "tag": "هوية وطباعة",
-    "isVideo": false,
-    "url": "https://www.behance.net/gallery/148210723/_",
-    "external": true,
-    "image": "assets/projects/harvard-education-center-brand.jpg",
-    "width": 1600,
-    "height": 1200,
-    "summary": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي.",
-    "challenge": "بناء هوية أساسية لمركز تعليمي بأسلوب واضح يسهّل تطبيقه على المواد اليومية.",
-    "role": "تصميم الشعار والنظام البصري وتطبيقاته الأساسية.",
-    "result": "نظام هوية أساسي جاهز للاستخدام في المطبوعات والرقمي.",
-    "tools": "هوية بصرية – شعار – نظام بصري",
-    "details": "مشروع تصميم الهوية والمواد البصرية لمركز هارفارد التعليمي لعام 2023، بهدف تقديم صورة احترافية وعصرية تعكس قوة المركز ودوره في تقديم خدمات تعليمية متخصصة للطلاب.\n\nالهدف من التصميم:\nبناء حضور بصري قوي ومميز للمركز، يعكس جودة الخدمات التعليمية، ويمنح العلامة التجارية مظهراً احترافياً يليق بمؤسسة تعليمية حديثة في عام 2023.",
-    "facts": [
-      {
-        "label": "سنة المشروع",
-        "value": "2023"
-      },
-      {
-        "label": "المجال",
-        "value": "التعليم والتدريب"
-      },
-      {
-        "label": "نوع المشروع",
-        "value": "Branding & Graphic Design"
-      },
-      {
-        "label": "الخدمات",
-        "value": "الهوية البصرية – التصميم الإعلاني – المواد التسويقية – المحتوى البصري"
-      }
-    ],
-    "gallery": [],
-    "alt": "مركز هارفارد التعليمي — هوية وطباعة",
-    "imageSmall": "assets/projects/harvard-education-center-brand-900.jpg",
-    "imageMedium": "assets/projects/harvard-education-center-brand-1200.jpg"
-  },
-  {
-    "id": "f07",
-    "code": "F08",
-    "title": "ULTRA GROW — تغليف المنتجات",
-    "cat": "brand",
-    "tag": "هوية وطباعة",
-    "isVideo": false,
-    "url": "https://www.behance.net/gallery/148215371/ULTRA-GROW",
-    "external": true,
-    "image": "assets/projects/ultra-grow-brand-packaging.jpg",
-    "imageSmall": "assets/projects/ultra-grow-brand-packaging-900.jpg",
-    "width": 1400,
-    "height": 964,
-    "summary": "هوية بصرية وتغليف لعلامة ULTRA GROW بأسلوب عصري جريء يمنح المنتج حضورًا واضحًا على الرف.",
-    "challenge": "منتج لازم يوصل على الرف ويوقف النظر في ثوانٍ، وسط منتجات متشابهة.",
-    "role": "تصميم الهوية والتغليف وتطبيقاته على العبوة.",
-    "result": "عبوة بهوية واضحة وحضور قوي على الرف.",
-    "tools": "هوية – تغليف – تصميم طباعي",
-    "alt": "ULTRA GROW — تغليف المنتجات — هوية وطباعة"
   },
   {
     "id": "f08",
@@ -6774,27 +6791,6 @@ const WORK_DATA = [
     "result": "تصميم إعلاني جاهز للنشر بأسلوب ناعم وهادئ.",
     "tools": "تصميم رقمي – إعلان سوشيال ميديا",
     "alt": "حقن فيلر — تصميم رقمي"
-  },
-  {
-    "id": "f11",
-    "code": "F12",
-    "title": "INSTA WATCHES",
-    "cat": "digital",
-    "tag": "تصميم رقمي",
-    "isVideo": false,
-    "url": "https://www.behance.net/gallery/175994775/INSTA-WATCHES",
-    "external": true,
-    "image": "assets/projects/insta-watches-ad-design.jpg",
-    "width": 1600,
-    "height": 1200,
-    "summary": "تصميمات رقمية لعلامة ساعات، تركّز على إبراز المنتج بإضاءة وتفاصيل فاخرة.",
-    "challenge": "منتج ساعات فاخر، والمطلوب إبراز التفاصيل المعدنية والزجاج من غير تشتيت.",
-    "role": "تصميم المجموعة واختيار الإضاءة والخلفيات المناسبة للمنتج.",
-    "result": "تصميمات رقمية تركّز على المنتج وتفاصيله.",
-    "tools": "تصميم رقمي – إعلان منتج",
-    "alt": "INSTA WATCHES — تصميم رقمي",
-    "imageSmall": "assets/projects/insta-watches-ad-design-900.jpg",
-    "imageMedium": "assets/projects/insta-watches-ad-design-1200.jpg"
   },
   {
     "id": "f12",
@@ -7173,7 +7169,7 @@ function initSiteData() {
   /* شريط الماركي */
   const track = $('#marqueeTrack');
   if (track) {
-    const words = [...SITE_DATA.skills, SITE_DATA.agency?.name || 'DOT Media'];
+    const words = [...SITE_DATA.skills];
     const set = words.map((w) => `<span class="marquee__item">${w}</span>`).join('');
     track.innerHTML = set + set;
   }
@@ -7448,60 +7444,6 @@ function initCounters() {
   );
 
   counters.forEach((el) => observer.observe(el));
-}
-
-/* ------------------------------------------------------------
-   7) الكتابة الآلية لسطر الدور
------------------------------------------------------------- */
-function initTyping() {
-  const el = $('#heroRole');
-  if (!el || typeof SITE_DATA === 'undefined' || !SITE_DATA.roles?.length) return;
-
-  const phrases = SITE_DATA.roles;
-  if (reduceMotion.matches) {
-    el.textContent = phrases[0];
-    return;
-  }
-
-  const text = document.createElement('span');
-  const caret = document.createElement('span');
-  caret.className = 'caret';
-  caret.setAttribute('aria-hidden', 'true');
-  caret.textContent = '|';
-  el.textContent = '';
-
-  /* السطر يظهر كامل من أول لحظة بدل ما يبدأ فاضي ويكتب حرف حرف */
-  text.textContent = phrases[0];
-  el.append(text, caret);
-
-  let phraseIndex = 0;
-  let charIndex = phrases[0].length;
-  let deleting = true;
-
-  const tick = () => {
-    const current = phrases[phraseIndex];
-
-    if (!deleting) {
-      charIndex += 1;
-      text.textContent = current.slice(0, charIndex);
-      if (charIndex === current.length) {
-        deleting = true;
-        window.setTimeout(tick, 1900);
-        return;
-      }
-    } else {
-      charIndex -= 1;
-      text.textContent = current.slice(0, charIndex);
-      if (charIndex === 0) {
-        deleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-      }
-    }
-
-    window.setTimeout(tick, deleting ? 34 : 62);
-  };
-
-  window.setTimeout(tick, 2800);
 }
 
 /* ------------------------------------------------------------
@@ -8546,6 +8488,7 @@ function initContactForm() {
     phone: $('#fieldPhone'),
     email: $('#fieldEmail'),
     service: $('#fieldService'),
+    budget: $('#fieldBudget'),
     message: $('#fieldMessage'),
   };
 
@@ -8554,6 +8497,7 @@ function initContactForm() {
     phone: $('#errorPhone'),
     email: $('#errorEmail'),
     service: $('#errorService'),
+    budget: $('#errorBudget'),
     message: $('#errorMessage'),
   };
 
@@ -8566,7 +8510,9 @@ function initContactForm() {
         : 'اكتب رقم هاتف صحيحًا (8 إلى 15 رقمًا).';
     },
     email: (v) =>
-      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'اكتب بريدًا إلكترونيًا صحيحًا.',
+      !v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())
+        ? ''
+        : 'اكتب بريدًا إلكترونيًا صحيحًا أو اتركه فارغًا.',
     service: (v) => (v ? '' : 'اختر نوع الخدمة المطلوبة.'),
     message: (v) =>
       v.trim().length >= 10 ? '' : 'اكتب وصفًا مختصرًا للمشروع (10 أحرف على الأقل).',
@@ -8610,6 +8556,7 @@ function initContactForm() {
     phone: fields.phone?.value.trim() || '',
     email: fields.email?.value.trim() || '',
     service: fields.service?.value || '',
+    budget: fields.budget?.value.trim() || '',
     message: fields.message?.value.trim() || '',
   });
 
@@ -8620,8 +8567,9 @@ function initContactForm() {
       '',
       `الاسم: ${v.name}`,
       `الهاتف: ${v.phone}`,
-      `البريد: ${v.email}`,
+      `البريد: ${v.email || 'غير مذكور'}`,
       `نوع الخدمة: ${v.service}`,
+      `الميزانية التقديرية: ${v.budget || 'غير محددة'}`,
       '',
       'تفاصيل المشروع:',
       v.message,
@@ -8686,6 +8634,7 @@ function initContactForm() {
           phone: values.phone,
           email: values.email,
           service: values.service,
+          budget: values.budget,
           message: values.message,
           _subject: 'طلب مشروع جديد — من الموقع الشخصي',
           _template: 'table',
@@ -8699,8 +8648,8 @@ function initContactForm() {
       if (/activat/i.test(message)) {
         setStatus(
           'info',
-          'طلبك اتسجل، ومحتاج تفعيل مرة واحدة بس: افتح رسالة التفعيل اللي وصلت على البريد واضغط رابط Activate Form.',
-          { href: mailtoUrl(), label: 'أو ابعت على البريد' }
+          'سُجّل طلبك، ويحتاج تفعيلًا لمرة واحدة: افتح رسالة التفعيل على البريد واضغط رابط Activate Form.',
+          { href: mailtoUrl(), label: 'أو أرسل عبر البريد' }
         );
         return;
       }
@@ -8708,16 +8657,16 @@ function initContactForm() {
       if (failed) throw new Error(message || 'send failed');
 
       form.reset();
-      setStatus('success', 'وصلني طلبك، وهرد عليك خلال 24 ساعة. لو مستعجل، ابعتلي على واتساب على طول.');
+      setStatus('success', 'وصلني طلبك، وسأرد عليك خلال 24 ساعة. للاستعجال، أرسل رسالة على واتساب.');
     } catch (error) {
       const timedOut = error && error.name === 'AbortError';
       openWhatsApp();
       setStatus(
         'info',
         timedOut
-          ? 'الإرسال خد وقت أطول من المتوقع، فجهّزتلك نسخة على واتساب — راجعها واضغط إرسال.'
-          : 'تعذّر إرسال الطلب من الموقع، فجهّزتلك نسخة على واتساب — راجعها واضغط إرسال.',
-        { href: mailtoUrl(), label: 'أو ابعت على البريد' }
+          ? 'استغرق الإرسال وقتًا أطول من المتوقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.'
+          : 'تعذّر إرسال الطلب من الموقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.',
+        { href: mailtoUrl(), label: 'أو أرسل عبر البريد' }
       );
     } finally {
       window.clearTimeout(timeout);
@@ -8740,7 +8689,7 @@ function initContactForm() {
     openWhatsApp();
     setStatus(
       'success',
-      'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق.'
+      'جُهّزت رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق.'
     );
   });
 }
@@ -8863,7 +8812,6 @@ function init() {
   initProjectDialog();
   initLightbox();
   initCounters();
-  initTyping();
   initContactForm();
   initMisc();
 }

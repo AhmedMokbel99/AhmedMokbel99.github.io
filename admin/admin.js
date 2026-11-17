@@ -1341,13 +1341,10 @@ const TEXT_GROUPS = [
     title: 'قسم البداية (Hero)',
     fields: [
       ['hero.availability', 'شارة التوفر', 'text'],
-      ['hero.agencyLabel', 'اسم الوكالة في الشارة', 'text'],
-      ['hero.role', 'المسمى الوظيفي', 'text'],
       ['hero.name', 'الاسم', 'text'],
-      ['hero.taglinePrefix', 'بداية الجملة', 'text'],
-      ['hero.taglineAccent', 'الجملة الملوّنة', 'text'],
+      ['hero.disciplines', 'سطر التخصصات (تصميم · موشن جرافيك · تصوير · فيديو)', 'text'],
+      ['hero.role', 'المسمى الوظيفي المختصر', 'text'],
       ['hero.lead', 'النص التعريفي', 'textarea'],
-      ['hero.roleFallback', 'سطر الدور بدون جافاسكريبت', 'text'],
       ['hero.specialty', 'نص التخصص لقارئ الشاشة', 'text'],
       ['hero.location', 'المكان في شارة البداية', 'text'],
       ['hero.experiencePrefix', 'نص الخبرة', 'text'],
@@ -1664,10 +1661,6 @@ function renderTexts() {
       </div>
     </div>
     ${groups}
-    <details class="group">
-      <summary>أدوار الهيرو المتحركة</summary>
-      <div class="group__body">${linesEditor('العبارات المتبادلة', 'hero.roles')}</div>
-    </details>
     ${editableLists}
     <details class="group">
       <summary>الأرقام والإحصائيات</summary>

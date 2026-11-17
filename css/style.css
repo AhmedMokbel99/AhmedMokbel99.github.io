@@ -736,10 +736,20 @@ body.has-dialog {
 }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 5.4vw, 4.25rem);
-  line-height: 1.24;
+  font-size: clamp(2.8rem, 6.2vw, 5rem);
+  line-height: 1.16;
   font-weight: 800;
   letter-spacing: 0;
+}
+
+.hero h1 .h1-disciplines {
+  display: block;
+  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.1vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--cyan);
 }
 
 .hero h1 .h1-sub {
@@ -1043,9 +1053,12 @@ body.has-dialog {
 
 .client {
   display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.8rem 0.95rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0.28rem;
+  min-height: 84px;
+  padding: 1rem 1.15rem;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.02);
@@ -1058,34 +1071,19 @@ body.has-dialog {
   transform: translateY(-2px);
 }
 
-.client__mark {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
-  border: 1px solid var(--brand-line);
-  background: var(--brand-soft);
-  color: #cbb7ff;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+.client__wordmark {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  text-transform: uppercase;
 }
 
 .client__name {
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--text);
-}
-
-.client__latin {
-  margin-inline-start: auto;
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.1em;
+  font-size: 0.76rem;
+  font-weight: 400;
   color: var(--dim);
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .float-pill {
@@ -1952,6 +1950,17 @@ html.js .project__media.is-ready::before {
   gap: 0.7rem;
 }
 
+.faq__group {
+  margin: 1.3rem 0 0.1rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
 .faq {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -2237,6 +2246,12 @@ html.js .project__media.is-ready::before {
 
 .field label span {
   color: var(--cyan);
+}
+
+.field label .field__optional {
+  color: var(--dim);
+  font-weight: 400;
+  font-size: 0.74rem;
 }
 
 .field input,
@@ -3502,7 +3517,12 @@ html.js .project__media.is-ready::before {
   }
 
   .hero h1 {
-    font-size: clamp(2.3rem, 8.5vw, 3.4rem);
+    font-size: clamp(2.6rem, 9.5vw, 3.4rem);
+  }
+
+  .hero h1 .h1-disciplines {
+    margin-top: 0.6rem;
+    font-size: 1.02rem;
   }
 
   .hero-meta {
