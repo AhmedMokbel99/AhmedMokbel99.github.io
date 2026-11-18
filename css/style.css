@@ -1214,6 +1214,9 @@ body.has-dialog {
 
 .stat__value {
   display: block;
+  /* الأرقام تُقرأ من الشمال لليمين: 13+ مش +13 */
+  direction: ltr;
+  unicode-bidi: isolate;
   font-family: var(--font-mono);
   font-size: clamp(2.1rem, 4vw, 3.1rem);
   font-weight: 600;

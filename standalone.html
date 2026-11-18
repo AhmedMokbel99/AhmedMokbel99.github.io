@@ -1263,6 +1263,9 @@ body.has-dialog {
 
 .stat__value {
   display: block;
+  /* الأرقام تُقرأ من الشمال لليمين: 13+ مش +13 */
+  direction: ltr;
+  unicode-bidi: isolate;
   font-family: var(--font-mono);
   font-size: clamp(2.1rem, 4vw, 3.1rem);
   font-weight: 600;
@@ -4827,8 +4830,8 @@ html.js .project__media.is-ready::before {
 
       <nav class="nav__panel" id="navPanel" aria-label="التنقل الرئيسي">
         <ul class="nav__links">
-          <li><a class="nav__link" href="#work" data-cms="nav.work">الأعمال</a></li>
           <li><a class="nav__link" href="#about" data-cms="nav.about">نبذة</a></li>
+          <li><a class="nav__link" href="#work" data-cms="nav.work">الأعمال</a></li>
           <li><a class="nav__link" href="#services" data-cms="nav.services">الخدمات</a></li>
           <li><a class="nav__link" href="#process" data-cms="nav.process">الطريقة</a></li>
           <li><a class="nav__link" href="#contact" data-cms="nav.contact">تواصل</a></li>
@@ -5024,6 +5027,75 @@ html.js .project__media.is-ready::before {
           </li>
 <!-- clients:end -->
         </ul>
+      </div>
+    </section>
+
+    <!-- ═══ Stats ═══ -->
+    <section class="section stats" aria-label="أرقام سريعة">
+      <div class="wrap">
+        <div class="stats-grid" id="statsGrid" data-reveal></div>
+      </div>
+    </section>
+
+    <!-- ═══ About ═══ -->
+    <section id="about" class="section section--soft">
+      <div class="wrap about-grid">
+        <div class="about-aside">
+          <div class="quote-card" data-reveal>
+            <blockquote>
+              <span data-cms="about.quoteA">الهوية القوية ليست شعارًا جميلًا، بل</span>
+              <mark data-cms="about.quoteMark">نظام واضح</mark> <span data-cms="about.quoteB">يُعرف به العمل في كل نقطة تواصل.</span>
+            </blockquote>
+            <div class="quote-card__sign">
+              <div>
+                <b data-cms="about.signName">أحمد مقبل</b>
+                <span data-cms="about.signRole">مصمم ومخرج بصري</span>
+              </div>
+              <span class="quote-card__mono" aria-hidden="true">AM</span>
+            </div>
+          </div>
+
+          <div class="agency-card" data-reveal>
+            <div>
+              <div class="agency-card__head">
+                <div class="agency-card__title" data-cms="about.agencyTitle">DOT Media</div>
+                <span data-cms="about.agencyTagline">استوديو إنتاج إبداعي</span>
+              </div>
+              <p data-cms="about.agencyDesc">استوديو إنتاج أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو مع فريق مستقل.</p>
+            </div>
+            <a class="btn btn--ghost btn--sm" data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">
+              <span data-cms="about.agencyCta">صفحة الاستوديو</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="about-body">
+          <div class="eyebrow" data-reveal data-cms="about.eyebrow">نبذة</div>
+          <h2 data-reveal data-cms="about.title">هوية بصرية وصورة واضحة لكل علامة</h2>
+          <p data-reveal>
+            <span data-cms="about.p1a">بدأت العمل في التصميم عام 2013 من مدينة الجمالية، وتطوّرت المسيرة من المطبوعات إلى الموشن جرافيك، ثم إلى التصوير وإنتاج الفيديو. أؤسس من خلال</span>
+            <strong data-cms="about.p1strong">DOT Media</strong>
+            <span data-cms="about.p1b">مساحة عمل للإنتاج الإبداعي، أنفّذ من خلالها مشاريع الهوية والحملات مع فريق إنتاج.</span>
+          </p>
+          <p data-reveal data-cms="about.p2">أعمل على أن يكون لكل مشروع سبب واضح: رسالة محددة، جمهور معروف، وقرار بصري يخدم الهدف — لا مجرد شكل جميل.</p>
+
+          <div class="about-lists" data-reveal>
+            <div>
+              <div class="about-list__title" data-cms="about.toolsTitle">أدوات العمل</div>
+              <ul class="chip-row" id="toolChips"></ul>
+            </div>
+            <div>
+              <div class="about-list__title" data-cms="about.skillsTitle">مجالات الخبرة</div>
+              <ul class="chip-row" id="skillChips"></ul>
+            </div>
+          </div>
+
+          <a class="about-link" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
+            <span data-cms="about.behanceCta">تابع أعمالي على بيهانس</span>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -5858,75 +5930,6 @@ html.js .project__media.is-ready::before {
             </div>
           </div>
 <!-- case-spot:end -->
-      </div>
-    </section>
-
-    <!-- ═══ Stats ═══ -->
-    <section class="section stats" aria-label="أرقام سريعة">
-      <div class="wrap">
-        <div class="stats-grid" id="statsGrid" data-reveal></div>
-      </div>
-    </section>
-
-    <!-- ═══ About ═══ -->
-    <section id="about" class="section section--soft">
-      <div class="wrap about-grid">
-        <div class="about-aside">
-          <div class="quote-card" data-reveal>
-            <blockquote>
-              <span data-cms="about.quoteA">الهوية القوية ليست شعارًا جميلًا، بل</span>
-              <mark data-cms="about.quoteMark">نظام واضح</mark> <span data-cms="about.quoteB">يُعرف به العمل في كل نقطة تواصل.</span>
-            </blockquote>
-            <div class="quote-card__sign">
-              <div>
-                <b data-cms="about.signName">أحمد مقبل</b>
-                <span data-cms="about.signRole">مصمم ومخرج بصري</span>
-              </div>
-              <span class="quote-card__mono" aria-hidden="true">AM</span>
-            </div>
-          </div>
-
-          <div class="agency-card" data-reveal>
-            <div>
-              <div class="agency-card__head">
-                <div class="agency-card__title" data-cms="about.agencyTitle">DOT Media</div>
-                <span data-cms="about.agencyTagline">استوديو إنتاج إبداعي</span>
-              </div>
-              <p data-cms="about.agencyDesc">استوديو إنتاج أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو مع فريق مستقل.</p>
-            </div>
-            <a class="btn btn--ghost btn--sm" data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">
-              <span data-cms="about.agencyCta">صفحة الاستوديو</span>
-              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
-            </a>
-          </div>
-        </div>
-
-        <div class="about-body">
-          <div class="eyebrow" data-reveal data-cms="about.eyebrow">نبذة</div>
-          <h2 data-reveal data-cms="about.title">هوية بصرية وصورة واضحة لكل علامة</h2>
-          <p data-reveal>
-            <span data-cms="about.p1a">بدأت العمل في التصميم عام 2013 من مدينة الجمالية، وتطوّرت المسيرة من المطبوعات إلى الموشن جرافيك، ثم إلى التصوير وإنتاج الفيديو. أؤسس من خلال</span>
-            <strong data-cms="about.p1strong">DOT Media</strong>
-            <span data-cms="about.p1b">مساحة عمل للإنتاج الإبداعي، أنفّذ من خلالها مشاريع الهوية والحملات مع فريق إنتاج.</span>
-          </p>
-          <p data-reveal data-cms="about.p2">أعمل على أن يكون لكل مشروع سبب واضح: رسالة محددة، جمهور معروف، وقرار بصري يخدم الهدف — لا مجرد شكل جميل.</p>
-
-          <div class="about-lists" data-reveal>
-            <div>
-              <div class="about-list__title" data-cms="about.toolsTitle">أدوات العمل</div>
-              <ul class="chip-row" id="toolChips"></ul>
-            </div>
-            <div>
-              <div class="about-list__title" data-cms="about.skillsTitle">مجالات الخبرة</div>
-              <ul class="chip-row" id="skillChips"></ul>
-            </div>
-          </div>
-
-          <a class="about-link" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
-            <span data-cms="about.behanceCta">تابع أعمالي على بيهانس</span>
-            <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-          </a>
-        </div>
       </div>
     </section>
 
