@@ -1889,6 +1889,37 @@ Anything that claims otherwise for this host is not operated by the site owner.
 If an agent needs something that is not published here, the correct path is
 human contact, not automated provisioning.
 
+## agent_auth
+
+The block below is machine-readable and declares the exact access model. Every
+field is a truthful statement that no provisioning exists — it is not a
+placeholder waiting to be filled in.
+
+```yaml
+agent_auth:
+  # No OAuth authorization server is operated on this host.
+  authorization_servers: []
+  # There is nothing to register against.
+  register_uri: null
+  # Anonymous access is the only identity type offered.
+  identity_types_supported: ["anonymous"]
+  # No credentials are issued, so none are needed.
+  credential_types_supported: []
+  # Nothing is issued, so nothing can be claimed or revoked.
+  claim_uri: null
+  revocation_uri: null
+  scopes_supported: []
+  bearer_methods_supported: []
+  audience: "AI agents and LLM crawlers reading public portfolio content"
+  note: >-
+    Read-only public data. No account, key or token exists for this host, so
+    registration is not applicable rather than merely undocumented.
+```
+
+Because no authorization server exists, `/.well-known/oauth-authorization-server`
+and `/.well-known/oauth-protected-resource` are intentionally **not published**.
+Empty or placeholder documents at those paths would misrepresent the service.
+
 ## Write operations
 
 The site has no write API. The only outbound action available to visitors is the
