@@ -105,7 +105,7 @@ published today.** Publishing them statically would be a lie.
 | Requirement | Verdict | Reason |
 | --- | --- | --- |
 | OAuth / OIDC discovery (`/.well-known/openid-configuration`) | **NOT APPLICABLE** | There are no protected resources and no authorization server. Publishing issuer/token/JWKS metadata would be fabricated. |
-| OAuth Protected Resource metadata | **NOT APPLICABLE** | Same — nothing to protect. |
+| OAuth Protected Resource metadata | **NOT APPLICABLE** | Scanner reports "auth.md exists but OAuth Protected Resource Metadata was not found". Correct: RFC 9728 describes protection of a resource, and none is protected. |
 | DNS-AID (`_index._agents.*`) | **NEEDS DOMAIN** | `github.io` is not the owner's DNS zone. Cannot create records or DNSSEC in a zone we do not control. |
 | DNSSEC | **NEEDS DOMAIN** | Same. |
 | MCP server card | **BLOCKED BY HOSTING** | Needs a request handler. Worker is written; card is served by the Worker, never statically. |
@@ -128,34 +128,51 @@ published today.** Publishing them statically would be a lie.
 
 ---
 
-## 6. Scanner status
+## 6. Scanner status (measured, not predicted)
 
-Baseline scan before this work: **Level 1 — Basic Web Presence**.
-Three checks passed (`robotsTxt`, `sitemap`, `robotsTxtAiRules`).
+Baseline scan before this work: **Level 1 — Basic Web Presence**, 3 checks passing.
 
-After deployment the expected movement is:
+Scan after deployment (`2026-11-18T01:29:53Z`): **Level 2 — Bot-Aware**.
 
-| Check | Before | Expected after | Note |
+| Check | Before | After | Verdict |
 | --- | --- | --- | --- |
-| `robotsTxt` | pass | pass | |
-| `sitemap` | pass | pass | `/docs/api/` added |
-| `robotsTxtAiRules` | pass | pass | |
-| `contentSignals` | fail | **pass** | `Content-Signal` added to robots.txt |
-| `apiCatalog` | fail | **pass** | real linkset + OpenAPI + docs |
-| `authMd` | fail | **pass** | `/auth.md` |
-| `agentSkills` | fail | **pass** | real skills + real digests |
-| `ard` | fail | **pass** | 6 entries, all live URLs |
-| `webMcp` | fail | **pass** | 5 registered tools + declarative form |
-| `linkHeaders` | fail | BLOCKED BY HOSTING | needs the Worker |
-| `markdownNegotiation` | fail | BLOCKED BY HOSTING | needs the Worker |
-| `dnsAid` | fail | NEEDS DOMAIN | `github.io` is not ours |
-| `oauthDiscovery` | fail | NOT APPLICABLE | no auth server |
-| `oauthProtectedResource` | fail | NOT APPLICABLE | no protected resource |
-| `mcpServerCard` | fail | BLOCKED BY HOSTING | Worker provides it when deployed |
+| `robotsTxt` | pass | **pass** | verified live |
+| `sitemap` | pass | **pass** | verified live |
+| `robotsTxtAiRules` | pass | **pass** | verified live |
+| `contentSignals` | fail | **pass** | `Content-Signal` verified in live robots.txt |
+| `apiCatalog` | fail | **pass** | linkset + OpenAPI + docs all return 200 |
+| `agentSkills` | fail | **pass** | 3 skills, digests recomputed from live bytes |
+| `ard` | fail | **pass** | 6 entries, every URL returns 200 |
+| `webMcp` | fail | **pass** | 5 tools registered in a real browser |
+| `linkHeaders` | fail | fail | **BLOCKED BY HOSTING** |
+| `markdownNegotiation` | fail | fail | **BLOCKED BY HOSTING** |
+| `mcpServerCard` | fail | fail | **BLOCKED BY HOSTING** |
+| `dnsAid` | fail | fail | **NEEDS DOMAIN** |
+| `oauthDiscovery` | fail | fail | **NOT APPLICABLE** |
+| `oauthProtectedResource` | fail | fail | **NOT APPLICABLE** |
+| `authMd` | fail | fail | **NOT APPLICABLE** |
 
-A scanner may still report `markdownNegotiation` as failing even though
-`/index.md` exists, because it tests negotiation, not the presence of a mirror.
-That distinction is deliberate and is recorded here rather than papered over.
+### Why each remaining failure stays
+
+- **`linkHeaders`** — GitHub Pages emits a fixed header set. The Worker in
+  `deploy/cloudflare/` adds them (tested), but it is not deployed.
+- **`markdownNegotiation`** — a static host cannot choose the response body from
+  the `Accept` header. `/index.md` and the six service mirrors do exist and are
+  served as `text/markdown`, so an agent can read Markdown today; what is missing
+  is negotiation on `/` itself.
+- **`mcpServerCard`** — the checker accepts only a card that points at a working
+  MCP endpoint. The Worker serves both; neither exists until it is deployed.
+- **`dnsAid`** — `github.io` is GitHub's zone, not the owner's. No SVCB record
+  and no DNSSEC can be created there.
+- **`oauthDiscovery` / `oauthProtectedResource` / `authMd`** — the scanner now
+  reports `authMd` as *"auth.md exists but OAuth Protected Resource Metadata was
+  not found"*. That is accurate: there is no protected resource, so under RFC 9728
+  there is nothing to describe. Publishing a PRM document with an empty
+  `authorization_servers` list purely to turn the check green would be a
+  fabrication, so it was not done.
+
+The maximum reachable level on GitHub Pages alone is **Level 2** for this site:
+everything above that requires response-header control or DNS ownership.
 
 ---
 
