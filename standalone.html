@@ -1235,7 +1235,7 @@ body.has-dialog {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.015);
@@ -1276,6 +1276,144 @@ body.has-dialog {
   margin-top: 0.45rem;
   color: var(--muted);
   font-size: 0.87rem;
+}
+
+/* ------------------------------------------------------------
+   08b. دراسة حالة مختارة
+   ------------------------------------------------------------ */
+.case-spot {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+.case-spot__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  align-items: center;
+  gap: clamp(2rem, 4.5vw, 4rem);
+}
+
+.case-spot__media {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.case-spot__media::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  height: 34%;
+  background: linear-gradient(to bottom, rgba(4, 6, 12, 0.9), rgba(4, 6, 12, 0));
+  pointer-events: none;
+}
+
+.case-spot__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.case-spot__label {
+  position: absolute;
+  inset-inline: 1.1rem;
+  inset-block-start: 1.1rem;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.case-spot__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.32rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--brand-line);
+  background: rgba(12, 14, 22, 0.72);
+  backdrop-filter: blur(8px);
+  color: #d8c8ff;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.case-spot__hint {
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.case-spot__body h2 {
+  max-width: 20ch;
+  margin-top: 0.55rem;
+  font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+  line-height: 1.25;
+}
+
+.case-spot__summary {
+  max-width: 46ch;
+  margin-top: 0.9rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.case-spot__facts {
+  display: grid;
+  gap: 1rem;
+  margin-block: 1.7rem 0;
+}
+
+.case-fact {
+  display: grid;
+  gap: 0.15rem;
+  padding-inline-start: 0.95rem;
+  border-inline-start: 2px solid var(--brand-line);
+}
+
+.case-fact dt {
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--cyan);
+}
+
+.case-fact dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  line-height: 1.85;
+}
+
+.case-spot__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.9rem;
+}
+
+@media (max-width: 900px) {
+  .case-spot__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .case-spot__media img {
+    aspect-ratio: 4 / 5;
+  }
+
+  .case-spot__body h2 {
+    max-width: none;
+  }
 }
 
 /* ------------------------------------------------------------
@@ -1350,6 +1488,22 @@ body.has-dialog {
   font-size: 0.98rem;
   color: var(--text);
   font-weight: 700;
+}
+
+.quote-card__mono {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  background: var(--grad-solid);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: var(--shadow-brand);
 }
 
 .agency-card {
@@ -3606,17 +3760,14 @@ html.js .project__media.is-ready::before {
 
 @media (max-width: 680px) {
   .stats-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
-  .stat:nth-child(3)::before,
-  .stat:nth-child(1)::before {
-    display: none;
-  }
-
-  .stat:nth-child(3),
-  .stat:nth-child(4) {
-    border-top: 1px solid var(--line);
+  .stat + .stat::before {
+    inset-block: 0 auto;
+    inset-inline: 14%;
+    width: auto;
+    height: 1px;
   }
 
   .services-grid,
@@ -5648,6 +5799,63 @@ html.js .project__media.is-ready::before {
         </p>
       </div>
     </section>
+
+    <!-- ═══ Case study ═══ -->
+    <section id="case" class="section case-spot" aria-labelledby="caseTitle">
+      <div class="wrap case-spot__grid">
+        <!-- case-spot:start -->
+          <figure class="case-spot__media" data-reveal>
+            <img
+              src="assets/projects/saudi-founding-day-motion-graphic-900.jpg"
+              srcset="assets/projects/saudi-founding-day-motion-graphic-900.jpg 900w, assets/projects/saudi-founding-day-motion-graphic-1200.jpg 1200w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
+              sizes="(max-width: 900px) 92vw, 520px"
+              width="1072"
+              height="1344"
+              alt="يوم التأسيس السعودي — موشن جرافيك"
+              loading="lazy"
+              decoding="async"
+            >
+            <figcaption class="case-spot__label">
+              <span class="case-spot__tag">موشن جرافيك</span>
+              <span class="case-spot__hint">اضغط لقراءة الدراسة كاملة</span>
+            </figcaption>
+          </figure>
+
+          <div class="case-spot__body">
+            <div class="eyebrow" data-reveal>دراسة حالة</div>
+            <h2 id="caseTitle" data-reveal>يوم التأسيس السعودي</h2>
+            <p class="case-spot__summary" data-reveal>عمل بصري بمناسبة يوم التأسيس السعودي لصالح TECHIFAY، يجمع بين التراث السعودي والهوية الخضراء والذهبية في تكوين مهيب.</p>
+
+            <dl class="case-spot__facts" data-reveal>
+            <div class="case-fact">
+              <dt>التحدي</dt>
+              <dd>مناسبة وطنية بتفاصيل تراثية كثيرة، والمطلوب تكوين مهيب يوصل الفكرة بسرعة من غير ازدحام بصري.</dd>
+            </div>
+            <div class="case-fact">
+              <dt>دوري في المشروع</dt>
+              <dd>تصميم المشاهد والتحريك والمونتاج، وضبط الإيقاع البصري مع الموسيقى.</dd>
+            </div>
+            <div class="case-fact">
+              <dt>النتيجة</dt>
+              <dd>عمل بصري جاهز للنشر على منصات المناسبة، بهوية خضراء وذهبية واضحة.</dd>
+            </div>
+            </dl>
+
+            <div class="case-spot__actions" data-reveal>
+              <button type="button" class="btn btn--primary" data-project-open="f01">
+                اقرأ دراسة الحالة كاملة
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+              </button>
+            <a class="btn btn--ghost" href="https://www.behance.net/gallery/244580859/_" target="_blank" rel="noopener noreferrer">
+              عرض على بيهانس
+              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
+            </a>
+            </div>
+          </div>
+<!-- case-spot:end -->
+      </div>
+    </section>
+
     <!-- ═══ Stats ═══ -->
     <section class="section stats" aria-label="أرقام سريعة">
       <div class="wrap">
@@ -5669,7 +5877,7 @@ html.js .project__media.is-ready::before {
                 <b data-cms="about.signName">أحمد مقبل</b>
                 <span data-cms="about.signRole">مصمم ومخرج بصري</span>
               </div>
-              <svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg>
+              <span class="quote-card__mono" aria-hidden="true">AM</span>
             </div>
           </div>
 
@@ -6341,11 +6549,6 @@ const SITE_DATA = {
       "value": 80,
       "suffix": "+",
       "label": "عميل راضٍ"
-    },
-    {
-      "key": "selected",
-      "suffix": "",
-      "label": "مشروع مختار من مسيرتي"
     }
   ]
 };
@@ -7830,6 +8033,13 @@ function initWork() {
     openProject(trigger.dataset.projectOpen);
   });
 
+  /* دراسات الحالة خارج الشبكة (زي قسم دراسة الحالة المختارة) */
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-project-open]');
+    if (!trigger || grid.contains(trigger)) return;
+    openProject(trigger.dataset.projectOpen);
+  });
+
   /* صورة بديلة عند فشل التحميل */
   grid.addEventListener(
     'error',
@@ -8153,7 +8363,16 @@ function openProject(id) {
   const dialog = $('#projectDialog');
   if (!dialog) return;
 
-  const index = state.visible.findIndex((p) => p.id === id);
+  let list = state.visible;
+  let index = list.findIndex((p) => p.id === id);
+
+  /* لو المشروع مش ظاهر في الفلتر الحالي، نفتحه من القائمة الكاملة */
+  if (index === -1) {
+    list = state.projects;
+    index = list.findIndex((p) => p.id === id);
+    if (index !== -1) state.visible = list;
+  }
+
   if (index === -1) return;
 
   state.dialogIndex = index;

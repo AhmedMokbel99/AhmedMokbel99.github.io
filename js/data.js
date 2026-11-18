@@ -63,11 +63,6 @@ const SITE_DATA = {
       "value": 80,
       "suffix": "+",
       "label": "عميل راضٍ"
-    },
-    {
-      "key": "selected",
-      "suffix": "",
-      "label": "مشروع مختار من مسيرتي"
     }
   ]
 };

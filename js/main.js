@@ -783,6 +783,13 @@ function initWork() {
     openProject(trigger.dataset.projectOpen);
   });
 
+  /* دراسات الحالة خارج الشبكة (زي قسم دراسة الحالة المختارة) */
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-project-open]');
+    if (!trigger || grid.contains(trigger)) return;
+    openProject(trigger.dataset.projectOpen);
+  });
+
   /* صورة بديلة عند فشل التحميل */
   grid.addEventListener(
     'error',
@@ -1106,7 +1113,16 @@ function openProject(id) {
   const dialog = $('#projectDialog');
   if (!dialog) return;
 
-  const index = state.visible.findIndex((p) => p.id === id);
+  let list = state.visible;
+  let index = list.findIndex((p) => p.id === id);
+
+  /* لو المشروع مش ظاهر في الفلتر الحالي، نفتحه من القائمة الكاملة */
+  if (index === -1) {
+    list = state.projects;
+    index = list.findIndex((p) => p.id === id);
+    if (index !== -1) state.visible = list;
+  }
+
   if (index === -1) return;
 
   state.dialogIndex = index;
