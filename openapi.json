@@ -1,0 +1,157 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Ahmed Mokbel portfolio API",
+    "version": "1.0.0",
+    "summary": "واجهة قراءة عامة لبيانات أعمال ومصمم أحمد مقبل.",
+    "description": "API ثابت للقراءة فقط (GET) يعرض بيانات البورتفوليو المولّدة من نفس محتوى الموقع. لا يوجد تسجيل ولا مفاتيح ولا كتابة. الملفات تُنشر عبر GitHub Pages وترجع Access-Control-Allow-Origin: *. توسعة .json جزء من المسار، والاستعلامات (query strings) غير مدعومة.",
+    "contact": {
+      "name": "Ahmed Mokbel",
+      "url": "https://ahmedmokbel99.github.io/#contact"
+    },
+    "license": {
+      "name": "All rights reserved"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://ahmedmokbel99.github.io",
+      "description": "GitHub Pages (production)"
+    }
+  ],
+  "paths": {
+    "/api/profile.json": {
+      "get": {
+        "operationId": "getProfile",
+        "summary": "الملف التعريفي لأحمد مقبل",
+        "responses": {
+          "200": {
+            "description": "profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects.json": {
+      "get": {
+        "operationId": "listProjects",
+        "summary": "قائمة كل المشاريع (ملخص)",
+        "responses": {
+          "200": {
+            "description": "project list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/projects/{slug}.json": {
+      "get": {
+        "operationId": "getProject",
+        "summary": "مشروع واحد بدراسة الحالة كاملة",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "admission-gateway-rollup",
+                "alhakum-altakathur-motion",
+                "almenissy-hijri-1448-greeting",
+                "alwathba-real-estate-ad",
+                "ans-dimashqi-pie-ad",
+                "ans-dimashqi-steak-ad",
+                "bdeel-car-ad",
+                "beginnings-motion-graphic",
+                "elmaqsoud-generators-ad",
+                "elzain-restaurant-video",
+                "en-serv-logo-animation",
+                "filler-injection-ad-design",
+                "first-motion-graphics-work",
+                "grm-hijri-1448-greeting",
+                "harvard-2026-new-year-identity",
+                "harvard-education-center-brand",
+                "ibn-albasel-motion-graphic",
+                "insta-watches-ad-design",
+                "nature-secret-ad-design",
+                "saudi-founding-day-motion-graphic",
+                "social-media-design-collection",
+                "taher-printing-brand-identity",
+                "ultra-grow-2-brand-system",
+                "ultra-grow-brand-packaging"
+              ]
+            },
+            "description": "معرّف المشروع العلني (من /api/projects.json)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "slug غير موجود — GitHub Pages ترجّع صفحة 404"
+          }
+        }
+      }
+    },
+    "/api/services.json": {
+      "get": {
+        "operationId": "listServices",
+        "summary": "الخدمات ومخرجاتها",
+        "responses": {
+          "200": {
+            "description": "services",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health.json": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "حالة آخر بناء",
+        "responses": {
+          "200": {
+            "description": "health",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "taher-printing-brand-identity",
+  "title": "طاهر للطباعة",
+  "category": "brand",
+  "categoryLabel": "هوية وطباعة",
+  "tag": "هوية وطباعة",
+  "summary": "هوية بصرية وتصميمات طباعية لمطبعة طاهر، تشمل الشعار والمطبوعات وتطبيقات الهوية.",
+  "featured": false,
+  "hasVideo": false,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/taher-printing-brand-identity.jpg",
+    "width": 1400,
+    "height": 1192
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/taher-printing-brand-identity.json",
+  "externalUrl": "https://www.behance.net/gallery/128103663/_",
+  "challenge": "مطبعة تحتاج هوية تفرّقها عن المنافسين، وتشتغل على الورق وفي نفس الوقت على الرقمي.",
+  "role": "تصميم الشعار والنظام الطباعي والمطبوعات وتطبيقات الهوية.",
+  "result": "هوية ومطبوعات جاهزة للتطبيق داخل المطبعة.",
+  "tools": [
+    "هوية بصرية",
+    "تصميم طباعي",
+    "مطبوعات"
+  ],
+  "gallery": []
+}

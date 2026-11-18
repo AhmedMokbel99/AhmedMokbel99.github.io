@@ -1,0 +1,27 @@
+{
+  "slug": "first-motion-graphics-work",
+  "title": "تجربة موشن جرافيك — البدايات",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "موشن جرافيك",
+  "summary": "من أوائل مشاريع الموشن جرافيك التي نفذتها؛ بداية المسار في التحريك والتصميم الحركي.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/first-motion-graphics-work.jpg",
+    "width": 1600,
+    "height": 1200
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/first-motion-graphics-work.json",
+  "externalUrl": "https://www.behance.net/gallery/119428049/_",
+  "challenge": "تجربة مبكرة في التحريك، والهدف كان تحويل فكرة بسيطة إلى مشهد متحرك متماسك.",
+  "role": "التصميم والتحريك من الصفر، مع تجربة أساليب انتقال وتوقيت مختلفة.",
+  "result": "عمل قصير يمثّل بداية المسار في الموشن جرافيك.",
+  "tools": [
+    "موشن جرافيك",
+    "تحريك"
+  ],
+  "gallery": []
+}

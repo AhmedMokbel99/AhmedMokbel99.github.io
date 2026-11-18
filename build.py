@@ -41,6 +41,7 @@ PAGES_FILE = CONTENT / "pages.json"
 INDEX = ROOT / "index.html"
 DATA_JS = ROOT / "js" / "data.js"
 MAIN_JS = ROOT / "js" / "main.js"
+WEBMCP_JS = ROOT / "js" / "webmcp.js"
 CSS_FILE = ROOT / "css" / "style.css"
 STANDALONE = ROOT / "standalone.html"
 SITEMAP = ROOT / "sitemap.xml"
@@ -195,12 +196,21 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
         "tools": site.get("tools", []),
         "skills": site.get("skills", []),
         "stats": site.get("stats", []),
+        "services": [
+            {"title": s["title"], "desc": s.get("desc", ""), "link": s.get("link", "")}
+            for s in site.get("services", [])
+            if s.get("title")
+        ],
     }
 
     visible = [p for p in projects if p.get("visible", True) is not False]
 
     site_data = apply_tokens(site_data)
     visible = apply_tokens(visible)
+
+    # نفس الـslug العلني اللي في api/projects/<slug>.json
+    slugs = project_slugs(visible)
+    visible = [dict(p, slug=slugs[p["id"]]) for p in visible]
 
     header = (
         "/**\n"
@@ -851,6 +861,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
   <meta name="theme-color" content="#07080d">
   <meta name="color-scheme" content="dark">
   <link rel="canonical" href="{esc(url)}">
+{agent_head_links(base, "/" + page["slug"].replace(".html", ".md"))}
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -1167,6 +1178,24 @@ def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
 
     lines += [
         "",
+        "## للوكلاء — Machine readable",
+        "",
+        f"- الملف التعريفي (JSON): {base}/api/profile.json",
+        f"- المشاريع (JSON): {base}/api/projects.json",
+        f"- دراسة حالة واحدة: {base}/api/projects/<slug>.json",
+        f"- الخدمات (JSON): {base}/api/services.json",
+        f"- نسخة Markdown من الموقع: {base}/index.md",
+        f"- وصف OpenAPI: {base}/openapi.json",
+        f"- فهرس مهارات الوكلاء: {base}/.well-known/agent-skills/index.json",
+        f"- كتالوج الموارد (ARD): {base}/.well-known/ai-catalog.json",
+        f"- بيان الوصول للوكلاء: {base}/auth.md",
+        "",
+        "المحتوى عام للقراءة فقط. لا يوجد تسجيل ولا مفاتيح وصول. "
+        "لا تُستخدم بيانات الموقع خارج ما هو منشور فيه.",
+    ]
+
+    lines += [
+        "",
         "## التواصل",
         "",
         f"- واتساب: https://wa.me/{contact['whatsapp']}",
@@ -1192,25 +1221,965 @@ def write_cname(site: dict) -> None:
 
 
 def write_robots(site: dict) -> None:
-    """robots.txt مولّد — رابط الـsitemap بيتغيّر مع الدومين أوتوماتيك."""
+    """robots.txt مولّد — رابط الـsitemap ومسار الـcatalog بيتغيّروا مع الدومين."""
     base = site_base(site)
     write(
         ROBOTS_FILE,
         "\n".join(
             [
                 "# robots.txt — أحمد مقبل | Ahmed Mokbel Portfolio",
+                "# Managed by build.py — edit content/site.json, not this file.",
                 "User-agent: *",
                 "Allow: /",
+                "",
+                "# Content Signals (contentsignals.org):",
+                "#   ai-train=no  — لا يُستخدم المحتوى لتدريب النماذج",
+                "#   search=yes   — الفهرسة والظهور في نتائج البحث مسموح",
+                "#   ai-input=yes — يُسمح باستخدام المحتوى للإجابة والإحالة",
+                "Content-Signal: ai-train=no, search=yes, ai-input=yes",
+                "",
+                "# Agentic Resource Discovery manifest",
+                f"Agentmap: {base}/.well-known/ai-catalog.json",
                 "",
                 "# نسخة الملف الواحد مخصّصة للاستخدام المحلي فقط",
                 "Disallow: /standalone.html",
                 "Disallow: /404.html",
                 "Disallow: /admin/",
                 "",
+                "# ملفات المصدر والأدوات — مش محتوى عام",
+                "Disallow: /_source/",
+                "Disallow: /content/",
+                "Disallow: /tools/",
+                "Disallow: /deploy/",
+                "Disallow: /build.py",
+                "Disallow: /netlify.toml",
+                "Disallow: /docs/admin-guide.md",
+                "Disallow: /docs/seo-setup.md",
+                "",
                 f"Sitemap: {base}/sitemap.xml",
                 "",
             ]
         ),
+    )
+
+
+# ---------------------------------------------------------------------------
+# 10) طبقة اكتشاف الوكلاء — API قراءة ثابت + /.well-known + مستندات
+# ---------------------------------------------------------------------------
+# كل ما هنا بيانات حقيقية مولّدة من content/*.json وقت البناء.
+# لا يوجد سيرفر ولا قاعدة بيانات: الملفات دي هي الـAPI نفسه، والاستضافة
+# (GitHub Pages) بترجّعها بـContent-Type صح وAccess-Control-Allow-Origin: *.
+TODAY = dt.date.today().isoformat()
+API_DIR = ROOT / "api"
+WELL_KNOWN_DIR = ROOT / ".well-known"
+SKILLS_DIR = ROOT / "skills"
+DOCS_API_DIR = ROOT / "docs" / "api"
+
+AGENT_SKILLS_SCHEMA = "https://schemas.agentskills.io/discovery/0.2.0/schema.json"
+
+
+def write_nested(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    write(path, text)
+
+
+def write_json(path: Path, data) -> None:
+    write_nested(path, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+
+
+def slugify(value: str) -> str:
+    text = re.sub(r"[^a-z0-9]+", "-", str(value).strip().lower())
+    return text.strip("-")
+
+
+def project_slugs(projects: list[dict]) -> dict[str, str]:
+    """slug عام لكل مشروع — من اسم الصورة أو من حقل slug لو موجود.
+
+    الـslug هو الهوية العلنية في الـAPI، وأكواد f01…f24 الداخلية ما بتظهرش فيه.
+    """
+    used: set[str] = set()
+    result: dict[str, str] = {}
+    for project in projects:
+        slug = slugify(project.get("slug") or "")
+        if not slug:
+            stem = Path(str(project.get("image") or "")).stem
+            stem = re.sub(r"-(?:640|900|1200)$", "", stem)
+            slug = slugify(stem) or slugify(project.get("id", "")) or "project"
+        unique, index = slug, 2
+        while unique in used:
+            unique = f"{slug}-{index}"
+            index += 1
+        used.add(unique)
+        result[project["id"]] = unique
+    return result
+
+
+def category_labels(site: dict) -> dict[str, str]:
+    return {c["id"]: c["label"] for c in site.get("categories", []) if c.get("id")}
+
+
+def api_project(project: dict, slug: str, base: str, labels: dict[str, str]) -> dict:
+    image = str(project.get("image") or "")
+    category = str(project.get("cat") or "")
+    record = {
+        "slug": slug,
+        "title": project["title"],
+        "category": category,
+        "categoryLabel": labels.get(category, ""),
+        "tag": project.get("tag") or "",
+        "summary": project.get("summary") or "",
+        "featured": bool(project.get("featured")),
+        "hasVideo": bool(project.get("isVideo")),
+        "media": {
+            "type": "image",
+            "url": f"{base}/{image}" if image else "",
+            "width": int(project.get("width") or 0),
+            "height": int(project.get("height") or 0),
+        },
+        "pageUrl": f"{base}/#work",
+        "detailUrl": f"{base}/api/projects/{slug}.json",
+    }
+    if project.get("external") and project.get("url"):
+        record["externalUrl"] = project["url"]
+    return record
+
+
+def api_project_full(project: dict, slug: str, base: str, labels: dict[str, str]) -> dict:
+    record = api_project(project, slug, base, labels)
+    record["challenge"] = project.get("challenge") or ""
+    record["role"] = project.get("role") or ""
+    record["result"] = project.get("result") or ""
+    record["tools"] = [
+        item.strip() for item in str(project.get("tools") or "").split("–") if item.strip()
+    ]
+    record["gallery"] = [
+        {"url": f'{base}/{item["src"]}', "alt": item.get("alt") or ""}
+        for item in (project.get("gallery") or [])
+        if isinstance(item, dict) and item.get("src")
+    ]
+    return record
+
+
+def experience_years(site: dict) -> int:
+    start = int(site["brand"].get("careerStart") or dt.date.today().year)
+    return max(1, dt.date.today().year - start)
+
+
+def api_profile(site: dict, projects: list[dict], base: str) -> dict:
+    brand, contact, agency = site["brand"], site["contact"], site["agency"]
+    about = site.get("about", {})
+    stats = {s.get("key"): s for s in site.get("stats", [])}
+    return {
+        "schemaVersion": "1.0",
+        "generatedAt": TODAY,
+        "source": base + "/",
+        "name": brand["name"],
+        "latinName": "Ahmed Mokbel",
+        "jobTitle": brand["jobTitle"],
+        "description": site["meta"]["description"],
+        "approach": about.get("p2") or "",
+        "location": {
+            "city": brand["location"].split("،")[0].strip(),
+            "governorate": brand["location"].split("،")[-1].strip(),
+            "country": "مصر",
+            "countryCode": "EG",
+            "worksRemotely": True,
+        },
+        "careerStart": int(brand["careerStart"]),
+        "since": int(brand["careerStart"]),
+        "numbers": {
+            "experienceYears": experience_years(site),
+            "projectsDelivered": (stats.get("projects") or {}).get("value"),
+            "clients": (stats.get("clients") or {}).get("value"),
+        },
+        "studio": {
+            "name": agency["name"],
+            "role": "founder",
+            "description": agency["description"],
+            "url": contact.get("agencyUrl") or contact.get("facebook"),
+        },
+        "services": [s["title"] for s in site.get("services", []) if s.get("title")],
+        "skills": [s for s in site.get("skills", []) if s],
+        "tools": [s for s in site.get("tools", []) if s],
+        "projects": len([p for p in projects if p.get("visible", True) is not False]),
+        "links": {
+            "home": base + "/",
+            "projects": f"{base}/api/projects.json",
+            "services": f"{base}/api/services.json",
+            "behance": contact["behance"],
+            "facebook": contact["facebook"],
+            "x": contact["twitter"],
+            "whatsapp": f'https://wa.me/{contact["whatsapp"]}',
+        },
+        "contact": {
+            "email": contact["email"],
+            "whatsapp": f'+{contact["whatsapp"]}',
+            "preferredLanguage": "ar",
+        },
+    }
+
+
+def api_services(site: dict, pages: list[dict], base: str) -> dict:
+    by_link = {page["slug"]: page for page in pages}
+    items = []
+    for service in site.get("services", []):
+        if not service.get("title"):
+            continue
+        page = by_link.get(service.get("link", ""))
+        entry = {
+            "title": service["title"],
+            "summary": service.get("desc") or "",
+            "pageUrl": f'{base}/{service["link"]}' if service.get("link") else base + "/",
+        }
+        if page:
+            entry["slug"] = page["slug"].replace(".html", "")
+            entry["serviceType"] = page.get("serviceType") or ""
+            entry["deliverables"] = [
+                item for item in (page.get("service", {}).get("items") or []) if item
+            ]
+            entry["audience"] = [
+                card.get("title") for card in (page.get("audience", {}).get("cards") or [])
+            ]
+            entry["markdownUrl"] = f'{base}/{page["slug"].replace(".html", "")}.md'
+        items.append(entry)
+    return {
+        "schemaVersion": "1.0",
+        "generatedAt": TODAY,
+        "source": base + "/",
+        "count": len(items),
+        "services": items,
+    }
+
+
+def write_api(site: dict, projects: list[dict], pages: list[dict], base: str) -> dict[str, str]:
+    labels = category_labels(site)
+    visible = [p for p in projects if p.get("visible", True) is not False]
+    slugs = project_slugs(visible)
+    profile = api_profile(site, visible, base)
+    services = api_services(site, pages, base)
+
+    write_json(API_DIR / "profile.json", profile)
+    write_json(API_DIR / "services.json", services)
+    write_json(
+        API_DIR / "projects.json",
+        {
+            "schemaVersion": "1.0",
+            "generatedAt": TODAY,
+            "source": base + "/",
+            "count": len(visible),
+            "detailPattern": f"{base}/api/projects/{{slug}}.json",
+            "projects": [api_project(p, slugs[p["id"]], base, labels) for p in visible],
+        },
+    )
+    for project in visible:
+        write_json(
+            API_DIR / "projects" / f'{slugs[project["id"]]}.json',
+            api_project_full(project, slugs[project["id"]], base, labels),
+        )
+
+    write_json(
+        API_DIR / "health.json",
+        {
+            "status": "ok",
+            "generatedAt": TODAY,
+            "kind": "static-build",
+            "note": "ملف ثابت يتولّد مع كل بناء ونشر — لا يوجد سيرفر حي وراءه.",
+            "counts": {
+                "projects": len(visible),
+                "services": services["count"],
+                "servicePages": len(pages),
+            },
+        },
+    )
+    write_json(
+        API_DIR / "index.json",
+        {
+            "schemaVersion": "1.0",
+            "generatedAt": TODAY,
+            "name": "Ahmed Mokbel portfolio API",
+            "description": "واجهة قراءة عامة (GET فقط) لبيانات البورتفوليو، مولّدة من نفس محتوى الموقع.",
+            "documentation": f"{base}/docs/api/",
+            "openapi": f"{base}/openapi.json",
+            "catalog": f"{base}/.well-known/api-catalog",
+            "resources": [
+                {"name": "profile", "url": f"{base}/api/profile.json"},
+                {"name": "projects", "url": f"{base}/api/projects.json"},
+                {"name": "project", "url": f"{base}/api/projects/{{slug}}.json"},
+                {"name": "services", "url": f"{base}/api/services.json"},
+                {"name": "health", "url": f"{base}/api/health.json"},
+            ],
+        },
+    )
+
+    write_json(ROOT / "openapi.json", openapi_doc(base, list(slugs.values())))
+    return slugs, services
+
+
+def openapi_doc(base: str, slugs: list[str]) -> dict:
+    """OpenAPI 3.1 لوصف الـAPI الثابت. كل المسارات GET وبدون مصادقة."""
+    ok_json = {"application/json": {"schema": {"type": "object"}}}
+    return {
+        "openapi": "3.1.0",
+        "info": {
+            "title": "Ahmed Mokbel portfolio API",
+            "version": "1.0.0",
+            "summary": "واجهة قراءة عامة لبيانات أعمال ومصمم أحمد مقبل.",
+            "description": (
+                "API ثابت للقراءة فقط (GET) يعرض بيانات البورتفوليو المولّدة من نفس "
+                "محتوى الموقع. لا يوجد تسجيل ولا مفاتيح ولا كتابة. الملفات تُنشر عبر "
+                "GitHub Pages وترجع Access-Control-Allow-Origin: *. توسعة .json جزء من "
+                "المسار، والاستعلامات (query strings) غير مدعومة."
+            ),
+            "contact": {"name": "Ahmed Mokbel", "url": base + "/#contact"},
+            "license": {"name": "All rights reserved"},
+        },
+        "servers": [{"url": base, "description": "GitHub Pages (production)"}],
+        "paths": {
+            "/api/profile.json": {
+                "get": {
+                    "operationId": "getProfile",
+                    "summary": "الملف التعريفي لأحمد مقبل",
+                    "responses": {"200": {"description": "profile", "content": ok_json}},
+                }
+            },
+            "/api/projects.json": {
+                "get": {
+                    "operationId": "listProjects",
+                    "summary": "قائمة كل المشاريع (ملخص)",
+                    "responses": {"200": {"description": "project list", "content": ok_json}},
+                }
+            },
+            "/api/projects/{slug}.json": {
+                "get": {
+                    "operationId": "getProject",
+                    "summary": "مشروع واحد بدراسة الحالة كاملة",
+                    "parameters": [
+                        {
+                            "name": "slug",
+                            "in": "path",
+                            "required": True,
+                            "schema": {"type": "string", "enum": sorted(slugs)},
+                            "description": "معرّف المشروع العلني (من /api/projects.json).",
+                        }
+                    ],
+                    "responses": {
+                        "200": {"description": "project", "content": ok_json},
+                        "404": {"description": "slug غير موجود — GitHub Pages ترجّع صفحة 404"},
+                    },
+                }
+            },
+            "/api/services.json": {
+                "get": {
+                    "operationId": "listServices",
+                    "summary": "الخدمات ومخرجاتها",
+                    "responses": {"200": {"description": "services", "content": ok_json}},
+                }
+            },
+            "/api/health.json": {
+                "get": {
+                    "operationId": "getHealth",
+                    "summary": "حالة آخر بناء",
+                    "responses": {"200": {"description": "health", "content": ok_json}},
+                }
+            },
+        },
+        "components": {"schemas": {}},
+    }
+
+
+def api_catalog_doc(base: str) -> dict:
+    return {
+        "linkset": [
+            {
+                "anchor": f"{base}/api/",
+                "service-desc": [
+                    {"href": f"{base}/openapi.json", "type": "application/openapi+json"}
+                ],
+                "service-doc": [{"href": f"{base}/docs/api/", "type": "text/html"}],
+                "status": [{"href": f"{base}/api/health.json", "type": "application/json"}],
+                "item": [
+                    {"href": f"{base}/api/profile.json", "type": "application/json"},
+                    {"href": f"{base}/api/projects.json", "type": "application/json"},
+                    {"href": f"{base}/api/services.json", "type": "application/json"},
+                ],
+            }
+        ]
+    }
+
+
+def ai_catalog_doc(site: dict, base: str) -> dict:
+    """ARD manifest — كل URL فيه شغّال فعلًا."""
+    host = base.split("://", 1)[-1]
+    return {
+        "specVersion": "1.0",
+        "host": {
+            "displayName": f'{site["brand"]["name"]} — Ahmed Mokbel Portfolio',
+            "identifier": base + "/",
+        },
+        "entries": [
+            {
+                "identifier": f"urn:air:{host}:portfolio:profile",
+                "displayName": "Ahmed Mokbel — Profile",
+                "type": "application/json",
+                "url": f"{base}/api/profile.json",
+                "representativeQueries": [
+                    "Who is Ahmed Mokbel?",
+                    "What does Ahmed Mokbel do and where is he based?",
+                    "من هو أحمد مقبل ومجال عمله؟",
+                ],
+            },
+            {
+                "identifier": f"urn:air:{host}:portfolio:projects",
+                "displayName": "Ahmed Mokbel — Portfolio Projects",
+                "type": "application/json",
+                "url": f"{base}/api/projects.json",
+                "representativeQueries": [
+                    "What projects has Ahmed Mokbel created?",
+                    "Show Ahmed Mokbel motion graphics projects",
+                    "Find Ahmed Mokbel branding projects",
+                    "ما المشاريع التي صمّمها أحمد مقبل؟",
+                ],
+            },
+            {
+                "identifier": f"urn:air:{host}:portfolio:services",
+                "displayName": "Ahmed Mokbel — Services",
+                "type": "application/json",
+                "url": f"{base}/api/services.json",
+                "representativeQueries": [
+                    "What services does Ahmed Mokbel offer?",
+                    "Does Ahmed Mokbel design brand identities?",
+                    "هل يقدّم أحمد مقبل تصوير منتجات؟",
+                ],
+            },
+            {
+                "identifier": f"urn:air:{host}:portfolio:openapi",
+                "displayName": "Ahmed Mokbel — OpenAPI description",
+                "type": "application/openapi+json",
+                "url": f"{base}/openapi.json",
+                "representativeQueries": [
+                    "How do I call the Ahmed Mokbel portfolio API?",
+                    "Show the OpenAPI schema for the portfolio API",
+                ],
+            },
+            {
+                "identifier": f"urn:air:{host}:portfolio:agent-skills",
+                "displayName": "Ahmed Mokbel — Agent Skills",
+                "type": "application/json",
+                "url": f"{base}/.well-known/agent-skills/index.json",
+                "representativeQueries": [
+                    "Which agent skills are available for this portfolio?",
+                    "How can an agent browse Ahmed Mokbel case studies?",
+                ],
+            },
+            {
+                "identifier": f"urn:air:{host}:portfolio:markdown",
+                "displayName": "Ahmed Mokbel — Portfolio in Markdown",
+                "type": "text/markdown",
+                "url": f"{base}/index.md",
+                "representativeQueries": [
+                    "Give me the Ahmed Mokbel portfolio as markdown",
+                    "Read the portfolio without images",
+                ],
+            },
+        ],
+    }
+
+
+SKILLS: list[dict] = [
+    {
+        "name": "portfolio-discovery",
+        "summary": "Discover who Ahmed Mokbel is, what he does, and where his work lives.",
+        "body": """## When to use this skill
+
+Use it when a user asks who Ahmed Mokbel is, what he does, where he is based,
+or how to reach him. This is the entry point for every other portfolio skill.
+
+## Data sources (all real, all public)
+
+| Resource | URL |
+| --- | --- |
+| Profile JSON | `{base}/api/profile.json` |
+| Portfolio homepage | `{base}/` |
+| Markdown mirror | `{base}/index.md` |
+| Human summary | `{base}/llms.txt` |
+
+## Steps
+
+1. Fetch `{base}/api/profile.json` — it answers identity, location, services,
+   tools, numbers and contact in a single request.
+2. If the user wants prose, fetch `{base}/index.md`.
+3. Cite `{base}/` as the source. Never invent clients, prices, awards or years.
+
+## Facts you may state
+
+- Ahmed Mokbel is a visual designer and art director based in
+  {location}, Egypt, and the founder of DOT Media.
+- His disciplines are graphic design, brand identity, motion graphics,
+  photography and video editing.
+- Ahmed Mokbel is the primary brand; DOT Media is his studio.
+
+## Contact
+
+Public contact details live in `{base}/api/profile.json` under `contact`.
+Inquiries are handled through the site's own form at `{base}/#contact` and
+require an explicit human confirmation before anything is sent.
+""",
+    },
+    {
+        "name": "project-discovery",
+        "summary": "Search and read Ahmed Mokbel's 24 portfolio projects and case studies.",
+        "body": """## When to use this skill
+
+Use it when a user asks for examples of Ahmed Mokbel's work, needs a case study,
+or wants projects filtered by discipline (motion graphics, brand identity,
+digital and print design).
+
+## Data sources
+
+| Resource | URL |
+| --- | --- |
+| All projects (summary) | `{base}/api/projects.json` |
+| One project (full case study) | `{base}/api/projects/<slug>.json` |
+| Human view (dialog) | `{base}/#work` |
+
+## Steps
+
+1. Fetch `{base}/api/projects.json` once and keep the `projects` array.
+2. Filter locally by `category` (`motion`, `brand`, `digital`), `tag`, or by
+   matching words in `title` and `summary`. There is no server-side search.
+3. For any project the user asks about, fetch its `detailUrl`. That document
+   contains `summary`, `challenge`, `role`, `result`, `tools` and `gallery`.
+4. Always quote the project's own `title` exactly and link its `pageUrl`.
+
+## Rules
+
+- Every project already has a written case study; do not fill gaps yourself.
+- `externalUrl` points to the original Behance gallery where one exists.
+- Project `slug` is the public identifier. Internal build codes are not part of
+  the API and must not be shown to users.
+""",
+    },
+    {
+        "name": "service-discovery",
+        "summary": "Explain Ahmed Mokbel's design, motion, photography and consulting services.",
+        "body": """## When to use this skill
+
+Use it when a user asks what Ahmed Mokbel offers, what a service includes, who
+it is for, or how a project starts.
+
+## Data sources
+
+| Resource | URL |
+| --- | --- |
+| Services JSON | `{base}/api/services.json` |
+| Motion graphics page | `{base}/motion-graphics.html` |
+| Brand identity page | `{base}/brand-identity.html` |
+| Digital and print page | `{base}/digital-print.html` |
+| Photo production page | `{base}/photo-production.html` |
+| Social media ads page | `{base}/social-media-ads.html` |
+| Brand consulting page | `{base}/brand-consulting.html` |
+
+## Steps
+
+1. Fetch `{base}/api/services.json` for the canonical list, deliverables and
+   audience for each service.
+2. For detail, fetch the matching service page or its `markdownUrl`.
+3. If the user wants to start a project, point them to `{base}/#contact` and ask
+   them to confirm the message themselves.
+
+## Rules
+
+- No prices are published. Do not estimate one.
+- No turnaround times or guarantees are published. Do not invent them.
+""",
+    },
+]
+
+
+def agent_skill_body(site: dict, skill: dict) -> str:
+    body = skill["body"].replace("{base}", site_base(site))
+    body = body.replace("{location}", site["brand"]["location"])
+    return (
+        "---\n"
+        f'name: "{skill["name"]}"\n'
+        f'description: "{skill["summary"]}"\n'
+        "---\n\n"
+        f'# {skill["name"]}\n\n'
+        f'{skill["summary"]}\n\n'
+        f"{body}"
+    )
+
+
+def write_agent_skills(site: dict, base: str) -> dict:
+    entries = []
+    for skill in SKILLS:
+        artifact = agent_skill_body(site, skill)
+        path = SKILLS_DIR / skill["name"] / "SKILL.md"
+        write_nested(path, artifact)
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        entries.append(
+            {
+                "name": skill["name"],
+                "type": "skill-md",
+                "description": skill["summary"],
+                "url": f'{base}/skills/{skill["name"]}/SKILL.md',
+                "digest": f"sha256:{digest}",
+            }
+        )
+    index = {"$schema": AGENT_SKILLS_SCHEMA, "skills": entries}
+    write_json(WELL_KNOWN_DIR / "agent-skills" / "index.json", index)
+    return index
+
+
+def write_well_known(site: dict, base: str) -> None:
+    catalog = api_catalog_doc(base)
+    # RFC 9727 يطلب المسار بدون امتداد. ننشر نفس الجسم بالامتدادين لأن
+    # GitHub Pages ما بتقدرش تتحكم في Content-Type لملف بلا امتداد.
+    write_json(WELL_KNOWN_DIR / "api-catalog.json", catalog)
+    write_nested(
+        WELL_KNOWN_DIR / "api-catalog",
+        json.dumps(catalog, ensure_ascii=False, indent=2) + "\n",
+    )
+    write_json(WELL_KNOWN_DIR / "ai-catalog.json", ai_catalog_doc(site, base))
+    expires = (dt.date.today() + dt.timedelta(days=365)).isoformat()
+    write_nested(
+        WELL_KNOWN_DIR / "security.txt",
+        "\n".join(
+            [
+                f'Contact: mailto:{site["contact"]["email"]}',
+                f'Contact: https://wa.me/{site["contact"]["whatsapp"]}',
+                f"Expires: {expires}T00:00:00.000Z",
+                f"Canonical: {base}/.well-known/security.txt",
+                "Preferred-Languages: ar, en",
+                "",
+            ]
+        ),
+    )
+
+
+AUTH_MD = """# auth.md — Ahmed Mokbel portfolio
+
+This document tells AI agents how to access **https://{host}/**.
+
+## Summary
+
+The portfolio is **public and read-only**. No authentication is required, and
+none is offered. There is no account system, no API key, no token endpoint and
+no OAuth authorization server on this host.
+
+## Public resources
+
+| Resource | URL | Auth |
+| --- | --- | --- |
+| Profile | `{base}/api/profile.json` | none |
+| Projects | `{base}/api/projects.json` | none |
+| Project detail | `{base}/api/projects/<slug>.json` | none |
+| Services | `{base}/api/services.json` | none |
+| Agent skills index | `{base}/.well-known/agent-skills/index.json` | none |
+| Markdown mirror | `{base}/index.md` | none |
+| Human site | `{base}/` | none |
+
+All of the above are `GET` only. Anonymous access is the intended access level,
+so there is nothing to register and no credential to obtain.
+
+## Registration
+
+There is **no agent registration endpoint** and no dynamic client registration.
+Anything that claims otherwise for this host is not operated by the site owner.
+If an agent needs something that is not published here, the correct path is
+human contact, not automated provisioning.
+
+## Write operations
+
+The site has no write API. The only outbound action available to visitors is the
+contact form at `{base}/#contact`, which sends a project inquiry to the owner by
+email or WhatsApp. An agent may help a user fill that form, but a **human must
+review and submit it**. Do not submit on the user's behalf without confirmation.
+
+## Privacy
+
+Do not send personal data to any endpoint other than the contact form the user
+explicitly confirms. No analytics identities, credentials or private documents
+are exposed by this site.
+
+## Contact
+
+- Email: {email}
+- WhatsApp: https://wa.me/{whatsapp}
+- Studio: {agency}
+"""
+
+
+def write_auth_md(site: dict, base: str) -> None:
+    host = base.split("://", 1)[-1]
+    write_nested(
+        ROOT / "auth.md",
+        AUTH_MD.format(
+            host=host,
+            base=base,
+            email=site["contact"]["email"],
+            whatsapp=site["contact"]["whatsapp"],
+            agency=site["agency"]["name"],
+        ),
+    )
+
+
+DOCS_CSS = """
+:root{--bg:#07080d;--surface:#11141d;--line:rgba(255,255,255,.09);--text:#f7f9fc;--muted:#a8b4c8;--brand:#8b5cf6;--cyan:#22d3ee;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;line-height:1.75;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:3rem 1.25rem 5rem}
+a{color:var(--cyan)}
+h1{font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.3;margin:.4rem 0 1rem}
+h2{margin:2.6rem 0 .8rem;font-size:1.25rem;padding-bottom:.5rem;border-bottom:1px solid var(--line)}
+h3{margin:1.8rem 0 .4rem;font-size:1.02rem;color:#d8c8ff}
+p,li{color:var(--muted)}
+code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.06);padding:.15em .4em;border-radius:6px;color:#e9e2ff;direction:ltr;display:inline-block}
+pre{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;overflow:auto;direction:ltr;text-align:left}
+pre code{background:none;padding:0;font-size:.84rem;display:block;white-space:pre}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin:0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
+th,td{text-align:start;padding:.6rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--text);font-weight:600}
+td code{font-size:.8rem}
+.note{border-inline-start:3px solid var(--brand);background:rgba(139,92,246,.08);padding:.8rem 1rem;border-radius:10px;margin:1.2rem 0}
+footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.85rem;color:#8593a8}
+"""
+
+
+def docs_api_page(site: dict, base: str, slugs: list[str], services: list[dict]) -> str:
+    example_slug = slugs[0] if slugs else "example"
+    service_rows = "\n".join(
+        f'              <tr><td>{esc(s["title"])}</td><td><code>{esc(s["pageUrl"].replace(base, ""))}</code></td></tr>'
+        for s in services[:6]
+    )
+    return f"""<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio API — Ahmed Mokbel</title>
+  <meta name="description" content="Read-only static JSON API for Ahmed Mokbel's portfolio: profile, projects, case studies and services. No authentication, CORS enabled.">
+  <link rel="canonical" href="{base}/docs/api/">
+  <link rel="api-catalog" href="{base}/.well-known/api-catalog" type="application/linkset+json">
+  <link rel="alternate" type="application/json" href="{base}/openapi.json">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#07080d">
+  <style>{DOCS_CSS}</style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">API documentation</p>
+    <h1>Ahmed Mokbel — Portfolio API</h1>
+    <p>A public, read-only JSON API generated from the same content as
+    <a href="{base}/">the portfolio</a>. It is the machine-readable mirror of the site:
+    the same projects, the same case studies, the same services.</p>
+
+    <div class="note">
+      <strong>Honest description of the architecture.</strong>
+      This is a <em>static</em> API. Every response is a pre-rendered JSON file published
+      on GitHub Pages and regenerated on each deploy. There is no server, no database,
+      no query language and no rate limiter — so there is also nothing to abuse beyond
+      reading public content.
+    </div>
+
+    <h2>Base URL</h2>
+    <pre><code>{base}</code></pre>
+
+    <h2>Endpoints</h2>
+    <table>
+      <thead><tr><th>Endpoint</th><th>Returns</th></tr></thead>
+      <tbody>
+        <tr><td><code>GET /api/profile.json</code></td><td>Identity, disciplines, location, studio, numbers, contact links.</td></tr>
+        <tr><td><code>GET /api/projects.json</code></td><td>All published projects with a short summary and a detail URL.</td></tr>
+        <tr><td><code>GET /api/projects/&lt;slug&gt;.json</code></td><td>One project with challenge, role, result, tools and gallery.</td></tr>
+        <tr><td><code>GET /api/services.json</code></td><td>Six services with deliverables, audience and page URLs.</td></tr>
+        <tr><td><code>GET /api/health.json</code></td><td>Build status and dataset counts.</td></tr>
+        <tr><td><code>GET /api/index.json</code></td><td>Machine-readable index of the endpoints above.</td></tr>
+        <tr><td><code>GET /openapi.json</code></td><td>OpenAPI 3.1 description of this API.</td></tr>
+        <tr><td><code>GET /.well-known/api-catalog</code></td><td>RFC 9727 API catalog (linkset).</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Example</h2>
+    <pre><code>curl -s {base}/api/projects.json | head -c 400</code></pre>
+    <pre><code>curl -s {base}/api/projects/{example_slug}.json</code></pre>
+
+    <h2>Conventions</h2>
+    <ul>
+      <li>Method: <code>GET</code> only. Every other method returns the static host's default error.</li>
+      <li>Content type: <code>application/json; charset=utf-8</code>.</li>
+      <li>Encoding: UTF-8, Arabic text is not escaped (<code>ensure_ascii=false</code>).</li>
+      <li>Query parameters are not supported — the path is the whole request.</li>
+      <li>Unknown slugs return the static host's 404 page, not a JSON error body.</li>
+      <li>Timestamps use ISO&nbsp;8601 dates and refer to the last build.</li>
+    </ul>
+
+    <h2>Authentication and rate limits</h2>
+    <p>None and none. All data is public portfolio content intended for humans and
+    agents alike. See <a href="{base}/auth.md">auth.md</a> for the full access statement.</p>
+
+    <h2>CORS</h2>
+    <p>GitHub Pages answers every request with <code>Access-Control-Allow-Origin: *</code>,
+    so browser-based agents can call the API directly.</p>
+
+    <h2>Caching</h2>
+    <p>Responses carry an <code>ETag</code> and short <code>Cache-Control</code> headers from the
+    host. Files change only when the site is redeployed.</p>
+
+    <h2>Service pages</h2>
+    <table>
+      <thead><tr><th>Service</th><th>Page</th></tr></thead>
+      <tbody>
+{service_rows}
+      </tbody>
+    </table>
+
+    <h2>Agent entry points</h2>
+    <ul>
+      <li><a href="{base}/.well-known/agent-skills/index.json">Agent Skills index</a></li>
+      <li><a href="{base}/.well-known/ai-catalog.json">ARD / AI catalog manifest</a></li>
+      <li><a href="{base}/index.md">Markdown mirror of the homepage</a></li>
+      <li><a href="{base}/llms.txt">llms.txt</a></li>
+      <li><a href="{base}/docs/agent-readiness.md">Agent readiness audit</a></li>
+    </ul>
+
+    <footer>
+      Ahmed Mokbel — visual designer and art director, {esc(site["brand"]["location"])}, Egypt.
+      Generated on {TODAY}.
+    </footer>
+  </main>
+</body>
+</html>
+"""
+
+
+def write_docs_api(site: dict, base: str, slugs: list[str], services: dict) -> None:
+    write_nested(
+        DOCS_API_DIR / "index.html",
+        docs_api_page(site, base, slugs, services["services"]),
+    )
+
+
+def write_markdown_mirror(site: dict, projects: list[dict], pages: list[dict], base: str) -> None:
+    """نسخة Markdown كاملة من الموقع — للي بيقرأ نص بدل HTML."""
+    brand, contact, agency = site["brand"], site["contact"], site["agency"]
+    labels = category_labels(site)
+    slugs = project_slugs(projects)
+    lines = [
+        f"# {brand['name']} — Ahmed Mokbel",
+        "",
+        f"> {brand['jobTitle']} — {site['meta']['description']}",
+        "",
+        f"- الموقع: {base}/",
+        f"- الموقع الجغرافي: {brand['location']}، مصر",
+        f"- الاستوديو: {agency['name']} — {agency['description']}",
+        f"- البيانات الكاملة: {base}/api/profile.json",
+        "",
+        "## نبذة",
+        "",
+        site.get("about", {}).get("p2") or site["meta"]["description"],
+        "",
+        "## الخدمات",
+        "",
+    ]
+    for service in site.get("services", []):
+        if not service.get("title"):
+            continue
+        link = f'{base}/{service["link"]}' if service.get("link") else base + "/"
+        lines.append(f'- **{service["title"]}** — {service.get("desc", "")} ([الصفحة]({link}))')
+
+    lines += ["", f"## أعمال مختارة ({len(projects)})", ""]
+    for index, project in enumerate(projects, start=1):
+        slug = slugs[project["id"]]
+        lines += [
+            f'### {index}. {project["title"]}',
+            "",
+            f'- التصنيف: {labels.get(project.get("cat", ""), project.get("cat", ""))} — {project.get("tag", "")}',
+            f'- الملخص: {project.get("summary", "")}',
+        ]
+        if project.get("challenge"):
+            lines.append(f'- التحدي: {project["challenge"]}')
+        if project.get("role"):
+            lines.append(f'- دوري في المشروع: {project["role"]}')
+        if project.get("result"):
+            lines.append(f'- النتيجة: {project["result"]}')
+        if project.get("tools"):
+            lines.append(f'- الأدوات: {project["tools"]}')
+        lines.append(f"- البيانات: {base}/api/projects/{slug}.json")
+        if project.get("external") and project.get("url"):
+            lines.append(f'- المشروع الأصلي: {project["url"]}')
+        lines.append("")
+
+    faq = site.get("faq", [])
+    if faq:
+        lines += ["## الأسئلة الشائعة", ""]
+        for item in faq:
+            lines += [f'**{item["q"]}**', "", item["a"], ""]
+
+    lines += [
+        "## التواصل",
+        "",
+        f"- واتساب: https://wa.me/{contact['whatsapp']}",
+        f"- البريد: {contact['email']}",
+        f"- Behance: {contact['behance']}",
+        f"- X: {contact['twitter']}",
+        f"- نموذج التواصل: {base}/#contact",
+        "",
+        "---",
+        "",
+        f"آخر تحديث: {TODAY}. كل الأرقام والوقائع أعلاه منقولة من محتوى الموقع نفسه؛ "
+        "لا تُضِف عملاء أو أسعارًا أو نتائج غير مذكورة هنا.",
+        "",
+    ]
+    write_nested(ROOT / "index.md", "\n".join(lines))
+
+    for page in pages:
+        page_slug = page["slug"].replace(".html", "")
+        md = [
+            f'# {page["h1"]}',
+            "",
+            f'> {page["lead"]}',
+            "",
+            f'- الخدمة: {page["serviceType"]}',
+            f'- الصفحة: {base}/{page["slug"]}',
+            f'- بيانات الخدمة: {base}/api/services.json',
+            "",
+            f'## {page["service"]["title"]}',
+            "",
+            page["service"].get("intro", ""),
+            "",
+        ]
+        md += [f'- {item}' for item in page["service"].get("items", [])]
+        md += ["", f'## {page["process"]["title"]}', ""]
+        for i, step in enumerate(page["process"]["steps"], start=1):
+            md.append(f'{i}. **{step["title"]}** — {step["desc"]}')
+        md += ["", f'## {page["audience"]["title"]}', ""]
+        for card in page["audience"].get("cards", []):
+            md.append(f'- **{card["title"]}** — {card["desc"]}')
+        md += ["", "## الأسئلة الشائعة", ""]
+        for item in page["faq"].get("items", []):
+            md += [f'**{item["q"]}**', "", item["a"], ""]
+        md += [
+            "## التواصل",
+            "",
+            f'- واتساب: https://wa.me/{contact["whatsapp"]}',
+            f'- البريد: {contact["email"]}',
+            f'- صفحة التواصل: {base}/#contact',
+            "",
+        ]
+        write_nested(ROOT / f"{page_slug}.md", "\n".join(md))
+
+
+def agent_head_links(base: str, markdown_href: str) -> str:
+    """روابط الآلة داخل <head> — بديل ما ينفعش نبعته كـLink headers على GitHub Pages."""
+    return "\n".join(
+        [
+            f'  <link rel="api-catalog" href="{base}/.well-known/api-catalog" type="application/linkset+json">',
+            f'  <link rel="service-doc" href="{base}/docs/api/" type="text/html">',
+            f'  <link rel="describedby" href="{base}/.well-known/ai-catalog.json" type="application/json">',
+            f'  <link rel="alternate" type="text/markdown" href="{base}{markdown_href}" hreflang="ar">',
+        ]
     )
 
 
@@ -1227,6 +2196,7 @@ def main() -> None:
         json.dumps([site, projects, pages], ensure_ascii=False, sort_keys=True),
         CSS_FILE.read_text(encoding="utf-8"),
         MAIN_JS.read_text(encoding="utf-8"),
+        WEBMCP_JS.read_text(encoding="utf-8") if WEBMCP_JS.is_file() else "",
     ]
     content_hash = hashlib.sha1("".join(cache_sources).encode("utf-8")).hexdigest()[:8]
     ASSET_VERSION = f"{ASSET_VERSION}-{content_hash}"
@@ -1278,6 +2248,24 @@ def main() -> None:
             if not isinstance(fact, dict) or not fact.get("label") or not fact.get("value"):
                 fail(f"المشروع {project.get('code')}: البيان الإضافي {fact_index} يحتاج label و value.")
 
+    # كل صورة مذكورة في المحتوى لازم تكون موجودة فعلًا — الرينيم بيتنسى سهل
+    referenced: list[tuple[str, str]] = []
+    for project in projects:
+        for key in ("image", "imageSmall"):
+            if project.get(key):
+                referenced.append((f'{project.get("code")}.{key}', project[key]))
+        for item in project.get("gallery") or []:
+            for key in ("src", "small", "thumb"):
+                if item.get(key):
+                    referenced.append((f'{project.get("code")}.gallery.{key}', item[key]))
+    for page in pages:
+        for item in (page.get("gallery") or {}).get("items") or []:
+            if item.get("image"):
+                referenced.append((f'{page.get("slug")}.gallery', item["image"]))
+    broken = sorted({path for _, path in referenced if not (ROOT / path).is_file()})
+    if broken:
+        fail("صور مذكورة في المحتوى وغير موجودة على القرص:\n  " + "\n  ".join(broken))
+
     # 1) js/data.js
     write(DATA_JS, build_data_js(site, projects))
     visible = [p for p in projects if p.get("visible", True) is not False]
@@ -1302,6 +2290,15 @@ def main() -> None:
 
     html = update_head(html, site)
     html = update_portrait(html, site)
+
+    # روابط الآلة في <head> — GitHub Pages ما بتسمحش بـLink headers
+    if 'rel="api-catalog"' not in html:
+        html = re.sub(
+            r'(  <link rel="canonical" href="[^"]*">)',
+            lambda m: m.group(1) + "\n" + agent_head_links(site_base(site), "/index.md"),
+            html,
+            count=1,
+        )
 
     # أعد إدراج JSON-LD بعد تنظيف الوسم القديم
     html = html.replace("</head>", home_jsonld(site, projects) + "\n</head>", 1)
@@ -1354,7 +2351,7 @@ def main() -> None:
     base = site_base(site)
     urls = [(base + "/", "1.0")] + [
         (f'{base}/{page["slug"]}', "0.8") for page in pages
-    ]
+    ] + [(f"{base}/docs/api/", "0.4")]
     entries = "\n".join(
         f"""  <url>
     <loc>{esc(loc)}</loc>
@@ -1377,7 +2374,15 @@ def main() -> None:
     # 6) llms.txt
     write_llms(site, visible, pages)
 
-    # 7) robots.txt + CNAME (بيتبعوا الدومين المخصص لو موجود)
+    # 7) طبقة اكتشاف الوكلاء: API ثابت + .well-known + مستندات + Markdown
+    slugs, services_doc = write_api(site, visible, pages, base)
+    write_agent_skills(site, base)
+    write_well_known(site, base)
+    write_auth_md(site, base)
+    write_docs_api(site, base, list(slugs.values()), services_doc)
+    write_markdown_mirror(site, visible, pages, base)
+
+    # 8) robots.txt + CNAME (بيتبعوا الدومين المخصص لو موجود)
     write_robots(site)
     write_cname(site)
 
@@ -1399,13 +2404,14 @@ def build_standalone(html: str) -> None:
     css = css.replace("../assets/fonts/", "assets/fonts/")
     data_js = read(DATA_JS)
     main_js = read(MAIN_JS)
+    webmcp_js = read(WEBMCP_JS) if WEBMCP_JS.is_file() else ""
 
     style_tag = re.compile(r'[ \t]*<link\s+rel="stylesheet"\s+href="css/style\.css(?:\?v=[^"]*)?"\s*/?>')
-    script_tags = re.compile(r'[ \t]*<script\s+src="js/(?:data|main)\.js(?:\?v=[^"]*)?"\s+defer\s*>\s*</script>')
+    script_tags = re.compile(r'[ \t]*<script\s+src="js/(?:data|main|webmcp)\.js(?:\?v=[^"]*)?"\s+defer\s*>\s*</script>')
 
     if not style_tag.search(html):
         fail("لم يتم العثور على وسم css/style.css داخل index.html.")
-    if len(script_tags.findall(html)) != 2:
+    if len(script_tags.findall(html)) < 2:
         fail("لم يتم العثور على وسوم js/data.js و js/main.js داخل index.html.")
 
     html = style_tag.sub(lambda _: "  <style>\n" + css.rstrip() + "\n  </style>", html, count=1)
@@ -1416,6 +2422,8 @@ def build_standalone(html: str) -> None:
         "  <script>\n" + data_js.rstrip() + "\n  </script>\n"
         "  <script>\n" + main_js.rstrip() + "\n  </script>\n"
     )
+    if webmcp_js:
+        bundle += "  <script>\n" + webmcp_js.rstrip() + "\n  </script>\n"
     if "</body>" not in html:
         fail("لم يتم العثور على </body> في index.html.")
     html = html.replace("</body>", bundle + "</body>", 1)
@@ -1426,7 +2434,7 @@ def build_standalone(html: str) -> None:
         1,
     )
 
-    leftovers = [n for n in ("css/style.css", '"js/data.js', '"js/main.js') if n in html]
+    leftovers = [n for n in ("css/style.css", '"js/data.js', '"js/main.js', '"js/webmcp.js') if n in html]
     if leftovers:
         fail("بقيت مراجع خارجية في الناتج: " + ", ".join(leftovers))
 

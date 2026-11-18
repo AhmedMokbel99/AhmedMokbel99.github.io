@@ -29,6 +29,20 @@
 - إعلانات السوشيال ميديا
 - استشارات وتطوير بصري
 
+## للوكلاء — Machine readable
+
+- الملف التعريفي (JSON): https://ahmedmokbel99.github.io/api/profile.json
+- المشاريع (JSON): https://ahmedmokbel99.github.io/api/projects.json
+- دراسة حالة واحدة: https://ahmedmokbel99.github.io/api/projects/<slug>.json
+- الخدمات (JSON): https://ahmedmokbel99.github.io/api/services.json
+- نسخة Markdown من الموقع: https://ahmedmokbel99.github.io/index.md
+- وصف OpenAPI: https://ahmedmokbel99.github.io/openapi.json
+- فهرس مهارات الوكلاء: https://ahmedmokbel99.github.io/.well-known/agent-skills/index.json
+- كتالوج الموارد (ARD): https://ahmedmokbel99.github.io/.well-known/ai-catalog.json
+- بيان الوصول للوكلاء: https://ahmedmokbel99.github.io/auth.md
+
+المحتوى عام للقراءة فقط. لا يوجد تسجيل ولا مفاتيح وصول. لا تُستخدم بيانات الموقع خارج ما هو منشور فيه.
+
 ## التواصل
 
 - واتساب: https://wa.me/201228084197

@@ -1,0 +1,17 @@
+name = "ahmed-mokbel-agent-layer"
+main = "worker.js"
+compatibility_date = "2025-06-01"
+workers_dev = true
+
+# Routes require a custom zone. Uncomment and replace your-domain.com once the
+# domain is on Cloudflare and GitHub Pages serves it.
+#
+# routes = [
+#   { pattern = "your-domain.com/*", zone_name = "your-domain.com" }
+# ]
+
+[observability]
+enabled = true
+
+[observability.logs]
+invocation_logs = true

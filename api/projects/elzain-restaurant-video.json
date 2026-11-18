@@ -1,0 +1,26 @@
+{
+  "slug": "elzain-restaurant-video",
+  "title": "الزين — مطعم سوري",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "تصوير ومونتاج",
+  "summary": "فيديو تعريفي لمطعم «الزين» السوري: لقطات من داخل المطعم تبرز الشيف والطبق الرئيسي والهوية الحمراء، بمونتاج سريع مناسب للسوشيال ميديا.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/elzain-restaurant-video.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/elzain-restaurant-video.json",
+  "challenge": "تعريف بمطعم سوري، والمطلوب إبراز الشخصية والطبق والهوية الحمراء في وقت قصير.",
+  "role": "التصوير والمونتاج واختيار اللقطات.",
+  "result": "فيديو تعريفي جاهز للسوشيال ميديا.",
+  "tools": [
+    "تصوير",
+    "مونتاج"
+  ],
+  "gallery": []
+}

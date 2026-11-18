@@ -1,0 +1,27 @@
+{
+  "slug": "alhakum-altakathur-motion",
+  "title": "ألهاكم التكاثر — الشيخ أمجد سمير",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "موشن جرافيك",
+  "summary": "عمل موشن جرافيك بعنوان «ألهاكم التكاثر» للشيخ أمجد سمير، يجسّد المعنى في مشاهد متتابعة: الجري خلف المال، ثم الثراء والاستقرار، ثم لحظة الصفاء والرجوع — بأسلوب ثلاثي الأبعاد وإضاءة دافئة.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/alhakum-altakathur-motion.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/alhakum-altakathur-motion.json",
+  "challenge": "تحويل معنى قرآني إلى مشاهد متتابعة توصل الفكرة بصرياً من غير خطابة.",
+  "role": "بناء المشاهد والتحريك ومونتاج العمل.",
+  "result": "عمل موشن جرافيك متكامل جاهز للنشر.",
+  "tools": [
+    "موشن جرافيك",
+    "تحريك",
+    "مونتاج"
+  ],
+  "gallery": []
+}

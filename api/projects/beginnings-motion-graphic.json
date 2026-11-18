@@ -1,0 +1,27 @@
+{
+  "slug": "beginnings-motion-graphic",
+  "title": "البدايات — ياسر الحزيمي",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "موشن جرافيك",
+  "summary": "فيلم موشن جرافيك قصير بعنوان «البدايات» يقدّم الفكرة بأسلوب رسومي دافئ: شخصية تشكّل إناءً من الطين، في بناء بصري هادئ يرمز إلى بداية الطريق وصناعة الشيء باليد.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/beginnings-motion-graphic.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/beginnings-motion-graphic.json",
+  "challenge": "فكرة رمزية — إناء بيتشكّل من الطين — ولازم تتحول لفيلم قصير بإيقاع هادي.",
+  "role": "التصميم والتحريك والمونتاج وضبط الإيقاع.",
+  "result": "فيلم موشن جرافيك قصير جاهز للنشر.",
+  "tools": [
+    "موشن جرافيك",
+    "تحريك",
+    "مونتاج"
+  ],
+  "gallery": []
+}

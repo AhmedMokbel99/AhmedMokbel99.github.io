@@ -1,0 +1,73 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "أحمد مقبل — Ahmed Mokbel Portfolio",
+    "identifier": "https://ahmedmokbel99.github.io/"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:ahmedmokbel99.github.io:portfolio:profile",
+      "displayName": "Ahmed Mokbel — Profile",
+      "type": "application/json",
+      "url": "https://ahmedmokbel99.github.io/api/profile.json",
+      "representativeQueries": [
+        "Who is Ahmed Mokbel?",
+        "What does Ahmed Mokbel do and where is he based?",
+        "من هو أحمد مقبل ومجال عمله؟"
+      ]
+    },
+    {
+      "identifier": "urn:air:ahmedmokbel99.github.io:portfolio:projects",
+      "displayName": "Ahmed Mokbel — Portfolio Projects",
+      "type": "application/json",
+      "url": "https://ahmedmokbel99.github.io/api/projects.json",
+      "representativeQueries": [
+        "What projects has Ahmed Mokbel created?",
+        "Show Ahmed Mokbel motion graphics projects",
+        "Find Ahmed Mokbel branding projects",
+        "ما المشاريع التي صمّمها أحمد مقبل؟"
+      ]
+    },
+    {
+      "identifier": "urn:air:ahmedmokbel99.github.io:portfolio:services",
+      "displayName": "Ahmed Mokbel — Services",
+      "type": "application/json",
+      "url": "https://ahmedmokbel99.github.io/api/services.json",
+      "representativeQueries": [
+        "What services does Ahmed Mokbel offer?",
+        "Does Ahmed Mokbel design brand identities?",
+        "هل يقدّم أحمد مقبل تصوير منتجات؟"
+      ]
+    },
+    {
+      "identifier": "urn:air:ahmedmokbel99.github.io:portfolio:openapi",
+      "displayName": "Ahmed Mokbel — OpenAPI description",
+      "type": "application/openapi+json",
+      "url": "https://ahmedmokbel99.github.io/openapi.json",
+      "representativeQueries": [
+        "How do I call the Ahmed Mokbel portfolio API?",
+        "Show the OpenAPI schema for the portfolio API"
+      ]
+    },
+    {
+      "identifier": "urn:air:ahmedmokbel99.github.io:portfolio:agent-skills",
+      "displayName": "Ahmed Mokbel — Agent Skills",
+      "type": "application/json",
+      "url": "https://ahmedmokbel99.github.io/.well-known/agent-skills/index.json",
+      "representativeQueries": [
+        "Which agent skills are available for this portfolio?",
+        "How can an agent browse Ahmed Mokbel case studies?"
+      ]
+    },
+    {
+      "identifier": "urn:air:ahmedmokbel99.github.io:portfolio:markdown",
+      "displayName": "Ahmed Mokbel — Portfolio in Markdown",
+      "type": "text/markdown",
+      "url": "https://ahmedmokbel99.github.io/index.md",
+      "representativeQueries": [
+        "Give me the Ahmed Mokbel portfolio as markdown",
+        "Read the portfolio without images"
+      ]
+    }
+  ]
+}

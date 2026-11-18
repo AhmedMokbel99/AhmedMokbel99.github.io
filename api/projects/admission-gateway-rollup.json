@@ -1,0 +1,26 @@
+{
+  "slug": "admission-gateway-rollup",
+  "title": "بوابة القبول",
+  "category": "brand",
+  "categoryLabel": "هوية وطباعة",
+  "tag": "تصميم طباعي",
+  "summary": "تصميم رول أب لبوابة القبول للالتحاق بالجامعات، يجمع بين الهوية الأكاديمية والوضوح المعلوماتي في قطعة طباعية واحدة.",
+  "featured": false,
+  "hasVideo": false,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/admission-gateway-rollup.jpg",
+    "width": 1508,
+    "height": 2000
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/admission-gateway-rollup.json",
+  "challenge": "قطعة طباعية واحدة لازم تشيل كمية معلومات كبيرة من غير ما تبقى مزدحمة.",
+  "role": "تصميم الرول أب وترتيب المعلومات وتطبيق هوية الجهة.",
+  "result": "رول أب جاهز للطباعة والاستخدام في معارض القبول.",
+  "tools": [
+    "تصميم طباعي",
+    "رول أب"
+  ],
+  "gallery": []
+}

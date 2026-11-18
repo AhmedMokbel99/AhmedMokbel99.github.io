@@ -1,10 +1,30 @@
 # robots.txt — أحمد مقبل | Ahmed Mokbel Portfolio
+# Managed by build.py — edit content/site.json, not this file.
 User-agent: *
 Allow: /
+
+# Content Signals (contentsignals.org):
+#   ai-train=no  — لا يُستخدم المحتوى لتدريب النماذج
+#   search=yes   — الفهرسة والظهور في نتائج البحث مسموح
+#   ai-input=yes — يُسمح باستخدام المحتوى للإجابة والإحالة
+Content-Signal: ai-train=no, search=yes, ai-input=yes
+
+# Agentic Resource Discovery manifest
+Agentmap: https://ahmedmokbel99.github.io/.well-known/ai-catalog.json
 
 # نسخة الملف الواحد مخصّصة للاستخدام المحلي فقط
 Disallow: /standalone.html
 Disallow: /404.html
 Disallow: /admin/
+
+# ملفات المصدر والأدوات — مش محتوى عام
+Disallow: /_source/
+Disallow: /content/
+Disallow: /tools/
+Disallow: /deploy/
+Disallow: /build.py
+Disallow: /netlify.toml
+Disallow: /docs/admin-guide.md
+Disallow: /docs/seo-setup.md
 
 Sitemap: https://ahmedmokbel99.github.io/sitemap.xml

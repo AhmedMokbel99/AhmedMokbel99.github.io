@@ -11,6 +11,10 @@
   <meta name="theme-color" content="#07080d">
   <meta name="color-scheme" content="dark">
   <link rel="canonical" href="https://ahmedmokbel99.github.io/">
+  <link rel="api-catalog" href="https://ahmedmokbel99.github.io/.well-known/api-catalog" type="application/linkset+json">
+  <link rel="service-doc" href="https://ahmedmokbel99.github.io/docs/api/" type="text/html">
+  <link rel="describedby" href="https://ahmedmokbel99.github.io/.well-known/ai-catalog.json" type="application/json">
+  <link rel="alternate" type="text/markdown" href="https://ahmedmokbel99.github.io/index.md" hreflang="ar">
 
   <!-- Icons & manifest -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -4223,6 +4227,7 @@ html.js .project__media.is-ready::before {
 
 
 
+
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -4494,7 +4499,7 @@ html.js .project__media.is-ready::before {
             "url": "https://ahmedmokbel99.github.io/#work",
             "genre": "هوية وطباعة",
             "description": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي. 2026",
-            "image": "https://ahmedmokbel99.github.io/assets/projects/project-f24.jpg"
+            "image": "https://ahmedmokbel99.github.io/assets/projects/harvard-2026-new-year-identity.jpg"
           }
         },
         {
@@ -5228,8 +5233,8 @@ html.js .project__media.is-ready::before {
 <article class="project" data-reveal data-project-card="f24" data-category="brand">
   <div class="project__media">
     <img
-      src="assets/projects/project-f24-900.jpg"
-      srcset="assets/projects/project-f24-640.jpg 640w, assets/projects/project-f24-900.jpg 900w, assets/projects/project-f24.jpg 1600w"
+      src="assets/projects/harvard-2026-new-year-identity-900.jpg"
+      srcset="assets/projects/harvard-2026-new-year-identity-640.jpg 640w, assets/projects/harvard-2026-new-year-identity-900.jpg 900w, assets/projects/harvard-2026-new-year-identity.jpg 1600w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1600"
       height="1600"
@@ -6207,7 +6212,7 @@ html.js .project__media.is-ready::before {
             <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
-          <form id="contactForm" novalidate action="https://formsubmit.co/ahmed01068775125@gmail.com" method="POST" data-endpoint="https://formsubmit.co/ajax/ahmed01068775125@gmail.com">
+          <form id="contactForm" novalidate action="https://formsubmit.co/ahmed01068775125@gmail.com" method="POST" data-endpoint="https://formsubmit.co/ajax/ahmed01068775125@gmail.com" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
             <input type="hidden" name="_subject" value="طلب مشروع جديد من الموقع الشخصي">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
@@ -6216,25 +6221,25 @@ html.js .project__media.is-ready::before {
             <div class="form-grid">
               <div class="field">
                 <label for="fieldName"><span data-cms="form.nameLabel">الاسم</span> <span aria-hidden="true">*</span></label>
-                <input id="fieldName" name="name" type="text" placeholder="اسمك الكامل" data-cms-attr="placeholder" data-cms="form.namePlaceholder" autocomplete="name" maxlength="80" aria-describedby="errorName" required>
+                <input id="fieldName" name="name" type="text" placeholder="اسمك الكامل" data-cms-attr="placeholder" data-cms="form.namePlaceholder" autocomplete="name" maxlength="80" aria-describedby="errorName" required toolparamdescription="Visitor name, 2 to 80 characters.">
                 <span class="field__error" id="errorName" aria-live="polite"></span>
               </div>
 
               <div class="field">
                 <label for="fieldPhone"><span data-cms="form.phoneLabel">الهاتف / واتساب</span> <span aria-hidden="true">*</span></label>
-                <input id="fieldPhone" name="phone" type="tel" inputmode="tel" placeholder="01xxxxxxxxx" data-cms-attr="placeholder" data-cms="form.phonePlaceholder" autocomplete="tel" dir="ltr" maxlength="20" aria-describedby="errorPhone" required>
+                <input id="fieldPhone" name="phone" type="tel" inputmode="tel" placeholder="01xxxxxxxxx" data-cms-attr="placeholder" data-cms="form.phonePlaceholder" autocomplete="tel" dir="ltr" maxlength="20" aria-describedby="errorPhone" required toolparamdescription="Phone or WhatsApp number, 7 to 20 characters.">
                 <span class="field__error" id="errorPhone" aria-live="polite"></span>
               </div>
 
               <div class="field">
                 <label for="fieldEmail"><span data-cms="form.emailLabel">البريد الإلكتروني</span> <span class="field__optional" data-cms="form.optional">اختياري</span></label>
-                <input id="fieldEmail" name="email" type="email" placeholder="name@example.com" data-cms-attr="placeholder" data-cms="form.emailPlaceholder" autocomplete="email" dir="ltr" maxlength="120" aria-describedby="errorEmail">
+                <input id="fieldEmail" name="email" type="email" placeholder="name@example.com" data-cms-attr="placeholder" data-cms="form.emailPlaceholder" autocomplete="email" dir="ltr" maxlength="120" aria-describedby="errorEmail" toolparamdescription="Optional email address for the reply.">
                 <span class="field__error" id="errorEmail" aria-live="polite"></span>
               </div>
 
               <div class="field">
                 <label for="fieldService"><span data-cms="form.serviceLabel">نوع الخدمة</span> <span aria-hidden="true">*</span></label>
-                <select id="fieldService" name="service" aria-describedby="errorService" required>
+                <select id="fieldService" name="service" aria-describedby="errorService" required toolparamdescription="Requested service title, one of the options in this list.">
                   <!-- service-options:start -->
                   <option value="" selected data-cms="form.servicePlaceholder">اختر الخدمة</option>
                   <option value="موشن جرافيك">موشن جرافيك</option>
@@ -6251,13 +6256,13 @@ html.js .project__media.is-ready::before {
 
               <div class="field field--full">
                 <label for="fieldMessage"><span data-cms="form.messageLabel">تفاصيل المشروع</span> <span aria-hidden="true">*</span></label>
-                <textarea id="fieldMessage" name="message" rows="4" placeholder="اكتب نبذة عن النشاط، هدف المشروع، والمدة المطلوبة..." data-cms-attr="placeholder" data-cms="form.messagePlaceholder" maxlength="2000" aria-describedby="errorMessage" required></textarea>
+                <textarea id="fieldMessage" name="message" rows="4" placeholder="اكتب نبذة عن النشاط، هدف المشروع، والمدة المطلوبة..." data-cms-attr="placeholder" data-cms="form.messagePlaceholder" maxlength="2000" aria-describedby="errorMessage" required toolparamdescription="Project details: activity, goal, and timeline. 10 to 2000 characters."></textarea>
                 <span class="field__error" id="errorMessage" aria-live="polite"></span>
               </div>
 
               <div class="field field--full">
                 <label for="fieldBudget"><span data-cms="form.budgetLabel">الميزانية التقديرية</span> <span class="field__optional" data-cms="form.optional">اختياري</span></label>
-                <input id="fieldBudget" name="budget" type="text" placeholder="اختياري — مثال: 10,000 ج.م" data-cms-attr="placeholder" data-cms="form.budgetPlaceholder" maxlength="60" aria-describedby="errorBudget">
+                <input id="fieldBudget" name="budget" type="text" placeholder="اختياري — مثال: 10,000 ج.م" data-cms-attr="placeholder" data-cms="form.budgetPlaceholder" maxlength="60" aria-describedby="errorBudget" toolparamdescription="Optional budget note, 60 characters max.">
                 <span class="field__error" id="errorBudget" aria-live="polite"></span>
               </div>
             </div>
@@ -6550,6 +6555,38 @@ const SITE_DATA = {
       "suffix": "+",
       "label": "عميل راضٍ"
     }
+  ],
+  "services": [
+    {
+      "title": "موشن جرافيك",
+      "desc": "فيديوهات تعريفية وإعلانية بحركة مدروسة ومؤثرات صوتية، من السيناريو وحتى التصدير النهائي.",
+      "link": "motion-graphics.html"
+    },
+    {
+      "title": "هوية بصرية كاملة",
+      "desc": "شعار، لوحة ألوان، خطوط، ودليل استخدام متكامل يعكس شخصية علامتك على كافة نقاط التواصل.",
+      "link": "brand-identity.html"
+    },
+    {
+      "title": "تصميم رقمي وطباعي",
+      "desc": "محتوى سوشيال ميديا مميز، بروشورات، ومطبوعات تجارية جاهزة للمطابع وفق المعايير العالمية.",
+      "link": "digital-print.html"
+    },
+    {
+      "title": "تصوير وإنتاج إعلاني",
+      "desc": "تصوير احترافي للمنتجات والخدمات بما يخدم دمجها لاحقًا في الحملات الإعلانية والتصاميم.",
+      "link": "photo-production.html"
+    },
+    {
+      "title": "إعلانات السوشيال ميديا",
+      "desc": "تصميمات مبنية على هدف واضح ورسالة محددة، تُنفَّذ خصيصًا لكل علامة بدل القوالب الجاهزة.",
+      "link": "social-media-ads.html"
+    },
+    {
+      "title": "استشارات وتطوير بصري",
+      "desc": "تحليل وتقييم الهوية البصرية الحالية للعلامات وتقديم حلول وتوصيات عملية لتجديدها ومواكبة السوق.",
+      "link": "brand-consulting.html"
+    }
   ]
 };
 
@@ -6592,7 +6629,8 @@ const WORK_DATA = [
     "result": "عمل بصري جاهز للنشر على منصات المناسبة، بهوية خضراء وذهبية واضحة.",
     "tools": "موشن جرافيك – تصميم مشاهد – مونتاج",
     "alt": "يوم التأسيس السعودي — موشن جرافيك",
-    "featured": true
+    "featured": true,
+    "slug": "saudi-founding-day-motion-graphic"
   },
   {
     "id": "f02",
@@ -6614,7 +6652,8 @@ const WORK_DATA = [
     "alt": "ابن الباسل — موشن جرافيك",
     "imageSmall": "assets/projects/ibn-albasel-motion-graphic-900.jpg",
     "imageMedium": "assets/projects/ibn-albasel-motion-graphic-1200.jpg",
-    "featured": true
+    "featured": true,
+    "slug": "ibn-albasel-motion-graphic"
   },
   {
     "id": "f03",
@@ -6636,7 +6675,8 @@ const WORK_DATA = [
     "tools": "إنتاج فيديو – تصوير – مونتاج",
     "alt": "آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم",
     "imageSmall": "assets/projects/ans-dimashqi-steak-ad-900.jpg",
-    "featured": true
+    "featured": true,
+    "slug": "ans-dimashqi-steak-ad"
   },
   {
     "id": "f06",
@@ -6678,7 +6718,8 @@ const WORK_DATA = [
     "alt": "مركز هارفارد التعليمي — هوية وطباعة",
     "imageSmall": "assets/projects/harvard-education-center-brand-900.jpg",
     "imageMedium": "assets/projects/harvard-education-center-brand-1200.jpg",
-    "featured": true
+    "featured": true,
+    "slug": "harvard-education-center-brand"
   },
   {
     "id": "f07",
@@ -6699,7 +6740,8 @@ const WORK_DATA = [
     "result": "عبوة بهوية واضحة وحضور قوي على الرف.",
     "tools": "هوية – تغليف – تصميم طباعي",
     "alt": "ULTRA GROW — تغليف المنتجات — هوية وطباعة",
-    "featured": true
+    "featured": true,
+    "slug": "ultra-grow-brand-packaging"
   },
   {
     "id": "f11",
@@ -6721,7 +6763,8 @@ const WORK_DATA = [
     "alt": "INSTA WATCHES — تصميم رقمي",
     "imageSmall": "assets/projects/insta-watches-ad-design-900.jpg",
     "imageMedium": "assets/projects/insta-watches-ad-design-1200.jpg",
-    "featured": true
+    "featured": true,
+    "slug": "insta-watches-ad-design"
   },
   {
     "id": "f24",
@@ -6732,8 +6775,8 @@ const WORK_DATA = [
     "isVideo": false,
     "url": "",
     "external": false,
-    "image": "assets/projects/project-f24.jpg",
-    "imageSmall": "assets/projects/project-f24-900.jpg",
+    "image": "assets/projects/harvard-2026-new-year-identity.jpg",
+    "imageSmall": "assets/projects/harvard-2026-new-year-identity-900.jpg",
     "width": 1600,
     "height": 1600,
     "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة",
@@ -6766,132 +6809,133 @@ const WORK_DATA = [
     "youtube": "",
     "gallery": [
       {
-        "src": "assets/projects/project-f24-g1.jpg",
-        "small": "assets/projects/project-f24-g1-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g1.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g1-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g2.jpg",
-        "small": "assets/projects/project-f24-g2-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g2.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g2-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g3.jpg",
-        "small": "assets/projects/project-f24-g3-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g3.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g3-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g4.jpg",
-        "small": "assets/projects/project-f24-g4-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g4.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g4-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g5.jpg",
-        "small": "assets/projects/project-f24-g5-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g5.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g5-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g6.jpg",
-        "small": "assets/projects/project-f24-g6-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g6.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g6-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g7.jpg",
-        "small": "assets/projects/project-f24-g7-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g7.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g7-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g8.jpg",
-        "small": "assets/projects/project-f24-g8-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g8.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g8-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g9.jpg",
-        "small": "assets/projects/project-f24-g9-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g9.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g9-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g10.jpg",
-        "small": "assets/projects/project-f24-g10-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g10.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g10-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g11.jpg",
-        "small": "assets/projects/project-f24-g11-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g11.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g11-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g12.jpg",
-        "small": "assets/projects/project-f24-g12-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g12.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g12-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g13.jpg",
-        "small": "assets/projects/project-f24-g13-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g13.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g13-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g14.jpg",
-        "small": "assets/projects/project-f24-g14-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g14.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g14-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g15.jpg",
-        "small": "assets/projects/project-f24-g15-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g15.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g15-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g16.jpg",
-        "small": "assets/projects/project-f24-g16-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g16.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g16-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g17.jpg",
-        "small": "assets/projects/project-f24-g17-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g17.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g17-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g18.jpg",
-        "small": "assets/projects/project-f24-g18-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g18.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g18-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       }
-    ]
+    ],
+    "slug": "harvard-2026-new-year-identity"
   },
   {
     "id": "f05",
@@ -6911,7 +6955,8 @@ const WORK_DATA = [
     "role": "تصميم الشعار والنظام الطباعي والمطبوعات وتطبيقات الهوية.",
     "result": "هوية ومطبوعات جاهزة للتطبيق داخل المطبعة.",
     "tools": "هوية بصرية – تصميم طباعي – مطبوعات",
-    "alt": "طاهر للطباعة — هوية وطباعة"
+    "alt": "طاهر للطباعة — هوية وطباعة",
+    "slug": "taher-printing-brand-identity"
   },
   {
     "id": "f04",
@@ -6932,7 +6977,8 @@ const WORK_DATA = [
     "tools": "موشن جرافيك – تحريك",
     "alt": "تجربة موشن جرافيك من بدايات المسار — موشن جرافيك",
     "imageSmall": "assets/projects/first-motion-graphics-work-900.jpg",
-    "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg"
+    "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg",
+    "slug": "first-motion-graphics-work"
   },
   {
     "id": "f08",
@@ -6952,7 +6998,8 @@ const WORK_DATA = [
     "role": "تطوير النظام البصري وتوسيع تطبيقاته على المواد المختلفة.",
     "result": "نظام بصري متسق يغطي التطبيقات الأساسية للعلامة.",
     "tools": "هوية بصرية – تطبيقات – تصميم رقمي",
-    "alt": "ULTRA GROW — النظام البصري — هوية وطباعة"
+    "alt": "ULTRA GROW — النظام البصري — هوية وطباعة",
+    "slug": "ultra-grow-2-brand-system"
   },
   {
     "id": "f09",
@@ -6973,7 +7020,8 @@ const WORK_DATA = [
     "tools": "تصميم رقمي – سوشيال ميديا",
     "alt": "مختارات سوشيال ميديا — تصميم رقمي",
     "imageSmall": "assets/projects/social-media-design-collection-900.jpg",
-    "imageMedium": "assets/projects/social-media-design-collection-1200.jpg"
+    "imageMedium": "assets/projects/social-media-design-collection-1200.jpg",
+    "slug": "social-media-design-collection"
   },
   {
     "id": "f10",
@@ -6993,7 +7041,8 @@ const WORK_DATA = [
     "role": "تصميم الإعلان واختيار الصور والإضاءة والألوان.",
     "result": "تصميم إعلاني جاهز للنشر بأسلوب ناعم وهادئ.",
     "tools": "تصميم رقمي – إعلان سوشيال ميديا",
-    "alt": "حقن فيلر — تصميم رقمي"
+    "alt": "حقن فيلر — تصميم رقمي",
+    "slug": "filler-injection-ad-design"
   },
   {
     "id": "f12",
@@ -7014,7 +7063,8 @@ const WORK_DATA = [
     "tools": "تصميم رقمي – معالجة صور",
     "alt": "سر الطبيعة — تصميم رقمي",
     "imageSmall": "assets/projects/nature-secret-ad-design-900.jpg",
-    "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg"
+    "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg",
+    "slug": "nature-secret-ad-design"
   },
   {
     "id": "f13",
@@ -7035,7 +7085,8 @@ const WORK_DATA = [
     "role": "تصميم الرول أب وترتيب المعلومات وتطبيق هوية الجهة.",
     "result": "رول أب جاهز للطباعة والاستخدام في معارض القبول.",
     "tools": "تصميم طباعي – رول أب",
-    "alt": "بوابة القبول — تصميم طباعي"
+    "alt": "بوابة القبول — تصميم طباعي",
+    "slug": "admission-gateway-rollup"
   },
   {
     "id": "f14",
@@ -7056,7 +7107,8 @@ const WORK_DATA = [
     "result": "فيلم موشن جرافيك قصير جاهز للنشر.",
     "tools": "موشن جرافيك – تحريك – مونتاج",
     "alt": "البدايات — ياسر الحزيمي — موشن جرافيك",
-    "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg"
+    "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg",
+    "slug": "beginnings-motion-graphic"
   },
   {
     "id": "f15",
@@ -7077,7 +7129,8 @@ const WORK_DATA = [
     "result": "عمل موشن جرافيك متكامل جاهز للنشر.",
     "tools": "موشن جرافيك – تحريك – مونتاج",
     "alt": "ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك",
-    "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg"
+    "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg",
+    "slug": "alhakum-altakathur-motion"
   },
   {
     "id": "f16",
@@ -7098,7 +7151,8 @@ const WORK_DATA = [
     "result": "تحريك شعار قصير وجاهز للاستخدام في الفيديوهات.",
     "tools": "تحريك شعار – موشن جرافيك",
     "alt": "EN-SERV — تحريك شعار",
-    "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg"
+    "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg",
+    "slug": "en-serv-logo-animation"
   },
   {
     "id": "f17",
@@ -7119,7 +7173,8 @@ const WORK_DATA = [
     "result": "فيديو تعريفي جاهز للسوشيال ميديا.",
     "tools": "تصوير – مونتاج",
     "alt": "الزين — مطعم سوري — تصوير ومونتاج",
-    "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg"
+    "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg",
+    "slug": "elzain-restaurant-video"
   },
   {
     "id": "f18",
@@ -7140,7 +7195,8 @@ const WORK_DATA = [
     "result": "إعلان تعريفي جاهز للنشر.",
     "tools": "موشن جرافيك – 3D – مونتاج",
     "alt": "المقصود للمولدات — إعلان الشركة — إعلان شركة",
-    "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg"
+    "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg",
+    "slug": "elmaqsoud-generators-ad"
   },
   {
     "id": "f19",
@@ -7161,7 +7217,8 @@ const WORK_DATA = [
     "result": "إعلان سينمائي قصير جاهز للنشر.",
     "tools": "موشن جرافيك – مونتاج",
     "alt": "بديل — إعلان سيارة — إعلان سيارات",
-    "imageSmall": "assets/projects/bdeel-car-ad-900.jpg"
+    "imageSmall": "assets/projects/bdeel-car-ad-900.jpg",
+    "slug": "bdeel-car-ad"
   },
   {
     "id": "f20",
@@ -7182,7 +7239,8 @@ const WORK_DATA = [
     "result": "إعلان عقاري جاهز للنشر.",
     "tools": "موشن جرافيك – مونتاج",
     "alt": "الوثبة العقارية — مشروع سكني — إعلان عقاري",
-    "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg"
+    "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg",
+    "slug": "alwathba-real-estate-ad"
   },
   {
     "id": "f21",
@@ -7203,7 +7261,8 @@ const WORK_DATA = [
     "result": "إعلان طعام جاهز للنشر، ينتهي برقم الطلب.",
     "tools": "إنتاج فيديو – موشن جرافيك",
     "alt": "آنس الدمشقي — إعلان الفطيرة — إعلان مطعم",
-    "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg"
+    "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg",
+    "slug": "ans-dimashqi-pie-ad"
   },
   {
     "id": "f22",
@@ -7223,7 +7282,8 @@ const WORK_DATA = [
     "role": "تصميم التكوين واختيار الخطوط وإخراج النسخة النهائية.",
     "result": "تصميم تهنئة جاهز للنشر على منصات العلامة.",
     "tools": "تصميم رقمي – سوشيال ميديا",
-    "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا"
+    "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا",
+    "slug": "almenissy-hijri-1448-greeting"
   },
   {
     "id": "f23",
@@ -7243,7 +7303,8 @@ const WORK_DATA = [
     "role": "تصميم التكوين ومعالجة التفاصيل وإخراج النسخة النهائية.",
     "result": "تصميم تهنئة جاهز للنشر.",
     "tools": "تصميم رقمي – سوشيال ميديا",
-    "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا"
+    "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا",
+    "slug": "grm-hijri-1448-greeting"
   }
 ];
   </script>
@@ -9040,6 +9101,349 @@ if (document.readyState === 'loading') {
 } else {
   init();
 }
+  </script>
+  <script>
+/* ------------------------------------------------------------
+   WebMCP — يعرّض أدوات الموقع لوكلاء المتصفح.
+   الـAPI موجود بس في المتصفحات اللي بتدعمه؛ في أي متصفح تاني
+   الملف بيتحمّل وبيقف بهدوء من غير أي خطأ.
+   المرجع: https://webmachinelearning.github.io/webmcp/
+------------------------------------------------------------ */
+(function () {
+  'use strict';
+
+  var context = null;
+  try {
+    context = document.modelContext || navigator.modelContext || null;
+  } catch (error) {
+    return;
+  }
+  if (!context || typeof context.registerTool !== 'function') return;
+  if (typeof SITE_DATA === 'undefined' || typeof WORK_DATA === 'undefined') return;
+
+  var controller = typeof AbortController === 'function' ? new AbortController() : null;
+  var projects = Array.isArray(WORK_DATA) ? WORK_DATA.slice() : [];
+  var MAX_RESULTS = 8;
+
+  var text = function (value) {
+    return String(value == null ? '' : value).toLowerCase();
+  };
+
+  /* تطبيع عربي بسيط: تشكيل + تطويل + أ == ى == ي */
+  var normalize = function (value) {
+    return text(value)
+      .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+      .replace(/[أإآ]/g, 'ا')
+      .replace(/ى/g, 'ي')
+      .replace(/ة/g, 'ه')
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
+
+  var reply = function (body) {
+    return { content: [{ type: 'text', text: body }] };
+  };
+
+  var fail = function (message) {
+    return { content: [{ type: 'text', text: message }], isError: true };
+  };
+
+  var projectLine = function (project) {
+    return (
+      '- ' +
+      project.title +
+      ' [' +
+      (project.slug || project.id) +
+      '] — ' +
+      (project.tag || project.cat || '') +
+      '\n  ' +
+      (project.summary || '')
+    );
+  };
+
+  var findProject = function (slug) {
+    var wanted = text(slug).trim();
+    if (!wanted) return null;
+    for (var i = 0; i < projects.length; i += 1) {
+      var project = projects[i];
+      if (text(project.slug) === wanted || text(project.id) === wanted) return project;
+    }
+    return null;
+  };
+
+  var tools = [
+    {
+      name: 'search_projects',
+      description:
+        'Search Ahmed Mokbel portfolio projects by keyword or discipline. Returns matching project titles, public slugs, short summaries and the API URL of each project.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          query: {
+            type: 'string',
+            description: 'Keyword in Arabic or English, for example: موشن جرافيك, هوية, ULTRA GROW.',
+          },
+          category: {
+            type: 'string',
+            enum: ['motion', 'brand', 'digital'],
+            description: 'Optional discipline filter.',
+          },
+        },
+        required: [],
+        additionalProperties: false,
+      },
+      execute: function (args) {
+        var query = normalize(args && args.query ? args.query : '');
+        var category = text(args && args.category ? args.category : '').trim();
+
+        var matches = projects.filter(function (project) {
+          if (category && project.cat !== category) return false;
+          if (!query) return true;
+          var haystack = normalize(
+            [project.title, project.summary, project.tag, project.tools, project.challenge]
+              .filter(Boolean)
+              .join(' ')
+          );
+          return haystack.indexOf(query) !== -1;
+        });
+
+        if (!matches.length) {
+          return reply('لا توجد مشاريع مطابقة لـ«' + (args && args.query ? args.query : '') + '».');
+        }
+
+        var body = matches
+          .slice(0, MAX_RESULTS)
+          .map(projectLine)
+          .join('\n');
+
+        return reply(
+          'نتائج البحث (' +
+            Math.min(matches.length, MAX_RESULTS) +
+            ' من ' +
+            matches.length +
+            '):\n' +
+            body
+        );
+      },
+    },
+
+    {
+      name: 'get_project',
+      description:
+        'Return the full case study of one portfolio project: summary, challenge, role, result, tools and gallery links.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          slug: {
+            type: 'string',
+            description: 'Public project slug from search_projects, for example saudi-founding-day-motion-graphic.',
+          },
+        },
+        required: ['slug'],
+        additionalProperties: false,
+      },
+      execute: function (args) {
+        var project = findProject(args && args.slug);
+        if (!project) {
+          return fail('لا يوجد مشروع بالمعرّف «' + (args && args.slug ? args.slug : '') + '».');
+        }
+
+        var lines = [project.title, project.tag || '', '', project.summary || ''];
+        if (project.challenge) lines.push('', 'التحدي: ' + project.challenge);
+        if (project.role) lines.push('', 'دوري في المشروع: ' + project.role);
+        if (project.result) lines.push('', 'النتيجة: ' + project.result);
+        if (project.tools) lines.push('', 'الأدوات: ' + project.tools);
+
+        var detail = project.slug ? '/api/projects/' + project.slug + '.json' : '';
+        if (detail) lines.push('', 'البيانات الكاملة: ' + detail);
+        if (project.external && project.url) lines.push('المشروع الأصلي: ' + project.url);
+
+        return reply(lines.filter(function (line) { return line !== null; }).join('\n'));
+      },
+    },
+
+    {
+      name: 'list_services',
+      description:
+        'List the services Ahmed Mokbel offers, with a short description and the page URL of each service.',
+      inputSchema: { type: 'object', properties: {}, required: [], additionalProperties: false },
+      execute: function () {
+        var services = Array.isArray(SITE_DATA.services) ? SITE_DATA.services : [];
+        if (!services.length) return fail('لا توجد خدمات منشورة.');
+        return reply(
+          services
+            .map(function (service) {
+              return (
+                '- ' +
+                service.title +
+                ': ' +
+                service.desc +
+                (service.link ? '\n  ' + service.link : '')
+              );
+            })
+            .join('\n')
+        );
+      },
+    },
+
+    {
+      name: 'get_profile',
+      description:
+        'Return Ahmed Mokbel public profile: role, location, studio, disciplines, tools and public contact channels.',
+      inputSchema: { type: 'object', properties: {}, required: [], additionalProperties: false },
+      execute: function () {
+        var stats = (SITE_DATA.stats || []).map(function (stat) {
+          return stat.label;
+        });
+        var lines = [
+          SITE_DATA.name,
+          SITE_DATA.title,
+          '',
+          SITE_DATA.lead,
+          '',
+          'الموقع: ' + SITE_DATA.location + '، مصر (يعمل عن بُعد).',
+          'الاستوديو: ' + SITE_DATA.agency.name + ' — ' + SITE_DATA.agency.description,
+          'التخصصات: ' + (SITE_DATA.skills || []).join('، '),
+          'الأدوات: ' + (SITE_DATA.tools || []).join('، '),
+          stats.length ? 'الأرقام: ' + stats.join('، ') : '',
+          '',
+          'واتساب: https://wa.me/' + SITE_DATA.whatsapp,
+          'البريد: ' + SITE_DATA.email,
+          'Behance: ' + SITE_DATA.behance,
+          'المشاريع: /api/projects.json',
+        ];
+        return reply(
+          lines.filter(function (line) { return line !== ''; }).join('\n')
+        );
+      },
+    },
+
+    {
+      name: 'start_project_inquiry',
+      description:
+        'Fill the contact form with a project inquiry and bring it into view for the human to review. It never sends anything: the visitor must press the send button themselves.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'Visitor name, 2 to 80 characters.' },
+          phone: { type: 'string', description: 'Phone or WhatsApp number, 7 to 20 characters.' },
+          service: {
+            type: 'string',
+            description: 'Requested service, for example: موشن جرافيك.',
+          },
+          message: { type: 'string', description: 'Project details, 10 to 2000 characters.' },
+          email: { type: 'string', description: 'Optional email address.' },
+          budget: { type: 'string', description: 'Optional budget note.' },
+        },
+        required: ['name', 'phone', 'service', 'message'],
+        additionalProperties: false,
+      },
+      execute: function (args) {
+        var input = args || {};
+        var errors = [];
+        var name = String(input.name == null ? '' : input.name).trim();
+        var phone = String(input.phone == null ? '' : input.phone).trim();
+        var service = String(input.service == null ? '' : input.service).trim();
+        var message = String(input.message == null ? '' : input.message).trim();
+        var email = String(input.email == null ? '' : input.email).trim();
+        var budget = String(input.budget == null ? '' : input.budget).trim();
+
+        if (name.length < 2 || name.length > 80) errors.push('name: 2–80 حرفًا.');
+        if (!/^[0-9+\s()\-]{7,20}$/.test(phone)) errors.push('phone: رقم غير صالح.');
+        if (!service) errors.push('service: مطلوب.');
+        if (message.length < 10 || message.length > 2000) errors.push('message: 10–2000 حرفًا.');
+        if (email && !/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(email)) errors.push('email: غير صالح.');
+        if (budget.length > 60) errors.push('budget: 60 حرفًا كحد أقصى.');
+
+        if (errors.length) return fail('بيانات غير مكتملة:\n- ' + errors.join('\n- '));
+
+        var form = document.getElementById('contactForm');
+        if (!form) return fail('نموذج التواصل غير متاح في هذه الصفحة.');
+
+        var setField = function (id, value) {
+          var field = document.getElementById(id);
+          if (!field || !value) return;
+          field.value = value;
+          field.dispatchEvent(new Event('input', { bubbles: true }));
+          field.dispatchEvent(new Event('change', { bubbles: true }));
+        };
+
+        setField('fieldName', name);
+        setField('fieldPhone', phone);
+        setField('fieldMessage', message);
+        setField('fieldEmail', email);
+        setField('fieldBudget', budget);
+
+        var select = document.getElementById('fieldService');
+        if (select) {
+          var matched = false;
+          for (var i = 0; i < select.options.length; i += 1) {
+            if (select.options[i].value === service) {
+              select.selectedIndex = i;
+              matched = true;
+              break;
+            }
+          }
+          if (matched) {
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+          } else {
+            return reply(
+              'تم تعبئة بقية الحقول، لكن الخدمة «' +
+                service +
+                '» غير موجودة في القائمة. يرجى اختيار خدمة من القائمة قبل الإرسال.'
+            );
+          }
+        }
+
+        var section = document.getElementById('contact');
+        if (section && typeof section.scrollIntoView === 'function') {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        return reply(
+          'تم تعبئة النموذج ولم يُرسل. راجع البيانات مع الزائر، وبعد موافقته اضغط ' +
+            '«أرسل الطلب» بنفسك. الإرسال لا يحدث تلقائيًا أبدًا.'
+        );
+      },
+    },
+  ];
+
+  var register = function (tool) {
+    try {
+      var result = controller
+        ? context.registerTool(tool, { signal: controller.signal })
+        : context.registerTool(tool);
+      if (result && typeof result.catch === 'function') {
+        result.catch(function () {
+          /* المتصفح رفض الأداة — نتجاهل بهدوء */
+        });
+      }
+    } catch (error) {
+      try {
+        var retry = context.registerTool(tool);
+        if (retry && typeof retry.catch === 'function') retry.catch(function () {});
+      } catch (ignored) {
+        /* API غير مكتمل — لا نكسر الصفحة */
+      }
+    }
+  };
+
+  tools.forEach(register);
+
+  if (controller) {
+    window.addEventListener(
+      'pagehide',
+      function () {
+        try {
+          controller.abort();
+        } catch (error) {
+          /* لا شيء */
+        }
+      },
+      { once: true }
+    );
+  }
+})();
   </script>
 </body>
 </html>

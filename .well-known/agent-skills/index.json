@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "portfolio-discovery",
+      "type": "skill-md",
+      "description": "Discover who Ahmed Mokbel is, what he does, and where his work lives.",
+      "url": "https://ahmedmokbel99.github.io/skills/portfolio-discovery/SKILL.md",
+      "digest": "sha256:458decc243d46e02698e6087215874ca0b55ddb2ce8025bd9fd777589f789e8c"
+    },
+    {
+      "name": "project-discovery",
+      "type": "skill-md",
+      "description": "Search and read Ahmed Mokbel's 24 portfolio projects and case studies.",
+      "url": "https://ahmedmokbel99.github.io/skills/project-discovery/SKILL.md",
+      "digest": "sha256:8b1565410d07373f105c6830a7ee246b9e7989ce1bf073ed172dcfbc3e7b1eb7"
+    },
+    {
+      "name": "service-discovery",
+      "type": "skill-md",
+      "description": "Explain Ahmed Mokbel's design, motion, photography and consulting services.",
+      "url": "https://ahmedmokbel99.github.io/skills/service-discovery/SKILL.md",
+      "digest": "sha256:bfd11e1bb93ecb6cb1b41703343e54df4130f6d35392b461dba62fdd4bdd30c2"
+    }
+  ]
+}

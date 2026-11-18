@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-11-18",
+  "source": "https://ahmedmokbel99.github.io/",
+  "name": "أحمد مقبل",
+  "latinName": "Ahmed Mokbel",
+  "jobTitle": "مصمم ومخرج بصري",
+  "description": "أحمد مقبل، مصمم ومخرج بصري من مدينة الجمالية، محافظة الدقهلية. هويات بصرية، موشن جرافيك، تصوير ومونتاج إعلانات للعلامات داخل مصر وخارجها.",
+  "approach": "أعمل على أن يكون لكل مشروع سبب واضح: رسالة محددة، جمهور معروف، وقرار بصري يخدم الهدف — لا مجرد شكل جميل.",
+  "location": {
+    "city": "مدينة الجمالية",
+    "governorate": "محافظة الدقهلية",
+    "country": "مصر",
+    "countryCode": "EG",
+    "worksRemotely": true
+  },
+  "careerStart": 2013,
+  "since": 2013,
+  "numbers": {
+    "experienceYears": 13,
+    "projectsDelivered": 160,
+    "clients": 80
+  },
+  "studio": {
+    "name": "DOT Media",
+    "role": "founder",
+    "description": "استوديو إنتاج إبداعي متخصص في إنتاج المحتوى التجاري وتطوير الهويات البصرية.",
+    "url": "https://www.facebook.com/profile.php?id=61581319508233"
+  },
+  "services": [
+    "موشن جرافيك",
+    "هوية بصرية كاملة",
+    "تصميم رقمي وطباعي",
+    "تصوير وإنتاج إعلاني",
+    "إعلانات السوشيال ميديا",
+    "استشارات وتطوير بصري"
+  ],
+  "skills": [
+    "موشن جرافيك",
+    "هوية بصرية",
+    "تصميم طباعي",
+    "تصوير",
+    "مونتاج",
+    "إنتاج إعلامي",
+    "سوشيال ميديا",
+    "مؤثرات بصرية VFX"
+  ],
+  "tools": [
+    "After Effects",
+    "Premiere Pro",
+    "Photoshop",
+    "Illustrator",
+    "Cinema 4D",
+    "Lightroom"
+  ],
+  "projects": 24,
+  "links": {
+    "home": "https://ahmedmokbel99.github.io/",
+    "projects": "https://ahmedmokbel99.github.io/api/projects.json",
+    "services": "https://ahmedmokbel99.github.io/api/services.json",
+    "behance": "https://www.behance.net/ahmed01068b62e",
+    "facebook": "https://www.facebook.com/profile.php?id=61581319508233",
+    "x": "https://x.com/ahmed0106877",
+    "whatsapp": "https://wa.me/201228084197"
+  },
+  "contact": {
+    "email": "ahmed01068775125@gmail.com",
+    "whatsapp": "+201228084197",
+    "preferredLanguage": "ar"
+  }
+}

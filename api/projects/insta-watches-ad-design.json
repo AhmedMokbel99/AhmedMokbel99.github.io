@@ -1,0 +1,27 @@
+{
+  "slug": "insta-watches-ad-design",
+  "title": "INSTA WATCHES",
+  "category": "digital",
+  "categoryLabel": "تصميم رقمي",
+  "tag": "تصميم رقمي",
+  "summary": "تصميمات رقمية لعلامة ساعات، تركّز على إبراز المنتج بإضاءة وتفاصيل فاخرة.",
+  "featured": true,
+  "hasVideo": false,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/insta-watches-ad-design.jpg",
+    "width": 1600,
+    "height": 1200
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/insta-watches-ad-design.json",
+  "externalUrl": "https://www.behance.net/gallery/175994775/INSTA-WATCHES",
+  "challenge": "منتج ساعات فاخر، والمطلوب إبراز التفاصيل المعدنية والزجاج من غير تشتيت.",
+  "role": "تصميم المجموعة واختيار الإضاءة والخلفيات المناسبة للمنتج.",
+  "result": "تصميمات رقمية تركّز على المنتج وتفاصيله.",
+  "tools": [
+    "تصميم رقمي",
+    "إعلان منتج"
+  ],
+  "gallery": []
+}

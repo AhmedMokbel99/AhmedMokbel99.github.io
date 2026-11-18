@@ -1,0 +1,27 @@
+{
+  "slug": "social-media-design-collection",
+  "title": "مختارات سوشيال ميديا — تغذية بصرية",
+  "category": "digital",
+  "categoryLabel": "تصميم رقمي",
+  "tag": "تصميم رقمي",
+  "summary": "مجموعة تصميمات رقمية متنوعة أُنتجت لعلامات ومناسبات مختلفة، تجمع بين الوضوح والجاذبية البصرية.",
+  "featured": false,
+  "hasVideo": false,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/social-media-design-collection.jpg",
+    "width": 1600,
+    "height": 1200
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/social-media-design-collection.json",
+  "externalUrl": "https://www.behance.net/gallery/228287151/_",
+  "challenge": "تصميمات لمناسبات وعلامات مختلفة، وكل تصميم لازم يشتغل لوحده وله أسلوبه الخاص.",
+  "role": "تصميم وتنفيذ التصميمات وإخراجها بالمقاسات المناسبة لكل منصة.",
+  "result": "مجموعة تصميمات جاهزة للنشر على السوشيال ميديا.",
+  "tools": [
+    "تصميم رقمي",
+    "سوشيال ميديا"
+  ],
+  "gallery": []
+}

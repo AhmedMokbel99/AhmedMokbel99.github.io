@@ -1,0 +1,26 @@
+{
+  "slug": "ans-dimashqi-pie-ad",
+  "title": "آنس الدمشقي — إعلان الفطيرة",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "إعلان مطعم",
+  "summary": "إعلان طعام ثانٍ لمطعم «آنس الدمشقي»: الفطيرة باللحم والمكونات المتطايرة حولها على خلفية برتقالية، بأسلوب دعائي مباشر ينتهي برقم الطلب.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/ans-dimashqi-pie-ad.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ans-dimashqi-pie-ad.json",
+  "challenge": "الإعلان الثاني للمطعم، لازم يكون بنفس هوية الأول لكن بفكرة بصرية مختلفة.",
+  "role": "التصميم والتركيب البصري والمونتاج.",
+  "result": "إعلان طعام جاهز للنشر، ينتهي برقم الطلب.",
+  "tools": [
+    "إنتاج فيديو",
+    "موشن جرافيك"
+  ],
+  "gallery": []
+}

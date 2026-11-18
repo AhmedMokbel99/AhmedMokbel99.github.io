@@ -1,0 +1,27 @@
+{
+  "slug": "elmaqsoud-generators-ad",
+  "title": "المقصود للمولدات — إعلان الشركة",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "إعلان شركة",
+  "summary": "إعلان شركة المقصود لتوريد المولدات: عرض للمعدات ولوحات التحكم في تكوين ثلاثي الأبعاد يعرّف بالخدمة ويختم برابط الموقع.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/elmaqsoud-generators-ad.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/elmaqsoud-generators-ad.json",
+  "challenge": "شركة معدات ثقيلة تحتاج عرضاً يوضح الخدمة بسرعة ويوصل رابط الموقع.",
+  "role": "التصميم والتحريك ثلاثي الأبعاد والمونتاج.",
+  "result": "إعلان تعريفي جاهز للنشر.",
+  "tools": [
+    "موشن جرافيك",
+    "3D",
+    "مونتاج"
+  ],
+  "gallery": []
+}

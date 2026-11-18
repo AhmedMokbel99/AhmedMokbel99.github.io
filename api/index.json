@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-11-18",
+  "name": "Ahmed Mokbel portfolio API",
+  "description": "واجهة قراءة عامة (GET فقط) لبيانات البورتفوليو، مولّدة من نفس محتوى الموقع.",
+  "documentation": "https://ahmedmokbel99.github.io/docs/api/",
+  "openapi": "https://ahmedmokbel99.github.io/openapi.json",
+  "catalog": "https://ahmedmokbel99.github.io/.well-known/api-catalog",
+  "resources": [
+    {
+      "name": "profile",
+      "url": "https://ahmedmokbel99.github.io/api/profile.json"
+    },
+    {
+      "name": "projects",
+      "url": "https://ahmedmokbel99.github.io/api/projects.json"
+    },
+    {
+      "name": "project",
+      "url": "https://ahmedmokbel99.github.io/api/projects/{slug}.json"
+    },
+    {
+      "name": "services",
+      "url": "https://ahmedmokbel99.github.io/api/services.json"
+    },
+    {
+      "name": "health",
+      "url": "https://ahmedmokbel99.github.io/api/health.json"
+    }
+  ]
+}

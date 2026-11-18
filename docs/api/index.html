@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio API — Ahmed Mokbel</title>
+  <meta name="description" content="Read-only static JSON API for Ahmed Mokbel's portfolio: profile, projects, case studies and services. No authentication, CORS enabled.">
+  <link rel="canonical" href="https://ahmedmokbel99.github.io/docs/api/">
+  <link rel="api-catalog" href="https://ahmedmokbel99.github.io/.well-known/api-catalog" type="application/linkset+json">
+  <link rel="alternate" type="application/json" href="https://ahmedmokbel99.github.io/openapi.json">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#07080d">
+  <style>
+:root{--bg:#07080d;--surface:#11141d;--line:rgba(255,255,255,.09);--text:#f7f9fc;--muted:#a8b4c8;--brand:#8b5cf6;--cyan:#22d3ee;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;line-height:1.75;font-size:16px}
+.wrap{max-width:860px;margin:0 auto;padding:3rem 1.25rem 5rem}
+a{color:var(--cyan)}
+h1{font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.3;margin:.4rem 0 1rem}
+h2{margin:2.6rem 0 .8rem;font-size:1.25rem;padding-bottom:.5rem;border-bottom:1px solid var(--line)}
+h3{margin:1.8rem 0 .4rem;font-size:1.02rem;color:#d8c8ff}
+p,li{color:var(--muted)}
+code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.06);padding:.15em .4em;border-radius:6px;color:#e9e2ff;direction:ltr;display:inline-block}
+pre{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;overflow:auto;direction:ltr;text-align:left}
+pre code{background:none;padding:0;font-size:.84rem;display:block;white-space:pre}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin:0}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
+th,td{text-align:start;padding:.6rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--text);font-weight:600}
+td code{font-size:.8rem}
+.note{border-inline-start:3px solid var(--brand);background:rgba(139,92,246,.08);padding:.8rem 1rem;border-radius:10px;margin:1.2rem 0}
+footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.85rem;color:#8593a8}
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">API documentation</p>
+    <h1>Ahmed Mokbel — Portfolio API</h1>
+    <p>A public, read-only JSON API generated from the same content as
+    <a href="https://ahmedmokbel99.github.io/">the portfolio</a>. It is the machine-readable mirror of the site:
+    the same projects, the same case studies, the same services.</p>
+
+    <div class="note">
+      <strong>Honest description of the architecture.</strong>
+      This is a <em>static</em> API. Every response is a pre-rendered JSON file published
+      on GitHub Pages and regenerated on each deploy. There is no server, no database,
+      no query language and no rate limiter — so there is also nothing to abuse beyond
+      reading public content.
+    </div>
+
+    <h2>Base URL</h2>
+    <pre><code>https://ahmedmokbel99.github.io</code></pre>
+
+    <h2>Endpoints</h2>
+    <table>
+      <thead><tr><th>Endpoint</th><th>Returns</th></tr></thead>
+      <tbody>
+        <tr><td><code>GET /api/profile.json</code></td><td>Identity, disciplines, location, studio, numbers, contact links.</td></tr>
+        <tr><td><code>GET /api/projects.json</code></td><td>All published projects with a short summary and a detail URL.</td></tr>
+        <tr><td><code>GET /api/projects/&lt;slug&gt;.json</code></td><td>One project with challenge, role, result, tools and gallery.</td></tr>
+        <tr><td><code>GET /api/services.json</code></td><td>Six services with deliverables, audience and page URLs.</td></tr>
+        <tr><td><code>GET /api/health.json</code></td><td>Build status and dataset counts.</td></tr>
+        <tr><td><code>GET /api/index.json</code></td><td>Machine-readable index of the endpoints above.</td></tr>
+        <tr><td><code>GET /openapi.json</code></td><td>OpenAPI 3.1 description of this API.</td></tr>
+        <tr><td><code>GET /.well-known/api-catalog</code></td><td>RFC 9727 API catalog (linkset).</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Example</h2>
+    <pre><code>curl -s https://ahmedmokbel99.github.io/api/projects.json | head -c 400</code></pre>
+    <pre><code>curl -s https://ahmedmokbel99.github.io/api/projects/saudi-founding-day-motion-graphic.json</code></pre>
+
+    <h2>Conventions</h2>
+    <ul>
+      <li>Method: <code>GET</code> only. Every other method returns the static host's default error.</li>
+      <li>Content type: <code>application/json; charset=utf-8</code>.</li>
+      <li>Encoding: UTF-8, Arabic text is not escaped (<code>ensure_ascii=false</code>).</li>
+      <li>Query parameters are not supported — the path is the whole request.</li>
+      <li>Unknown slugs return the static host's 404 page, not a JSON error body.</li>
+      <li>Timestamps use ISO&nbsp;8601 dates and refer to the last build.</li>
+    </ul>
+
+    <h2>Authentication and rate limits</h2>
+    <p>None and none. All data is public portfolio content intended for humans and
+    agents alike. See <a href="https://ahmedmokbel99.github.io/auth.md">auth.md</a> for the full access statement.</p>
+
+    <h2>CORS</h2>
+    <p>GitHub Pages answers every request with <code>Access-Control-Allow-Origin: *</code>,
+    so browser-based agents can call the API directly.</p>
+
+    <h2>Caching</h2>
+    <p>Responses carry an <code>ETag</code> and short <code>Cache-Control</code> headers from the
+    host. Files change only when the site is redeployed.</p>
+
+    <h2>Service pages</h2>
+    <table>
+      <thead><tr><th>Service</th><th>Page</th></tr></thead>
+      <tbody>
+              <tr><td>موشن جرافيك</td><td><code>/motion-graphics.html</code></td></tr>
+              <tr><td>هوية بصرية كاملة</td><td><code>/brand-identity.html</code></td></tr>
+              <tr><td>تصميم رقمي وطباعي</td><td><code>/digital-print.html</code></td></tr>
+              <tr><td>تصوير وإنتاج إعلاني</td><td><code>/photo-production.html</code></td></tr>
+              <tr><td>إعلانات السوشيال ميديا</td><td><code>/social-media-ads.html</code></td></tr>
+              <tr><td>استشارات وتطوير بصري</td><td><code>/brand-consulting.html</code></td></tr>
+      </tbody>
+    </table>
+
+    <h2>Agent entry points</h2>
+    <ul>
+      <li><a href="https://ahmedmokbel99.github.io/.well-known/agent-skills/index.json">Agent Skills index</a></li>
+      <li><a href="https://ahmedmokbel99.github.io/.well-known/ai-catalog.json">ARD / AI catalog manifest</a></li>
+      <li><a href="https://ahmedmokbel99.github.io/index.md">Markdown mirror of the homepage</a></li>
+      <li><a href="https://ahmedmokbel99.github.io/llms.txt">llms.txt</a></li>
+      <li><a href="https://ahmedmokbel99.github.io/docs/agent-readiness.md">Agent readiness audit</a></li>
+    </ul>
+
+    <footer>
+      Ahmed Mokbel — visual designer and art director, مدينة الجمالية، محافظة الدقهلية, Egypt.
+      Generated on 2026-11-18.
+    </footer>
+  </main>
+</body>
+</html>

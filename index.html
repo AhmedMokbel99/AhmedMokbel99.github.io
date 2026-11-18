@@ -10,6 +10,10 @@
   <meta name="theme-color" content="#07080d">
   <meta name="color-scheme" content="dark">
   <link rel="canonical" href="https://ahmedmokbel99.github.io/">
+  <link rel="api-catalog" href="https://ahmedmokbel99.github.io/.well-known/api-catalog" type="application/linkset+json">
+  <link rel="service-doc" href="https://ahmedmokbel99.github.io/docs/api/" type="text/html">
+  <link rel="describedby" href="https://ahmedmokbel99.github.io/.well-known/ai-catalog.json" type="application/json">
+  <link rel="alternate" type="text/markdown" href="https://ahmedmokbel99.github.io/index.md" hreflang="ar">
 
   <!-- Icons & manifest -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -41,12 +45,13 @@
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/showreel-poster.jpg" fetchpriority="high">
-<link rel="stylesheet" href="css/style.css?v=18-1319d42a">
+<link rel="stylesheet" href="css/style.css?v=18-e80b0c4a">
 
   <!-- Structured data -->
 
-  <script src="js/data.js?v=18-1319d42a" defer></script>
-  <script src="js/main.js?v=18-1319d42a" defer></script>
+  <script src="js/data.js?v=18-e80b0c4a" defer></script>
+  <script src="js/main.js?v=18-e80b0c4a" defer></script>
+  <script src="js/webmcp.js?v=18-e80b0c4a" defer></script>
 
   <script type="application/ld+json">
 {
@@ -319,7 +324,7 @@
             "url": "https://ahmedmokbel99.github.io/#work",
             "genre": "هوية وطباعة",
             "description": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي. 2026",
-            "image": "https://ahmedmokbel99.github.io/assets/projects/project-f24.jpg"
+            "image": "https://ahmedmokbel99.github.io/assets/projects/harvard-2026-new-year-identity.jpg"
           }
         },
         {
@@ -1052,8 +1057,8 @@
 <article class="project" data-reveal data-project-card="f24" data-category="brand">
   <div class="project__media">
     <img
-      src="assets/projects/project-f24-900.jpg"
-      srcset="assets/projects/project-f24-640.jpg 640w, assets/projects/project-f24-900.jpg 900w, assets/projects/project-f24.jpg 1600w"
+      src="assets/projects/harvard-2026-new-year-identity-900.jpg"
+      srcset="assets/projects/harvard-2026-new-year-identity-640.jpg 640w, assets/projects/harvard-2026-new-year-identity-900.jpg 900w, assets/projects/harvard-2026-new-year-identity.jpg 1600w"
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1600"
       height="1600"
@@ -2031,7 +2036,7 @@
             <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
-          <form id="contactForm" novalidate action="https://formsubmit.co/ahmed01068775125@gmail.com" method="POST" data-endpoint="https://formsubmit.co/ajax/ahmed01068775125@gmail.com">
+          <form id="contactForm" novalidate action="https://formsubmit.co/ahmed01068775125@gmail.com" method="POST" data-endpoint="https://formsubmit.co/ajax/ahmed01068775125@gmail.com" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
             <input type="hidden" name="_subject" value="طلب مشروع جديد من الموقع الشخصي">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">
@@ -2040,25 +2045,25 @@
             <div class="form-grid">
               <div class="field">
                 <label for="fieldName"><span data-cms="form.nameLabel">الاسم</span> <span aria-hidden="true">*</span></label>
-                <input id="fieldName" name="name" type="text" placeholder="اسمك الكامل" data-cms-attr="placeholder" data-cms="form.namePlaceholder" autocomplete="name" maxlength="80" aria-describedby="errorName" required>
+                <input id="fieldName" name="name" type="text" placeholder="اسمك الكامل" data-cms-attr="placeholder" data-cms="form.namePlaceholder" autocomplete="name" maxlength="80" aria-describedby="errorName" required toolparamdescription="Visitor name, 2 to 80 characters.">
                 <span class="field__error" id="errorName" aria-live="polite"></span>
               </div>
 
               <div class="field">
                 <label for="fieldPhone"><span data-cms="form.phoneLabel">الهاتف / واتساب</span> <span aria-hidden="true">*</span></label>
-                <input id="fieldPhone" name="phone" type="tel" inputmode="tel" placeholder="01xxxxxxxxx" data-cms-attr="placeholder" data-cms="form.phonePlaceholder" autocomplete="tel" dir="ltr" maxlength="20" aria-describedby="errorPhone" required>
+                <input id="fieldPhone" name="phone" type="tel" inputmode="tel" placeholder="01xxxxxxxxx" data-cms-attr="placeholder" data-cms="form.phonePlaceholder" autocomplete="tel" dir="ltr" maxlength="20" aria-describedby="errorPhone" required toolparamdescription="Phone or WhatsApp number, 7 to 20 characters.">
                 <span class="field__error" id="errorPhone" aria-live="polite"></span>
               </div>
 
               <div class="field">
                 <label for="fieldEmail"><span data-cms="form.emailLabel">البريد الإلكتروني</span> <span class="field__optional" data-cms="form.optional">اختياري</span></label>
-                <input id="fieldEmail" name="email" type="email" placeholder="name@example.com" data-cms-attr="placeholder" data-cms="form.emailPlaceholder" autocomplete="email" dir="ltr" maxlength="120" aria-describedby="errorEmail">
+                <input id="fieldEmail" name="email" type="email" placeholder="name@example.com" data-cms-attr="placeholder" data-cms="form.emailPlaceholder" autocomplete="email" dir="ltr" maxlength="120" aria-describedby="errorEmail" toolparamdescription="Optional email address for the reply.">
                 <span class="field__error" id="errorEmail" aria-live="polite"></span>
               </div>
 
               <div class="field">
                 <label for="fieldService"><span data-cms="form.serviceLabel">نوع الخدمة</span> <span aria-hidden="true">*</span></label>
-                <select id="fieldService" name="service" aria-describedby="errorService" required>
+                <select id="fieldService" name="service" aria-describedby="errorService" required toolparamdescription="Requested service title, one of the options in this list.">
                   <!-- service-options:start -->
                   <option value="" selected data-cms="form.servicePlaceholder">اختر الخدمة</option>
                   <option value="موشن جرافيك">موشن جرافيك</option>
@@ -2075,13 +2080,13 @@
 
               <div class="field field--full">
                 <label for="fieldMessage"><span data-cms="form.messageLabel">تفاصيل المشروع</span> <span aria-hidden="true">*</span></label>
-                <textarea id="fieldMessage" name="message" rows="4" placeholder="اكتب نبذة عن النشاط، هدف المشروع، والمدة المطلوبة..." data-cms-attr="placeholder" data-cms="form.messagePlaceholder" maxlength="2000" aria-describedby="errorMessage" required></textarea>
+                <textarea id="fieldMessage" name="message" rows="4" placeholder="اكتب نبذة عن النشاط، هدف المشروع، والمدة المطلوبة..." data-cms-attr="placeholder" data-cms="form.messagePlaceholder" maxlength="2000" aria-describedby="errorMessage" required toolparamdescription="Project details: activity, goal, and timeline. 10 to 2000 characters."></textarea>
                 <span class="field__error" id="errorMessage" aria-live="polite"></span>
               </div>
 
               <div class="field field--full">
                 <label for="fieldBudget"><span data-cms="form.budgetLabel">الميزانية التقديرية</span> <span class="field__optional" data-cms="form.optional">اختياري</span></label>
-                <input id="fieldBudget" name="budget" type="text" placeholder="اختياري — مثال: 10,000 ج.م" data-cms-attr="placeholder" data-cms="form.budgetPlaceholder" maxlength="60" aria-describedby="errorBudget">
+                <input id="fieldBudget" name="budget" type="text" placeholder="اختياري — مثال: 10,000 ج.م" data-cms-attr="placeholder" data-cms="form.budgetPlaceholder" maxlength="60" aria-describedby="errorBudget" toolparamdescription="Optional budget note, 60 characters max.">
                 <span class="field__error" id="errorBudget" aria-live="polite"></span>
               </div>
             </div>

@@ -64,6 +64,38 @@ const SITE_DATA = {
       "suffix": "+",
       "label": "عميل راضٍ"
     }
+  ],
+  "services": [
+    {
+      "title": "موشن جرافيك",
+      "desc": "فيديوهات تعريفية وإعلانية بحركة مدروسة ومؤثرات صوتية، من السيناريو وحتى التصدير النهائي.",
+      "link": "motion-graphics.html"
+    },
+    {
+      "title": "هوية بصرية كاملة",
+      "desc": "شعار، لوحة ألوان، خطوط، ودليل استخدام متكامل يعكس شخصية علامتك على كافة نقاط التواصل.",
+      "link": "brand-identity.html"
+    },
+    {
+      "title": "تصميم رقمي وطباعي",
+      "desc": "محتوى سوشيال ميديا مميز، بروشورات، ومطبوعات تجارية جاهزة للمطابع وفق المعايير العالمية.",
+      "link": "digital-print.html"
+    },
+    {
+      "title": "تصوير وإنتاج إعلاني",
+      "desc": "تصوير احترافي للمنتجات والخدمات بما يخدم دمجها لاحقًا في الحملات الإعلانية والتصاميم.",
+      "link": "photo-production.html"
+    },
+    {
+      "title": "إعلانات السوشيال ميديا",
+      "desc": "تصميمات مبنية على هدف واضح ورسالة محددة، تُنفَّذ خصيصًا لكل علامة بدل القوالب الجاهزة.",
+      "link": "social-media-ads.html"
+    },
+    {
+      "title": "استشارات وتطوير بصري",
+      "desc": "تحليل وتقييم الهوية البصرية الحالية للعلامات وتقديم حلول وتوصيات عملية لتجديدها ومواكبة السوق.",
+      "link": "brand-consulting.html"
+    }
   ]
 };
 
@@ -106,7 +138,8 @@ const WORK_DATA = [
     "result": "عمل بصري جاهز للنشر على منصات المناسبة، بهوية خضراء وذهبية واضحة.",
     "tools": "موشن جرافيك – تصميم مشاهد – مونتاج",
     "alt": "يوم التأسيس السعودي — موشن جرافيك",
-    "featured": true
+    "featured": true,
+    "slug": "saudi-founding-day-motion-graphic"
   },
   {
     "id": "f02",
@@ -128,7 +161,8 @@ const WORK_DATA = [
     "alt": "ابن الباسل — موشن جرافيك",
     "imageSmall": "assets/projects/ibn-albasel-motion-graphic-900.jpg",
     "imageMedium": "assets/projects/ibn-albasel-motion-graphic-1200.jpg",
-    "featured": true
+    "featured": true,
+    "slug": "ibn-albasel-motion-graphic"
   },
   {
     "id": "f03",
@@ -150,7 +184,8 @@ const WORK_DATA = [
     "tools": "إنتاج فيديو – تصوير – مونتاج",
     "alt": "آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم",
     "imageSmall": "assets/projects/ans-dimashqi-steak-ad-900.jpg",
-    "featured": true
+    "featured": true,
+    "slug": "ans-dimashqi-steak-ad"
   },
   {
     "id": "f06",
@@ -192,7 +227,8 @@ const WORK_DATA = [
     "alt": "مركز هارفارد التعليمي — هوية وطباعة",
     "imageSmall": "assets/projects/harvard-education-center-brand-900.jpg",
     "imageMedium": "assets/projects/harvard-education-center-brand-1200.jpg",
-    "featured": true
+    "featured": true,
+    "slug": "harvard-education-center-brand"
   },
   {
     "id": "f07",
@@ -213,7 +249,8 @@ const WORK_DATA = [
     "result": "عبوة بهوية واضحة وحضور قوي على الرف.",
     "tools": "هوية – تغليف – تصميم طباعي",
     "alt": "ULTRA GROW — تغليف المنتجات — هوية وطباعة",
-    "featured": true
+    "featured": true,
+    "slug": "ultra-grow-brand-packaging"
   },
   {
     "id": "f11",
@@ -235,7 +272,8 @@ const WORK_DATA = [
     "alt": "INSTA WATCHES — تصميم رقمي",
     "imageSmall": "assets/projects/insta-watches-ad-design-900.jpg",
     "imageMedium": "assets/projects/insta-watches-ad-design-1200.jpg",
-    "featured": true
+    "featured": true,
+    "slug": "insta-watches-ad-design"
   },
   {
     "id": "f24",
@@ -246,8 +284,8 @@ const WORK_DATA = [
     "isVideo": false,
     "url": "",
     "external": false,
-    "image": "assets/projects/project-f24.jpg",
-    "imageSmall": "assets/projects/project-f24-900.jpg",
+    "image": "assets/projects/harvard-2026-new-year-identity.jpg",
+    "imageSmall": "assets/projects/harvard-2026-new-year-identity-900.jpg",
     "width": 1600,
     "height": 1600,
     "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة",
@@ -280,132 +318,133 @@ const WORK_DATA = [
     "youtube": "",
     "gallery": [
       {
-        "src": "assets/projects/project-f24-g1.jpg",
-        "small": "assets/projects/project-f24-g1-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g1.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g1-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g2.jpg",
-        "small": "assets/projects/project-f24-g2-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g2.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g2-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g3.jpg",
-        "small": "assets/projects/project-f24-g3-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g3.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g3-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g4.jpg",
-        "small": "assets/projects/project-f24-g4-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g4.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g4-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g5.jpg",
-        "small": "assets/projects/project-f24-g5-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g5.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g5-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g6.jpg",
-        "small": "assets/projects/project-f24-g6-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g6.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g6-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g7.jpg",
-        "small": "assets/projects/project-f24-g7-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g7.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g7-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g8.jpg",
-        "small": "assets/projects/project-f24-g8-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g8.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g8-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g9.jpg",
-        "small": "assets/projects/project-f24-g9-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g9.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g9-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g10.jpg",
-        "small": "assets/projects/project-f24-g10-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g10.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g10-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g11.jpg",
-        "small": "assets/projects/project-f24-g11-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g11.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g11-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g12.jpg",
-        "small": "assets/projects/project-f24-g12-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g12.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g12-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g13.jpg",
-        "small": "assets/projects/project-f24-g13-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g13.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g13-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g14.jpg",
-        "small": "assets/projects/project-f24-g14-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g14.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g14-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g15.jpg",
-        "small": "assets/projects/project-f24-g15-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g15.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g15-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g16.jpg",
-        "small": "assets/projects/project-f24-g16-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g16.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g16-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g17.jpg",
-        "small": "assets/projects/project-f24-g17-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g17.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g17-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       },
       {
-        "src": "assets/projects/project-f24-g18.jpg",
-        "small": "assets/projects/project-f24-g18-900.jpg",
+        "src": "assets/projects/harvard-2026-new-year-identity-g18.jpg",
+        "small": "assets/projects/harvard-2026-new-year-identity-g18-900.jpg",
         "width": 1600,
         "height": 1600,
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       }
-    ]
+    ],
+    "slug": "harvard-2026-new-year-identity"
   },
   {
     "id": "f05",
@@ -425,7 +464,8 @@ const WORK_DATA = [
     "role": "تصميم الشعار والنظام الطباعي والمطبوعات وتطبيقات الهوية.",
     "result": "هوية ومطبوعات جاهزة للتطبيق داخل المطبعة.",
     "tools": "هوية بصرية – تصميم طباعي – مطبوعات",
-    "alt": "طاهر للطباعة — هوية وطباعة"
+    "alt": "طاهر للطباعة — هوية وطباعة",
+    "slug": "taher-printing-brand-identity"
   },
   {
     "id": "f04",
@@ -446,7 +486,8 @@ const WORK_DATA = [
     "tools": "موشن جرافيك – تحريك",
     "alt": "تجربة موشن جرافيك من بدايات المسار — موشن جرافيك",
     "imageSmall": "assets/projects/first-motion-graphics-work-900.jpg",
-    "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg"
+    "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg",
+    "slug": "first-motion-graphics-work"
   },
   {
     "id": "f08",
@@ -466,7 +507,8 @@ const WORK_DATA = [
     "role": "تطوير النظام البصري وتوسيع تطبيقاته على المواد المختلفة.",
     "result": "نظام بصري متسق يغطي التطبيقات الأساسية للعلامة.",
     "tools": "هوية بصرية – تطبيقات – تصميم رقمي",
-    "alt": "ULTRA GROW — النظام البصري — هوية وطباعة"
+    "alt": "ULTRA GROW — النظام البصري — هوية وطباعة",
+    "slug": "ultra-grow-2-brand-system"
   },
   {
     "id": "f09",
@@ -487,7 +529,8 @@ const WORK_DATA = [
     "tools": "تصميم رقمي – سوشيال ميديا",
     "alt": "مختارات سوشيال ميديا — تصميم رقمي",
     "imageSmall": "assets/projects/social-media-design-collection-900.jpg",
-    "imageMedium": "assets/projects/social-media-design-collection-1200.jpg"
+    "imageMedium": "assets/projects/social-media-design-collection-1200.jpg",
+    "slug": "social-media-design-collection"
   },
   {
     "id": "f10",
@@ -507,7 +550,8 @@ const WORK_DATA = [
     "role": "تصميم الإعلان واختيار الصور والإضاءة والألوان.",
     "result": "تصميم إعلاني جاهز للنشر بأسلوب ناعم وهادئ.",
     "tools": "تصميم رقمي – إعلان سوشيال ميديا",
-    "alt": "حقن فيلر — تصميم رقمي"
+    "alt": "حقن فيلر — تصميم رقمي",
+    "slug": "filler-injection-ad-design"
   },
   {
     "id": "f12",
@@ -528,7 +572,8 @@ const WORK_DATA = [
     "tools": "تصميم رقمي – معالجة صور",
     "alt": "سر الطبيعة — تصميم رقمي",
     "imageSmall": "assets/projects/nature-secret-ad-design-900.jpg",
-    "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg"
+    "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg",
+    "slug": "nature-secret-ad-design"
   },
   {
     "id": "f13",
@@ -549,7 +594,8 @@ const WORK_DATA = [
     "role": "تصميم الرول أب وترتيب المعلومات وتطبيق هوية الجهة.",
     "result": "رول أب جاهز للطباعة والاستخدام في معارض القبول.",
     "tools": "تصميم طباعي – رول أب",
-    "alt": "بوابة القبول — تصميم طباعي"
+    "alt": "بوابة القبول — تصميم طباعي",
+    "slug": "admission-gateway-rollup"
   },
   {
     "id": "f14",
@@ -570,7 +616,8 @@ const WORK_DATA = [
     "result": "فيلم موشن جرافيك قصير جاهز للنشر.",
     "tools": "موشن جرافيك – تحريك – مونتاج",
     "alt": "البدايات — ياسر الحزيمي — موشن جرافيك",
-    "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg"
+    "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg",
+    "slug": "beginnings-motion-graphic"
   },
   {
     "id": "f15",
@@ -591,7 +638,8 @@ const WORK_DATA = [
     "result": "عمل موشن جرافيك متكامل جاهز للنشر.",
     "tools": "موشن جرافيك – تحريك – مونتاج",
     "alt": "ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك",
-    "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg"
+    "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg",
+    "slug": "alhakum-altakathur-motion"
   },
   {
     "id": "f16",
@@ -612,7 +660,8 @@ const WORK_DATA = [
     "result": "تحريك شعار قصير وجاهز للاستخدام في الفيديوهات.",
     "tools": "تحريك شعار – موشن جرافيك",
     "alt": "EN-SERV — تحريك شعار",
-    "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg"
+    "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg",
+    "slug": "en-serv-logo-animation"
   },
   {
     "id": "f17",
@@ -633,7 +682,8 @@ const WORK_DATA = [
     "result": "فيديو تعريفي جاهز للسوشيال ميديا.",
     "tools": "تصوير – مونتاج",
     "alt": "الزين — مطعم سوري — تصوير ومونتاج",
-    "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg"
+    "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg",
+    "slug": "elzain-restaurant-video"
   },
   {
     "id": "f18",
@@ -654,7 +704,8 @@ const WORK_DATA = [
     "result": "إعلان تعريفي جاهز للنشر.",
     "tools": "موشن جرافيك – 3D – مونتاج",
     "alt": "المقصود للمولدات — إعلان الشركة — إعلان شركة",
-    "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg"
+    "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg",
+    "slug": "elmaqsoud-generators-ad"
   },
   {
     "id": "f19",
@@ -675,7 +726,8 @@ const WORK_DATA = [
     "result": "إعلان سينمائي قصير جاهز للنشر.",
     "tools": "موشن جرافيك – مونتاج",
     "alt": "بديل — إعلان سيارة — إعلان سيارات",
-    "imageSmall": "assets/projects/bdeel-car-ad-900.jpg"
+    "imageSmall": "assets/projects/bdeel-car-ad-900.jpg",
+    "slug": "bdeel-car-ad"
   },
   {
     "id": "f20",
@@ -696,7 +748,8 @@ const WORK_DATA = [
     "result": "إعلان عقاري جاهز للنشر.",
     "tools": "موشن جرافيك – مونتاج",
     "alt": "الوثبة العقارية — مشروع سكني — إعلان عقاري",
-    "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg"
+    "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg",
+    "slug": "alwathba-real-estate-ad"
   },
   {
     "id": "f21",
@@ -717,7 +770,8 @@ const WORK_DATA = [
     "result": "إعلان طعام جاهز للنشر، ينتهي برقم الطلب.",
     "tools": "إنتاج فيديو – موشن جرافيك",
     "alt": "آنس الدمشقي — إعلان الفطيرة — إعلان مطعم",
-    "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg"
+    "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg",
+    "slug": "ans-dimashqi-pie-ad"
   },
   {
     "id": "f22",
@@ -737,7 +791,8 @@ const WORK_DATA = [
     "role": "تصميم التكوين واختيار الخطوط وإخراج النسخة النهائية.",
     "result": "تصميم تهنئة جاهز للنشر على منصات العلامة.",
     "tools": "تصميم رقمي – سوشيال ميديا",
-    "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا"
+    "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا",
+    "slug": "almenissy-hijri-1448-greeting"
   },
   {
     "id": "f23",
@@ -757,6 +812,7 @@ const WORK_DATA = [
     "role": "تصميم التكوين ومعالجة التفاصيل وإخراج النسخة النهائية.",
     "result": "تصميم تهنئة جاهز للنشر.",
     "tools": "تصميم رقمي – سوشيال ميديا",
-    "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا"
+    "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا",
+    "slug": "grm-hijri-1448-greeting"
   }
 ];

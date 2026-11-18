@@ -1,0 +1,26 @@
+{
+  "slug": "bdeel-car-ad",
+  "title": "بديل — إعلان سيارة",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "إعلان سيارات",
+  "summary": "إعلان سيارة لعلامة «بديل» بأسلوب سينمائي: إضاءة درامية، حركة كاميرا قريبة، وخلفية خطوط ضوئية تمنح المشهد إحساسًا بالسرعة والفخامة.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/bdeel-car-ad.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/bdeel-car-ad.json",
+  "challenge": "إعلان سيارة محتاج إحساس بالسرعة والفخامة من غير كلام كتير.",
+  "role": "الإخراج البصري والتحريك والمونتاج.",
+  "result": "إعلان سينمائي قصير جاهز للنشر.",
+  "tools": [
+    "موشن جرافيك",
+    "مونتاج"
+  ],
+  "gallery": []
+}

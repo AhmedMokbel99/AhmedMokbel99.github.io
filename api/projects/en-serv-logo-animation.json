@@ -1,0 +1,26 @@
+{
+  "slug": "en-serv-logo-animation",
+  "title": "EN-SERV — تحريك شعار",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "تحريك شعار",
+  "summary": "تحريك شعار EN-SERV: مونوجرام هندسي يتبلور من خطوط ضوئية على خلفية داكنة، وينتهي بظهور الاسم في مشهد إغلاق نظيف.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/en-serv-logo-animation.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/en-serv-logo-animation.json",
+  "challenge": "مونوجرام هندسي محتاج يتبلور بحركة تليق بشكل الشعار.",
+  "role": "تحريك الشعار وبناء مشهد الإغلاق.",
+  "result": "تحريك شعار قصير وجاهز للاستخدام في الفيديوهات.",
+  "tools": [
+    "تحريك شعار",
+    "موشن جرافيك"
+  ],
+  "gallery": []
+}

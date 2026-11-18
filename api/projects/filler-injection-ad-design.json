@@ -1,0 +1,27 @@
+{
+  "slug": "filler-injection-ad-design",
+  "title": "حقن فيلر",
+  "category": "digital",
+  "categoryLabel": "تصميم رقمي",
+  "tag": "تصميم رقمي",
+  "summary": "تصميم إعلاني لخدمة حقن الفيلر للدكتورة لينا بعّاد، بأسلوب ناعم يعتمد على درجات الوردي وعناصر الطبيعة.",
+  "featured": false,
+  "hasVideo": false,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/filler-injection-ad-design.jpg",
+    "width": 1400,
+    "height": 1400
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/filler-injection-ad-design.json",
+  "externalUrl": "https://www.behance.net/gallery/194077395/_",
+  "challenge": "إعلان لخدمة طبية حسّاسة، لازم يطمّن ويبان راقٍ من غير مبالغة.",
+  "role": "تصميم الإعلان واختيار الصور والإضاءة والألوان.",
+  "result": "تصميم إعلاني جاهز للنشر بأسلوب ناعم وهادئ.",
+  "tools": [
+    "تصميم رقمي",
+    "إعلان سوشيال ميديا"
+  ],
+  "gallery": []
+}

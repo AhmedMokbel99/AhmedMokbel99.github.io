@@ -1,0 +1,28 @@
+{
+  "slug": "ibn-albasel-motion-graphic",
+  "title": "ابن الباسل",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "موشن جرافيك",
+  "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
+  "featured": true,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/ibn-albasel-motion-graphic.jpg",
+    "width": 1600,
+    "height": 1200
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ibn-albasel-motion-graphic.json",
+  "externalUrl": "https://www.behance.net/gallery/244097521/_",
+  "challenge": "تقديم اسم «ابن الباسل» بأسلوب سينمائي يبني شخصية العلامة من أول ثانية.",
+  "role": "بناء التسلسل البصري والتحريك وضبط الإيقاع حتى النسخة النهائية.",
+  "result": "فيديو موشن جرافيك جاهز للنشر على السوشيال ميديا.",
+  "tools": [
+    "موشن جرافيك",
+    "تحريك",
+    "مونتاج"
+  ],
+  "gallery": []
+}

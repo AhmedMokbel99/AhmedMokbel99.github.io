@@ -1,0 +1,39 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://ahmedmokbel99.github.io/api/",
+      "service-desc": [
+        {
+          "href": "https://ahmedmokbel99.github.io/openapi.json",
+          "type": "application/openapi+json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://ahmedmokbel99.github.io/docs/api/",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://ahmedmokbel99.github.io/api/health.json",
+          "type": "application/json"
+        }
+      ],
+      "item": [
+        {
+          "href": "https://ahmedmokbel99.github.io/api/profile.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://ahmedmokbel99.github.io/api/projects.json",
+          "type": "application/json"
+        },
+        {
+          "href": "https://ahmedmokbel99.github.io/api/services.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "slug": "alwathba-real-estate-ad",
+  "title": "الوثبة العقارية — مشروع سكني",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "إعلان عقاري",
+  "summary": "إعلان لمشروع سكني لشركة «الوثبة» العقارية: جولة بصرية على واجهات المبنى وتفاصيله، بإطار جرافيكي وخلفية داكنة تُبرز الهوية.",
+  "featured": false,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/alwathba-real-estate-ad.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/alwathba-real-estate-ad.json",
+  "challenge": "مشروع سكني يحتاج جولة بصرية توضّح الواجهات والتفاصيل بهوية الشركة.",
+  "role": "التصميم والتحريك والإطار الجرافيكي والمونتاج.",
+  "result": "إعلان عقاري جاهز للنشر.",
+  "tools": [
+    "موشن جرافيك",
+    "مونتاج"
+  ],
+  "gallery": []
+}

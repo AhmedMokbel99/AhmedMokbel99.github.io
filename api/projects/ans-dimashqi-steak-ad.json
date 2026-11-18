@@ -1,0 +1,27 @@
+{
+  "slug": "ans-dimashqi-steak-ad",
+  "title": "آنس الدمشقي — إعلان طبق اللحم",
+  "category": "motion",
+  "categoryLabel": "موشن جرافيك",
+  "tag": "إعلان مطعم",
+  "summary": "إعلان طعام لمطعم «آنس الدمشقي»: تصوير للطبق بإضاءة دافئة تُبرز تفاصيل اللحم والصوص والخضار، وينتهي برقم الطلب — إنتاج DOT Media.",
+  "featured": true,
+  "hasVideo": true,
+  "media": {
+    "type": "image",
+    "url": "https://ahmedmokbel99.github.io/assets/projects/ans-dimashqi-steak-ad.jpg",
+    "width": 1200,
+    "height": 900
+  },
+  "pageUrl": "https://ahmedmokbel99.github.io/#work",
+  "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ans-dimashqi-steak-ad.json",
+  "challenge": "إعلان طعام لازم يخلّي الطبق نفسه هو البطل، ويوصل رقم الطلب في آخر ثانية.",
+  "role": "الإخراج البصري، تنسيق التصوير، والمونتاج واختيار الموسيقى.",
+  "result": "إعلان قصير جاهز للنشر، ينتهي برقم الطلب.",
+  "tools": [
+    "إنتاج فيديو",
+    "تصوير",
+    "مونتاج"
+  ],
+  "gallery": []
+}
