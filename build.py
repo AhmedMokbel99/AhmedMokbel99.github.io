@@ -418,6 +418,33 @@ def clients_block(site: dict) -> str:
     return "\n".join(cards)
 
 
+def stats_block(site: dict, projects: list[dict]) -> str:
+    """أرقام ثابتة داخل HTML — تظهر حتى لو تعطّل JavaScript أو تأخّر تحميله."""
+    current_year = dt.date.today().year
+    career_start = int((site.get("brand") or {}).get("careerStart") or current_year)
+    behance = sum(1 for p in projects if p.get("external") and p.get("url"))
+    rows = []
+    for stat in site.get("stats", []):
+        key = stat.get("key")
+        value = stat.get("value")
+        if key == "experience":
+            value = max(1, current_year - career_start)
+        elif key == "selected":
+            value = len(projects)
+        elif key == "behance":
+            value = behance
+        if value is None:
+            continue
+        suffix = esc(stat.get("suffix") or "")
+        rows.append(
+            f'''          <div class="stat">
+            <span class="stat__value" data-count="{esc(value)}" data-suffix="{suffix}">{esc(value)}{suffix}</span>
+            <span class="stat__label">{esc(stat.get("label") or "")}</span>
+          </div>'''
+        )
+    return "\n".join(rows)
+
+
 def case_spot_block(projects: list[dict]) -> str:
     """دراسة حالة مختارة: أول مشروع مميّز عنده دراسة حالة كاملة.
 
@@ -1992,6 +2019,7 @@ def docs_api_page(site: dict, base: str, slugs: list[str], services: list[dict])
   <title>Portfolio API — Ahmed Mokbel</title>
   <meta name="description" content="Read-only static JSON API for Ahmed Mokbel's portfolio: profile, projects, case studies and services. No authentication, CORS enabled.">
   <link rel="canonical" href="{base}/docs/api/">
+  <link rel="icon" type="image/svg+xml" href="{base}/assets/favicon.svg">
   <link rel="api-catalog" href="{base}/.well-known/api-catalog" type="application/linkset+json">
   <link rel="alternate" type="application/json" href="{base}/openapi.json">
   <meta name="robots" content="index,follow">
@@ -2306,6 +2334,7 @@ def main() -> None:
 
     html = replace_block(html, "services", services_block(site.get("services", [])))
     html = replace_block(html, "clients", clients_block(site))
+    html = replace_block(html, "stats", stats_block(site, visible))
     html = replace_block(html, "process", process_block(site.get("process", [])))
     html = replace_block(html, "faq", faq_block(
         site.get("faq", []),
@@ -2371,6 +2400,11 @@ def main() -> None:
     # يمنع تراكم الأسطر الفارغة في الهيد مع كل بناء
     html = re.sub(r"\n{3,}", "\n\n", html)
     write(INDEX, html)
+
+    # 2b) 404.html — نفس بصمة الأصول حتى ما يبقاش كاش قديم للـ CSS
+    error_page = ROOT / "404.html"
+    if error_page.is_file():
+        write(error_page, update_assets_version(read(error_page)))
 
     # 3) صفحات الخدمات
     for page in pages:

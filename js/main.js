@@ -369,12 +369,27 @@ function initCounters() {
 
     const duration = 1500;
     const start = window.performance.now();
+    let settled = false;
+
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      el.textContent = formatCount(target) + suffix;
+    };
+
+    /* شبكة أمان: لو توقّف rAF (تبويب في الخلفية مثلًا) الرقم ما يفضلش ناقصًا */
+    const guard = window.setTimeout(finish, duration + 120);
 
     const frame = (now) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = formatCount(Math.round(target * eased)) + suffix;
-      if (progress < 1) window.requestAnimationFrame(frame);
+      if (progress < 1) {
+        window.requestAnimationFrame(frame);
+      } else {
+        window.clearTimeout(guard);
+        finish();
+      }
     };
 
     window.requestAnimationFrame(frame);

@@ -303,7 +303,6 @@ p {
 .section {
   padding-block: var(--section-y);
   position: relative;
-  scroll-margin-top: calc(var(--nav-h) + 16px);
 }
 
 .section--soft {
@@ -492,6 +491,7 @@ body.has-dialog {
 .brand {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   gap: 0.7rem;
   font-family: var(--font-display);
   font-size: 1.15rem;
@@ -533,7 +533,12 @@ body.has-dialog {
 
 .nav__link {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  /* يوسّع مساحة اللمس للكلمات القصيرة مثل «نبذة» بلا تغيير في التخطيط */
+  padding-inline: 0.15rem;
+  margin-inline: -0.15rem;
   padding-block: 0.4rem;
   font-size: 0.94rem;
   font-weight: 500;
@@ -693,7 +698,7 @@ body.has-dialog {
 }
 
 .btn--sm {
-  min-height: 42px;
+  min-height: 44px;
   padding: 0.55rem 1.15rem;
   font-size: 0.86rem;
 }
@@ -1628,6 +1633,7 @@ body.has-dialog {
 }
 
 .about-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -1637,6 +1643,15 @@ body.has-dialog {
   font-weight: 500;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease, gap 0.2s ease;
+}
+
+/* مساحة لمس 44px بلا أي تغيير بصري */
+.about-link::before,
+.service__link::before {
+  content: "";
+  position: absolute;
+  inset-block: -0.65rem;
+  inset-inline: -0.5rem;
 }
 
 .about-link:hover {
@@ -4172,6 +4187,7 @@ html.js .project__media.is-ready::before {
 }
 
 .service__link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -5033,7 +5049,22 @@ html.js .project__media.is-ready::before {
     <!-- ═══ Stats ═══ -->
     <section class="section stats" aria-label="أرقام سريعة">
       <div class="wrap">
-        <div class="stats-grid" id="statsGrid" data-reveal></div>
+        <div class="stats-grid" id="statsGrid" data-reveal>
+<!-- stats:start -->
+          <div class="stat">
+            <span class="stat__value" data-count="13" data-suffix="+">13+</span>
+            <span class="stat__label">سنوات خبرة</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" data-count="160" data-suffix="+">160+</span>
+            <span class="stat__label">مشروع منجز</span>
+          </div>
+          <div class="stat">
+            <span class="stat__value" data-count="80" data-suffix="+">80+</span>
+            <span class="stat__label">عميل راضٍ</span>
+          </div>
+<!-- stats:end -->
+        </div>
       </div>
     </section>
 
@@ -6466,7 +6497,7 @@ html.js .project__media.is-ready::before {
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
     </button>
 
-    <img class="lightbox__image" id="lightboxImage" alt="" decoding="async">
+    <img class="lightbox__image" id="lightboxImage" alt="" decoding="async" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 
     <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" type="button" aria-label="الصورة التالية">
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -7683,12 +7714,27 @@ function initCounters() {
 
     const duration = 1500;
     const start = window.performance.now();
+    let settled = false;
+
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      el.textContent = formatCount(target) + suffix;
+    };
+
+    /* شبكة أمان: لو توقّف rAF (تبويب في الخلفية مثلًا) الرقم ما يفضلش ناقصًا */
+    const guard = window.setTimeout(finish, duration + 120);
 
     const frame = (now) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       el.textContent = formatCount(Math.round(target * eased)) + suffix;
-      if (progress < 1) window.requestAnimationFrame(frame);
+      if (progress < 1) {
+        window.requestAnimationFrame(frame);
+      } else {
+        window.clearTimeout(guard);
+        finish();
+      }
     };
 
     window.requestAnimationFrame(frame);

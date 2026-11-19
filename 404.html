@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/style.css?v=14">
+<link rel="stylesheet" href="/css/style.css?v=18-29a9cfee">
 
   <style>
     .error-page {
@@ -111,9 +111,19 @@
     }
 
     .error-help a {
+      position: relative;
+      display: inline-block;
       color: var(--muted);
       text-decoration: underline;
       text-underline-offset: 4px;
+    }
+
+    /* مساحة لمس مريحة للروابط النصية داخل صفحة الخطأ */
+    .error-help a::before {
+      content: "";
+      position: absolute;
+      inset-block: -0.7rem;
+      inset-inline: -0.4rem;
     }
 
     .error-help a:hover {

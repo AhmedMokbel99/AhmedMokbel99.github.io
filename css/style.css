@@ -254,7 +254,6 @@ p {
 .section {
   padding-block: var(--section-y);
   position: relative;
-  scroll-margin-top: calc(var(--nav-h) + 16px);
 }
 
 .section--soft {
@@ -443,6 +442,7 @@ body.has-dialog {
 .brand {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   gap: 0.7rem;
   font-family: var(--font-display);
   font-size: 1.15rem;
@@ -484,7 +484,12 @@ body.has-dialog {
 
 .nav__link {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  /* يوسّع مساحة اللمس للكلمات القصيرة مثل «نبذة» بلا تغيير في التخطيط */
+  padding-inline: 0.15rem;
+  margin-inline: -0.15rem;
   padding-block: 0.4rem;
   font-size: 0.94rem;
   font-weight: 500;
@@ -644,7 +649,7 @@ body.has-dialog {
 }
 
 .btn--sm {
-  min-height: 42px;
+  min-height: 44px;
   padding: 0.55rem 1.15rem;
   font-size: 0.86rem;
 }
@@ -1579,6 +1584,7 @@ body.has-dialog {
 }
 
 .about-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -1588,6 +1594,15 @@ body.has-dialog {
   font-weight: 500;
   border-bottom: 1px solid transparent;
   transition: border-color 0.2s ease, gap 0.2s ease;
+}
+
+/* مساحة لمس 44px بلا أي تغيير بصري */
+.about-link::before,
+.service__link::before {
+  content: "";
+  position: absolute;
+  inset-block: -0.65rem;
+  inset-inline: -0.5rem;
 }
 
 .about-link:hover {
@@ -4123,6 +4138,7 @@ html.js .project__media.is-ready::before {
 }
 
 .service__link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;

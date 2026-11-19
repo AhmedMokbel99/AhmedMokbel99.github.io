@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-18",
+  "generatedAt": "2026-11-19",
   "name": "Ahmed Mokbel portfolio API",
   "description": "واجهة قراءة عامة (GET فقط) لبيانات البورتفوليو، مولّدة من نفس محتوى الموقع.",
   "documentation": "https://ahmedmokbel99.github.io/docs/api/",
