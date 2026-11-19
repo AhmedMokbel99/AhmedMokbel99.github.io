@@ -36,6 +36,33 @@ Verified against the live host:
 | Content negotiation (`Accept: text/markdown`) | **Impossible** |
 | Server-side routing / JSON-RPC | **Impossible** |
 | DNS records | **Impossible** — `github.io` is not the owner's zone |
+| `Strict-Transport-Security` | Always sent (`max-age=31556952`) — not configurable |
+| `Content-Security-Policy` | No HTTP header. A `<meta http-equiv>` subset is enforced live |
+| `Referrer-Policy` | No HTTP header. `<meta name="referrer">` is enforced live |
+| `frame-ancestors` | **Impossible** — browsers ignore it inside `<meta>` |
+| `X-Content-Type-Options`, `X-Frame-Options`, `Permissions-Policy`, `COOP`, `CORP` | **Impossible** — no `<meta>` equivalent |
+
+### Security headers: what is actually enforced
+
+`build.py` injects the following into every public page, after `<meta charset>`:
+
+- `Content-Security-Policy` via `<meta http-equiv>` — `default-src 'self'`,
+  `script-src 'self'`, `style-src 'self' 'unsafe-inline'` (inline `style="…"`
+  attributes are still used), `img-src 'self' data:`, `media-src 'self'`,
+  `frame-src https://www.youtube-nocookie.com` (the lightbox YouTube embed),
+  `connect-src 'self' https://formsubmit.co` and
+  `form-action 'self' https://formsubmit.co` (the contact form), `base-uri 'self'`,
+  `object-src 'none'`, `manifest-src 'self'`. `frame-ancestors` is deliberately
+  omitted because it is ignored in `<meta>` and would only add a console warning.
+- `Referrer-Policy: strict-origin-when-cross-origin` via `<meta name="referrer">`.
+- `robots` (`index, follow, max-image-preview:large` on public pages; `noindex`
+  on 404 and the generated single-file build).
+
+`netlify.toml` in the repository root contains a fuller header set, but **it is
+not read by GitHub Pages** and none of it is active on the live site. The
+remaining hardening (X-Frame-Options / `frame-ancestors`, nosniff,
+Permissions-Policy, COOP/CORP) needs either a host that supports response
+headers or the Cloudflare Worker in `deploy/cloudflare/`.
 
 ---
 

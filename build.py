@@ -24,6 +24,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import base64
 import hashlib
 import html as html_lib
 import json
@@ -1083,7 +1084,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
     </div>
   </footer>
 
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script>{SERVICE_YEAR_SCRIPT}</script>
 </body>
 </html>
 '''
@@ -1163,6 +1164,67 @@ def update_portrait(html: str, site: dict) -> str:
 
 def update_assets_version(html: str) -> str:
     return re.sub(r"\?v=[^\"'>\s]+", f"?v={ASSET_VERSION}", html)
+
+
+# ── سياسات <head> اللي بتتفرض فعلًا على GitHub Pages ─────────────────────────
+# GitHub Pages ما بتدّيش تحكم في HTTP response headers، فالمتاح هو <meta> فقط:
+#   • Content-Security-Policy — مدعومة عبر <meta http-equiv> (بدون frame-ancestors،
+#     لأن المتصفحات بتتجاهل هذه التوجيهات في <meta> وبتطلع تحذير في الكونسول)
+#   • Referrer-Policy — مدعومة عبر <meta name="referrer">
+#   • robots — مدعومة عبر <meta name="robots">
+# اللي مش ممكن فرضه عبر <meta> (X-Frame-Options، X-Content-Type-Options،
+# Permissions-Policy، COOP/CORP، HSTS) موثّق في docs/agent-readiness.md §1.
+CSP_PUBLIC = (
+    "default-src 'self'; "
+    "base-uri 'self'; "
+    "object-src 'none'; "
+    "script-src 'self'; "
+    "style-src 'self' 'unsafe-inline'; "
+    "img-src 'self' data:; "
+    "font-src 'self' data:; "
+    "media-src 'self'; "
+    "frame-src https://www.youtube-nocookie.com; "
+    "connect-src 'self' https://formsubmit.co; "
+    "form-action 'self' https://formsubmit.co; "
+    "manifest-src 'self'"
+)
+# standalone.html بيضمّن الـCSS والـJS جوّه الملف، فمحتاج 'unsafe-inline' للسكربتات
+CSP_STANDALONE = CSP_PUBLIC.replace("script-src 'self';", "script-src 'self' 'unsafe-inline';")
+REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+# صفحات الخدمات فيها سكربت صغير واحد بيحدّث سنة الفوتر. بدل 'unsafe-inline'
+# بنحسب هاش الـsha256 وقت البناء ونسمح به هو بس.
+SERVICE_YEAR_SCRIPT = "document.getElementById('year').textContent = new Date().getFullYear();"
+SERVICE_YEAR_HASH = base64.b64encode(
+    hashlib.sha256(SERVICE_YEAR_SCRIPT.encode("utf-8")).digest()
+).decode("ascii")
+CSP_SERVICE = CSP_PUBLIC.replace(
+    "script-src 'self';",
+    f"script-src 'self' 'sha256-{SERVICE_YEAR_HASH}';",
+)
+
+
+def head_policy(html: str, *, csp: str = CSP_PUBLIC, robots: str | None = None) -> str:
+    """يحقن CSP + Referrer-Policy (+ robots لو مطلوب) بعد <meta charset> بشكل idempotent."""
+    html = re.sub(r'\n?[ \t]*<meta http-equiv="Content-Security-Policy"[^>]*>', "", html)
+    html = re.sub(r'\n?[ \t]*<meta name="referrer"[^>]*>', "", html)
+    block = [
+        f'  <meta http-equiv="Content-Security-Policy" content="{csp}">',
+        f'  <meta name="referrer" content="{REFERRER_POLICY}">',
+    ]
+    if robots is not None:
+        html = re.sub(r'\n?[ \t]*<meta name="robots"[^>]*>', "", html)
+        if robots:
+            block.append(f'  <meta name="robots" content="{robots}">')
+    new, count = re.subn(
+        r'(<meta charset="[^"]*">)',
+        lambda m: m.group(1) + "\n" + "\n".join(block),
+        html,
+        count=1,
+    )
+    if count != 1:
+        fail("لم يتم العثور على <meta charset> لحقن سياسات <head>.")
+    return new
 
 
 def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
@@ -2019,7 +2081,7 @@ def docs_api_page(site: dict, base: str, slugs: list[str], services: list[dict])
   <title>Portfolio API — Ahmed Mokbel</title>
   <meta name="description" content="Read-only static JSON API for Ahmed Mokbel's portfolio: profile, projects, case studies and services. No authentication, CORS enabled.">
   <link rel="canonical" href="{base}/docs/api/">
-  <link rel="icon" type="image/svg+xml" href="{base}/assets/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
   <link rel="api-catalog" href="{base}/.well-known/api-catalog" type="application/linkset+json">
   <link rel="alternate" type="application/json" href="{base}/openapi.json">
   <meta name="robots" content="index,follow">
@@ -2116,7 +2178,7 @@ def docs_api_page(site: dict, base: str, slugs: list[str], services: list[dict])
 def write_docs_api(site: dict, base: str, slugs: list[str], services: dict) -> None:
     write_nested(
         DOCS_API_DIR / "index.html",
-        docs_api_page(site, base, slugs, services["services"]),
+        head_policy(docs_api_page(site, base, slugs, services["services"])),
     )
 
 
@@ -2397,6 +2459,7 @@ def main() -> None:
         count=1,
     )
     html = update_assets_version(html)
+    html = head_policy(html, robots="index, follow, max-image-preview:large")
     # يمنع تراكم الأسطر الفارغة في الهيد مع كل بناء
     html = re.sub(r"\n{3,}", "\n\n", html)
     write(INDEX, html)
@@ -2404,12 +2467,19 @@ def main() -> None:
     # 2b) 404.html — نفس بصمة الأصول حتى ما يبقاش كاش قديم للـ CSS
     error_page = ROOT / "404.html"
     if error_page.is_file():
-        write(error_page, update_assets_version(read(error_page)))
+        write(error_page, head_policy(update_assets_version(read(error_page))))
 
     # 3) صفحات الخدمات
     for page in pages:
         others = [p for p in pages if p["slug"] != page["slug"]]
-        write(ROOT / page["slug"], service_page(page, site, others))
+        write(
+            ROOT / page["slug"],
+            head_policy(
+                service_page(page, site, others),
+                csp=CSP_SERVICE,
+                robots="index, follow, max-image-preview:large",
+            ),
+        )
 
     # 4) sitemap
     today = dt.date.today().isoformat()
@@ -2464,6 +2534,8 @@ def main() -> None:
 
 
 def build_standalone(html: str) -> None:
+    # السكربتات والستايل مضمّنين جوّه الملف، فالسياستان لازم تسمحا بـ'unsafe-inline'
+    html = head_policy(html, csp=CSP_STANDALONE, robots="noindex")
     css = read(CSS_FILE)
     # standalone.html في جذر الموقع، فمسار الخطوط بيتغيّر
     css = css.replace("../assets/fonts/", "assets/fonts/")
@@ -2492,7 +2564,6 @@ def build_standalone(html: str) -> None:
     if "</body>" not in html:
         fail("لم يتم العثور على </body> في index.html.")
     html = html.replace("</body>", bundle + "</body>", 1)
-    html = html.replace("</head>", '  <meta name="robots" content="noindex">\n</head>', 1)
     html = html.replace(
         "<!DOCTYPE html>",
         "<!DOCTYPE html>\n<!-- نسخة مولّدة آليًا بواسطة build.py — عدّل الملفات الأصلية ثم أعد البناء -->",

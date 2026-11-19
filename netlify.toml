@@ -2,6 +2,17 @@
 #  Netlify configuration — Ahmed Mokbel Portfolio
 #  Static site (HTML / CSS / JS) + Netlify Forms
 # ─────────────────────────────────────────────────────────────
+#
+#  ⚠️  NOT ACTIVE ON THE LIVE SITE.
+#  The portfolio is hosted on GitHub Pages, which ignores this file
+#  completely. Nothing below is sent as an HTTP header today.
+#  Kept only as a reference for a future Netlify/Cloudflare deploy.
+#
+#  What is actually enforced live is the <meta> subset that build.py
+#  injects into every page (Content-Security-Policy + Referrer-Policy
+#  + robots). See docs/agent-readiness.md §1 for the full breakdown of
+#  what GitHub Pages can and cannot enforce.
+# ─────────────────────────────────────────────────────────────
 
 [build]
   publish = "."
@@ -15,7 +26,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
     Strict-Transport-Security = "max-age=31536000"
-    Content-Security-Policy = "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; form-action 'self' https://formsubmit.co; frame-ancestors 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://formsubmit.co; manifest-src 'self'; upgrade-insecure-requests"
     Cache-Control = "public, max-age=0, must-revalidate"
 
 # ── Single-file build: its CSS/JS are inlined by build.py ────
@@ -24,7 +35,7 @@
   for = "/standalone.html"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
-    Content-Security-Policy = "default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; form-action 'self' https://formsubmit.co; frame-ancestors 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://formsubmit.co; manifest-src 'self'; upgrade-insecure-requests"
 
 # ── Long-lived static assets ─────────────────────────────────
 [[headers]]
