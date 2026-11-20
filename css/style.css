@@ -4052,3 +4052,33 @@ html.js .project__media.is-ready::before {
     max-width: none;
   }
 }
+
+/* ============================================================
+   21. لمسات ضبط نهائية
+   ------------------------------------------------------------
+   تعديلات بسيطة تحسّن القراءة والتنقل دون تغيير هوية التصميم.
+   ============================================================ */
+
+:root {
+  --muted: #b3bfd2;
+  --dim: #94a2b8;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}

@@ -586,7 +586,7 @@ const WORK_DATA = [
     "external": false,
     "image": "assets/projects/admission-gateway-rollup.jpg",
     "imageSmall": "assets/projects/admission-gateway-rollup-900.jpg",
-    "imageMedium": "assets/projects/admission-gateway-rollup-1400.jpg",
+    "imageMedium": "assets/projects/admission-gateway-rollup.jpg",
     "width": 1508,
     "height": 2000,
     "summary": "تصميم رول أب لبوابة القبول للالتحاق بالجامعات، يجمع بين الهوية الأكاديمية والوضوح المعلوماتي في قطعة طباعية واحدة.",
