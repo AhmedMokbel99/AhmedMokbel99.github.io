@@ -4134,6 +4134,66 @@ a,
 button {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* ============================================================
+   22. لمسة احترافية متوازنة
+   ------------------------------------------------------------
+   نفس الهوية والألوان، مع تراتب أوضح وتباين أعلى وحواف أدق.
+   ============================================================ */
+
+:root {
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.18);
+  --muted: #b9c5d8;
+  --dim: #9aa8bd;
+}
+
+.section-head h2 {
+  font-size: clamp(1.95rem, 3.7vw, 2.9rem);
+  line-height: 1.25;
+}
+
+.section-head p {
+  max-width: 44rem;
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.hero h1 {
+  line-height: 1.12;
+}
+
+.hero-lead,
+.about-body p,
+.service p,
+.faq p {
+  line-height: 1.9;
+}
+
+.project__title {
+  line-height: 1.35;
+}
+
+.btn {
+  letter-spacing: 0;
+}
+
+.btn--primary {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.service,
+.project {
+  border-color: var(--line-strong);
+}
+
+.service:hover {
+  transform: translateY(-4px);
+}
+
+.project:hover {
+  transform: translateY(-3px);
+}
   </style>
 
   <!-- Structured data -->
