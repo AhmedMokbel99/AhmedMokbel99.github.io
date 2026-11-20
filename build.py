@@ -446,98 +446,6 @@ def stats_block(site: dict, projects: list[dict]) -> str:
     return "\n".join(rows)
 
 
-def case_spot_block(projects: list[dict]) -> str:
-    """دراسة حالة مختارة: أول مشروع مميّز عنده دراسة حالة كاملة.
-
-    بيتغيّر تلقائيًا مع ترتيب المشاريع من اللوحة — من غير أي حقل جديد.
-    """
-    pick = next(
-        (
-            p
-            for p in projects
-            if p.get("featured")
-            and all(str(p.get(k, "")).strip() for k in ("challenge", "role", "result"))
-        ),
-        None,
-    )
-    if not pick:
-        return ""
-
-    image = str(pick.get("image", "")).strip()
-    image_small = str(pick.get("imageSmall") or "").strip()
-    width = int(pick.get("width") or 1200)
-    height = int(pick.get("height") or 900)
-    fallback = image_small or image
-
-    candidates = []
-    if image_small:
-        candidates.append((image_small, 900))
-    if image.startswith("assets/"):
-        wide = re.sub(r"\.(?:jpe?g|png|webp)$", "-1200.jpg", image, flags=re.I)
-        if (ROOT / wide).exists():
-            candidates.append((wide, 1200))
-    candidates.append((image, width))
-    srcset = ", ".join(f"{esc(src)} {w}w" for src, w in candidates if src)
-
-    facts = []
-    for label, key in (
-        ("التحدي", "challenge"),
-        ("دوري في المشروع", "role"),
-        ("النتيجة", "result"),
-    ):
-        value = str(pick.get(key, "")).strip()
-        if not value:
-            continue
-        facts.append(
-            f'''            <div class="case-fact">
-              <dt>{esc(label)}</dt>
-              <dd>{esc(value)}</dd>
-            </div>'''
-        )
-
-    behance = ""
-    if pick.get("external") and pick.get("url"):
-        behance = f'''
-            <a class="btn btn--ghost" href="{esc(pick["url"])}" target="_blank" rel="noopener noreferrer">
-              عرض على بيهانس
-              <svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg>
-            </a>'''
-
-    return f'''          <figure class="case-spot__media" data-reveal>
-            <img
-              src="{esc(fallback)}"
-              srcset="{srcset}"
-              sizes="(max-width: 900px) 92vw, 520px"
-              width="{width}"
-              height="{height}"
-              alt="{esc(project_alt(pick))}"
-              loading="lazy"
-              decoding="async"
-            >
-            <figcaption class="case-spot__label">
-              <span class="case-spot__tag">{esc(pick.get("tag", ""))}</span>
-              <span class="case-spot__hint">اضغط لقراءة الدراسة كاملة</span>
-            </figcaption>
-          </figure>
-
-          <div class="case-spot__body">
-            <div class="eyebrow" data-reveal>دراسة حالة</div>
-            <h2 id="caseTitle" data-reveal>{esc(pick["title"])}</h2>
-            <p class="case-spot__summary" data-reveal>{esc(pick.get("summary", ""))}</p>
-
-            <dl class="case-spot__facts" data-reveal>
-{chr(10).join(facts)}
-            </dl>
-
-            <div class="case-spot__actions" data-reveal>
-              <button type="button" class="btn btn--primary" data-project-open="{esc(pick["id"])}">
-                اقرأ دراسة الحالة كاملة
-                <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-              </button>{behance}
-            </div>
-          </div>'''
-
-
 def process_block(steps: list[dict]) -> str:
     cards = []
     for index, step in enumerate(steps, start=1):
@@ -2404,7 +2312,6 @@ def main() -> None:
         (site.get("faqSection") or {}).get("termsTitle") or "شروط العمل",
     ))
     html = replace_block(html, "channels", channels_block(site))
-    html = replace_block(html, "case-spot", case_spot_block(visible))
     html = replace_block(html, "service-options", service_options(site))
     html = replace_block(html, "static-projects", "\n".join(project_card(p, i) for i, p in enumerate(visible)))
 
