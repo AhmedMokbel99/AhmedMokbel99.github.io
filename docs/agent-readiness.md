@@ -60,8 +60,8 @@ Verified against the live host:
 
 The contact form is submitted as JSON to `https://api.web3forms.com/submit`.
 The public access key lives at `contact.web3formsAccessKey` in
-`content/site.json`; while it is empty the form hides the provider and offers
-the WhatsApp fallback instead.
+`content/site.json`; while it is empty the form offers the WhatsApp fallback
+instead of attempting a send.
 
 `netlify.toml` in the repository root contains a fuller header set, but **it is
 not read by GitHub Pages** and none of it is active on the live site. The
