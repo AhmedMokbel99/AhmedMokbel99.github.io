@@ -1706,13 +1706,8 @@ function initContactForm() {
 
       if (failed) throw new Error(apiMessage || errorDetails || 'send failed');
 
-      const waLink = whatsappStatusLink();
       form.reset();
-      setStatus(
-        'success',
-        'وصلني طلبك، وسأرد عليك خلال 24 ساعة. للاستعجال، اضغط رابط واتساب.',
-        waLink
-      );
+      setStatus('success', 'وصلني طلبك، وسأرد عليك خلال 24 ساعة.');
     } catch (error) {
       const timedOut = error && error.name === 'AbortError';
       setStatus(
