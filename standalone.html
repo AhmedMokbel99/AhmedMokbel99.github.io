@@ -6190,11 +6190,6 @@ button {
                 <span class="field__error" id="errorMessage" aria-live="polite"></span>
               </div>
 
-              <div class="field field--full">
-                <label for="fieldBudget"><span data-cms="form.budgetLabel">الميزانية التقديرية</span> <span class="field__optional" data-cms="form.optional">اختياري</span></label>
-                <input id="fieldBudget" name="budget" type="text" placeholder="اختياري — مثال: 10,000 ج.م" data-cms-attr="placeholder" data-cms="form.budgetPlaceholder" maxlength="60" aria-describedby="errorBudget" toolparamdescription="Optional budget note, 60 characters max.">
-                <span class="field__error" id="errorBudget" aria-live="polite"></span>
-              </div>
             </div>
 
             <div class="form-actions">
@@ -8706,7 +8701,6 @@ function initContactForm() {
     phone: $('#fieldPhone'),
     email: $('#fieldEmail'),
     service: $('#fieldService'),
-    budget: $('#fieldBudget'),
     message: $('#fieldMessage'),
   };
 
@@ -8715,7 +8709,6 @@ function initContactForm() {
     phone: $('#errorPhone'),
     email: $('#errorEmail'),
     service: $('#errorService'),
-    budget: $('#errorBudget'),
     message: $('#errorMessage'),
   };
 
@@ -8774,7 +8767,6 @@ function initContactForm() {
     phone: fields.phone?.value.trim() || '',
     email: fields.email?.value.trim() || '',
     service: fields.service?.value || '',
-    budget: fields.budget?.value.trim() || '',
     message: fields.message?.value.trim() || '',
   });
 
@@ -8787,7 +8779,6 @@ function initContactForm() {
       `الهاتف: ${v.phone}`,
       `البريد: ${v.email || 'غير مذكور'}`,
       `نوع الخدمة: ${v.service}`,
-      `الميزانية التقديرية: ${v.budget || 'غير محددة'}`,
       '',
       'تفاصيل المشروع:',
       v.message,
@@ -8852,7 +8843,6 @@ function initContactForm() {
           phone: values.phone,
           email: values.email,
           service: values.service,
-          budget: values.budget,
           message: values.message,
           _subject: 'طلب مشروع جديد — من الموقع الشخصي',
           _template: 'table',
@@ -9270,7 +9260,6 @@ if (document.readyState === 'loading') {
           },
           message: { type: 'string', description: 'Project details, 10 to 2000 characters.' },
           email: { type: 'string', description: 'Optional email address.' },
-          budget: { type: 'string', description: 'Optional budget note.' },
         },
         required: ['name', 'phone', 'service', 'message'],
         additionalProperties: false,
@@ -9283,14 +9272,12 @@ if (document.readyState === 'loading') {
         var service = String(input.service == null ? '' : input.service).trim();
         var message = String(input.message == null ? '' : input.message).trim();
         var email = String(input.email == null ? '' : input.email).trim();
-        var budget = String(input.budget == null ? '' : input.budget).trim();
 
         if (name.length < 2 || name.length > 80) errors.push('name: 2–80 حرفًا.');
         if (!/^[0-9+\s()\-]{7,20}$/.test(phone)) errors.push('phone: رقم غير صالح.');
         if (!service) errors.push('service: مطلوب.');
         if (message.length < 10 || message.length > 2000) errors.push('message: 10–2000 حرفًا.');
         if (email && !/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(email)) errors.push('email: غير صالح.');
-        if (budget.length > 60) errors.push('budget: 60 حرفًا كحد أقصى.');
 
         if (errors.length) return fail('بيانات غير مكتملة:\n- ' + errors.join('\n- '));
 
@@ -9309,7 +9296,6 @@ if (document.readyState === 'loading') {
         setField('fieldPhone', phone);
         setField('fieldMessage', message);
         setField('fieldEmail', email);
-        setField('fieldBudget', budget);
 
         var select = document.getElementById('fieldService');
         if (select) {

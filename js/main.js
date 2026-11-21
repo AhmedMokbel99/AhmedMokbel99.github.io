@@ -1468,7 +1468,6 @@ function initContactForm() {
     phone: $('#fieldPhone'),
     email: $('#fieldEmail'),
     service: $('#fieldService'),
-    budget: $('#fieldBudget'),
     message: $('#fieldMessage'),
   };
 
@@ -1477,7 +1476,6 @@ function initContactForm() {
     phone: $('#errorPhone'),
     email: $('#errorEmail'),
     service: $('#errorService'),
-    budget: $('#errorBudget'),
     message: $('#errorMessage'),
   };
 
@@ -1536,7 +1534,6 @@ function initContactForm() {
     phone: fields.phone?.value.trim() || '',
     email: fields.email?.value.trim() || '',
     service: fields.service?.value || '',
-    budget: fields.budget?.value.trim() || '',
     message: fields.message?.value.trim() || '',
   });
 
@@ -1549,7 +1546,6 @@ function initContactForm() {
       `الهاتف: ${v.phone}`,
       `البريد: ${v.email || 'غير مذكور'}`,
       `نوع الخدمة: ${v.service}`,
-      `الميزانية التقديرية: ${v.budget || 'غير محددة'}`,
       '',
       'تفاصيل المشروع:',
       v.message,
@@ -1614,7 +1610,6 @@ function initContactForm() {
           phone: values.phone,
           email: values.email,
           service: values.service,
-          budget: values.budget,
           message: values.message,
           _subject: 'طلب مشروع جديد — من الموقع الشخصي',
           _template: 'table',

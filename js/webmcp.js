@@ -228,7 +228,6 @@
           },
           message: { type: 'string', description: 'Project details, 10 to 2000 characters.' },
           email: { type: 'string', description: 'Optional email address.' },
-          budget: { type: 'string', description: 'Optional budget note.' },
         },
         required: ['name', 'phone', 'service', 'message'],
         additionalProperties: false,
@@ -241,14 +240,12 @@
         var service = String(input.service == null ? '' : input.service).trim();
         var message = String(input.message == null ? '' : input.message).trim();
         var email = String(input.email == null ? '' : input.email).trim();
-        var budget = String(input.budget == null ? '' : input.budget).trim();
 
         if (name.length < 2 || name.length > 80) errors.push('name: 2–80 حرفًا.');
         if (!/^[0-9+\s()\-]{7,20}$/.test(phone)) errors.push('phone: رقم غير صالح.');
         if (!service) errors.push('service: مطلوب.');
         if (message.length < 10 || message.length > 2000) errors.push('message: 10–2000 حرفًا.');
         if (email && !/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(email)) errors.push('email: غير صالح.');
-        if (budget.length > 60) errors.push('budget: 60 حرفًا كحد أقصى.');
 
         if (errors.length) return fail('بيانات غير مكتملة:\n- ' + errors.join('\n- '));
 
@@ -267,7 +264,6 @@
         setField('fieldPhone', phone);
         setField('fieldMessage', message);
         setField('fieldEmail', email);
-        setField('fieldBudget', budget);
 
         var select = document.getElementById('fieldService');
         if (select) {
