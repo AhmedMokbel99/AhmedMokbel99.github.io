@@ -1992,8 +1992,8 @@
             <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
-          <!-- FormSubmit: after activation, replace the email in action/data-endpoint with the random alias from the confirmation email. -->
-          <form id="contactForm" novalidate action="https://formsubmit.co/ahmed01068775125@gmail.com" method="POST" data-endpoint="https://formsubmit.co/ajax/ahmed01068775125@gmail.com" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
+          <!-- FormSubmit: the recipient is decoded from SITE_DATA.formRecipient at submit time. After activation, update contact.formRecipient in content/site.json; keep contact.email for mailto links. -->
+          <form id="contactForm" novalidate action="#" method="POST" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
             <input type="hidden" name="_subject" value="طلب مشروع جديد من الموقع الشخصي">
             <input type="hidden" name="_template" value="table">
             <input type="hidden" name="_captcha" value="false">

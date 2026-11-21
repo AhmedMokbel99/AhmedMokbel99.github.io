@@ -4,7 +4,7 @@
 مبني بـ HTML / CSS / JavaScript خام (بدون أي إطار عمل) بدعم كامل للعربية واتجاه RTL،
 وتصميم متجاوب مع جميع الشاشات، وتحسينات SEO وأداء وإتاحة.
 
-- **البريد:** ahmed01068775125@gmail.com
+- **البريد:** YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=
 - **واتساب:** +20 122 808 4197
 - **بيهانس:** https://www.behance.net/ahmed01068b62e
 - **فيسبوك:** https://www.facebook.com/profile.php?id=61581319508233
@@ -137,7 +137,8 @@ js/data.js · index.html · motion-graphics.html · brand-identity.html · sitem
   "brand": { "name": "أحمد مقبل", "jobTitle": "مصمم جرافيك وموشن جرافيك", "location": "المنصورة، مصر",
              "careerStart": 2013, "behanceSince": "2015" },
   "contact": {
-    "email": "ahmed01068775125@gmail.com",
+    "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
+    "emailEncoding": "base64",
     "whatsapp": "201228084197",
     "behance": "https://www.behance.net/ahmed01068b62e",
     "facebook": "https://www.facebook.com/profile.php?id=61581319508233",

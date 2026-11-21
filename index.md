@@ -294,7 +294,7 @@
 ## التواصل
 
 - واتساب: https://wa.me/201228084197
-- البريد: ahmed01068775125@gmail.com
+- البريد: YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=
 - Behance: https://www.behance.net/ahmed01068b62e
 - X: https://x.com/ahmed0106877
 - نموذج التواصل: https://ahmedmokbel99.github.io/#contact

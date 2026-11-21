@@ -144,6 +144,17 @@ def encode_email(value: str) -> str:
     return base64.b64encode(str(value).encode("utf-8")).decode("ascii")
 
 
+def decode_email(value: str) -> str:
+    """يفكّ القيمة المخزّنة في site.json، ويقبل النص العادي للتوافق."""
+    text = str(value or "")
+    if not text:
+        return ""
+    try:
+        return base64.b64decode(text, validate=True).decode("utf-8")
+    except (ValueError, UnicodeDecodeError):
+        return text
+
+
 def read(path: Path) -> str:
     text = path.read_text(encoding="utf-8-sig")
     return text.replace("\r\n", "\n").replace("\r", "\n")
@@ -2223,6 +2234,12 @@ def main() -> None:
     site = load_json(SITE_FILE, "site.json")
     projects = load_json(PROJECTS_FILE, "projects.json")
     pages = load_json(PAGES_FILE, "pages.json")
+
+    contact = site.setdefault("contact", {})
+    if contact.get("email"):
+        contact["email"] = decode_email(contact["email"])
+    if contact.get("formRecipient"):
+        contact["formRecipient"] = decode_email(contact["formRecipient"])
 
     # بصمة المحتوى: تتغيّر مع أي تعديل من اللوحة أو أي تعديل في التصميم/البرمجة،
     # فتكسر كاش data.js و style.css و main.js عند الزوار

@@ -146,7 +146,7 @@ function initSiteData() {
   });
 
   $$('[data-text="email"]').forEach((el) => {
-    if (!el.closest('[data-email-reveal]')) el.textContent = 'اضغط لعرض البريد';
+    el.textContent = 'اضغط لعرض البريد';
   });
 
   /* شرائح المهارات والأدوات */

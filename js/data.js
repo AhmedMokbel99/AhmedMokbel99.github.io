@@ -23,7 +23,9 @@ const SITE_DATA = {
     "url": "https://www.facebook.com/profile.php?id=61581319508233",
     "description": "استوديو إنتاج إبداعي متخصص في إنتاج المحتوى التجاري وتطوير الهويات البصرية."
   },
-  "email": "ahmed01068775125@gmail.com",
+  "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
+  "emailEncoding": "base64",
+  "formRecipient": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
   "whatsapp": "201228084197",
   "behance": "https://www.behance.net/ahmed01068b62e",
   "facebook": "https://www.facebook.com/profile.php?id=61581319508233",

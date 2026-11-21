@@ -20,6 +20,19 @@
   var projects = Array.isArray(WORK_DATA) ? WORK_DATA.slice() : [];
   var MAX_RESULTS = 8;
 
+  var siteEmail = function () {
+    var value = SITE_DATA.email || '';
+    if (!value) return '';
+    if (SITE_DATA.emailEncoding === 'base64') {
+      try {
+        return atob(value);
+      } catch (error) {
+        return value;
+      }
+    }
+    return value;
+  };
+
   var text = function (value) {
     return String(value == null ? '' : value).toLowerCase();
   };
@@ -203,7 +216,7 @@
           stats.length ? 'الأرقام: ' + stats.join('، ') : '',
           '',
           'واتساب: https://wa.me/' + SITE_DATA.whatsapp,
-          'البريد: ' + SITE_DATA.email,
+          'البريد: ' + siteEmail(),
           'Behance: ' + SITE_DATA.behance,
           'المشاريع: /api/projects.json',
         ];
