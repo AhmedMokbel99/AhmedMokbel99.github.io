@@ -1848,7 +1848,7 @@ def write_well_known(site: dict, base: str) -> None:
         WELL_KNOWN_DIR / "security.txt",
         "\n".join(
             [
-                f'Contact: mailto:{site["contact"]["email"]}',
+                f'Contact: mailto:{encode_email(site["contact"]["email"])}',
                 f'Contact: https://wa.me/{site["contact"]["whatsapp"]}',
                 f"Expires: {expires}T00:00:00.000Z",
                 f"Canonical: {base}/.well-known/security.txt",
@@ -1950,7 +1950,7 @@ def write_auth_md(site: dict, base: str) -> None:
         AUTH_MD.format(
             host=host,
             base=base,
-            email=site["contact"]["email"],
+            email=encode_email(site["contact"]["email"]),
             whatsapp=site["contact"]["whatsapp"],
             agency=site["agency"]["name"],
         ),
@@ -2198,7 +2198,7 @@ def write_markdown_mirror(site: dict, projects: list[dict], pages: list[dict], b
             "## التواصل",
             "",
             f'- واتساب: https://wa.me/{contact["whatsapp"]}',
-            f'- البريد: {contact["email"]}',
+            f'- البريد: {encode_email(contact["email"])}',
             f'- صفحة التواصل: {base}/#contact',
             "",
         ]

@@ -21,6 +21,44 @@ const formatCount = (n) => new Intl.NumberFormat('en-US').format(n);
 const whatsappBase = () =>
   typeof SITE_DATA !== 'undefined' ? `https://wa.me/${SITE_DATA.whatsapp}` : '';
 
+/* البريد مشفّر في data.js؛ يتفكّ فقط لما الزائر يضغط على رابط البريد */
+let cachedEmail = null;
+const decodeEmailValue = (value) => {
+  if (!value) return '';
+  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.emailEncoding === 'base64') {
+    try {
+      return atob(value);
+    } catch (_) {
+      return value;
+    }
+  }
+  return value;
+};
+const getEmail = () => {
+  if (cachedEmail !== null) return cachedEmail;
+  cachedEmail =
+    typeof SITE_DATA !== 'undefined' ? decodeEmailValue(SITE_DATA.email) : '';
+  return cachedEmail;
+};
+const getFormRecipient = () => {
+  if (typeof SITE_DATA === 'undefined') return getEmail();
+  return decodeEmailValue(SITE_DATA.formRecipient) || getEmail();
+};
+const revealEmail = () => {
+  const email = getEmail();
+  if (!email) return '';
+  $$('[data-text="email"]').forEach((el) => {
+    el.textContent = email;
+  });
+  return email;
+};
+const mailtoLink = () => {
+  const email = getEmail();
+  return email
+    ? `mailto:${email}?subject=${encodeURIComponent('طلب مشروع جديد — من الموقع الشخصي')}`
+    : '';
+};
+
 /* نفس منطق build.py: يشيل التكرار من نص alt */
 const dedupeAlt = (text) => {
   const out = [];
@@ -76,9 +114,7 @@ function initSiteData() {
   if (typeof SITE_DATA === 'undefined') return;
 
   const links = {
-    email: `mailto:${SITE_DATA.email}?subject=${encodeURIComponent(
-      'طلب مشروع جديد — من الموقع الشخصي'
-    )}`,
+    email: '#contact',
     whatsapp: `${whatsappBase()}?text=${encodeURIComponent(
       'مرحباً أحمد، أود الاستفسار عن مشروع تصميم / موشن جرافيك'
     )}`,
@@ -96,6 +132,13 @@ function initSiteData() {
     if (key === 'email') {
       el.removeAttribute('target');
       el.removeAttribute('rel');
+      el.setAttribute('data-email-reveal', '');
+      el.addEventListener('click', (event) => {
+        if (!revealEmail()) return;
+        event.preventDefault();
+        const url = mailtoLink();
+        if (url) window.location.href = url;
+      });
     } else {
       el.setAttribute('target', '_blank');
       el.setAttribute('rel', 'noopener noreferrer');
@@ -103,7 +146,7 @@ function initSiteData() {
   });
 
   $$('[data-text="email"]').forEach((el) => {
-    el.textContent = SITE_DATA.email;
+    if (!el.closest('[data-email-reveal]')) el.textContent = 'اضغط لعرض البريد';
   });
 
   /* شرائح المهارات والأدوات */
@@ -1445,9 +1488,19 @@ function initContactForm() {
 
     if (link) {
       const anchor = document.createElement('a');
-      anchor.href = link.href;
-      anchor.target = '_blank';
-      anchor.rel = 'noopener noreferrer';
+      if (link.revealEmail) {
+        anchor.href = '#contact';
+        anchor.addEventListener('click', (event) => {
+          event.preventDefault();
+          revealEmail();
+          const url = mailtoUrl();
+          if (url) window.location.href = url;
+        });
+      } else {
+        anchor.href = link.href;
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+      }
       anchor.textContent = link.label;
       anchor.style.cssText = 'color:inherit;text-decoration:underline;margin-inline-start:.35rem;';
       status.append(' ', anchor);
