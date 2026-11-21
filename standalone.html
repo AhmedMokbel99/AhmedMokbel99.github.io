@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://formsubmit.co; form-action 'self' https://formsubmit.co; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="robots" content="noindex">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <title>أحمد مقبل — تصميم وموشن جرافيك وتصوير | مصمم ومخرج بصري</title>
@@ -15,6 +15,7 @@
   <meta name="color-scheme" content="dark">
   <link rel="canonical" href="https://ahmedmokbel99.github.io/">
   <link rel="api-catalog" href="https://ahmedmokbel99.github.io/.well-known/api-catalog" type="application/linkset+json">
+  <link rel="privacy-policy" href="https://ahmedmokbel99.github.io/privacy.html" type="text/html">
   <link rel="service-doc" href="https://ahmedmokbel99.github.io/docs/api/" type="text/html">
   <link rel="describedby" href="https://ahmedmokbel99.github.io/.well-known/ai-catalog.json" type="application/json">
   <link rel="alternate" type="text/markdown" href="https://ahmedmokbel99.github.io/index.md" hreflang="ar">
@@ -353,6 +354,10 @@ body.has-dialog {
 
 .skip-link:focus {
   top: 0;
+}
+
+main:focus {
+  outline: none;
 }
 
 .eyebrow {
@@ -5628,7 +5633,7 @@ button {
     type="button"
     class="project__open"
     data-project-open="f16"
-    aria-label="عرض تفاصيل مشروع EN-SERV — تحريك شعار — تحريك شعار"
+    aria-label="عرض تفاصيل مشروع EN-SERV — تحريك شعار"
   ></button>
 </article>
 <article class="project is-deferred" data-reveal data-project-card="f17" data-category="ads">
@@ -5670,7 +5675,7 @@ button {
       sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
       width="1200"
       height="900"
-      alt="المقصود للمولدات — إعلان الشركة — إعلان شركة"
+      alt="المقصود للمولدات — إعلان الشركة"
       loading="lazy"
       decoding="async"
     >
@@ -5690,7 +5695,7 @@ button {
     type="button"
     class="project__open"
     data-project-open="f18"
-    aria-label="عرض تفاصيل مشروع المقصود للمولدات — إعلان الشركة — إعلان شركة"
+    aria-label="عرض تفاصيل مشروع المقصود للمولدات — إعلان الشركة"
   ></button>
 </article>
 <article class="project is-deferred" data-reveal data-project-card="f19" data-category="ads">
@@ -6204,7 +6209,8 @@ button {
               </button>
             </div>
 
-            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب إلى بريدي مباشرة. إن تعذّر الإرسال، يمكنك إرساله عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
+            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب إلى بريدي عبر FormSubmit. إن تعذّر الإرسال، يمكنك إرساله عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
+            <p class="form-note">الإرسال عبر FormSubmit · <a href="privacy.html">سياسة الخصوصية</a></p>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -7119,7 +7125,7 @@ const WORK_DATA = [
     "role": "التصميم والتحريك ثلاثي الأبعاد والمونتاج.",
     "result": "إعلان تعريفي جاهز للنشر.",
     "tools": "موشن جرافيك – 3D – مونتاج",
-    "alt": "المقصود للمولدات — إعلان الشركة — إعلان شركة",
+    "alt": "المقصود للمولدات — إعلان الشركة",
     "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg",
     "slug": "elmaqsoud-generators-ad"
   },
@@ -7295,14 +7301,22 @@ const mailtoLink = () => {
     : '';
 };
 
-/* نفس منطق build.py: يشيل التكرار من نص alt */
+/* نفس منطق build.py: يشيل التكرار من نص alt ومن الـ aria-label */
+const normalizeDedupe = (text) =>
+  String(text || '')
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/ة/g, 'ه')
+    .replace(/[\u064B-\u0652]/g, '')
+    .replace(/^ال/, '');
+
 const dedupeAlt = (text) => {
   const out = [];
   String(text || '')
     .split(' — ')
     .forEach((part) => {
       const value = part.trim();
-      if (value && (!out.length || out[out.length - 1].toLowerCase() !== value.toLowerCase())) {
+      if (value && (!out.length || normalizeDedupe(out[out.length - 1]) !== normalizeDedupe(value))) {
         out.push(value);
       }
     });
@@ -7382,7 +7396,7 @@ function initSiteData() {
   });
 
   $$('[data-text="email"]').forEach((el) => {
-    el.textContent = 'اضغط لعرض البريد';
+    if (el.closest('[data-email-reveal]')) el.textContent = 'اضغط لعرض البريد';
   });
 
   /* شرائح المهارات والأدوات */
@@ -7894,7 +7908,7 @@ function projectMarkup(project) {
         type="button"
         class="project__open"
         data-project-open="${project.id}"
-        aria-label="عرض تفاصيل مشروع ${project.title} — ${project.tag}"
+        aria-label="${dedupeAlt(`عرض تفاصيل مشروع ${project.title} — ${project.tag}`)}"
       ></button>
     </article>`;
 }
@@ -8857,8 +8871,21 @@ function initContactForm() {
     window.open(url, '_blank', 'noopener');
   };
 
+  /* فتح واتساب بعد await بيتمنعه المتصفح؛ نخلي الزائر يضغط الرابط بنفسه */
+  const whatsappStatusLink = () => {
+    const href = whatsappUrl();
+    return href ? { href, label: 'افتح واتساب' } : null;
+  };
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+
+    if (form.querySelector('[name="_honey"]')?.value) {
+      form.reset();
+      clearStatus();
+      return;
+    }
+
     clearStatus();
 
     if (!validateAll()) {
@@ -8870,12 +8897,12 @@ function initContactForm() {
     const endpoint = recipient ? `https://formsubmit.co/ajax/${recipient}` : '';
     if (recipient) form.action = `https://formsubmit.co/${recipient}`;
 
-    /* لو المتصفح قديم أو الإرسال المباشر مش متاح، بنرجع لواتساب فورًا */
+    /* لو المتصفح قديم أو الإرسال المباشر مش متاح، بنعرض رابط واتساب يضغطه الزائر */
     if (!endpoint || typeof window.fetch !== 'function') {
-      openWhatsApp();
       setStatus(
         'success',
-        'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق وسأرد عليك في أقرب وقت.'
+        'تم تجهيز رسالتك على واتساب — اضغط الرابط وراجعها قبل الإرسال.',
+        whatsappStatusLink()
       );
       return;
     }
@@ -8925,17 +8952,21 @@ function initContactForm() {
 
       if (failed) throw new Error(message || 'send failed');
 
+      const waLink = whatsappStatusLink();
       form.reset();
-      setStatus('success', 'وصلني طلبك، وسأرد عليك خلال 24 ساعة. للاستعجال، أرسل رسالة على واتساب.');
+      setStatus(
+        'success',
+        'وصلني طلبك، وسأرد عليك خلال 24 ساعة. للاستعجال، اضغط رابط واتساب.',
+        waLink
+      );
     } catch (error) {
       const timedOut = error && error.name === 'AbortError';
-      openWhatsApp();
       setStatus(
         'info',
         timedOut
-          ? 'استغرق الإرسال وقتًا أطول من المتوقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.'
-          : 'تعذّر إرسال الطلب من الموقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.',
-        { href: '#contact', label: 'أو أرسل عبر البريد', revealEmail: true }
+          ? 'استغرق الإرسال وقتًا أطول من المتوقع. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.'
+          : 'تعذّر إرسال الطلب من الموقع. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.',
+        whatsappStatusLink()
       );
     } finally {
       window.clearTimeout(timeout);
@@ -9186,7 +9217,7 @@ if (document.readyState === 'loading') {
           },
           category: {
             type: 'string',
-            enum: ['motion', 'brand', 'digital'],
+            enum: ['motion', 'ads', 'brand', 'digital'],
             description: 'Optional discipline filter.',
           },
         },
@@ -9312,6 +9343,10 @@ if (document.readyState === 'loading') {
           'البريد: ' + siteEmail(),
           'Behance: ' + SITE_DATA.behance,
           'المشاريع: /api/projects.json',
+          'سياسة الخصوصية: /privacy.html',
+          'كتالوج API: /.well-known/api-catalog',
+          'كتالوج الوكلاء: /.well-known/ai-catalog.json',
+          'توثيق API: /docs/api/',
         ];
         return reply(
           lines.filter(function (line) { return line !== ''; }).join('\n')

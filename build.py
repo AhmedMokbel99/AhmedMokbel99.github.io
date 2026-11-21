@@ -313,12 +313,26 @@ def replace_block(html: str, name: str, inner: str) -> str:
 # ---------------------------------------------------------------------------
 # 3) مكوّنات HTML
 # ---------------------------------------------------------------------------
+DEDUPE_TRANSLATION = str.maketrans(
+    {
+        "أ": "ا", "إ": "ا", "آ": "ا", "ى": "ي", "ة": "ه",
+        "َ": "", "ً": "", "ٌ": "", "ْ": "", "ِ": "", "ٍ": "", "ّ": "",
+    }
+)
+
+
+def normalize_dedupe(text: str) -> str:
+    """تطبيع خفيف للمقارنة: الألف/الياء/التاء والـ«ال» لا تفرّق بين جزأين مكررين."""
+    value = str(text or "").translate(DEDUPE_TRANSLATION)
+    return value[2:] if value.startswith("ال") else value
+
+
 def dedupe_alt(text: str) -> str:
     """يشيل التكرار في نص الصورة البديل: «اسم — وصف — وصف» -> «اسم — وصف»."""
     parts = [part.strip() for part in str(text).split(" — ")]
     out: list[str] = []
     for part in parts:
-        if part and (not out or out[-1].lower() != part.lower()):
+        if part and (not out or normalize_dedupe(out[-1]) != normalize_dedupe(part)):
             out.append(part)
     return " — ".join(out)
 
@@ -355,6 +369,7 @@ def project_card(project: dict, index: int = 0) -> str:
         if part
     )
     alt = project_alt(project)
+    aria_label = dedupe_alt(f'عرض تفاصيل مشروع {project["title"]} — {project.get("tag", "")}')
 
     badge = (
         '<span class="project__type">'
@@ -391,7 +406,7 @@ def project_card(project: dict, index: int = 0) -> str:
     type="button"
     class="project__open"
     data-project-open="{esc(project["id"])}"
-    aria-label="عرض تفاصيل مشروع {esc(project["title"])} — {esc(project["tag"])}"
+    aria-label="{esc(aria_label)}"
   ></button>
 </article>'''
 
@@ -2221,6 +2236,7 @@ def agent_head_links(base: str, markdown_href: str) -> str:
     return "\n".join(
         [
             f'  <link rel="api-catalog" href="{base}/.well-known/api-catalog" type="application/linkset+json">',
+            f'  <link rel="privacy-policy" href="{base}/privacy.html" type="text/html">',
             f'  <link rel="service-doc" href="{base}/docs/api/" type="text/html">',
             f'  <link rel="describedby" href="{base}/.well-known/ai-catalog.json" type="application/json">',
             f'  <link rel="alternate" type="text/markdown" href="{base}{markdown_href}" hreflang="ar">',
@@ -2464,7 +2480,7 @@ def main() -> None:
 
 def build_standalone(html: str) -> None:
     # السكربتات والستايل مضمّنين جوّه الملف، فالسياستان لازم تسمحا بـ'unsafe-inline'
-    html = head_policy(html, csp=CSP_STANDALONE, robots="noindex")
+    html = head_policy(html, csp=CSP_STANDALONE, robots="index, follow, max-image-preview:large")
     css = read(CSS_FILE)
     # standalone.html في جذر الموقع، فمسار الخطوط بيتغيّر
     css = css.replace("../assets/fonts/", "assets/fonts/")

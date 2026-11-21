@@ -709,7 +709,7 @@ const WORK_DATA = [
     "role": "التصميم والتحريك ثلاثي الأبعاد والمونتاج.",
     "result": "إعلان تعريفي جاهز للنشر.",
     "tools": "موشن جرافيك – 3D – مونتاج",
-    "alt": "المقصود للمولدات — إعلان الشركة — إعلان شركة",
+    "alt": "المقصود للمولدات — إعلان الشركة",
     "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg",
     "slug": "elmaqsoud-generators-ad"
   },

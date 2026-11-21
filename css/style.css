@@ -303,6 +303,10 @@ body.has-dialog {
   top: 0;
 }
 
+main:focus {
+  outline: none;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;

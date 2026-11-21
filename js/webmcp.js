@@ -93,7 +93,7 @@
           },
           category: {
             type: 'string',
-            enum: ['motion', 'brand', 'digital'],
+            enum: ['motion', 'ads', 'brand', 'digital'],
             description: 'Optional discipline filter.',
           },
         },
@@ -219,6 +219,10 @@
           'البريد: ' + siteEmail(),
           'Behance: ' + SITE_DATA.behance,
           'المشاريع: /api/projects.json',
+          'سياسة الخصوصية: /privacy.html',
+          'كتالوج API: /.well-known/api-catalog',
+          'كتالوج الوكلاء: /.well-known/ai-catalog.json',
+          'توثيق API: /docs/api/',
         ];
         return reply(
           lines.filter(function (line) { return line !== ''; }).join('\n')

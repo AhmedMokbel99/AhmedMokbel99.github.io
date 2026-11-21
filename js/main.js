@@ -59,14 +59,22 @@ const mailtoLink = () => {
     : '';
 };
 
-/* نفس منطق build.py: يشيل التكرار من نص alt */
+/* نفس منطق build.py: يشيل التكرار من نص alt ومن الـ aria-label */
+const normalizeDedupe = (text) =>
+  String(text || '')
+    .replace(/[أإآ]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/ة/g, 'ه')
+    .replace(/[\u064B-\u0652]/g, '')
+    .replace(/^ال/, '');
+
 const dedupeAlt = (text) => {
   const out = [];
   String(text || '')
     .split(' — ')
     .forEach((part) => {
       const value = part.trim();
-      if (value && (!out.length || out[out.length - 1].toLowerCase() !== value.toLowerCase())) {
+      if (value && (!out.length || normalizeDedupe(out[out.length - 1]) !== normalizeDedupe(value))) {
         out.push(value);
       }
     });
@@ -146,7 +154,7 @@ function initSiteData() {
   });
 
   $$('[data-text="email"]').forEach((el) => {
-    el.textContent = 'اضغط لعرض البريد';
+    if (el.closest('[data-email-reveal]')) el.textContent = 'اضغط لعرض البريد';
   });
 
   /* شرائح المهارات والأدوات */
@@ -658,7 +666,7 @@ function projectMarkup(project) {
         type="button"
         class="project__open"
         data-project-open="${project.id}"
-        aria-label="عرض تفاصيل مشروع ${project.title} — ${project.tag}"
+        aria-label="${dedupeAlt(`عرض تفاصيل مشروع ${project.title} — ${project.tag}`)}"
       ></button>
     </article>`;
 }
@@ -1621,8 +1629,21 @@ function initContactForm() {
     window.open(url, '_blank', 'noopener');
   };
 
+  /* فتح واتساب بعد await بيتمنعه المتصفح؛ نخلي الزائر يضغط الرابط بنفسه */
+  const whatsappStatusLink = () => {
+    const href = whatsappUrl();
+    return href ? { href, label: 'افتح واتساب' } : null;
+  };
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+
+    if (form.querySelector('[name="_honey"]')?.value) {
+      form.reset();
+      clearStatus();
+      return;
+    }
+
     clearStatus();
 
     if (!validateAll()) {
@@ -1634,12 +1655,12 @@ function initContactForm() {
     const endpoint = recipient ? `https://formsubmit.co/ajax/${recipient}` : '';
     if (recipient) form.action = `https://formsubmit.co/${recipient}`;
 
-    /* لو المتصفح قديم أو الإرسال المباشر مش متاح، بنرجع لواتساب فورًا */
+    /* لو المتصفح قديم أو الإرسال المباشر مش متاح، بنعرض رابط واتساب يضغطه الزائر */
     if (!endpoint || typeof window.fetch !== 'function') {
-      openWhatsApp();
       setStatus(
         'success',
-        'تم تجهيز رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق وسأرد عليك في أقرب وقت.'
+        'تم تجهيز رسالتك على واتساب — اضغط الرابط وراجعها قبل الإرسال.',
+        whatsappStatusLink()
       );
       return;
     }
@@ -1689,17 +1710,21 @@ function initContactForm() {
 
       if (failed) throw new Error(message || 'send failed');
 
+      const waLink = whatsappStatusLink();
       form.reset();
-      setStatus('success', 'وصلني طلبك، وسأرد عليك خلال 24 ساعة. للاستعجال، أرسل رسالة على واتساب.');
+      setStatus(
+        'success',
+        'وصلني طلبك، وسأرد عليك خلال 24 ساعة. للاستعجال، اضغط رابط واتساب.',
+        waLink
+      );
     } catch (error) {
       const timedOut = error && error.name === 'AbortError';
-      openWhatsApp();
       setStatus(
         'info',
         timedOut
-          ? 'استغرق الإرسال وقتًا أطول من المتوقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.'
-          : 'تعذّر إرسال الطلب من الموقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.',
-        { href: '#contact', label: 'أو أرسل عبر البريد', revealEmail: true }
+          ? 'استغرق الإرسال وقتًا أطول من المتوقع. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.'
+          : 'تعذّر إرسال الطلب من الموقع. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.',
+        whatsappStatusLink()
       );
     } finally {
       window.clearTimeout(timeout);
