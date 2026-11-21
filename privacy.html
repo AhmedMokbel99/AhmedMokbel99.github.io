@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>سياسة الخصوصية | أحمد مقبل</title>
   <meta name="description" content="كيف تُجمع بياناتك عند استخدام نموذج التواصل في موقع أحمد مقبل، ولماذا تُستخدم، وكيف تتواصل معنا بخصوصها.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://api.web3forms.com; form-action 'self'; manifest-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com https://ahmed-contact-endpoint.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#07080d">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -48,11 +48,12 @@
       <h2>كيف تُستخدم البيانات؟</h2>
       <p>تُستخدم البيانات حصرًا للرد على استفسارك ومناقشة تفاصيل المشروع المحتمل. لا تُباع ولا تُشارك مع أطراف تسويقية.</p>
 
-      <h2>Web3Forms</h2>
-      <p>يُرسل النموذج عبر خدمة <a href="https://web3forms.com/" target="_blank" rel="noopener noreferrer" lang="en">Web3Forms</a> باستخدام مفتاح وصول عام مخزّن في إعدادات الموقع، بدل كشف البريد المباشر في صفحة الموقع. تتولّى الخدمة توصيل الرسالة إلينا، وتطبّق سياسة الخصوصية الخاصة بها أيضًا.</p>
+      <h2>من يتلقّى البيانات؟</h2>
+      <p>يمرّ طلبك عبر عامل <a href="https://developers.cloudflare.com/workers/" target="_blank" rel="noopener noreferrer" lang="en">Cloudflare Workers</a> للتحقق من الطلب وتحديد الحد المسموح، ثم يصل إشعار به إلى بوت خاص بنا على <a href="https://telegram.org/" target="_blank" rel="noopener noreferrer" lang="en">Telegram</a>. لا تظهر مفاتيح الخدمات في صفحة الموقع. يتولّى <a href="https://developers.cloudflare.com/turnstile/" target="_blank" rel="noopener noreferrer" lang="en">Cloudflare Turnstile</a> التحقق الآلي، وقد يعالج عنوان IP وبيانات الطلب وفق سياسته الخاصة.</p>
 
       <h2>الاحتفاظ بالبيانات وحذفها</h2>
-      <p>نحتفظ بالرسائل مدة الرد على الطلب فقط، ثم تحذفها عند عدم الحاجة إليها. يمكنك طلب حذف أي بيانات أرسلتها عبر التواصل من صفحة <a href="index.html#contact">التواصل</a> أو عبر واتساب.</p>
+      <p>يُحفظ إشعار Telegram في محادثة البوت لحين الرد على طلبك، ويمكن حذفه عند عدم الحاجة إليه. لا يخزّن العامل اسمك أو رسالتك؛ بل يحتفظ بقيمة مشفّرة لعنوان IP مع أوقات المحاولات فقط لمدة ساعة واحدة لمنع الإرسال المتكرر، ثم تُحذف تلقائيًا. سجلات الرفض لا تحتوي على بياناتك، بل على سبب الرفض فقط.</p>
+      <p>لك الحق في طلب حذف أي بيانات أرسلتها. أرسل الطلب من صفحة <a href="index.html#contact">التواصل</a> أو عبر واتساب وسنحذف إشعارك.</p>
 
       <a class="btn btn--ghost legal-back" href="index.html">العودة إلى الرئيسية</a>
     </article>

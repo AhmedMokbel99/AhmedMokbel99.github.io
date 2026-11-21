@@ -31,6 +31,7 @@ import json
 import re
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content"
@@ -206,7 +207,8 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
             "description": site["agency"]["description"],
         },
         "email": encode_email(contact["email"]),
-        "web3formsAccessKey": contact.get("web3formsAccessKey", ""),
+        "contactEndpoint": contact.get("contactEndpoint", ""),
+        "turnstileSiteKey": contact.get("turnstileSiteKey", ""),
         "whatsapp": contact["whatsapp"],
         "behance": contact["behance"],
         "facebook": contact["facebook"],
@@ -1160,38 +1162,58 @@ def update_assets_version(html: str) -> str:
 #   • robots — مدعومة عبر <meta name="robots">
 # اللي مش ممكن فرضه عبر <meta> (X-Frame-Options، X-Content-Type-Options،
 # Permissions-Policy، COOP/CORP، HSTS) موثّق في docs/agent-readiness.md §1.
-CSP_PUBLIC = (
-    "default-src 'self'; "
-    "base-uri 'self'; "
-    "object-src 'none'; "
-    "script-src 'self'; "
-    "style-src 'self' 'unsafe-inline'; "
-    "img-src 'self' data:; "
-    "font-src 'self' data:; "
-    "media-src 'self'; "
-    "frame-src https://www.youtube-nocookie.com; "
-    "connect-src 'self' https://api.web3forms.com; "
-    "form-action 'self'; "
-    "manifest-src 'self'"
-)
-# standalone.html بيضمّن الـCSS والـJS جوّه الملف، فمحتاج 'unsafe-inline' للسكربتات
-CSP_STANDALONE = CSP_PUBLIC.replace("script-src 'self';", "script-src 'self' 'unsafe-inline';")
+TURNSTILE_ORIGIN = "https://challenges.cloudflare.com"
+YOUTUBE_ORIGIN = "https://www.youtube-nocookie.com"
+
+# يُضبط في main() من contact.contactEndpoint الموجود في content/site.json،
+# عشان سياسة connect-src تتبع عنوان العامل الفعلي وما ترجعش لعنوان قديم.
+def configure_csp(site: dict) -> None:
+    global CSP_PUBLIC, CSP_STANDALONE, CSP_SERVICE
+
+    endpoint = str((site.get("contact") or {}).get("contactEndpoint") or "").strip()
+    parsed = urlparse(endpoint)
+    if parsed.scheme not in {"https", "http"} or not parsed.netloc:
+        fail("site.json: contact.contactEndpoint لازم يكون رابط HTTPS صالح للعامل.")
+    worker_origin = f"{parsed.scheme}://{parsed.netloc}"
+
+    CSP_PUBLIC = (
+        "default-src 'self'; "
+        "base-uri 'self'; "
+        "object-src 'none'; "
+        f"script-src 'self' {TURNSTILE_ORIGIN}; "
+        "style-src 'self' 'unsafe-inline'; "
+        "img-src 'self' data:; "
+        "font-src 'self' data:; "
+        "media-src 'self'; "
+        f"frame-src {YOUTUBE_ORIGIN} {TURNSTILE_ORIGIN}; "
+        f"connect-src 'self' {TURNSTILE_ORIGIN} {worker_origin}; "
+        "form-action 'self'; "
+        "manifest-src 'self'"
+    )
+    # standalone.html بيضمّن الـCSS والـJS جوّه الملف، فمحتاج 'unsafe-inline' للسكربتات
+    CSP_STANDALONE = CSP_PUBLIC.replace(
+        f"script-src 'self' {TURNSTILE_ORIGIN};",
+        f"script-src 'self' {TURNSTILE_ORIGIN} 'unsafe-inline';",
+    )
+    # صفحات الخدمات فيها سكربت صغير واحد بيحدّث سنة الفوتر. بدل 'unsafe-inline'
+    # بنحسب هاش الـsha256 وقت البناء ونسمح به هو بس.
+    CSP_SERVICE = CSP_PUBLIC.replace(
+        f"script-src 'self' {TURNSTILE_ORIGIN};",
+        f"script-src 'self' {TURNSTILE_ORIGIN} 'sha256-{SERVICE_YEAR_HASH}';",
+    )
+
+
 REFERRER_POLICY = "strict-origin-when-cross-origin"
 
-# صفحات الخدمات فيها سكربت صغير واحد بيحدّث سنة الفوتر. بدل 'unsafe-inline'
-# بنحسب هاش الـsha256 وقت البناء ونسمح به هو بس.
 SERVICE_YEAR_SCRIPT = "document.getElementById('year').textContent = new Date().getFullYear();"
 SERVICE_YEAR_HASH = base64.b64encode(
     hashlib.sha256(SERVICE_YEAR_SCRIPT.encode("utf-8")).digest()
 ).decode("ascii")
-CSP_SERVICE = CSP_PUBLIC.replace(
-    "script-src 'self';",
-    f"script-src 'self' 'sha256-{SERVICE_YEAR_HASH}';",
-)
 
 
-def head_policy(html: str, *, csp: str = CSP_PUBLIC, robots: str | None = None) -> str:
+def head_policy(html: str, *, csp: str | None = None, robots: str | None = None) -> str:
     """يحقن CSP + Referrer-Policy (+ robots لو مطلوب) بعد <meta charset> بشكل idempotent."""
+    csp = CSP_PUBLIC if csp is None else csp
     html = re.sub(r'\n?[ \t]*<meta http-equiv="Content-Security-Policy"[^>]*>', "", html)
     html = re.sub(r'\n?[ \t]*<meta name="referrer"[^>]*>', "", html)
     block = [
@@ -2301,6 +2323,7 @@ def main() -> None:
     contact = site.setdefault("contact", {})
     if contact.get("email"):
         contact["email"] = decode_email(contact["email"])
+    configure_csp(site)
 
     # بصمة المحتوى: تتغيّر مع أي تعديل من اللوحة أو أي تعديل في التصميم/البرمجة،
     # فتكسر كاش data.js و style.css و main.js عند الزوار

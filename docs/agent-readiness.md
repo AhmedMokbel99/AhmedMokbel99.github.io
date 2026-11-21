@@ -47,21 +47,24 @@ Verified against the live host:
 `build.py` injects the following into every public page, after `<meta charset>`:
 
 - `Content-Security-Policy` via `<meta http-equiv>` — `default-src 'self'`,
-  `script-src 'self'`, `style-src 'self' 'unsafe-inline'` (inline `style="…"`
-  attributes are still used), `img-src 'self' data:`, `media-src 'self'`,
-  `frame-src https://www.youtube-nocookie.com` (the lightbox YouTube embed),
-  `connect-src 'self' https://api.web3forms.com` and
-  `form-action 'self'` (the contact form is submitted as JSON), `base-uri 'self'`,
-  `object-src 'none'`, `manifest-src 'self'`. `frame-ancestors` is deliberately
-  omitted because it is ignored in `<meta>` and would only add a console warning.
+  `script-src 'self' https://challenges.cloudflare.com`,
+  `style-src 'self' 'unsafe-inline'` (inline `style="…"` attributes are still
+  used), `img-src 'self' data:`, `media-src 'self'`,
+  `frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com`
+  (the lightbox embed and Turnstile widget),
+  `connect-src 'self' <contact Worker origin>` and `form-action 'self'` (the
+  contact form is submitted as JSON), `base-uri 'self'`, `object-src 'none'`,
+  `manifest-src 'self'`. `frame-ancestors` is deliberately omitted because it is
+  ignored in `<meta>` and would only add a console warning.
 - `Referrer-Policy: strict-origin-when-cross-origin` via `<meta name="referrer">`.
 - `robots` (`index, follow, max-image-preview:large` on public pages; `noindex`
   on 404 and the admin area).
 
-The contact form is submitted as JSON to `https://api.web3forms.com/submit`.
-The public access key lives at `contact.web3formsAccessKey` in
-`content/site.json`; while it is empty the form offers the WhatsApp fallback
-instead of attempting a send.
+The contact form is submitted as JSON to the Worker URL in
+`contact.contactEndpoint` in `content/site.json`. The public Turnstile sitekey
+is in `contact.turnstileSiteKey`; the secret key, Telegram token/chat ID and
+contact email exist only as Worker Secrets in `worker/`. While either value is
+empty, the form offers the WhatsApp fallback instead of attempting a send.
 
 `netlify.toml` in the repository root contains a fuller header set, but **it is
 not read by GitHub Pages** and none of it is active on the live site. The

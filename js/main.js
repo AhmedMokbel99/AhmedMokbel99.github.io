@@ -57,9 +57,13 @@ const getEmail = () => {
     typeof SITE_DATA !== 'undefined' ? decodeEmailValue(SITE_DATA.email) : '';
   return cachedEmail;
 };
-const getWeb3FormsAccessKey = () => {
+const getContactEndpoint = () => {
   if (typeof SITE_DATA === 'undefined') return '';
-  return String(SITE_DATA.web3formsAccessKey || '').trim();
+  return String(SITE_DATA.contactEndpoint || '').trim();
+};
+const getTurnstileSiteKey = () => {
+  if (typeof SITE_DATA === 'undefined') return '';
+  return String(SITE_DATA.turnstileSiteKey || '').trim();
 };
 const revealEmail = () => {
   const email = getEmail();
@@ -1504,6 +1508,8 @@ function initContactForm() {
   const status = $('#formStatus');
   const whatsappBtn = $('#formWhatsapp');
   const submitBtn = $('#formSubmit');
+  const turnstileHost = $('#turnstileWidget');
+  const turnstileNote = $('#turnstileNote');
 
   const clock = () =>
     window.performance && typeof performance.now === 'function' ? performance.now() : Date.now();
@@ -1671,6 +1677,123 @@ function initContactForm() {
     return href ? { href, label: 'افتح واتساب' } : null;
   };
 
+  const siteKey = getTurnstileSiteKey();
+  let turnstileId = null;
+  let turnstileToken = '';
+  let turnstileFailed = false;
+  let turnstileStarting = null;
+
+  const showVerificationFallback = () => {
+    if (turnstileNote) {
+      turnstileNote.textContent = 'تعذّر تحميل التحقق. يمكنك إرسال طلبك عبر واتساب.';
+    }
+    setStatus(
+      'info',
+      'تعذّر تحميل التحقق. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.',
+      whatsappStatusLink()
+    );
+  };
+
+  const loadTurnstile = () =>
+    new Promise((resolve, reject) => {
+      if (window.turnstile) {
+        resolve();
+        return;
+      }
+      if (!siteKey) {
+        reject(new Error('missing_sitekey'));
+        return;
+      }
+      let script = $('#turnstileScript');
+      if (!script) {
+        script = document.createElement('script');
+        script.id = 'turnstileScript';
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.defer = true;
+        script.onload = () => (window.turnstile ? resolve() : reject(new Error('turnstile_unavailable')));
+        script.onerror = () => reject(new Error('turnstile_load_failed'));
+        document.head.appendChild(script);
+        return;
+      }
+      script.addEventListener('load', () => (window.turnstile ? resolve() : reject(new Error('turnstile_unavailable'))), { once: true });
+      script.addEventListener('error', () => reject(new Error('turnstile_load_failed')), { once: true });
+    });
+
+  const startTurnstile = () => {
+    if (turnstileFailed || turnstileStarting || turnstileId !== null || !turnstileHost || !siteKey) {
+      return turnstileStarting || Promise.resolve();
+    }
+    turnstileStarting = (async () => {
+      try {
+        await loadTurnstile();
+        await new Promise((resolve) => window.turnstile.ready(resolve));
+        turnstileId = window.turnstile.render(turnstileHost, {
+          sitekey: siteKey,
+          theme: 'dark',
+          size: 'normal',
+          language: 'ar',
+          action: 'contact_form',
+          callback: (token) => {
+            turnstileToken = String(token || '');
+            if (turnstileNote) turnstileNote.textContent = '';
+          },
+          'expired-callback': () => {
+            turnstileToken = '';
+            if (turnstileNote) turnstileNote.textContent = 'انتهت صلاحية التحقق. سيُعاد تشغيله تلقائيًا.';
+            if (turnstileId !== null && window.turnstile) window.turnstile.reset(turnstileId);
+          },
+          'error-callback': () => {
+            turnstileToken = '';
+            turnstileFailed = true;
+            showVerificationFallback();
+          },
+        });
+      } catch (_) {
+        turnstileFailed = true;
+        showVerificationFallback();
+      } finally {
+        turnstileStarting = null;
+      }
+    })();
+    return turnstileStarting;
+  };
+
+  const waitForTurnstileToken = (timeoutMs) =>
+    new Promise((resolve) => {
+      const started = Date.now();
+      const poll = () => {
+        if (turnstileToken) {
+          resolve(true);
+        } else if (turnstileFailed || Date.now() - started >= timeoutMs) {
+          resolve(false);
+        } else {
+          window.setTimeout(poll, 200);
+        }
+      };
+      poll();
+    });
+
+  if (turnstileHost && siteKey) {
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            startTurnstile();
+          }
+        },
+        { rootMargin: '200px' }
+      );
+      observer.observe(form);
+    } else {
+      startTurnstile();
+    }
+    form.addEventListener('focusin', startTurnstile, { once: true });
+  } else if (turnstileNote) {
+    turnstileNote.textContent = 'التحقق غير مفعّل حاليًا.';
+  }
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -1701,17 +1824,25 @@ function initContactForm() {
       return;
     }
 
-    const accessKey = getWeb3FormsAccessKey();
-    const endpoint = accessKey ? 'https://api.web3forms.com/submit' : '';
+    const endpoint = getContactEndpoint();
 
-    /* لو المفتاح مش متاح أو المتصفح قديم، بنعرض رابط واتساب يضغطه الزائر */
-    if (!endpoint || typeof window.fetch !== 'function') {
+    /* لو الرابط أو التحقق مش متاح أو المتصفح قديم، بنعرض رابط واتساب يضغطه الزائر */
+    if (!endpoint || !siteKey || typeof window.fetch !== 'function') {
       setStatus(
         'success',
         'تم تجهيز رسالتك على واتساب — اضغط الرابط وراجعها قبل الإرسال.',
         whatsappStatusLink()
       );
       return;
+    }
+
+    if (!turnstileToken) {
+      setStatus('info', 'جارٍ تجهيز التحقق...');
+      await startTurnstile();
+      if (!(await waitForTurnstileToken(15000))) {
+        showVerificationFallback();
+        return;
+      }
     }
 
     submitting = true;
@@ -1737,7 +1868,6 @@ function initContactForm() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         signal: controller.signal,
         body: JSON.stringify({
-          access_key: accessKey,
           name: values.name,
           phone: values.phone,
           email: values.email,
@@ -1745,23 +1875,22 @@ function initContactForm() {
           message: values.message,
           subject: 'طلب مشروع جديد — من الموقع الشخصي',
           botcheck: form.elements.botcheck?.value || '',
+          'cf-turnstile-response': turnstileToken,
         }),
       });
 
       const data = await response.json().catch(() => ({}));
-      const apiMessage = String(data.message || '');
-      const errorDetails = data.errors
-        ? Object.values(data.errors)
-            .flat()
-            .join('، ')
-        : '';
-      const failed = !response.ok || data.success === false || data.success === 'false';
+      if (!response.ok || data.ok !== true) {
+        throw new Error(String(data.error || 'send failed'));
+      }
 
-      if (failed) throw new Error(apiMessage || errorDetails || 'send failed');
-
+      if (turnstileId !== null && window.turnstile) window.turnstile.reset(turnstileId);
+      turnstileToken = '';
       form.reset();
       setStatus('success', 'وصلني طلبك، وسأرد عليك خلال 24 ساعة.');
     } catch (error) {
+      turnstileToken = '';
+      if (turnstileId !== null && window.turnstile) window.turnstile.reset(turnstileId);
       const timedOut = error && error.name === 'AbortError';
       setStatus(
         'info',

@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://api.web3forms.com; form-action 'self'; manifest-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com https://ahmed-contact-endpoint.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -49,7 +49,7 @@
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/showreel-poster.jpg" fetchpriority="high">
-<link rel="stylesheet" href="css/style.css?v=18-ade39bbf">
+<link rel="stylesheet" href="css/style.css?v=18-ff802a7d">
 
   <noscript>
     <style>
@@ -61,9 +61,9 @@
 
   <!-- Structured data -->
 
-  <script src="js/data.js?v=18-ade39bbf" defer></script>
-  <script src="js/main.js?v=18-ade39bbf" defer></script>
-  <script src="js/webmcp.js?v=18-ade39bbf" defer></script>
+  <script src="js/data.js?v=18-ff802a7d" defer></script>
+  <script src="js/main.js?v=18-ff802a7d" defer></script>
+  <script src="js/webmcp.js?v=18-ff802a7d" defer></script>
 
   <script type="application/ld+json">
 {
@@ -2081,7 +2081,7 @@
             <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
-          <!-- Web3Forms: the access key is read from SITE_DATA.web3formsAccessKey in content/site.json. submission is JSON; no email address is exposed here. -->
+          <!-- The form posts JSON to the Worker URL in SITE_DATA.contactEndpoint. Secrets stay in the Worker, never in this page. -->
           <form id="contactForm" novalidate action="#" method="POST" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
             <input class="form__honeypot" type="text" name="botcheck" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
@@ -2128,6 +2128,11 @@
 
             </div>
 
+            <div class="turnstile-wrap">
+              <div id="turnstileWidget" dir="ltr" aria-label="التحقق الآلي"></div>
+              <p class="turnstile-note" id="turnstileNote" role="status" aria-live="polite"></p>
+            </div>
+
             <div class="form-actions">
               <button type="submit" class="btn btn--primary" id="formSubmit">
                 <svg class="icon icon--solid" aria-hidden="true"><use href="#i-send"></use></svg>
@@ -2139,8 +2144,8 @@
               </button>
             </div>
 
-            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب إلى بريدي عبر Web3Forms. إن تعذّر الإرسال، يمكنك إرساله عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
-            <p class="form-note">الإرسال عبر Web3Forms · <a href="privacy.html">سياسة الخصوصية</a></p>
+            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب عبر خادم محمي إلى بريدي وواتسابي. إن تعذّر الإرسال، يمكنك إرساله مباشرة عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
+            <p class="form-note">محمي بتحقق Cloudflare Turnstile · <a href="privacy.html">سياسة الخصوصية</a></p>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>
