@@ -40,9 +40,9 @@ const getEmail = () => {
     typeof SITE_DATA !== 'undefined' ? decodeEmailValue(SITE_DATA.email) : '';
   return cachedEmail;
 };
-const getFormRecipient = () => {
-  if (typeof SITE_DATA === 'undefined') return getEmail();
-  return decodeEmailValue(SITE_DATA.formRecipient) || getEmail();
+const getWeb3FormsAccessKey = () => {
+  if (typeof SITE_DATA === 'undefined') return '';
+  return String(SITE_DATA.web3formsAccessKey || '').trim();
 };
 const revealEmail = () => {
   const email = getEmail();
@@ -1638,7 +1638,7 @@ function initContactForm() {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    if (form.querySelector('[name="_honey"]')?.value) {
+    if (form.querySelector('[name="botcheck"]')?.value) {
       form.reset();
       clearStatus();
       return;
@@ -1651,11 +1651,10 @@ function initContactForm() {
       return;
     }
 
-    const recipient = getFormRecipient();
-    const endpoint = recipient ? `https://formsubmit.co/ajax/${recipient}` : '';
-    if (recipient) form.action = `https://formsubmit.co/${recipient}`;
+    const accessKey = getWeb3FormsAccessKey();
+    const endpoint = accessKey ? 'https://api.web3forms.com/submit' : '';
 
-    /* لو المتصفح قديم أو الإرسال المباشر مش متاح، بنعرض رابط واتساب يضغطه الزائر */
+    /* لو المفتاح مش متاح أو المتصفح قديم، بنعرض رابط واتساب يضغطه الزائر */
     if (!endpoint || typeof window.fetch !== 'function') {
       setStatus(
         'success',
@@ -1685,30 +1684,27 @@ function initContactForm() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         signal: controller.signal,
         body: JSON.stringify({
+          access_key: accessKey,
           name: values.name,
           phone: values.phone,
           email: values.email,
           service: values.service,
           message: values.message,
-          _subject: 'طلب مشروع جديد — من الموقع الشخصي',
-          _template: 'table',
+          subject: 'طلب مشروع جديد — من الموقع الشخصي',
+          botcheck: form.elements.botcheck?.value || '',
         }),
       });
 
       const data = await response.json().catch(() => ({}));
-      const message = String(data.message || '');
+      const apiMessage = String(data.message || '');
+      const errorDetails = data.errors
+        ? Object.values(data.errors)
+            .flat()
+            .join('، ')
+        : '';
       const failed = !response.ok || data.success === false || data.success === 'false';
 
-      if (/activat/i.test(message)) {
-        setStatus(
-          'info',
-          'سُجّل طلبك، ويحتاج تفعيلًا لمرة واحدة: افتح رسالة التفعيل على البريد واضغط رابط Activate Form.',
-          { href: '#contact', label: 'أو أرسل عبر البريد', revealEmail: true }
-        );
-        return;
-      }
-
-      if (failed) throw new Error(message || 'send failed');
+      if (failed) throw new Error(apiMessage || errorDetails || 'send failed');
 
       const waLink = whatsappStatusLink();
       form.reset();

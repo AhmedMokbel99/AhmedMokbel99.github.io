@@ -3,7 +3,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://formsubmit.co; form-action 'self' https://formsubmit.co; manifest-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://api.web3forms.com; form-action 'self'; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -6148,12 +6148,9 @@ button {
             <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
-          <!-- FormSubmit: the recipient is decoded from SITE_DATA.formRecipient at submit time. After activation, update contact.formRecipient in content/site.json; keep contact.email for mailto links. -->
+          <!-- Web3Forms: the access key is read from SITE_DATA.web3formsAccessKey in content/site.json. submission is JSON; no email address is exposed here. -->
           <form id="contactForm" novalidate action="#" method="POST" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
-            <input type="hidden" name="_subject" value="طلب مشروع جديد من الموقع الشخصي">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input class="form__honeypot" type="text" name="_honey" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input class="form__honeypot" type="text" name="botcheck" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field">
                 <label for="fieldName"><span data-cms="form.nameLabel">الاسم</span> <span aria-hidden="true">*</span></label>
@@ -6209,8 +6206,8 @@ button {
               </button>
             </div>
 
-            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب إلى بريدي عبر FormSubmit. إن تعذّر الإرسال، يمكنك إرساله عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
-            <p class="form-note">الإرسال عبر FormSubmit · <a href="privacy.html">سياسة الخصوصية</a></p>
+            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب إلى بريدي عبر Web3Forms. إن تعذّر الإرسال، يمكنك إرساله عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
+            <p class="form-note">الإرسال عبر Web3Forms · <a href="privacy.html">سياسة الخصوصية</a></p>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -6441,7 +6438,7 @@ const SITE_DATA = {
   },
   "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
   "emailEncoding": "base64",
-  "formRecipient": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
+  "web3formsAccessKey": "",
   "whatsapp": "201228084197",
   "behance": "https://www.behance.net/ahmed01068b62e",
   "facebook": "https://www.facebook.com/profile.php?id=61581319508233",
@@ -7282,9 +7279,9 @@ const getEmail = () => {
     typeof SITE_DATA !== 'undefined' ? decodeEmailValue(SITE_DATA.email) : '';
   return cachedEmail;
 };
-const getFormRecipient = () => {
-  if (typeof SITE_DATA === 'undefined') return getEmail();
-  return decodeEmailValue(SITE_DATA.formRecipient) || getEmail();
+const getWeb3FormsAccessKey = () => {
+  if (typeof SITE_DATA === 'undefined') return '';
+  return String(SITE_DATA.web3formsAccessKey || '').trim();
 };
 const revealEmail = () => {
   const email = getEmail();
@@ -8880,7 +8877,7 @@ function initContactForm() {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    if (form.querySelector('[name="_honey"]')?.value) {
+    if (form.querySelector('[name="botcheck"]')?.value) {
       form.reset();
       clearStatus();
       return;
@@ -8893,11 +8890,10 @@ function initContactForm() {
       return;
     }
 
-    const recipient = getFormRecipient();
-    const endpoint = recipient ? `https://formsubmit.co/ajax/${recipient}` : '';
-    if (recipient) form.action = `https://formsubmit.co/${recipient}`;
+    const accessKey = getWeb3FormsAccessKey();
+    const endpoint = accessKey ? 'https://api.web3forms.com/submit' : '';
 
-    /* لو المتصفح قديم أو الإرسال المباشر مش متاح، بنعرض رابط واتساب يضغطه الزائر */
+    /* لو المفتاح مش متاح أو المتصفح قديم، بنعرض رابط واتساب يضغطه الزائر */
     if (!endpoint || typeof window.fetch !== 'function') {
       setStatus(
         'success',
@@ -8927,30 +8923,27 @@ function initContactForm() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         signal: controller.signal,
         body: JSON.stringify({
+          access_key: accessKey,
           name: values.name,
           phone: values.phone,
           email: values.email,
           service: values.service,
           message: values.message,
-          _subject: 'طلب مشروع جديد — من الموقع الشخصي',
-          _template: 'table',
+          subject: 'طلب مشروع جديد — من الموقع الشخصي',
+          botcheck: form.elements.botcheck?.value || '',
         }),
       });
 
       const data = await response.json().catch(() => ({}));
-      const message = String(data.message || '');
+      const apiMessage = String(data.message || '');
+      const errorDetails = data.errors
+        ? Object.values(data.errors)
+            .flat()
+            .join('، ')
+        : '';
       const failed = !response.ok || data.success === false || data.success === 'false';
 
-      if (/activat/i.test(message)) {
-        setStatus(
-          'info',
-          'سُجّل طلبك، ويحتاج تفعيلًا لمرة واحدة: افتح رسالة التفعيل على البريد واضغط رابط Activate Form.',
-          { href: '#contact', label: 'أو أرسل عبر البريد', revealEmail: true }
-        );
-        return;
-      }
-
-      if (failed) throw new Error(message || 'send failed');
+      if (failed) throw new Error(apiMessage || errorDetails || 'send failed');
 
       const waLink = whatsappStatusLink();
       form.reset();

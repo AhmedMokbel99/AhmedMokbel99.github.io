@@ -207,7 +207,7 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
         },
         "email": encode_email(contact["email"]),
         "emailEncoding": "base64",
-        "formRecipient": encode_email(contact.get("formRecipient") or contact["email"]),
+        "web3formsAccessKey": contact.get("web3formsAccessKey", ""),
         "whatsapp": contact["whatsapp"],
         "behance": contact["behance"],
         "facebook": contact["facebook"],
@@ -1122,8 +1122,8 @@ CSP_PUBLIC = (
     "font-src 'self' data:; "
     "media-src 'self'; "
     "frame-src https://www.youtube-nocookie.com; "
-    "connect-src 'self' https://formsubmit.co; "
-    "form-action 'self' https://formsubmit.co; "
+    "connect-src 'self' https://api.web3forms.com; "
+    "form-action 'self'; "
     "manifest-src 'self'"
 )
 # standalone.html بيضمّن الـCSS والـJS جوّه الملف، فمحتاج 'unsafe-inline' للسكربتات
@@ -2254,8 +2254,6 @@ def main() -> None:
     contact = site.setdefault("contact", {})
     if contact.get("email"):
         contact["email"] = decode_email(contact["email"])
-    if contact.get("formRecipient"):
-        contact["formRecipient"] = decode_email(contact["formRecipient"])
 
     # بصمة المحتوى: تتغيّر مع أي تعديل من اللوحة أو أي تعديل في التصميم/البرمجة،
     # فتكسر كاش data.js و style.css و main.js عند الزوار

@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://formsubmit.co; form-action 'self' https://formsubmit.co; manifest-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://api.web3forms.com; form-action 'self'; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -1993,12 +1993,9 @@
             <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
-          <!-- FormSubmit: the recipient is decoded from SITE_DATA.formRecipient at submit time. After activation, update contact.formRecipient in content/site.json; keep contact.email for mailto links. -->
+          <!-- Web3Forms: the access key is read from SITE_DATA.web3formsAccessKey in content/site.json. submission is JSON; no email address is exposed here. -->
           <form id="contactForm" novalidate action="#" method="POST" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
-            <input type="hidden" name="_subject" value="طلب مشروع جديد من الموقع الشخصي">
-            <input type="hidden" name="_template" value="table">
-            <input type="hidden" name="_captcha" value="false">
-            <input class="form__honeypot" type="text" name="_honey" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <input class="form__honeypot" type="text" name="botcheck" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field">
                 <label for="fieldName"><span data-cms="form.nameLabel">الاسم</span> <span aria-hidden="true">*</span></label>
@@ -2054,8 +2051,8 @@
               </button>
             </div>
 
-            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب إلى بريدي عبر FormSubmit. إن تعذّر الإرسال، يمكنك إرساله عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
-            <p class="form-note">الإرسال عبر FormSubmit · <a href="privacy.html">سياسة الخصوصية</a></p>
+            <p class="form-note" data-cms="contactSection.formNote">يصل الطلب إلى بريدي عبر Web3Forms. إن تعذّر الإرسال، يمكنك إرساله عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
+            <p class="form-note">الإرسال عبر Web3Forms · <a href="privacy.html">سياسة الخصوصية</a></p>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>
