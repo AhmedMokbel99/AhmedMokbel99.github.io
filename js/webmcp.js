@@ -23,14 +23,11 @@
   var siteEmail = function () {
     var value = SITE_DATA.email || '';
     if (!value) return '';
-    if (SITE_DATA.emailEncoding === 'base64') {
-      try {
-        return atob(value);
-      } catch (error) {
-        return value;
-      }
+    try {
+      return atob(value);
+    } catch (error) {
+      return value;
     }
-    return value;
   };
 
   var text = function (value) {

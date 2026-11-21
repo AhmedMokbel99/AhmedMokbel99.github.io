@@ -21,18 +21,35 @@ const formatCount = (n) => new Intl.NumberFormat('en-US').format(n);
 const whatsappBase = () =>
   typeof SITE_DATA !== 'undefined' ? `https://wa.me/${SITE_DATA.whatsapp}` : '';
 
+/* يغلّف المقاطع اللاتينية بـ<span lang="en" dir="ltr"> جوه النص العربي */
+const latinRun = /[A-Za-z][A-Za-z0-9.'’+\-/]*(?:[ \t]+[A-Za-z0-9.'’+\-/]+)*/g;
+const escapeHtml = (value) =>
+  String(value).replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[char]);
+const markLatin = (value) => {
+  const text = String(value || '');
+  let out = '';
+  let last = 0;
+  let match;
+  latinRun.lastIndex = 0;
+  while ((match = latinRun.exec(text))) {
+    out += escapeHtml(text.slice(last, match.index));
+    out += `<span lang="en" dir="ltr">${escapeHtml(match[0])}</span>`;
+    last = match.index + match[0].length;
+  }
+  return out + escapeHtml(text.slice(last));
+};
+
 /* البريد مشفّر في data.js؛ يتفكّ فقط لما الزائر يضغط على رابط البريد */
 let cachedEmail = null;
 const decodeEmailValue = (value) => {
   if (!value) return '';
-  if (typeof SITE_DATA !== 'undefined' && SITE_DATA.emailEncoding === 'base64') {
-    try {
-      return atob(value);
-    } catch (_) {
-      return value;
-    }
+  try {
+    return atob(value);
+  } catch (_) {
+    return value;
   }
-  return value;
 };
 const getEmail = () => {
   if (cachedEmail !== null) return cachedEmail;
@@ -640,7 +657,7 @@ function projectMarkup(project) {
     .join(', ');
 
   return `
-    <article class="project" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
+    <article id="project-${project.id}" class="project" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
       <div class="project__media">
         <img
           src="${fallback}"
@@ -656,7 +673,7 @@ function projectMarkup(project) {
       </div>
       <div class="project__body">
         <span class="project__tag">${project.tag}</span>
-        <h3 class="project__title">${project.title}</h3>
+        <h3 class="project__title">${markLatin(project.title)}</h3>
         <span class="project__more">
           <span>${projectHasVideo(project) ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
           <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -1844,6 +1861,21 @@ function initMisc() {
   }
 }
 
+/* رابط مباشر لمشروع: #project-f03 يفتح نافذة المشروع عند التحميل أو تغيير الـhash */
+function openProjectFromHash() {
+  const match = /^#project-([A-Za-z0-9_-]+)$/.exec(window.location.hash || '');
+  if (!match) return;
+
+  const key = match[1];
+  const index = state.projects.findIndex((project) => project.id === key || project.slug === key);
+  if (index === -1) return;
+
+  /* المشروع ممكن يكون مخفيًا تحت «عرض المزيد» — نُظهره قبل فتح النافذة */
+  state.shown = Math.max(state.shown, index + 1);
+  updateWorkMore();
+  openProject(state.projects[index].id);
+}
+
 /* ------------------------------------------------------------
    التشغيل
 ------------------------------------------------------------ */
@@ -1859,6 +1891,8 @@ function init() {
   initWork();
   initProjectDialog();
   initLightbox();
+  openProjectFromHash();
+  window.addEventListener('hashchange', openProjectFromHash);
   initCounters();
   initContactForm();
   initMisc();

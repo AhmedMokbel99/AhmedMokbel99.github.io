@@ -206,7 +206,6 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
             "description": site["agency"]["description"],
         },
         "email": encode_email(contact["email"]),
-        "emailEncoding": "base64",
         "web3formsAccessKey": contact.get("web3formsAccessKey", ""),
         "whatsapp": contact["whatsapp"],
         "behance": contact["behance"],
@@ -342,6 +341,22 @@ def project_alt(project: dict) -> str:
     return dedupe_alt(project.get("alt") or fallback)
 
 
+LATIN_RUN = re.compile(r"[A-Za-z][A-Za-z0-9.'’+\-/]*(?:[ \t]+[A-Za-z0-9.'’+\-/]+)*")
+
+
+def mark_latin(value) -> str:
+    """يغلّف المقاطع اللاتينية بـ<span lang="en" dir="ltr"> جوه النص العربي."""
+    text = str(value or "")
+    out: list[str] = []
+    last = 0
+    for match in LATIN_RUN.finditer(text):
+        out.append(esc(text[last : match.start()]))
+        out.append('<span lang="en" dir="ltr">' + esc(match.group(0)) + "</span>")
+        last = match.end()
+    out.append(esc(text[last:]))
+    return "".join(out)
+
+
 def project_has_video(project: dict) -> bool:
     """هل فيه فيديو فعلي يتشغّل؟ لو لأ منعرضش «شاهد الفيديو» على الفاضي."""
     return bool(project.get("video") or project.get("youtube") or project.get("videos"))
@@ -380,7 +395,7 @@ def project_card(project: dict, index: int = 0) -> str:
         else ""
     )
 
-    return f'''<article class="project{" is-deferred" if index >= INITIAL_CARDS else ""}" data-reveal data-project-card="{esc(project["id"])}" data-category="{esc(project["cat"])}">
+    return f'''<article id="project-{esc(project["id"])}" class="project{" is-deferred" if index >= INITIAL_CARDS else ""}" data-reveal data-project-card="{esc(project["id"])}" data-category="{esc(project["cat"])}">
   <div class="project__media">
     <img
       src="{esc(fallback)}"
@@ -396,7 +411,7 @@ def project_card(project: dict, index: int = 0) -> str:
   </div>
   <div class="project__body">
     <span class="project__tag">{esc(project["tag"])}</span>
-    <h3 class="project__title">{esc(project["title"])}</h3>
+    <h3 class="project__title">{mark_latin(project["title"])}</h3>
     <span class="project__more">
       <span>{"شاهد الفيديو" if project_has_video(project) else "عرض التفاصيل"}</span>
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -441,10 +456,10 @@ def clients_block(site: dict) -> str:
         # لو الاسم اللاتيني هو نفسه اسم العلامة، ما نكرّرش السطر تحته
         same = latin.casefold() == client["name"].strip().casefold()
         hidden = ' aria-hidden="true"' if not same else ""
-        label = "" if same else f'\n            <span class="client__name">{esc(client["name"])}</span>'
+        label = "" if same else f'\n            <span class="client__name">{mark_latin(client["name"])}</span>'
         cards.append(
             f'''          <li class="client">
-            <span class="client__wordmark" lang="en"{hidden}>{esc(latin)}</span>{label}
+            <span class="client__wordmark" lang="en" dir="ltr"{hidden}>{esc(latin)}</span>{label}
           </li>'''
         )
     return "\n".join(cards)
@@ -594,18 +609,20 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         "@id": person_id,
         "name": brand["name"],
         "jobTitle": brand["jobTitle"],
-        "description": f'{brand["jobTitle"]} من {brand["location"]}، ومؤسس {agency["name"]} للإنتاج الإبداعي.',
+        "description": f'{brand["jobTitle"]} من {brand["location"]}، ومؤسس {agency["name"]}. {agency["description"]}',
         "url": base + "/",
         "image": f'{base}/{images["portrait"]["src"]}',
         "telephone": f'+{contact["whatsapp"]}',
         "address": {
             "@type": "PostalAddress",
             "addressLocality": brand["location"].split("،")[0],
+            "addressRegion": "الدقهلية",
             "addressCountry": "EG",
         },
         "worksFor": {
             "@type": "Organization",
             "name": agency["name"],
+            "description": agency["description"],
             "url": contact.get("agencyUrl", contact.get("facebook")),
         },
         "sameAs": [
@@ -629,7 +646,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         "@type": ["ProfessionalService", "LocalBusiness"],
         "@id": f"{base}/#service",
         "name": f'{brand["name"]} — {agency["name"]}',
-        "description": f'خدمات تصميم الجرافيك والموشن جرافيك والهوية البصرية والإنتاج الإعلامي من {brand["location"]}، مصر.',
+        "description": f'{agency["description"]} خدمات تصميم الجرافيك والموشن جرافيك والهوية البصرية والإنتاج الإعلامي من {brand["location"]}، مصر.',
         "url": base + "/",
         "image": f'{base}/{images["og"]["src"]}',
         "telephone": f'+{contact["whatsapp"]}',
@@ -638,11 +655,13 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         "address": {
             "@type": "PostalAddress",
             "addressLocality": brand["location"].split("،")[0],
+            "addressRegion": "الدقهلية",
             "addressCountry": "EG",
         },
         "areaServed": [
             {"@type": "City", "name": brand["location"].split("،")[0]},
             {"@type": "Country", "name": "مصر"},
+            {"@type": "AdministrativeArea", "name": "العالم العربي"},
         ],
         "sameAs": [contact["behance"], contact["facebook"], contact["twitter"]],
         "hasOfferCatalog": {
@@ -676,8 +695,9 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
     }
 
     portfolio = portfolio_jsonld(site, projects)
+    videos = video_jsonld(site, projects)
 
-    return jsonld_script([person, website, service, faq, portfolio])
+    return jsonld_script([person, website, service, faq, portfolio] + videos)
 
 
 def portfolio_jsonld(site: dict, projects: list[dict]) -> dict:
@@ -689,7 +709,7 @@ def portfolio_jsonld(site: dict, projects: list[dict]) -> dict:
         work = {
             "@type": "CreativeWork",
             "name": project["title"],
-            "url": f"{base}/#work",
+            "url": f'{base}/#project-{project["id"]}',
             "genre": project.get("tag") or "",
             "description": project.get("summary") or "",
         }
@@ -706,6 +726,33 @@ def portfolio_jsonld(site: dict, projects: list[dict]) -> dict:
         "numberOfItems": len(items),
         "itemListElement": items,
     }
+
+
+def video_jsonld(site: dict, projects: list[dict]) -> list[dict]:
+    """VideoObject لكل مشروع ليه ملف فيديو فعلي — الـcontentUrl لازم يكون ملف ميديا."""
+    base = site_base(site)
+    nodes = []
+    for project in projects:
+        if project.get("visible", True) is False:
+            continue
+        video = str(project.get("video") or "").strip()
+        if not video.lower().endswith((".mp4", ".webm", ".mov")):
+            continue
+        image = str(project.get("image") or "").strip()
+        nodes.append(
+            {
+                "@type": "VideoObject",
+                "@id": f'{base}/#video-{project["id"]}',
+                "name": project["title"],
+                "description": project.get("summary") or "",
+                "thumbnailUrl": f"{base}/{image}" if image else "",
+                "contentUrl": f"{base}/{video}",
+                "uploadDate": str(project.get("date") or "").strip(),
+                "inLanguage": "ar",
+                "url": f'{base}/#project-{project["id"]}',
+            }
+        )
+    return nodes
 
 
 def svg_sprite() -> str:
@@ -749,6 +796,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
             "areaServed": [
                 {"@type": "City", "name": brand["location"].split("،")[0]},
                 {"@type": "Country", "name": "مصر"},
+                {"@type": "AdministrativeArea", "name": "العالم العربي"},
             ],
         },
         {
@@ -1363,7 +1411,7 @@ def api_project(project: dict, slug: str, base: str, labels: dict[str, str]) -> 
             "width": int(project.get("width") or 0),
             "height": int(project.get("height") or 0),
         },
-        "pageUrl": f"{base}/#work",
+        "pageUrl": f'{base}/#project-{project["id"]}',
         "detailUrl": f"{base}/api/projects/{slug}.json",
     }
     if project.get("external") and project.get("url"):
@@ -1440,7 +1488,6 @@ def api_profile(site: dict, projects: list[dict], base: str) -> dict:
         },
         "contact": {
             "email": encode_email(contact["email"]),
-            "emailEncoding": "base64",
             "whatsapp": f'+{contact["whatsapp"]}',
             "preferredLanguage": "ar",
         },
@@ -2297,6 +2344,12 @@ def main() -> None:
         for key in ("id", "code", "title", "cat", "tag", "image"):
             if not project.get(key):
                 fail(f"المشروع رقم {index} ينقصه الحقل: {key}")
+        if str(project.get("video") or "").lower().endswith((".mp4", ".webm", ".mov")):
+            if not str(project.get("date") or "").strip():
+                fail(
+                    f'المشروع {project.get("code")}: حقل date مطلوب لمشاريع الفيديو '
+                    "(uploadDate في VideoObject)."
+                )
         gallery = project.get("gallery") or []
         if not isinstance(gallery, list):
             fail(f"المشروع {project.get('code')}: gallery يجب أن تكون قائمة.")

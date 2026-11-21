@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-20",
+  "generatedAt": "2026-11-21",
   "source": "https://ahmedmokbel99.github.io/",
   "count": 24,
   "detailPattern": "https://ahmedmokbel99.github.io/api/projects/{slug}.json",
@@ -20,7 +20,7 @@
         "width": 1072,
         "height": 1344
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f01",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/saudi-founding-day-motion-graphic.json",
       "externalUrl": "https://www.behance.net/gallery/244580859/_"
     },
@@ -39,15 +39,15 @@
         "width": 1600,
         "height": 1200
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f02",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ibn-albasel-motion-graphic.json",
       "externalUrl": "https://www.behance.net/gallery/244097521/_"
     },
     {
       "slug": "ans-dimashqi-steak-ad",
       "title": "آنس الدمشقي — إعلان طبق اللحم",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
       "tag": "إعلان مطعم",
       "summary": "إعلان طعام لمطعم «آنس الدمشقي»: تصوير للطبق بإضاءة دافئة تُبرز تفاصيل اللحم والصوص والخضار، وينتهي برقم الطلب — إنتاج DOT Media.",
       "featured": true,
@@ -58,7 +58,7 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f03",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ans-dimashqi-steak-ad.json"
     },
     {
@@ -76,7 +76,7 @@
         "width": 1600,
         "height": 1200
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f06",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/harvard-education-center-brand.json",
       "externalUrl": "https://www.behance.net/gallery/148210723/_"
     },
@@ -95,7 +95,7 @@
         "width": 1400,
         "height": 964
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f07",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ultra-grow-brand-packaging.json",
       "externalUrl": "https://www.behance.net/gallery/148215371/ULTRA-GROW"
     },
@@ -114,7 +114,7 @@
         "width": 1600,
         "height": 1200
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f11",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/insta-watches-ad-design.json",
       "externalUrl": "https://www.behance.net/gallery/175994775/INSTA-WATCHES"
     },
@@ -133,7 +133,7 @@
         "width": 1600,
         "height": 1600
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f24",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/harvard-2026-new-year-identity.json"
     },
     {
@@ -151,7 +151,7 @@
         "width": 1400,
         "height": 1192
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f05",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/taher-printing-brand-identity.json",
       "externalUrl": "https://www.behance.net/gallery/128103663/_"
     },
@@ -170,7 +170,7 @@
         "width": 1600,
         "height": 1200
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f04",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/first-motion-graphics-work.json",
       "externalUrl": "https://www.behance.net/gallery/119428049/_"
     },
@@ -189,7 +189,7 @@
         "width": 1400,
         "height": 980
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f08",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ultra-grow-2-brand-system.json",
       "externalUrl": "https://www.behance.net/gallery/194077839/ULTRA-GROW-2"
     },
@@ -208,7 +208,7 @@
         "width": 1600,
         "height": 1200
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f09",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/social-media-design-collection.json",
       "externalUrl": "https://www.behance.net/gallery/228287151/_"
     },
@@ -227,7 +227,7 @@
         "width": 1400,
         "height": 1400
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f10",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/filler-injection-ad-design.json",
       "externalUrl": "https://www.behance.net/gallery/194077395/_"
     },
@@ -246,7 +246,7 @@
         "width": 1600,
         "height": 1200
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f12",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/nature-secret-ad-design.json",
       "externalUrl": "https://www.behance.net/gallery/194077227/_"
     },
@@ -265,7 +265,7 @@
         "width": 1508,
         "height": 2000
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f13",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/admission-gateway-rollup.json"
     },
     {
@@ -283,7 +283,7 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f14",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/beginnings-motion-graphic.json"
     },
     {
@@ -301,7 +301,7 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f15",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/alhakum-altakathur-motion.json"
     },
     {
@@ -319,14 +319,14 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f16",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/en-serv-logo-animation.json"
     },
     {
       "slug": "elzain-restaurant-video",
       "title": "الزين — مطعم سوري",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
       "tag": "تصوير ومونتاج",
       "summary": "فيديو تعريفي لمطعم «الزين» السوري: لقطات من داخل المطعم تبرز الشيف والطبق الرئيسي والهوية الحمراء، بمونتاج سريع مناسب للسوشيال ميديا.",
       "featured": false,
@@ -337,14 +337,14 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f17",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/elzain-restaurant-video.json"
     },
     {
       "slug": "elmaqsoud-generators-ad",
       "title": "المقصود للمولدات — إعلان الشركة",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
       "tag": "إعلان شركة",
       "summary": "إعلان شركة المقصود لتوريد المولدات: عرض للمعدات ولوحات التحكم في تكوين ثلاثي الأبعاد يعرّف بالخدمة ويختم برابط الموقع.",
       "featured": false,
@@ -355,14 +355,14 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f18",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/elmaqsoud-generators-ad.json"
     },
     {
       "slug": "bdeel-car-ad",
       "title": "بديل — إعلان سيارة",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
       "tag": "إعلان سيارات",
       "summary": "إعلان سيارة لعلامة «بديل» بأسلوب سينمائي: إضاءة درامية، حركة كاميرا قريبة، وخلفية خطوط ضوئية تمنح المشهد إحساسًا بالسرعة والفخامة.",
       "featured": false,
@@ -373,14 +373,14 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f19",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/bdeel-car-ad.json"
     },
     {
       "slug": "alwathba-real-estate-ad",
       "title": "الوثبة العقارية — مشروع سكني",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
       "tag": "إعلان عقاري",
       "summary": "إعلان لمشروع سكني لشركة «الوثبة» العقارية: جولة بصرية على واجهات المبنى وتفاصيله، بإطار جرافيكي وخلفية داكنة تُبرز الهوية.",
       "featured": false,
@@ -391,14 +391,14 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f20",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/alwathba-real-estate-ad.json"
     },
     {
       "slug": "ans-dimashqi-pie-ad",
       "title": "آنس الدمشقي — إعلان الفطيرة",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
       "tag": "إعلان مطعم",
       "summary": "إعلان طعام ثانٍ لمطعم «آنس الدمشقي»: الفطيرة باللحم والمكونات المتطايرة حولها على خلفية برتقالية، بأسلوب دعائي مباشر ينتهي برقم الطلب.",
       "featured": false,
@@ -409,7 +409,7 @@
         "width": 1200,
         "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f21",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ans-dimashqi-pie-ad.json"
     },
     {
@@ -427,7 +427,7 @@
         "width": 1200,
         "height": 1204
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f22",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/almenissy-hijri-1448-greeting.json"
     },
     {
@@ -445,7 +445,7 @@
         "width": 1400,
         "height": 1842
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#work",
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f23",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/grm-hijri-1448-greeting.json"
     }
   ]

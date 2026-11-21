@@ -138,7 +138,6 @@ js/data.js · index.html · motion-graphics.html · brand-identity.html · sitem
              "careerStart": 2013, "behanceSince": "2015" },
   "contact": {
     "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
-    "emailEncoding": "base64",
     "whatsapp": "201228084197",
     "behance": "https://www.behance.net/ahmed01068b62e",
     "facebook": "https://www.facebook.com/profile.php?id=61581319508233",
