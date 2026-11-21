@@ -1479,7 +1479,6 @@ function initContactForm() {
   const status = $('#formStatus');
   const whatsappBtn = $('#formWhatsapp');
   const submitBtn = $('#formSubmit');
-  const endpoint = form.dataset.endpoint || '';
 
   const setStatus = (stateName, message, link) => {
     if (!status) return;
@@ -1608,8 +1607,10 @@ function initContactForm() {
   const whatsappUrl = () => `${whatsappBase()}?text=${encodeURIComponent(buildMessage())}`;
 
   const mailtoUrl = () => {
+    const email = getEmail();
+    if (!email) return '';
     const subject = 'طلب مشروع جديد — من الموقع الشخصي';
-    return `mailto:${SITE_DATA.email}?subject=${encodeURIComponent(
+    return `mailto:${email}?subject=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(buildMessage())}`;
   };
@@ -1628,6 +1629,10 @@ function initContactForm() {
       setStatus('error', 'هناك بعض الحقول تحتاج إلى تصحيح قبل الإرسال.');
       return;
     }
+
+    const recipient = getFormRecipient();
+    const endpoint = recipient ? `https://formsubmit.co/ajax/${recipient}` : '';
+    if (recipient) form.action = `https://formsubmit.co/${recipient}`;
 
     /* لو المتصفح قديم أو الإرسال المباشر مش متاح، بنرجع لواتساب فورًا */
     if (!endpoint || typeof window.fetch !== 'function') {
@@ -1677,7 +1682,7 @@ function initContactForm() {
         setStatus(
           'info',
           'سُجّل طلبك، ويحتاج تفعيلًا لمرة واحدة: افتح رسالة التفعيل على البريد واضغط رابط Activate Form.',
-          { href: mailtoUrl(), label: 'أو أرسل عبر البريد' }
+          { href: '#contact', label: 'أو أرسل عبر البريد', revealEmail: true }
         );
         return;
       }
@@ -1694,7 +1699,7 @@ function initContactForm() {
         timedOut
           ? 'استغرق الإرسال وقتًا أطول من المتوقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.'
           : 'تعذّر إرسال الطلب من الموقع، لذلك جهّزت نسخة على واتساب — راجعها واضغط إرسال.',
-        { href: mailtoUrl(), label: 'أو أرسل عبر البريد' }
+        { href: '#contact', label: 'أو أرسل عبر البريد', revealEmail: true }
       );
     } finally {
       window.clearTimeout(timeout);
