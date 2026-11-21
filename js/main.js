@@ -1505,6 +1505,14 @@ function initContactForm() {
   const whatsappBtn = $('#formWhatsapp');
   const submitBtn = $('#formSubmit');
 
+  const clock = () =>
+    window.performance && typeof performance.now === 'function' ? performance.now() : Date.now();
+  const MIN_FILL_MS = 3000;
+  const COOLDOWN_MS = 60000;
+  const readyAt = clock();
+  let cooldownUntil = 0;
+  let submitting = false;
+
   const setStatus = (stateName, message, link) => {
     if (!status) return;
     status.dataset.state = stateName;
@@ -1557,20 +1565,31 @@ function initContactForm() {
   };
 
   const validators = {
-    name: (v) => (v.trim().length >= 2 ? '' : 'اكتب اسمك الكامل من فضلك.'),
-    phone: (v) => {
-      const digits = v.replace(/\D/g, '');
-      return digits.length >= 8 && digits.length <= 15
+    name: (v) => {
+      const value = v.trim();
+      return value.length >= 2 && value.length <= 80
         ? ''
-        : 'اكتب رقم هاتف صحيحًا (8 إلى 15 رقمًا).';
+        : 'اكتب اسمك من 2 إلى 80 حرفًا.';
     },
-    email: (v) =>
-      !v.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim())
+    phone: (v) => {
+      const value = v.trim();
+      return /^[0-9+\s()\-]{7,20}$/.test(value)
         ? ''
-        : 'اكتب بريدًا إلكترونيًا صحيحًا أو اتركه فارغًا.',
+        : 'اكتب رقم هاتف من 7 إلى 20 رمزًا، أرقام و+ و- و( ) ومسافات فقط.';
+    },
+    email: (v) => {
+      const value = v.trim();
+      return !value || (value.length <= 120 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value))
+        ? ''
+        : 'اكتب بريدًا صحيحًا (120 حرفًا كحد أقصى) أو اتركه فارغًا.';
+    },
     service: (v) => (v ? '' : 'اختر نوع الخدمة المطلوبة.'),
-    message: (v) =>
-      v.trim().length >= 10 ? '' : 'اكتب وصفًا مختصرًا للمشروع (10 أحرف على الأقل).',
+    message: (v) => {
+      const value = v.trim();
+      return value.length >= 10 && value.length <= 2000
+        ? ''
+        : 'اكتب تفاصيل المشروع من 10 إلى 2000 حرف.';
+    },
   };
 
   const validateField = (key) => {
@@ -1661,6 +1680,20 @@ function initContactForm() {
       return;
     }
 
+    /* ملء النموذج في أقل من 3 ثوانٍ سلوك آلي؛ نرفضه بهدوء دون إرسال */
+    if (clock() - readyAt < MIN_FILL_MS) {
+      form.reset();
+      clearStatus();
+      return;
+    }
+
+    if (submitting) return;
+
+    if (Date.now() < cooldownUntil) {
+      setStatus('error', 'يرجى الانتظار قليلًا قبل إرسال طلب آخر.');
+      return;
+    }
+
     clearStatus();
 
     if (!validateAll()) {
@@ -1680,6 +1713,9 @@ function initContactForm() {
       );
       return;
     }
+
+    submitting = true;
+    cooldownUntil = Date.now() + COOLDOWN_MS;
 
     const values = getValues();
     const submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
@@ -1736,6 +1772,7 @@ function initContactForm() {
       );
     } finally {
       window.clearTimeout(timeout);
+      submitting = false;
       if (submitLabel) submitLabel.textContent = originalLabel;
       if (submitBtn) {
         submitBtn.disabled = false;

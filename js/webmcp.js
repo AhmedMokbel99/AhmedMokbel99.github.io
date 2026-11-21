@@ -259,7 +259,7 @@
         if (!/^[0-9+\s()\-]{7,20}$/.test(phone)) errors.push('phone: رقم غير صالح.');
         if (!service) errors.push('service: مطلوب.');
         if (message.length < 10 || message.length > 2000) errors.push('message: 10–2000 حرفًا.');
-        if (email && !/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(email)) errors.push('email: غير صالح.');
+        if (email && (email.length > 120 || !/^[^@\s]+@[^@\s.]+\.[^@\s]{2,}$/.test(email))) errors.push('email: غير صالح.');
 
         if (errors.length) return fail('بيانات غير مكتملة:\n- ' + errors.join('\n- '));
 
