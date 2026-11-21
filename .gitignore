@@ -3,15 +3,37 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 
-# Editors
+# Editors / local tooling
 .vscode/
 .idea/
+.wrangler/
+node_modules/
+coverage/
+.cache/
+*.swp
+*.tmp
+*.bak
+*~
 
 # Build / preview artifacts
 dist/
 _site/
 _source/
+review-files/
 *.log
+
+# Secrets and local environment — never commit
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.p8
+.ssh/
 
 # Source folders (raw artwork, not deployed)
 تصميم/
