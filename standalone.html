@@ -9087,7 +9087,8 @@ function initContactForm() {
     turnstileStarting = (async () => {
       try {
         await loadTurnstile();
-        await new Promise((resolve) => window.turnstile.ready(resolve));
+        // api.js محمّل بالفعل عبر onload وتعريف window.turnstile متاح، فلا حاجة لـ ready()
+        // (والاتصال به مع سكربت ديناميكي يُسبب خطأ Turnstile).
         turnstileId = window.turnstile.render(turnstileHost, {
           sitekey: siteKey,
           theme: 'dark',
