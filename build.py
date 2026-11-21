@@ -139,6 +139,11 @@ def fail(message: str) -> None:
     raise SystemExit(1)
 
 
+def encode_email(value: str) -> str:
+    """يخفي البريد عن زاحف الصفحات؛ الـ JS يفكّه عند الضغط فقط."""
+    return base64.b64encode(str(value).encode("utf-8")).decode("ascii")
+
+
 def read(path: Path) -> str:
     text = path.read_text(encoding="utf-8-sig")
     return text.replace("\r\n", "\n").replace("\r", "\n")
@@ -189,7 +194,9 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
             "url": contact.get("agencyUrl", contact.get("facebook", "")),
             "description": site["agency"]["description"],
         },
-        "email": contact["email"],
+        "email": encode_email(contact["email"]),
+        "emailEncoding": "base64",
+        "formRecipient": encode_email(contact.get("formRecipient") or contact["email"]),
         "whatsapp": contact["whatsapp"],
         "behance": contact["behance"],
         "facebook": contact["facebook"],
@@ -1193,7 +1200,7 @@ def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
         "## التواصل",
         "",
         f"- واتساب: https://wa.me/{contact['whatsapp']}",
-        f"- البريد: {contact['email']}",
+        f"- البريد: {encode_email(contact['email'])}",
         f"- Behance: {contact['behance']}",
         f"- Facebook (DOT Media): {contact['facebook']}",
         f"- X: {contact['twitter']}",
@@ -1406,7 +1413,8 @@ def api_profile(site: dict, projects: list[dict], base: str) -> dict:
             "whatsapp": f'https://wa.me/{contact["whatsapp"]}',
         },
         "contact": {
-            "email": contact["email"],
+            "email": encode_email(contact["email"]),
+            "emailEncoding": "base64",
             "whatsapp": f'+{contact["whatsapp"]}',
             "preferredLanguage": "ar",
         },
@@ -2147,7 +2155,7 @@ def write_markdown_mirror(site: dict, projects: list[dict], pages: list[dict], b
         "## التواصل",
         "",
         f"- واتساب: https://wa.me/{contact['whatsapp']}",
-        f"- البريد: {contact['email']}",
+        f"- البريد: {encode_email(contact['email'])}",
         f"- Behance: {contact['behance']}",
         f"- X: {contact['twitter']}",
         f"- نموذج التواصل: {base}/#contact",
