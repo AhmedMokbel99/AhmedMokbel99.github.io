@@ -569,9 +569,14 @@ function projectHasVideo(project) {
 }
 
 function projectMarkup(project) {
-  const category = categoryLabel(project.cat);
   const fallback = project.imageSmall || project.image;
   const alt = dedupeAlt(project.alt || `${project.title} — ${project.tag}`);
+  const badge = projectHasVideo(project)
+    ? `<span class="project__type">
+         <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
+         فيديو
+       </span>`
+    : '';
   const gridSmall = project.image
     ? String(project.image).replace(/\.(jpe?g|png|webp)$/i, '-640.jpg')
     : '';
@@ -596,16 +601,7 @@ function projectMarkup(project) {
           loading="lazy"
           decoding="async"
         >
-        <div class="project__badges">
-          ${
-            projectHasVideo(project)
-              ? `<span class="project__type">
-                   <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
-                   فيديو
-                 </span>`
-              : ''
-          }
-        </div>
+        ${badge ? `<div class="project__badges">${badge}</div>` : ''}
       </div>
       <div class="project__body">
         <span class="project__tag">${project.tag}</span>
@@ -619,7 +615,7 @@ function projectMarkup(project) {
         type="button"
         class="project__open"
         data-project-open="${project.id}"
-        aria-label="عرض تفاصيل مشروع ${project.title} — ${category}"
+        aria-label="عرض تفاصيل مشروع ${project.title} — ${project.tag}"
       ></button>
     </article>`;
 }
@@ -1168,7 +1164,7 @@ function initProjectDialog() {
   $('#dialogPrev')?.addEventListener('click', () => moveDialog(-1));
   $('#dialogNext')?.addEventListener('click', () => moveDialog(1));
 
-  /* زر «اطلب مشروعاً مشابهاً»: يقفل النافذة ويفتح مسار التواصل جاهز */
+  /* زر «اطلب مشروعًا مشابهًا»: يقفل النافذة ويفتح مسار التواصل جاهز */
   $('#dialogCta')?.addEventListener('click', (event) => {
     const project = state.visible[state.dialogIndex];
     event.preventDefault();
@@ -1716,7 +1712,6 @@ function initShowreel() {
     card.classList.toggle('is-paused', !playing);
     if (!toggle) return;
     toggle.setAttribute('aria-pressed', String(playing));
-    toggle.setAttribute('aria-label', playing ? 'إيقاف الريل' : 'تشغيل الريل');
   };
 
   const play = () => {

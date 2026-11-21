@@ -359,9 +359,7 @@ def project_card(project: dict, index: int = 0) -> str:
       loading="lazy"
       decoding="async"
     >
-    <div class="project__badges">
-      {badge}
-    </div>
+    {f'<div class="project__badges">{badge}</div>' if badge else ''}
   </div>
   <div class="project__body">
     <span class="project__tag">{esc(project["tag"])}</span>
@@ -375,7 +373,7 @@ def project_card(project: dict, index: int = 0) -> str:
     type="button"
     class="project__open"
     data-project-open="{esc(project["id"])}"
-    aria-label="عرض تفاصيل مشروع {esc(project["title"])} — {esc(CATEGORY_FALLBACK.get(project["cat"], project["cat"]))}"
+    aria-label="عرض تفاصيل مشروع {esc(project["title"])} — {esc(project["tag"])}"
   ></button>
 </article>'''
 
@@ -413,7 +411,7 @@ def clients_block(site: dict) -> str:
         label = "" if same else f'\n            <span class="client__name">{esc(client["name"])}</span>'
         cards.append(
             f'''          <li class="client">
-            <span class="client__wordmark"{hidden}>{esc(latin)}</span>{label}
+            <span class="client__wordmark" lang="en"{hidden}>{esc(latin)}</span>{label}
           </li>'''
         )
     return "\n".join(cards)
@@ -494,7 +492,7 @@ def channels_block(site: dict) -> str:
         icon, solid = CHANNEL_ICONS.get(kind, ("i-globe", False))
         icon_class = "icon icon--solid" if solid else "icon"
         if kind == "email":
-            href = ""
+            href = ' href="#contact"'
             value = "<b data-text=\"email\"></b>"
         else:
             value = f"<b>{esc(channel.get('value', ''))}</b>"
@@ -566,7 +564,6 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         "description": f'{brand["jobTitle"]} من {brand["location"]}، ومؤسس {agency["name"]} للإنتاج الإبداعي.',
         "url": base + "/",
         "image": f'{base}/{images["portrait"]["src"]}',
-        "email": f'mailto:{contact["email"]}',
         "telephone": f'+{contact["whatsapp"]}',
         "address": {
             "@type": "PostalAddress",
@@ -603,7 +600,6 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
         "url": base + "/",
         "image": f'{base}/{images["og"]["src"]}',
         "telephone": f'+{contact["whatsapp"]}',
-        "email": f'mailto:{contact["email"]}',
         "priceRange": "$$",
         "founder": {"@id": person_id},
         "address": {
@@ -642,7 +638,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
                 "name": item["q"],
                 "acceptedAnswer": {"@type": "Answer", "text": item["a"]},
             }
-            for item in site.get("faq", [])
+            for item in (site.get("faq", []) + site.get("terms", []))
         ],
     }
 
@@ -847,7 +843,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
     </div>
   </header>
 
-  <main id="main">
+  <main id="main" tabindex="-1">
 
     <section class="section service-hero">
       <div class="wrap">
@@ -987,6 +983,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
       <span>
         <a href="index.html">الرئيسية</a> ·
 {footer_services} ·
+        <a href="privacy.html">سياسة الخصوصية</a> ·
         <a href="{esc(contact["behance"])}" target="_blank" rel="noopener noreferrer">بيهانس</a>
       </span>
     </div>

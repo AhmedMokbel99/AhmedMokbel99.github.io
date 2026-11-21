@@ -4142,3 +4142,8 @@ button {
 .project:hover {
   transform: translateY(-3px);
 }
+
+/* 23. حماية الفورم */
+.form__honeypot {
+  display: none !important;
+}
