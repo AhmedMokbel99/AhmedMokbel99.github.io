@@ -9070,8 +9070,7 @@ function initContactForm() {
         script = document.createElement('script');
         script.id = 'turnstileScript';
         script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-        script.async = true;
-        script.defer = true;
+        // Turnstile يرفض turnstile.ready() لو كان سكربت api.js مُحمّلاً بـ async/defer.
         script.onload = () => (window.turnstile ? resolve() : reject(new Error('turnstile_unavailable')));
         script.onerror = () => reject(new Error('turnstile_load_failed'));
         document.head.appendChild(script);
