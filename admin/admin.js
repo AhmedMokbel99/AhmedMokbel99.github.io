@@ -2149,7 +2149,10 @@ async function saveAll() {
     toast('تم الحفظ ✅ — GitHub يبني الموقع الآن تلقائيًا (حوالي دقيقة).', 'ok');
     setTimeout(() => checkDeploy(), 4000);
   } catch (error) {
-    toast(`فشل الحفظ: ${error.message}`, 'err');
+    const hint = /Resource not accessible/i.test(error.message)
+      ? ' — افتح /admin/?reset=1 وسجّل بتوكن جديد عليه Contents: Read and write.'
+      : '';
+    toast(`فشل الحفظ: ${error.message}${hint}`, 'err');
     button.disabled = false;
   } finally {
     button.textContent = 'حفظ ونشر';
@@ -2271,6 +2274,13 @@ async function init() {
     navigator.serviceWorker.register('sw.js').catch(() => {
       /* التثبيت كتطبيق اختياري — لو فشل مفيش أي تأثير على اللوحة */
     });
+  }
+
+  /* رابط إعادة ضبط: يمسح الجلسة القديمة فورًا لو التوكن اتغير أو اتسحب */
+  if (new URLSearchParams(location.search).has('reset')) {
+    localStorage.removeItem(LS.token);
+    localStorage.removeItem(LS.owner);
+    localStorage.removeItem(LS.repo);
   }
 
   state.token = localStorage.getItem(LS.token) || '';
