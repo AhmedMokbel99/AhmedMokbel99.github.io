@@ -490,6 +490,29 @@ button, input, select, textarea { font: inherit; }
   margin-top: 0.2rem;
 }
 
+/* ---------- الإحصائيات ---------- */
+.stats-grid { display: grid; gap: 0.8rem; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.stat-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  padding: 0.9rem 1rem;
+  display: grid;
+  gap: 0.15rem;
+}
+.stat-card span { color: var(--muted); font-size: 0.78rem; }
+.stat-card b { font-family: var(--display); font-size: 1.7rem; line-height: 1.2; color: var(--cyan); }
+.table-wrap { overflow-x: auto; }
+.stats-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+.stats-table th, .stats-table td {
+  padding: 0.55rem 0.6rem;
+  border-block-end: 1px solid var(--line);
+  text-align: start;
+}
+.stats-table th { color: var(--muted); font-weight: 600; font-size: 0.78rem; }
+.stats-table td:last-child, .stats-table th:last-child { text-align: end; font-variant-numeric: tabular-nums; }
+.stats-table tbody tr:last-child td { border-block-end: 0; }
+
 /* ---------- الإعدادات ---------- */
 .settings-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 .card {

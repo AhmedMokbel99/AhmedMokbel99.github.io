@@ -18,6 +18,33 @@ const categoryLabel = (id) =>
   (typeof CATEGORIES !== 'undefined' && CATEGORIES.find((c) => c.id === id)?.label) || id;
 
 const formatCount = (n) => new Intl.NumberFormat('en-US').format(n);
+
+/* إحصائيات خفيفة على Cloudflare — من غير كوكيز ولا بيانات شخصية */
+const ANALYTICS_ENDPOINT = 'https://ahmed-analytics.ahmed01068775125.workers.dev';
+function trackEvent(kind, project = '') {
+  try {
+    fetch(`${ANALYTICS_ENDPOINT}/event`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ kind, project: String(project || '').slice(0, 160) }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch (error) {
+    /* الإحصائيات مش جزء من تجربة الزائر — لو فشلت نتجاهلها */
+  }
+}
+
+function trackVisitOnce() {
+  try {
+    if (sessionStorage.getItem('am_analytics_visit')) return;
+    sessionStorage.setItem('am_analytics_visit', '1');
+  } catch (error) {
+    /* لو التخزين متقفل نحسب الزيارة على أي حال */
+  }
+  trackEvent('visit');
+}
+
 const whatsappBase = () =>
   typeof SITE_DATA !== 'undefined' ? `https://wa.me/${SITE_DATA.whatsapp}` : '';
 
@@ -1208,6 +1235,7 @@ function openProject(id) {
 
   if (index === -1) return;
 
+  trackEvent('project', id);
   state.dialogIndex = index;
 
   if (typeof HTMLDialogElement === 'undefined' || !dialog.showModal) {
@@ -2123,6 +2151,7 @@ function init() {
   initCounters();
   initContactForm();
   initMisc();
+  trackVisitOnce();
 }
 
 if (document.readyState === 'loading') {

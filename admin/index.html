@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://raw.githubusercontent.com; media-src 'self' blob:; font-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; form-action 'self'; manifest-src 'self'; worker-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://raw.githubusercontent.com; media-src 'self' blob:; font-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://ahmed-analytics.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'; worker-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="لوحة تحكم خاصة بموقع أحمد مقبل — غير مفهرسة وغير مربوطة من الموقع.">
@@ -18,7 +18,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preload" href="../assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="admin.css?v=9">
+<link rel="stylesheet" href="admin.css?v=10">
 </head>
 <body>
 
@@ -101,7 +101,7 @@
       <div class="topbar__start">
         <span class="brand-mark brand-mark--sm">AM</span>
         <div class="topbar__title">
-          <b>لوحة التحكم <small dir="ltr" style="opacity:.65;font-weight:400">v31</small></b>
+          <b>لوحة التحكم <small dir="ltr" style="opacity:.65;font-weight:400">v32</small></b>
           <small id="repoLabel">—</small>
         </div>
       </div>
@@ -127,6 +127,9 @@
           <button class="tab" data-tab="images" type="button">
             <span aria-hidden="true">🖼</span> صور الموقع
           </button>
+          <button class="tab" data-tab="analytics" type="button">
+            <span aria-hidden="true">📊</span> الإحصائيات
+          </button>
           <button class="tab" data-tab="settings" type="button">
             <span aria-hidden="true">⚙</span> الإعدادات
           </button>
@@ -142,6 +145,7 @@
         <section class="panel" id="panel-texts" hidden></section>
         <section class="panel" id="panel-pages" hidden></section>
         <section class="panel" id="panel-images" hidden></section>
+        <section class="panel" id="panel-analytics" hidden></section>
         <section class="panel" id="panel-settings" hidden></section>
       </main>
     </div>
@@ -170,6 +174,6 @@
     <button class="btn btn--primary btn--sm" id="dirtySaveBtn" type="button">حفظ ونشر الآن</button>
   </div>
 
-  <script src="admin.js?v=31"></script>
+  <script src="admin.js?v=32"></script>
 </body>
 </html>

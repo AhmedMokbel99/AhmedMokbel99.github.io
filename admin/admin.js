@@ -438,9 +438,10 @@ function logout() {
 function switchTab(tab) {
   state.tab = tab;
   $$('.tab').forEach((btn) => btn.classList.toggle('is-active', btn.dataset.tab === tab));
-  ['projects', 'texts', 'images', 'pages', 'settings'].forEach((name) => {
+  ['projects', 'texts', 'images', 'pages', 'analytics', 'settings'].forEach((name) => {
     $(`#panel-${name}`).hidden = name !== tab;
   });
+  if (tab === 'analytics') loadAnalytics();
 }
 
 function renderAll() {
@@ -2330,6 +2331,93 @@ function bindEditors(panel, scope) {
       card.classList.remove('is-dragging', 'drop-target')
     );
   });
+}
+
+/* ---------------- الإحصائيات ---------------- */
+const ANALYTICS_ENDPOINT = 'https://ahmed-analytics.ahmed01068775125.workers.dev';
+
+function renderAnalytics(data) {
+  const panel = $('#panel-analytics');
+  if (!panel) return;
+
+  if (!data) {
+    panel.innerHTML = `
+      <div class="panel-head">
+        <div><h2>الإحصائيات</h2><p>جاري تحميل الأرقام…</p></div>
+      </div>`;
+    return;
+  }
+
+  const nf = new Intl.NumberFormat('en-US');
+  const counts = data.projects && typeof data.projects === 'object' ? data.projects : {};
+  const rows = state.projects
+    .map((project, index) => ({
+      title: String(project.title || project.code || project.id || '—'),
+      id: String(project.id || ''),
+      count: Number(counts[project.id] || 0),
+      index,
+    }))
+    .sort((a, b) => b.count - a.count || a.index - b.index);
+
+  panel.innerHTML = `
+    <div class="panel-head">
+      <div>
+        <h2>الإحصائيات</h2>
+        <p>زيارات الموقع وعدد مرات فتح كل مشروع — البيانات محفوظة على Cloudflare من غير بيانات شخصية.</p>
+      </div>
+      <button class="btn btn--ghost btn--sm" type="button" id="refreshAnalyticsBtn">تحديث الأرقام</button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card"><span>إجمالي الزيارات</span><b dir="ltr">${nf.format(Number(data.visits || 0))}</b></div>
+      <div class="stat-card"><span>زوار فريدون</span><b dir="ltr">${nf.format(Number(data.visitors || 0))}</b></div>
+      <div class="stat-card"><span>زيارات اليوم</span><b dir="ltr">${nf.format(Number(data.todayVisits || 0))}</b></div>
+      <div class="stat-card"><span>زوار اليوم</span><b dir="ltr">${nf.format(Number(data.todayVisitors || 0))}</b></div>
+    </div>
+
+    <p class="hint" style="margin:.7rem 0 0">الزائر الفريد بيتحسب مرة واحدة في اليوم — من غير كوكيز ولا تخزين IP أو بريد.</p>
+
+    <div class="card" style="margin-top:1rem">
+      <h3>المشاريع — عدد مرات الفتح</h3>
+      <div class="table-wrap">
+        <table class="stats-table">
+          <thead><tr><th>المشروع</th><th>عدد مرات الفتح</th></tr></thead>
+          <tbody>
+            ${rows
+              .map(
+                (row) =>
+                  `<tr><td>${h(row.title)}</td><td dir="ltr">${nf.format(row.count)}</td></tr>`
+              )
+              .join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="hint" style="margin-top:.7rem">آخر تحديث: ${h(new Date().toLocaleTimeString('ar-EG'))}</p>
+  `;
+
+  $('#refreshAnalyticsBtn')?.addEventListener('click', loadAnalytics);
+}
+
+async function loadAnalytics() {
+  renderAnalytics(null);
+  try {
+    const response = await fetch(`${ANALYTICS_ENDPOINT}/summary`, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`خطأ ${response.status}`);
+    renderAnalytics(await response.json());
+  } catch (error) {
+    const panel = $('#panel-analytics');
+    if (panel) {
+      panel.innerHTML = `
+        <div class="panel-head">
+          <div><h2>الإحصائيات</h2><p>تعذّر تحميل الأرقام.</p></div>
+          <button class="btn btn--ghost btn--sm" type="button" id="refreshAnalyticsBtn">إعادة المحاولة</button>
+        </div>
+        <div class="card">${h(error.message)}</div>`;
+      $('#refreshAnalyticsBtn')?.addEventListener('click', loadAnalytics);
+    }
+  }
 }
 
 /* ---------------- الإعدادات ---------------- */

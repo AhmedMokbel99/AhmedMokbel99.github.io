@@ -1164,6 +1164,7 @@ def update_assets_version(html: str) -> str:
 # Permissions-Policy، COOP/CORP، HSTS) موثّق في docs/agent-readiness.md §1.
 TURNSTILE_ORIGIN = "https://challenges.cloudflare.com"
 YOUTUBE_ORIGIN = "https://www.youtube-nocookie.com"
+ANALYTICS_ORIGIN = "https://ahmed-analytics.ahmed01068775125.workers.dev"
 
 # يُضبط في main() من contact.contactEndpoint الموجود في content/site.json،
 # عشان سياسة connect-src تتبع عنوان العامل الفعلي وما ترجعش لعنوان قديم.
@@ -1186,7 +1187,7 @@ def configure_csp(site: dict) -> None:
         "font-src 'self' data:; "
         "media-src 'self'; "
         f"frame-src {YOUTUBE_ORIGIN} {TURNSTILE_ORIGIN}; "
-        f"connect-src 'self' {TURNSTILE_ORIGIN} {worker_origin}; "
+        f"connect-src 'self' {TURNSTILE_ORIGIN} {worker_origin} {ANALYTICS_ORIGIN}; "
         "form-action 'self'; "
         "manifest-src 'self'"
     )

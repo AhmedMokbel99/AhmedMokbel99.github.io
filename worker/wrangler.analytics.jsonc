@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ahmed-analytics",
+  "main": "analytics.js",
+  "compatibility_date": "2026-01-01",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ANALYTICS",
+        "class_name": "Analytics"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["Analytics"]
+    }
+  ]
+}
