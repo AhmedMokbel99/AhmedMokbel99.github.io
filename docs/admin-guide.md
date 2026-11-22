@@ -24,7 +24,7 @@
 
 1. سجّل الدخول إلى GitHub بحساب **AhmedMokbel99**.
 2. افتح الرابط المجهّز:
-   <https://github.com/settings/personal-access-tokens/new?name=AM%20Admin&description=Portfolio%20admin%20panel&target_name=AhmedMokbel99&contents=write&actions=read>
+   <https://github.com/settings/personal-access-tokens/new?name=AM%20Admin&description=Portfolio%20admin%20panel&target_name=AhmedMokbel99&expires_in=none&contents=write&actions=read>
    — بيفتح الصفحة بالمستودع والصلاحيات مختارين.
 3. لو الصلاحيات مش مختارة لأي سبب، اختَرها يدويًا:
    - **Repository access** → **Only select repositories** → `AhmedMokbel99.github.io`
@@ -33,7 +33,7 @@
      - **Actions** → **Read-only** (اختياري — لعرض حالة النشر داخل اللوحة)
      - **Metadata** → **Read-only** (تلقائي)
      - الباقي **No access**
-4. في **Expiration** اختر سنة مثلًا. لو انتهى، تعمل توكنًا جديدًا وتدخله من جديد.
+4. في **Expiration** لاحظ أن الرابط أعلاه يضبط التوكن بـ **No expiration** (`expires_in=none`)، فلا ينتهي ولا يُطلب منك مجددًا على نفس المتصفح. لو ظهر تاريخ، اختر **No expiration** يدويًا.
 5. اضغط **Generate token**، وانسخ التوكن فورًا (يبدأ بـ `github_pat_`).
    **لن يظهر مرة أخرى بعد إغلاق الصفحة.**
 
@@ -67,10 +67,12 @@
 ## 2.1) إزاي ترجع للوحة بعد كده
 
 اللوحة **مش** هتطلب منك توكن كل مرة. هي بتحفظه في المتصفح، وبعد أول دخول
-بتفتح على طول. في حالتين بس هتطلب التوكن تاني:
+بتفتح على طول. التوكن الناتج من الرابط الجديد **بدون تاريخ انتهاء**، فمش هيتطلب
+بسبب مرور الوقت. هتطلب التوكن تاني في ثلاث حالات بس:
 
 - دخلت من **متصفح تاني** أو **جهاز تاني** (لأن التوكن مش بيتزامن بينهم).
-- التوكن **انتهت صلاحيته** أو عملت له Revoke، أو مسحت بيانات المتصفح.
+- عملت **Revoke/Delete** للتوكن من GitHub.
+- مسحت بيانات المتصفح أو ضغطت **تسجيل الخروج** داخل اللوحة.
 
 طرق الوصول السريع:
 
