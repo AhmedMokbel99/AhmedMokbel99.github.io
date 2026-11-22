@@ -2363,6 +2363,55 @@ def main() -> None:
         }
     )
 
+    # الحقول اللي مش محتاجة تدخل من المالك تتعبّى تلقائيًا بدل ما البناء يقف
+    default_categories = [
+        cat for cat in site.get("categories", []) if cat.get("id") and cat.get("id") != "all"
+    ]
+    default_cat = default_categories[0]["id"] if default_categories else "motion"
+    default_tag = (default_categories[0].get("label") if default_categories else "") or "تصميم"
+    used_codes = {
+        str(project.get("code") or "").strip()
+        for project in projects
+        if str(project.get("code") or "").strip()
+    }
+    used_ids = {
+        str(project.get("id") or "").strip()
+        for project in projects
+        if str(project.get("id") or "").strip()
+    }
+    max_project_number = 0
+    for project in projects:
+        match = re.search(r"(\d+)\s*$", str(project.get("code") or project.get("id") or ""))
+        if match:
+            max_project_number = max(max_project_number, int(match.group(1)))
+
+    def next_generated_project_value(prefix: str) -> str:
+        nonlocal max_project_number
+        while True:
+            max_project_number += 1
+            candidate = f"{prefix}{max_project_number:02d}"
+            if candidate not in used_codes and candidate not in used_ids:
+                used_codes.add(candidate)
+                used_ids.add(candidate)
+                return candidate
+
+    for project in projects:
+        if not str(project.get("cat") or "").strip():
+            project["cat"] = default_cat
+        if not str(project.get("code") or "").strip():
+            project["code"] = next_generated_project_value("F")
+        if not str(project.get("id") or "").strip():
+            project["id"] = next_generated_project_value("f")
+        if not str(project.get("title") or "").strip():
+            project["title"] = f"مشروع {project['code']}"
+        if not str(project.get("tag") or "").strip():
+            project["tag"] = default_tag
+        if not str(project.get("alt") or "").strip():
+            project["alt"] = f"{project['title']} — {project['tag']}"
+        if str(project.get("video") or "").lower().endswith((".mp4", ".webm", ".mov")):
+            if not str(project.get("date") or "").strip():
+                project["date"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
     for index, project in enumerate(projects, start=1):
         for key in ("id", "code", "title", "cat", "tag", "image"):
             if not project.get(key):
@@ -2376,18 +2425,30 @@ def main() -> None:
         gallery = project.get("gallery") or []
         if not isinstance(gallery, list):
             fail(f"المشروع {project.get('code')}: gallery يجب أن تكون قائمة.")
-        for item_index, item in enumerate(gallery, start=1):
-            if not isinstance(item, dict) or not item.get("src"):
-                fail(f"المشروع {project.get('code')}: صورة الجاليري {item_index} ينقصها src.")
-            if not item.get("alt"):
-                fail(f"المشروع {project.get('code')}: صورة الجاليري {item_index} ينقصها alt.")
+        clean_gallery = [
+            item for item in gallery if isinstance(item, dict) and str(item.get("src") or "").strip()
+        ]
+        if clean_gallery or "gallery" in project:
+            project["gallery"] = clean_gallery
+        for item in clean_gallery:
+            if not str(item.get("alt") or "").strip():
+                item["alt"] = f"{project['title']} — {project['tag']}".strip()
 
         facts = project.get("facts") or []
         if not isinstance(facts, list):
             fail(f"المشروع {project.get('code')}: facts يجب أن تكون قائمة.")
-        for fact_index, fact in enumerate(facts, start=1):
-            if not isinstance(fact, dict) or not fact.get("label") or not fact.get("value"):
-                fail(f"المشروع {project.get('code')}: البيان الإضافي {fact_index} يحتاج label و value.")
+        clean_facts = [
+            {
+                "label": str(fact.get("label") or "").strip(),
+                "value": str(fact.get("value") or "").strip(),
+            }
+            for fact in facts
+            if isinstance(fact, dict)
+            and str(fact.get("label") or "").strip()
+            and str(fact.get("value") or "").strip()
+        ]
+        if clean_facts or "facts" in project:
+            project["facts"] = clean_facts
 
     # كل صورة مذكورة في المحتوى لازم تكون موجودة فعلًا — الرينيم بيتنسى سهل
     referenced: list[tuple[str, str]] = []

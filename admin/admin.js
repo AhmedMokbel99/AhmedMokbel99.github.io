@@ -536,6 +536,75 @@ function nextProjectCode() {
   return `F${String(max + 1).padStart(2, '0')}`;
 }
 
+function nextProjectId() {
+  let max = 0;
+  state.projects.forEach((project) => {
+    const match = String(project.id || '').match(/(\d+)\s*$/);
+    if (match) max = Math.max(max, Number(match[1]));
+  });
+  let id = `f${String(max + 1).padStart(2, '0')}`;
+  while (state.projects.some((project) => project.id === id)) {
+    max += 1;
+    id = `f${String(max + 1).padStart(2, '0')}`;
+  }
+  return id;
+}
+
+function defaultCategoryId() {
+  const first = (state.site.categories || []).find((cat) => cat.id && cat.id !== 'all');
+  return first ? first.id : 'motion';
+}
+
+/* تعبئة الحقول اللي build.py محتاجها من غير ما المالك يكتبها بنفسه */
+function ensureProjectFields(project) {
+  if (!project || typeof project !== 'object') return false;
+  let changed = false;
+  const fill = (key, value) => {
+    if (!String(project[key] ?? '').trim()) {
+      project[key] = value;
+      changed = true;
+    }
+  };
+
+  fill('cat', defaultCategoryId());
+  fill('code', nextProjectCode());
+  fill('id', nextProjectId());
+  fill('title', `مشروع ${project.code}`);
+  const category = (state.site.categories || []).find((cat) => cat.id === project.cat);
+  fill('tag', (category && category.label) || 'تصميم');
+  fill('alt', `${project.title} — ${project.tag}`);
+
+  if (!Array.isArray(project.gallery)) {
+    project.gallery = [];
+    changed = true;
+  }
+  const cleanGallery = project.gallery
+    .filter((item) => item && String(item.src || '').trim())
+    .map((item) => {
+      const next = { ...item };
+      if (!String(next.alt || '').trim()) {
+        next.alt = `${project.title} — ${project.tag}`.trim();
+        changed = true;
+      }
+      return next;
+    });
+  if (cleanGallery.length !== project.gallery.length) changed = true;
+  project.gallery = cleanGallery;
+
+  if (!Array.isArray(project.facts)) {
+    project.facts = [];
+    changed = true;
+  }
+  const cleanFacts = project.facts
+    .filter((fact) => fact && String(fact.label || '').trim() && String(fact.value || '').trim())
+    .map((fact) => ({ label: String(fact.label).trim(), value: String(fact.value).trim() }));
+  if (cleanFacts.length !== project.facts.length) changed = true;
+  project.facts = cleanFacts;
+
+  if (/\.(mp4|webm|mov)$/i.test(String(project.video || ''))) fill('date', new Date().toISOString());
+  return changed;
+}
+
 function blankProject() {
   let maxId = 0;
   state.projects.forEach((project) => {
@@ -1259,6 +1328,7 @@ function base64FromBuffer(buffer) {
 
 function saveProjectDraft() {
   const draft = state.draft;
+  ensureProjectFields(draft);
   if (!String(draft.title || '').trim()) return toast('اسم المشروع مطلوب', 'err');
   if (!draft.image) return toast('صورة الغلاف مطلوبة', 'err');
   if (!String(draft.alt || '').trim())
@@ -2218,6 +2288,16 @@ async function saveAll() {
   button.textContent = 'جاري الحفظ…';
 
   try {
+    /* أي حقل ناقص يتعبّى تلقائيًا بدل ما النشر يفشل بعدين */
+    let autoFilled = false;
+    state.projects.forEach((project) => {
+      if (ensureProjectFields(project)) autoFilled = true;
+    });
+    if (autoFilled) {
+      markDirty();
+      renderProjects();
+    }
+
     /* نفس شروط build.py — منع حفظ مشروع هيوقف النشر بعدين */
     const missing = [];
     state.projects.forEach((project, index) => {
