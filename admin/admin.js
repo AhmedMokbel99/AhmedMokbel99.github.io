@@ -15,7 +15,7 @@ const LS = {
 
 const CONTENT_FILES = ['content/site.json', 'content/projects.json', 'content/pages.json'];
 const MAX_IMAGE = 3 * 1024 * 1024;
-const MAX_VIDEO = 25 * 1024 * 1024;
+const MAX_VIDEO = 100 * 1024 * 1024;
 
 const state = {
   token: '',
@@ -795,7 +795,7 @@ function renderProjectForm() {
         videoMode === 'local'
           ? `<div style="margin-top:.7rem">
               <input type="file" id="videoInput" accept="video/mp4,video/webm">
-              <p class="hint">MP4 أو WebM حتى 25MB. الملفات الأكبر ارفعها على يوتيوب (غير مدرج) والصق الرابط.</p>
+              <p class="hint">MP4 أو WebM حتى 100MB (حد GitHub API). فوق 50MB النشر هياخد وقت أطول. الأكبر من 100MB ارفعها على يوتيوب (غير مدرج) والصق الرابط.</p>
               ${draft.video ? `<p class="hint" dir="ltr">${h(draft.video)}</p>` : ''}
             </div>`
           : videoMode === 'youtube'
@@ -1068,12 +1068,11 @@ function removeGalleryItem(index) {
 async function attachVideo(file) {
   try {
     if (file.size > MAX_VIDEO) {
-      throw new Error('الفيديو أكبر من 25MB. ارفعه على يوتيوب (غير مدرج) واستخدم رابط يوتيوب.');
+      throw new Error('الفيديو أكبر من 100MB — ده حد GitHub API. ارفعه على يوتيوب (غير مدرج) واستخدم رابط يوتيوب.');
     }
     const base = slugify(state.draftImageName) || `project-${state.draft.id}`;
     const path = `assets/projects/${base}.mp4`;
-    const buffer = await file.arrayBuffer();
-    state.pendingUploads.set(path, base64FromBuffer(buffer));
+    state.pendingUploads.set(path, await fileToBase64(file));
     state.draftUploads.push(path);
     state.draft.video = path;
     state.draft.youtube = '';
@@ -1237,6 +1236,15 @@ async function attachSiteImage(key, file) {
   } catch (error) {
     toast(error.message || 'تعذّر تجهيز الصورة', 'err');
   }
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || '').split(',')[1] || '');
+    reader.onerror = () => reject(reader.error || new Error('تعذّر قراءة الفيديو'));
+    reader.readAsDataURL(file);
+  });
 }
 
 function base64FromBuffer(buffer) {
