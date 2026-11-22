@@ -189,6 +189,7 @@ async function api(path, options = {}) {
     }
     const err = new Error(message);
     err.status = response.status;
+    err.path = path;
     throw err;
   }
 
@@ -2149,9 +2150,12 @@ async function saveAll() {
     toast('تم الحفظ ✅ — GitHub يبني الموقع الآن تلقائيًا (حوالي دقيقة).', 'ok');
     setTimeout(() => checkDeploy(), 4000);
   } catch (error) {
-    const hint = /Resource not accessible/i.test(error.message)
-      ? ' — افتح /admin/?reset=1 وسجّل بتوكن جديد عليه Contents: Read and write.'
-      : '';
+    let hint = '';
+    if (error.status === 403) {
+      hint = ` — الطلب المرفوض: ${error.path || 'غير معروف'}. راجع صلاحية Contents: Read and write واضغط Update token في صفحة GitHub بعد التعديل.`;
+    } else if (/Resource not accessible/i.test(error.message)) {
+      hint = ' — افتح /admin/?reset=1 وسجّل بتوكن جديد عليه Contents: Read and write.';
+    }
     toast(`فشل الحفظ: ${error.message}${hint}`, 'err');
     button.disabled = false;
   } finally {
@@ -2162,6 +2166,15 @@ async function saveAll() {
 
 async function commitFiles(files, deletions, message) {
   const repo = `/repos/${state.owner}/${state.repo}`;
+
+  /* فحص سريع: لو GitHub بيقول إن التوكن للقراءة فقط، نوضح السبب قبل أي محاولة كتابة */
+  const repoInfo = await api(repo);
+  if (repoInfo.permissions && repoInfo.permissions.push === false) {
+    throw new Error(
+      'التوكن ده بيقرأ بس (push=false) — غيّر Contents إلى Read and write ثم اضغط Update token في صفحة GitHub.'
+    );
+  }
+
   const ref = await api(`${repo}/git/ref/heads/${encodeURIComponent(state.branch)}`);
   const base = await api(`${repo}/git/commits/${ref.object.sha}`);
 
