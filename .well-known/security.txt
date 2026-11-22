@@ -1,5 +1,5 @@
 Contact: mailto:YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=
 Contact: https://wa.me/201228084197
-Expires: 2027-11-22T00:00:00.000Z
+Expires: 2027-11-23T00:00:00.000Z
 Canonical: https://ahmedmokbel99.github.io/.well-known/security.txt
 Preferred-Languages: ar, en

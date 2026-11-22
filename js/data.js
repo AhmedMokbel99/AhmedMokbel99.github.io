@@ -128,9 +128,9 @@ const WORK_DATA = [
   {
     "id": "f26",
     "code": "F26",
-    "title": "📸 تصميم بوستر وباقات إعلانية لمصور فوتوغرافي محترف (إبراهيم مطر)",
+    "title": "بوستر وباقات تصوير إبراهيم مطر",
     "cat": "brand",
-    "tag": "تصميم إعلاني وهوية بصرية",
+    "tag": "تصميم إعلاني",
     "isVideo": false,
     "url": "",
     "external": false,
@@ -138,7 +138,7 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/project-f26-900.jpg",
     "width": 1189,
     "height": 1658,
-    "alt": "بوستر وباقات إعلانية لمصور فوتوغرافي",
+    "alt": "بوستر إعلاني وباقات تصوير لحفلات الزفاف للمصور إبراهيم مطر",
     "summary": "🎯 صناعة الهوية البصرية والعروض الترويجية لخدمات التصوير الفوتوغرافي\n\nتصميم بوستر إعلاني وترويجي متكامل لصالح المصور المحترف \"إبراهيم مطر\" لعرض باقات وتفاصيل تصوير حفلات الزفاف والمناسبات. تم التركيز على دمج لقطات حية من أعماله في إطار هندسي يحاكي عدسة الكاميرا، مع تنظيم ذكي ومقروء للباقات والأسعار لجذب الجمهور المستهدف وتحفيز الحجز المباشر.",
     "details": "🚀 إبراز اللحظات السعيدة من خلال تصميم إعلاني تفاعلي ومنظم\n\nيهدف هذا التصميم البصري إلى تقديم عروض باقات تصوير حفلات الزفاف (Wedding Packages) بشكل مبتكر وفخم يجمع بين الهوية البصرية الفنية للمصور والوضوح التسويقي المطلوب، ليكون أداة ترويجية قوية على منصات التواصل وفي المطبوعات.\n\n🔑 أبرز ما تم التركيز عليه في هذا التصميم:\n\nالهندسة البصرية وتأطير الصور: استخدام تصميم عدسة الكاميرا الدائرية الضخمة في المنتصف لربط المشاهد فوراً بمجال التصوير، تحيط بها إطارات مائلة مقتطعة بعناية (Dynamic Crop) تحتوي على لقطات حية من مناسبات حقيقية تعكس حيوية وتنوع أعمال المصور.\n\nالتباين والتناغم اللوني الفخم: اعتماد الخلفية الداكنة (Dark Slate) الغنية بنقوش خفيفة لأدوات التصوير (Watermark) لإعطاء عمق، مع استخدام اللون الذهبي والأبيض للنصوص والأسعار لضمان تباين قوي وسرعة قراءة العروض (High Contrast).\n\nالتنظيم الهرمي للعروض (Structured Packages): تقسيم الباقات بوضوح (Package 1 vs Package 2) مع تظليل الأسعار بالذهبي وتفصيل الخدمات والهدايا المرافقة (مثل التابلوه والألبوم والفلاشة) بطريقة تسلسلية مريحة للعين.\n\nتأكيد الهوية الشخصية والدعوة لاتخاذ إجراء: دمج توقيع المصور الفني \"Ebrahim Matar Photography\" بخط يدوي يعكس اللمسة الفنية والشخصية، وإبراز أرقام التواصل والواتساب في الأسفل بخلفية خضراء مميزة لتسهيل الحجز السريع.",
     "challenge": "",
@@ -155,14 +155,14 @@ const WORK_DATA = [
         "small": "assets/projects/project-f26-g1-900.jpg",
         "width": 1175,
         "height": 1663,
-        "alt": "مشروع —"
+        "alt": "تفصيل من تصميم بوستر باقات التصوير — إبراهيم مطر (1)"
       },
       {
         "src": "assets/projects/project-f26-g2.jpg",
         "small": "assets/projects/project-f26-g2-900.jpg",
         "width": 1179,
         "height": 1658,
-        "alt": "مشروع —"
+        "alt": "تفصيل من تصميم بوستر باقات التصوير — إبراهيم مطر (2)"
       }
     ],
     "slug": "project-f26"
@@ -170,9 +170,9 @@ const WORK_DATA = [
   {
     "id": "f25",
     "code": "F25",
-    "title": "✨ تصميم إعلانات وبوستات السوشيال ميديا الإبداعية لعلامات تجارية متنوعة",
-    "cat": "motion",
-    "tag": "تصميم_جرافيك، بوستات_سوشيال_ميديا، إعلانات_خلاقة، هوية_بصرية، صناعة_المحتوى_البصري، Photoshop، Illustrator، حملات_تسويقية",
+    "title": "بوستات سوشيال ميديا لعلامات تجارية",
+    "cat": "digital",
+    "tag": "سوشيال ميديا",
     "isVideo": false,
     "url": "",
     "external": false,
@@ -180,7 +180,7 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/project-f25-900.jpg",
     "width": 1198,
     "height": 798,
-    "alt": "مشروع —",
+    "alt": "مجموعة بوستات إعلانية لعلامات تجارية على السوشيال ميديا",
     "summary": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، وتساهم بفعالية في تعزيز وعي الجمهور بالعلامات التجارية وزيادة نسب التفاعل (Engagement Rate) والمبيعات.",
     "details": "🚀 تحويل الرؤية الإعلانية إلى واقع بصري يأسر العين ويحقق النتائج\n\nتعد منصات التواصل الاجتماعي ساحة سريعة التغير، ومن هنا انطلقت في هذا المشروع لتقديم حلول تصميمية مبتكرة وخارجة عن المألوف، تراعي \"الاستراتيجية البصرية\" لكل قطاع لضمان تميزه وسط المنافسين.",
     "challenge": "",
@@ -216,6 +216,8 @@ const WORK_DATA = [
     "alt": "آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم",
     "imageSmall": "assets/projects/ans-dimashqi-steak-ad-900.jpg",
     "featured": true,
+    "gallery": [],
+    "facts": [],
     "slug": "ans-dimashqi-steak-ad"
   },
   {
@@ -239,7 +241,37 @@ const WORK_DATA = [
     "tools": "إنتاج فيديو – موشن جرافيك",
     "alt": "آنس الدمشقي — إعلان الفطيرة — إعلان مطعم",
     "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "ans-dimashqi-pie-ad"
+  },
+  {
+    "id": "f27",
+    "code": "F27",
+    "title": "ألترا جرو — موشن جرافيك",
+    "cat": "motion",
+    "tag": "موشن جرافيك",
+    "isVideo": true,
+    "url": "",
+    "external": false,
+    "image": "assets/projects/ultra-grow.jpg",
+    "imageSmall": "assets/projects/ultra-grow-900.jpg",
+    "width": 1600,
+    "height": 900,
+    "alt": "إطار من فيديو موشن جرافيك لمنصة ألترا جرو",
+    "summary": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) - الرائدة في تقديم حلول النمو والدعم الرقمي للأعمال في الوطن العربي. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون الشريك الأمثل لرواد الأعمال والشركات للتوسع والانتشار، وذلك من خلال قصة بصرية شيقة تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي لضمان أعلى نسب تفاعل وتحويل",
+    "details": "",
+    "challenge": "",
+    "role": "",
+    "result": "",
+    "tools": "",
+    "facts": [],
+    "visible": true,
+    "video": "assets/projects/ultra-grow.mp4",
+    "youtube": "",
+    "gallery": [],
+    "date": "2026-11-22T15:04:54.685Z",
+    "slug": "ultra-grow"
   },
   {
     "id": "f06",
@@ -474,6 +506,8 @@ const WORK_DATA = [
     "result": "تصميم تهنئة جاهز للنشر على منصات العلامة.",
     "tools": "تصميم رقمي – سوشيال ميديا",
     "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا",
+    "gallery": [],
+    "facts": [],
     "slug": "almenissy-hijri-1448-greeting"
   },
   {
@@ -495,6 +529,8 @@ const WORK_DATA = [
     "result": "تصميم تهنئة جاهز للنشر.",
     "tools": "تصميم رقمي – سوشيال ميديا",
     "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا",
+    "gallery": [],
+    "facts": [],
     "slug": "grm-hijri-1448-greeting"
   },
   {
@@ -517,6 +553,8 @@ const WORK_DATA = [
     "alt": "مختارات سوشيال ميديا — تصميم رقمي",
     "imageSmall": "assets/projects/social-media-design-collection-900.jpg",
     "imageMedium": "assets/projects/social-media-design-collection-1200.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "social-media-design-collection"
   },
   {
@@ -539,6 +577,8 @@ const WORK_DATA = [
     "result": "رول أب جاهز للطباعة والاستخدام في معارض القبول.",
     "tools": "تصميم طباعي – رول أب",
     "alt": "بوابة القبول — تصميم طباعي",
+    "gallery": [],
+    "facts": [],
     "slug": "admission-gateway-rollup"
   },
   {
@@ -560,6 +600,8 @@ const WORK_DATA = [
     "result": "تصميم إعلاني جاهز للنشر بأسلوب ناعم وهادئ.",
     "tools": "تصميم رقمي – إعلان سوشيال ميديا",
     "alt": "حقن فيلر — تصميم رقمي",
+    "gallery": [],
+    "facts": [],
     "slug": "filler-injection-ad-design"
   },
   {
@@ -582,6 +624,8 @@ const WORK_DATA = [
     "tools": "هوية – تغليف – تصميم طباعي",
     "alt": "ULTRA GROW — تغليف المنتجات — هوية وطباعة",
     "featured": true,
+    "gallery": [],
+    "facts": [],
     "slug": "ultra-grow-brand-packaging"
   },
   {
@@ -604,6 +648,8 @@ const WORK_DATA = [
     "tools": "موشن جرافيك – تصميم مشاهد – مونتاج",
     "alt": "يوم التأسيس السعودي — موشن جرافيك",
     "featured": true,
+    "gallery": [],
+    "facts": [],
     "slug": "saudi-founding-day-motion-graphic"
   },
   {
@@ -627,6 +673,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/insta-watches-ad-design-900.jpg",
     "imageMedium": "assets/projects/insta-watches-ad-design-1200.jpg",
     "featured": true,
+    "gallery": [],
+    "facts": [],
     "slug": "insta-watches-ad-design"
   },
   {
@@ -650,6 +698,8 @@ const WORK_DATA = [
     "tools": "تحريك شعار – موشن جرافيك",
     "alt": "EN-SERV — تحريك شعار",
     "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "en-serv-logo-animation"
   },
   {
@@ -673,6 +723,8 @@ const WORK_DATA = [
     "tools": "موشن جرافيك – مونتاج",
     "alt": "الوثبة العقارية — مشروع سكني — إعلان عقاري",
     "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "alwathba-real-estate-ad"
   },
   {
@@ -696,6 +748,8 @@ const WORK_DATA = [
     "tools": "موشن جرافيك – مونتاج",
     "alt": "بديل — إعلان سيارة — إعلان سيارات",
     "imageSmall": "assets/projects/bdeel-car-ad-900.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "bdeel-car-ad"
   },
   {
@@ -719,6 +773,8 @@ const WORK_DATA = [
     "tools": "موشن جرافيك – 3D – مونتاج",
     "alt": "المقصود للمولدات — إعلان الشركة — إعلان شركة",
     "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "elmaqsoud-generators-ad"
   },
   {
@@ -742,6 +798,8 @@ const WORK_DATA = [
     "tools": "تصوير – مونتاج",
     "alt": "الزين — مطعم سوري — تصوير ومونتاج",
     "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "elzain-restaurant-video"
   },
   {
@@ -765,6 +823,8 @@ const WORK_DATA = [
     "tools": "موشن جرافيك – تحريك – مونتاج",
     "alt": "ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك",
     "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "alhakum-altakathur-motion"
   },
   {
@@ -788,6 +848,8 @@ const WORK_DATA = [
     "tools": "موشن جرافيك – تحريك – مونتاج",
     "alt": "البدايات — ياسر الحزيمي — موشن جرافيك",
     "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "beginnings-motion-graphic"
   },
   {
@@ -809,6 +871,8 @@ const WORK_DATA = [
     "result": "هوية ومطبوعات جاهزة للتطبيق داخل المطبعة.",
     "tools": "هوية بصرية – تصميم طباعي – مطبوعات",
     "alt": "طاهر للطباعة — هوية وطباعة",
+    "gallery": [],
+    "facts": [],
     "slug": "taher-printing-brand-identity"
   },
   {
@@ -831,6 +895,8 @@ const WORK_DATA = [
     "alt": "تجربة موشن جرافيك من بدايات المسار — موشن جرافيك",
     "imageSmall": "assets/projects/first-motion-graphics-work-900.jpg",
     "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "first-motion-graphics-work"
   },
   {
@@ -852,6 +918,8 @@ const WORK_DATA = [
     "result": "نظام بصري متسق يغطي التطبيقات الأساسية للعلامة.",
     "tools": "هوية بصرية – تطبيقات – تصميم رقمي",
     "alt": "ULTRA GROW — النظام البصري — هوية وطباعة",
+    "gallery": [],
+    "facts": [],
     "slug": "ultra-grow-2-brand-system"
   },
   {
@@ -875,6 +943,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/ibn-albasel-motion-graphic-900.jpg",
     "imageMedium": "assets/projects/ibn-albasel-motion-graphic-1200.jpg",
     "featured": true,
+    "gallery": [],
+    "facts": [],
     "slug": "ibn-albasel-motion-graphic"
   },
   {
@@ -897,6 +967,8 @@ const WORK_DATA = [
     "alt": "سر الطبيعة — تصميم رقمي",
     "imageSmall": "assets/projects/nature-secret-ad-design-900.jpg",
     "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg",
+    "gallery": [],
+    "facts": [],
     "slug": "nature-secret-ad-design"
   }
 ];
