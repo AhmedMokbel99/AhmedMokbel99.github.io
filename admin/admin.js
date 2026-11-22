@@ -84,6 +84,14 @@ function toast(message, kind = '') {
   }, 4200);
 }
 
+function busy(message) {
+  const node = $('#toast');
+  if (!node) return;
+  clearTimeout(toast._timer);
+  node.textContent = message;
+  node.className = 'toast is-on';
+}
+
 function markDirty() {
   state.dirty = true;
   const btn = $('#saveBtn');
@@ -195,6 +203,37 @@ async function api(path, options = {}) {
 
   if (response.status === 204) return null;
   return response.json();
+}
+
+function apiUpload(path, body, onProgress) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `https://api.github.com${path}`);
+    xhr.setRequestHeader('Authorization', `Bearer ${state.token}`);
+    xhr.setRequestHeader('Accept', 'application/vnd.github+json');
+    xhr.setRequestHeader('X-GitHub-Api-Version', '2022-11-28');
+    xhr.upload.addEventListener('progress', (event) => {
+      if (event.lengthComputable && onProgress) onProgress(event.loaded / event.total);
+    });
+    xhr.addEventListener('load', () => {
+      let data = null;
+      try {
+        data = JSON.parse(xhr.responseText || '{}');
+      } catch (error) {
+        /* ignore */
+      }
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(data);
+        return;
+      }
+      const error = new Error((data && data.message) || `خطأ ${xhr.status}`);
+      error.status = xhr.status;
+      error.path = path;
+      reject(error);
+    });
+    xhr.addEventListener('error', () => reject(new Error('تعذّر الاتصال بـ GitHub — اتصل بالإنترنت وجرب تاني.')));
+    xhr.send(body);
+  });
 }
 
 function decodeBase64(text) {
@@ -1081,6 +1120,7 @@ async function attachCover(file) {
   const cleanName = String(file.name || '').replace(/\.[^.]+$/, '');
   state.draftImageName = slugify(cleanName) || state.draftImageName;
   await attachVideo(file);
+  busy('الفيديو اتقرأ — جاري أخذ صورة منه وتجهيزها…');
 
   try {
     const poster = await posterFromVideo(file);
@@ -1231,6 +1271,7 @@ function removeGalleryItem(index) {
 
 async function attachVideo(file) {
   try {
+    busy('جاري قراءة الفيديو وتجهيزه… ما تغلقش الصفحة');
     if (file.size > MAX_VIDEO) {
       throw new Error('الفيديو أكبر من 100MB — ده حد GitHub API. ارفعه على يوتيوب (غير مدرج) واستخدم رابط يوتيوب.');
     }
@@ -2381,6 +2422,11 @@ async function saveAll() {
   const button = $('#saveBtn');
   button.disabled = true;
   button.textContent = 'جاري الحفظ…';
+  const started = Date.now();
+  const tick = setInterval(() => {
+    const seconds = Math.floor((Date.now() - started) / 1000);
+    button.textContent = `جاري الحفظ… ${seconds}ث`;
+  }, 1000);
 
   try {
     /* أي حقل ناقص يتعبّى تلقائيًا بدل ما النشر يفشل بعدين */
@@ -2443,7 +2489,11 @@ async function saveAll() {
     );
 
     const message = `تحديث الموقع من لوحة التحكم — ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`;
-    await commitFiles(files, deletions, message);
+    busy('جاري رفع الملفات على GitHub… ما تغلقش الصفحة');
+    await commitFiles(files, deletions, message, (percent) => {
+      busy(`جاري رفع الملفات… ${percent}% — ما تغلقش الصفحة`);
+      button.textContent = `جاري الحفظ… ${percent}%`;
+    });
 
     state.pendingUploads.clear();
     state.pendingDeletes.clear();
@@ -2464,12 +2514,13 @@ async function saveAll() {
     toast(`فشل الحفظ: ${error.message}${hint}`, 'err');
     button.disabled = false;
   } finally {
+    clearInterval(tick);
     button.textContent = 'حفظ ونشر';
     if (!state.dirty) button.disabled = true;
   }
 }
 
-async function commitFiles(files, deletions, message) {
+async function commitFiles(files, deletions, message, onProgress) {
   const repo = `/repos/${state.owner}/${state.repo}`;
 
   /* فحص سريع: لو GitHub بيقول إن التوكن للقراءة فقط، نوضح السبب قبل أي محاولة كتابة */
@@ -2483,16 +2534,26 @@ async function commitFiles(files, deletions, message) {
   const ref = await api(`${repo}/git/ref/heads/${encodeURIComponent(state.branch)}`);
   const base = await api(`${repo}/git/commits/${ref.object.sha}`);
 
+  const bodies = files.map((file) =>
+    JSON.stringify(
+      file.base64
+        ? { content: file.base64, encoding: 'base64' }
+        : { content: file.text, encoding: 'utf-8' }
+    )
+  );
+  const totalBytes = bodies.reduce((sum, body) => sum + body.length, 0) || 1;
+  let sentBytes = 0;
+
   const blobs = [];
-  for (const file of files) {
-    const blob = await api(`${repo}/git/blobs`, {
-      method: 'POST',
-      body: JSON.stringify(
-        file.base64
-          ? { content: file.base64, encoding: 'base64' }
-          : { content: file.text, encoding: 'utf-8' }
-      ),
+  for (let index = 0; index < files.length; index += 1) {
+    const body = bodies[index];
+    const startBytes = sentBytes;
+    const blob = await apiUpload(`${repo}/git/blobs`, body, (fraction) => {
+      sentBytes = startBytes + Math.round(fraction * body.length);
+      if (onProgress) onProgress(Math.min(99, Math.round((sentBytes / totalBytes) * 100)));
     });
+    sentBytes = startBytes + body.length;
+    if (onProgress) onProgress(Math.min(99, Math.round((sentBytes / totalBytes) * 100)));
     blobs.push(blob.sha);
   }
 
