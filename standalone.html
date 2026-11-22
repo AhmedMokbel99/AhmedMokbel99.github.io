@@ -8880,14 +8880,25 @@ function initContactForm() {
   let cooldownUntil = 0;
   let submitting = false;
 
-  const setStatus = (stateName, message, link) => {
+  const setStatus = (stateName, message, actions) => {
     if (!status) return;
     status.dataset.state = stateName;
     status.textContent = message;
 
-    if (link) {
+    const list = Array.isArray(actions) ? actions.filter(Boolean) : actions ? [actions] : [];
+    list.forEach((action) => {
+      if (typeof action.onClick === 'function') {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = action.label;
+        button.style.cssText =
+          'color:inherit;background:none;border:0;padding:0;font:inherit;text-decoration:underline;cursor:pointer;margin-inline-start:.35rem;';
+        button.addEventListener('click', action.onClick);
+        status.append(' ', button);
+        return;
+      }
       const anchor = document.createElement('a');
-      if (link.revealEmail) {
+      if (action.revealEmail) {
         anchor.href = '#contact';
         anchor.addEventListener('click', (event) => {
           event.preventDefault();
@@ -8896,14 +8907,14 @@ function initContactForm() {
           if (url) window.location.href = url;
         });
       } else {
-        anchor.href = link.href;
+        anchor.href = action.href;
         anchor.target = '_blank';
         anchor.rel = 'noopener noreferrer';
       }
-      anchor.textContent = link.label;
+      anchor.textContent = action.label;
       anchor.style.cssText = 'color:inherit;text-decoration:underline;margin-inline-start:.35rem;';
       status.append(' ', anchor);
-    }
+    });
 
     status.classList.add('is-visible');
   };
@@ -9043,6 +9054,37 @@ function initContactForm() {
   let turnstileToken = '';
   let turnstileFailed = false;
   let turnstileStarting = null;
+  let turnstileErrors = 0;
+
+  function retryTurnstile() {
+    if (!siteKey || !turnstileHost) return;
+    turnstileFailed = false;
+    turnstileErrors = 0;
+    turnstileToken = '';
+    if (turnstileNote) turnstileNote.textContent = '';
+    clearStatus();
+
+    const finish = (ok) => {
+      if (!ok) showVerificationFallback();
+    };
+    if (window.turnstile && turnstileId !== null) {
+      try {
+        window.turnstile.reset(turnstileId);
+      } catch (_) {
+        try {
+          window.turnstile.remove(turnstileId);
+        } catch (_) {}
+        turnstileId = null;
+      }
+    }
+    if (turnstileId === null) {
+      startTurnstile()
+        .then(() => waitForTurnstileToken(15000))
+        .then(finish);
+    } else {
+      waitForTurnstileToken(15000).then(finish);
+    }
+  }
 
   const showVerificationFallback = () => {
     if (turnstileNote) {
@@ -9051,7 +9093,10 @@ function initContactForm() {
     setStatus(
       'info',
       'تعذّر تحميل التحقق. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.',
-      whatsappStatusLink()
+      [
+        whatsappStatusLink(),
+        { label: 'إعادة محاولة التحقق', onClick: retryTurnstile },
+      ]
     );
   };
 
@@ -9066,18 +9111,27 @@ function initContactForm() {
         return;
       }
       let script = $('#turnstileScript');
+      if (script && script.dataset.failed === '1') {
+        script.remove();
+        script = null;
+      }
       if (!script) {
         script = document.createElement('script');
         script.id = 'turnstileScript';
         script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-        // Turnstile يرفض turnstile.ready() لو كان سكربت api.js مُحمّلاً بـ async/defer.
         script.onload = () => (window.turnstile ? resolve() : reject(new Error('turnstile_unavailable')));
-        script.onerror = () => reject(new Error('turnstile_load_failed'));
+        script.onerror = () => {
+          script.dataset.failed = '1';
+          reject(new Error('turnstile_load_failed'));
+        };
         document.head.appendChild(script);
         return;
       }
       script.addEventListener('load', () => (window.turnstile ? resolve() : reject(new Error('turnstile_unavailable'))), { once: true });
-      script.addEventListener('error', () => reject(new Error('turnstile_load_failed')), { once: true });
+      script.addEventListener('error', () => {
+        script.dataset.failed = '1';
+        reject(new Error('turnstile_load_failed'));
+      }, { once: true });
     });
 
   const startTurnstile = () => {
@@ -9097,6 +9151,7 @@ function initContactForm() {
           action: 'contact_form',
           callback: (token) => {
             turnstileToken = String(token || '');
+            turnstileErrors = 0;
             if (turnstileNote) turnstileNote.textContent = '';
           },
           'expired-callback': () => {
@@ -9106,8 +9161,14 @@ function initContactForm() {
           },
           'error-callback': () => {
             turnstileToken = '';
+            turnstileErrors += 1;
+            if (turnstileErrors <= 2) {
+              if (turnstileNote) turnstileNote.textContent = 'جارٍ إعادة محاولة التحقق...';
+              return false; // Turnstile يعيد المحاولة تلقائياً للفشل اللحظي.
+            }
             turnstileFailed = true;
             showVerificationFallback();
+            return true;
           },
         });
       } catch (_) {
