@@ -2406,6 +2406,11 @@ def main() -> None:
             project["title"] = f"مشروع {project['code']}"
         if not str(project.get("tag") or "").strip():
             project["tag"] = default_tag
+        if not str(project.get("image") or "").strip() and (
+            str(project.get("video") or "").lower().endswith((".mp4", ".webm", ".mov"))
+            or str(project.get("youtube") or "").strip()
+        ):
+            project["image"] = "assets/projects/video-poster.svg"
         if not str(project.get("alt") or "").strip():
             project["alt"] = f"{project['title']} — {project['tag']}"
         if str(project.get("video") or "").lower().endswith((".mp4", ".webm", ".mov")):

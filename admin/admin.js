@@ -572,6 +572,12 @@ function ensureProjectFields(project) {
   fill('title', `مشروع ${project.code}`);
   const category = (state.site.categories || []).find((cat) => cat.id === project.cat);
   fill('tag', (category && category.label) || 'تصميم');
+  if (
+    /\.(mp4|webm|mov)$/i.test(String(project.video || '')) ||
+    String(project.youtube || '').trim()
+  ) {
+    fill('image', 'assets/projects/video-poster.svg');
+  }
   fill('alt', `${project.title} — ${project.tag}`);
 
   if (!Array.isArray(project.gallery)) {
@@ -802,22 +808,22 @@ function renderProjectForm() {
     </div>
 
     <div class="form-section">
-      <h4>صورة الغلاف *</h4>
+      <h4>صورة الغلاف أو فيديو *</h4>
       <div class="image-picker">
         <div class="image-preview" id="imagePreview">
-          ${preview ? `<img src="${h(preview)}" alt="معاينة الغلاف">` : 'اختر صورة'}
+          ${preview ? `<img src="${h(preview)}" alt="معاينة الغلاف">` : 'اختر صورة أو فيديو'}
         </div>
         <div class="image-controls">
-          <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp">
+          <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime">
           <label class="field" style="margin:0">
             <span>اسم الملف (إنجليزي — يظهر في رابط الصورة)</span>
             <input type="text" id="imageNameInput" value="${h(state.draftImageName)}" dir="ltr">
           </label>
           <label class="field" style="margin:0">
-            <span>النص البديل للصورة (Alt) *</span>
+            <span>النص البديل للصورة (Alt)</span>
             <input type="text" value="${h(draft.alt || '')}" data-draft="alt" placeholder="وصف الصورة لمحركات البحث">
           </label>
-          <p class="hint" style="margin:0">أقصى حجم 3MB. يتم القص والضغط تلقائيًا وتوليد نسخة 900px للبطاقة.</p>
+          <p class="hint" style="margin:0">اختار صورة (حتى 3MB) أو فيديو MP4/WebM حتى 100MB. لو اخترت فيديو، صورة الغلاف هتتولد منه تلقائيًا.</p>
         </div>
       </div>
     </div>
@@ -936,7 +942,8 @@ function renderProjectForm() {
 
   $('#imageInput')?.addEventListener('change', async (event) => {
     const file = event.target.files[0];
-    if (file) await attachImage(file);
+    event.target.value = '';
+    if (file) await attachCover(file);
   });
 
   $('#galleryInput')?.addEventListener('change', async (event) => {
@@ -1003,6 +1010,94 @@ function renderProjectForm() {
   $('#imageNameInput')?.addEventListener('input', (event) => {
     state.draftImageName = event.target.value;
   });
+}
+
+function posterFromVideo(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const video = document.createElement('video');
+    let settled = false;
+    let timer = 0;
+
+    const finish = (blob) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      URL.revokeObjectURL(url);
+      if (blob) resolve(blob);
+      else reject(new Error('تعذّر أخذ صورة من الفيديو'));
+    };
+
+    const draw = () => {
+      if (settled) return;
+      try {
+        const rawWidth = video.videoWidth || 1280;
+        const rawHeight = video.videoHeight || 720;
+        const scale = Math.min(1, 1600 / Math.max(rawWidth, rawHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.max(2, Math.round(rawWidth * scale));
+        canvas.height = Math.max(2, Math.round(rawHeight * scale));
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob((blob) => finish(blob), 'image/jpeg', 0.85);
+      } catch (error) {
+        finish(null);
+      }
+    };
+
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.src = url;
+    video.addEventListener(
+      'loadeddata',
+      () => {
+        const target = Number.isFinite(video.duration) && video.duration > 0.3 ? 0.2 : 0;
+        if (target > 0) {
+          try {
+            video.currentTime = target;
+            return; /* seeked هي رسم الإطار */
+          } catch (error) {
+            /* نرسم فورًا لو المتصفح رفض التمرير */
+          }
+        }
+        draw();
+      },
+      { once: true }
+    );
+    video.addEventListener('seeked', draw, { once: true });
+    video.addEventListener('error', () => finish(null), { once: true });
+    timer = setTimeout(draw, 4000);
+    video.load();
+  });
+}
+
+async function attachCover(file) {
+  const isVideo = file.type.startsWith('video/') || /\.(mp4|webm|mov)$/i.test(file.name || '');
+  if (!isVideo) {
+    await attachImage(file);
+    return;
+  }
+
+  const cleanName = String(file.name || '').replace(/\.[^.]+$/, '');
+  state.draftImageName = slugify(cleanName) || state.draftImageName;
+  await attachVideo(file);
+
+  try {
+    const poster = await posterFromVideo(file);
+    const posterFile = new File(
+      [poster],
+      `${state.draftImageName || 'project'}-poster.jpg`,
+      { type: 'image/jpeg' }
+    );
+    await attachImage(posterFile);
+    toast('تم تجهيز الفيديو وصورة الغلاف منه تلقائيًا ✅', 'ok');
+  } catch (error) {
+    state.draft.image = 'assets/projects/video-poster.svg';
+    state.draft.imageSmall = '';
+    state.draftPreview = rawUrl('assets/projects/video-poster.svg');
+    renderProjectForm();
+    toast('الفيديو اتجهّز — استخدمنا غلاف احتياطي مؤقت.', 'ok');
+  }
 }
 
 async function attachImage(file) {
