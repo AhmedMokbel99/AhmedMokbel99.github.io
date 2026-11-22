@@ -3,7 +3,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com https://ahmed-contact-endpoint.ahmed01068775125.workers.dev https://ahmed-analytics.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://ahmed-analytics.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -4204,26 +4204,6 @@ button {
 .form__honeypot {
   display: none !important;
 }
-
-.turnstile-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: .45rem;
-  margin-block: 1rem .25rem;
-  min-height: 3.5rem;
-}
-
-.turnstile-wrap > div {
-  max-width: 100%;
-}
-
-.turnstile-note {
-  margin: 0;
-  color: var(--muted);
-  font-size: .82rem;
-  line-height: 1.6;
-}
   </style>
 
   <noscript>
@@ -6312,7 +6292,7 @@ button {
         <div class="contact-copy" data-reveal>
           <div class="eyebrow" data-cms="contactSection.eyebrow">تواصل</div>
           <h2 data-cms="contactSection.title">لنبدأ مشروعك القادم</h2>
-          <p data-cms="contactSection.lead">أرسل تفاصيل المشروع ونوع الخدمة المطلوبة، وسأعود إليك بخطة واضحة للبدء. أو تواصل مباشرة عبر واتساب.</p>
+          <p data-cms="contactSection.lead">املأ تفاصيل المشروع ونوع الخدمة المطلوبة، ثم اضغط «أرسل عبر واتساب» لتراجع الرسالة الجاهزة قبل إرسالها.</p>
 
           <div class="contact-channels">
             <!-- channels:start -->
@@ -6390,8 +6370,8 @@ button {
             <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
-          <!-- The form posts JSON to the Worker URL in SITE_DATA.contactEndpoint. Secrets stay in the Worker, never in this page. -->
-          <form id="contactForm" novalidate action="#" method="POST" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
+          <!-- لا يوجد إرسال من الموقع: الزر يفتح واتساب برسالة جاهزة ليوافق الزائر ويرسلها بنفسه. -->
+          <form id="contactForm" novalidate toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. Pressing the button opens WhatsApp with a ready message; the visitor reviews and sends it inside WhatsApp.">
             <input class="form__honeypot" type="text" name="botcheck" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field">
@@ -6437,24 +6417,15 @@ button {
 
             </div>
 
-            <div class="turnstile-wrap">
-              <div id="turnstileWidget" dir="ltr" aria-label="التحقق الآلي"></div>
-              <p class="turnstile-note" id="turnstileNote" role="status" aria-live="polite"></p>
-            </div>
-
             <div class="form-actions">
               <button type="submit" class="btn btn--primary" id="formSubmit">
-                <svg class="icon icon--solid" aria-hidden="true"><use href="#i-send"></use></svg>
-                <span data-cms="contactSection.submitWhatsapp">أرسل الطلب</span>
-              </button>
-              <button type="button" class="btn btn--ghost" id="formWhatsapp">
                 <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
-                <span>أو أرسلها على واتساب</span>
+                <span data-cms="contactSection.submitWhatsapp">أرسل عبر واتساب</span>
               </button>
             </div>
 
-            <p class="form-note" data-cms="contactSection.formNote">يُرسَل طلبك عبر خادم محمي، وأراجعه بنفسي وأرد عليك خلال 24 ساعة. إن تعذّر الإرسال من الموقع، يمكنك إرساله مباشرة عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
-            <p class="form-note">محمي بتحقق Cloudflare Turnstile · <a href="privacy.html">سياسة الخصوصية</a></p>
+            <p class="form-note" data-cms="contactSection.formNote">عند الضغط يفتح واتساب برسالة جاهزة، راجعها وأرسلها.</p>
+            <p class="form-note"><a href="privacy.html">سياسة الخصوصية</a></p>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>
@@ -6684,8 +6655,6 @@ const SITE_DATA = {
     "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع."
   },
   "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
-  "contactEndpoint": "https://ahmed-contact-endpoint.ahmed01068775125.workers.dev",
-  "turnstileSiteKey": "0x4AAAAAAGMQnorfnda9HV0t",
   "whatsapp": "201228084197",
   "behance": "https://www.behance.net/ahmed01068b62e",
   "facebook": "https://www.facebook.com/profile.php?id=61581319508233",
@@ -7719,14 +7688,6 @@ const getEmail = () => {
   cachedEmail =
     typeof SITE_DATA !== 'undefined' ? decodeEmailValue(SITE_DATA.email) : '';
   return cachedEmail;
-};
-const getContactEndpoint = () => {
-  if (typeof SITE_DATA === 'undefined') return '';
-  return String(SITE_DATA.contactEndpoint || '').trim();
-};
-const getTurnstileSiteKey = () => {
-  if (typeof SITE_DATA === 'undefined') return '';
-  return String(SITE_DATA.turnstileSiteKey || '').trim();
 };
 const revealEmail = () => {
   const email = getEmail();
@@ -9163,17 +9124,14 @@ function initLightbox() {
 }
 
 /* ------------------------------------------------------------
-   10) نموذج التواصل
+   10) نموذج التواصل — واتساب فقط، من غير إرسال من الموقع
 ------------------------------------------------------------ */
 function initContactForm() {
   const form = $('#contactForm');
   if (!form) return;
 
   const status = $('#formStatus');
-  const whatsappBtn = $('#formWhatsapp');
   const submitBtn = $('#formSubmit');
-  const turnstileHost = $('#turnstileWidget');
-  const turnstileNote = $('#turnstileNote');
 
   const clock = () =>
     window.performance && typeof performance.now === 'function' ? performance.now() : Date.now();
@@ -9196,24 +9154,14 @@ function initContactForm() {
         button.textContent = action.label;
         button.style.cssText =
           'color:inherit;background:none;border:0;padding:0;font:inherit;text-decoration:underline;cursor:pointer;margin-inline-start:.35rem;';
-        button.addEventListener('click', action.onClick);
+        button.addEventListener('click', () => action.onClick(button));
         status.append(' ', button);
         return;
       }
       const anchor = document.createElement('a');
-      if (action.revealEmail) {
-        anchor.href = '#contact';
-        anchor.addEventListener('click', (event) => {
-          event.preventDefault();
-          revealEmail();
-          const url = mailtoUrl();
-          if (url) window.location.href = url;
-        });
-      } else {
-        anchor.href = action.href;
-        anchor.target = '_blank';
-        anchor.rel = 'noopener noreferrer';
-      }
+      anchor.href = action.href;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
       anchor.textContent = action.label;
       anchor.style.cssText = 'color:inherit;text-decoration:underline;margin-inline-start:.35rem;';
       status.append(' ', anchor);
@@ -9314,10 +9262,24 @@ function initContactForm() {
     message: fields.message?.value.trim() || '',
   });
 
-  const buildMessage = () => {
+  const makeReference = () => {
+    const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    const bytes = new Uint8Array(4);
+    if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+      window.crypto.getRandomValues(bytes);
+    } else {
+      for (let i = 0; i < bytes.length; i += 1) bytes[i] = Math.floor(Math.random() * 256);
+    }
+    const suffix = Array.from(bytes, (byte) => alphabet[byte % alphabet.length]).join('');
+    return `AM-${date}-${suffix}`;
+  };
+
+  const buildMessage = (reference) => {
     const v = getValues();
     return [
       'طلب مشروع جديد — من الموقع الشخصي',
+      `المرجع: ${reference}`,
       '',
       `الاسم: ${v.name}`,
       `الهاتف: ${v.phone}`,
@@ -9329,197 +9291,48 @@ function initContactForm() {
     ].join('\n');
   };
 
-  const whatsappUrl = () => `${whatsappBase()}?text=${encodeURIComponent(buildMessage())}`;
+  const phoneNumber = () =>
+    String(typeof SITE_DATA !== 'undefined' ? SITE_DATA.whatsapp : '') || '201228084197';
 
-  const mailtoUrl = () => {
-    const email = getEmail();
-    if (!email) return '';
-    const subject = 'طلب مشروع جديد — من الموقع الشخصي';
-    return `mailto:${email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(buildMessage())}`;
-  };
+  const whatsappUrl = (reference) =>
+    `${whatsappBase()}?text=${encodeURIComponent(buildMessage(reference))}`;
 
-  const openWhatsApp = () => {
-    const url = whatsappUrl();
-    if (!url) return;
-    window.open(url, '_blank', 'noopener');
-  };
-
-  /* فتح واتساب بعد await بيتمنعه المتصفح؛ نخلي الزائر يضغط الرابط بنفسه */
-  const whatsappStatusLink = () => {
-    const href = whatsappUrl();
-    return href ? { href, label: 'افتح واتساب' } : null;
-  };
-
-  const siteKey = getTurnstileSiteKey();
-  let turnstileId = null;
-  let turnstileToken = '';
-  let turnstileFailed = false;
-  let turnstileStarting = null;
-  let turnstileErrors = 0;
-
-  function retryTurnstile() {
-    if (!siteKey || !turnstileHost) return;
-    turnstileFailed = false;
-    turnstileErrors = 0;
-    turnstileToken = '';
-    if (turnstileNote) turnstileNote.textContent = '';
-    clearStatus();
-
-    const finish = (ok) => {
-      if (!ok) showVerificationFallback();
-    };
-    if (window.turnstile && turnstileId !== null) {
-      try {
-        window.turnstile.reset(turnstileId);
-      } catch (_) {
-        try {
-          window.turnstile.remove(turnstileId);
-        } catch (_) {}
-        turnstileId = null;
-      }
-    }
-    if (turnstileId === null) {
-      startTurnstile()
-        .then(() => waitForTurnstileToken(15000))
-        .then(finish);
-    } else {
-      waitForTurnstileToken(15000).then(finish);
-    }
-  }
-
-  const showVerificationFallback = () => {
-    if (turnstileNote) {
-      turnstileNote.textContent = 'تعذّر تحميل التحقق. يمكنك إرسال طلبك عبر واتساب.';
-    }
-    setStatus(
-      'info',
-      'تعذّر تحميل التحقق. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.',
-      [
-        whatsappStatusLink(),
-        { label: 'إعادة محاولة التحقق', onClick: retryTurnstile },
-      ]
-    );
-  };
-
-  const loadTurnstile = () =>
-    new Promise((resolve, reject) => {
-      if (window.turnstile) {
-        resolve();
-        return;
-      }
-      if (!siteKey) {
-        reject(new Error('missing_sitekey'));
-        return;
-      }
-      let script = $('#turnstileScript');
-      if (script && script.dataset.failed === '1') {
-        script.remove();
-        script = null;
-      }
-      if (!script) {
-        script = document.createElement('script');
-        script.id = 'turnstileScript';
-        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-        script.onload = () => (window.turnstile ? resolve() : reject(new Error('turnstile_unavailable')));
-        script.onerror = () => {
-          script.dataset.failed = '1';
-          reject(new Error('turnstile_load_failed'));
-        };
-        document.head.appendChild(script);
-        return;
-      }
-      script.addEventListener('load', () => (window.turnstile ? resolve() : reject(new Error('turnstile_unavailable'))), { once: true });
-      script.addEventListener('error', () => {
-        script.dataset.failed = '1';
-        reject(new Error('turnstile_load_failed'));
-      }, { once: true });
-    });
-
-  const startTurnstile = () => {
-    if (turnstileFailed || turnstileStarting || turnstileId !== null || !turnstileHost || !siteKey) {
-      return turnstileStarting || Promise.resolve();
-    }
-    turnstileStarting = (async () => {
-      try {
-        await loadTurnstile();
-        // api.js محمّل بالفعل عبر onload وتعريف window.turnstile متاح، فلا حاجة لـ ready()
-        // (والاتصال به مع سكربت ديناميكي يُسبب خطأ Turnstile).
-        turnstileId = window.turnstile.render(turnstileHost, {
-          sitekey: siteKey,
-          theme: 'dark',
-          size: 'normal',
-          language: 'ar',
-          action: 'contact_form',
-          callback: (token) => {
-            turnstileToken = String(token || '');
-            turnstileErrors = 0;
-            if (turnstileNote) turnstileNote.textContent = '';
-          },
-          'expired-callback': () => {
-            turnstileToken = '';
-            if (turnstileNote) turnstileNote.textContent = 'انتهت صلاحية التحقق. سيُعاد تشغيله تلقائيًا.';
-            if (turnstileId !== null && window.turnstile) window.turnstile.reset(turnstileId);
-          },
-          'error-callback': () => {
-            turnstileToken = '';
-            turnstileErrors += 1;
-            if (turnstileErrors <= 2) {
-              if (turnstileNote) turnstileNote.textContent = 'جارٍ إعادة محاولة التحقق...';
-              return false; // Turnstile يعيد المحاولة تلقائياً للفشل اللحظي.
-            }
-            turnstileFailed = true;
-            showVerificationFallback();
-            return true;
-          },
-        });
-      } catch (_) {
-        turnstileFailed = true;
-        showVerificationFallback();
-      } finally {
-        turnstileStarting = null;
-      }
-    })();
-    return turnstileStarting;
-  };
-
-  const waitForTurnstileToken = (timeoutMs) =>
-    new Promise((resolve) => {
-      const started = Date.now();
-      const poll = () => {
-        if (turnstileToken) {
-          resolve(true);
-        } else if (turnstileFailed || Date.now() - started >= timeoutMs) {
-          resolve(false);
-        } else {
-          window.setTimeout(poll, 200);
-        }
-      };
-      poll();
-    });
-
-  if (turnstileHost && siteKey) {
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((entry) => entry.isIntersecting)) {
-            observer.disconnect();
-            startTurnstile();
+  const showFallback = (reference) => {
+    const phone = phoneNumber();
+    setStatus('info', `لم يفتح واتساب. افتح الرابط أو انسخ الرقم ${phone} وأرسل الرسالة يدويًا.`, [
+      { href: whatsappUrl(reference), label: 'افتح واتساب' },
+      {
+        label: 'انسخ الرقم',
+        onClick: (button) => {
+          const copied = () => {
+            button.textContent = 'تم النسخ';
+          };
+          if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            navigator.clipboard.writeText(phone).then(copied, () => {
+              button.textContent = 'تعذّر النسخ';
+            });
+            return;
           }
+          const helper = document.createElement('textarea');
+          helper.value = phone;
+          helper.setAttribute('readonly', '');
+          helper.style.cssText = 'position:absolute;inset-inline-start:-9999px;';
+          document.body.appendChild(helper);
+          helper.select();
+          let ok = false;
+          try {
+            ok = document.execCommand('copy');
+          } catch (_) {
+            ok = false;
+          }
+          helper.remove();
+          button.textContent = ok ? 'تم النسخ' : 'تعذّر النسخ';
         },
-        { rootMargin: '200px' }
-      );
-      observer.observe(form);
-    } else {
-      startTurnstile();
-    }
-    form.addEventListener('focusin', startTurnstile, { once: true });
-  } else if (turnstileNote) {
-    turnstileNote.textContent = 'التحقق غير مفعّل حاليًا.';
-  }
+      },
+    ]);
+  };
 
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     if (form.querySelector('[name="botcheck"]')?.value) {
@@ -9528,7 +9341,7 @@ function initContactForm() {
       return;
     }
 
-    /* ملء النموذج في أقل من 3 ثوانٍ سلوك آلي؛ نرفضه بهدوء دون إرسال */
+    /* ملء النموذج في أقل من 3 ثوانٍ سلوك آلي؛ نرفضه بهدوء */
     if (clock() - readyAt < MIN_FILL_MS) {
       form.reset();
       clearStatus();
@@ -9549,105 +9362,45 @@ function initContactForm() {
       return;
     }
 
-    const endpoint = getContactEndpoint();
-
-    /* لو الرابط أو التحقق مش متاح أو المتصفح قديم، بنعرض رابط واتساب يضغطه الزائر */
-    if (!endpoint || !siteKey || typeof window.fetch !== 'function') {
-      setStatus(
-        'success',
-        'تم تجهيز رسالتك على واتساب — اضغط الرابط وراجعها قبل الإرسال.',
-        whatsappStatusLink()
-      );
-      return;
-    }
-
-    if (!turnstileToken) {
-      setStatus('info', 'جارٍ تجهيز التحقق...');
-      await startTurnstile();
-      if (!(await waitForTurnstileToken(15000))) {
-        showVerificationFallback();
-        return;
-      }
-    }
-
     submitting = true;
     cooldownUntil = Date.now() + COOLDOWN_MS;
-
-    const values = getValues();
-    const submitLabel = submitBtn ? submitBtn.querySelector('span') : null;
-    const originalLabel = submitLabel ? submitLabel.textContent : '';
-    /* لو النت بطيء أو السيرفر علّق، منخليش الزائر مستني للأبد */
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 15000);
-
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.setAttribute('aria-busy', 'true');
     }
-    if (submitLabel) submitLabel.textContent = 'جارٍ الإرسال…';
-    setStatus('info', 'بنرسل طلبك...');
 
+    const reference = makeReference();
+    const url = whatsappUrl(reference);
+
+    /* الفتح لازم يحصل هنا مباشرة قبل أي await عشان المتصفح ما يمنعوش */
+    let opened = null;
     try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({
-          name: values.name,
-          phone: values.phone,
-          email: values.email,
-          service: values.service,
-          message: values.message,
-          subject: 'طلب مشروع جديد — من الموقع الشخصي',
-          botcheck: form.elements.botcheck?.value || '',
-          'cf-turnstile-response': turnstileToken,
-        }),
-      });
+      opened = window.open(url, '_blank');
+    } catch (_) {
+      opened = null;
+    }
 
-      const data = await response.json().catch(() => ({}));
-      if (!response.ok || data.ok !== true) {
-        throw new Error(String(data.error || 'send failed'));
+    if (opened) {
+      try {
+        opened.opener = null;
+      } catch (_) {
+        /* نافذة واتساب مفتوحة؛ لا حاجة لإجراء إضافي */
       }
-
-      if (turnstileId !== null && window.turnstile) window.turnstile.reset(turnstileId);
-      turnstileToken = '';
-      form.reset();
-      setStatus('success', 'وصلني طلبك، وسأرد عليك خلال 24 ساعة.');
-    } catch (error) {
-      turnstileToken = '';
-      if (turnstileId !== null && window.turnstile) window.turnstile.reset(turnstileId);
-      const timedOut = error && error.name === 'AbortError';
       setStatus(
-        'info',
-        timedOut
-          ? 'استغرق الإرسال وقتًا أطول من المتوقع. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.'
-          : 'تعذّر إرسال الطلب من الموقع. اضغط رابط واتساب وراجع رسالتك قبل الإرسال.',
-        whatsappStatusLink()
+        'success',
+        `فتحنا واتساب برسالة جاهزة برقم المرجع ${reference}. راجعها واضغط إرسال داخل التطبيق.`
       );
-    } finally {
-      window.clearTimeout(timeout);
+    } else {
+      showFallback(reference);
+    }
+
+    window.setTimeout(() => {
       submitting = false;
-      if (submitLabel) submitLabel.textContent = originalLabel;
       if (submitBtn) {
         submitBtn.disabled = false;
         submitBtn.removeAttribute('aria-busy');
       }
-    }
-  });
-
-  whatsappBtn?.addEventListener('click', () => {
-    clearStatus();
-
-    if (!validateAll()) {
-      setStatus('error', 'راجع الحقول المطلوبة أولاً حتى نتمكن من تجهيز رسالتك.');
-      return;
-    }
-
-    openWhatsApp();
-    setStatus(
-      'success',
-      'جُهّزت رسالتك على واتساب — راجعها واضغط إرسال داخل التطبيق.'
-    );
+    }, 800);
   });
 }
 
@@ -10029,7 +9782,7 @@ if (document.readyState === 'loading') {
     {
       name: 'start_project_inquiry',
       description:
-        'Fill the contact form with a project inquiry and bring it into view for the human to review. It never sends anything: the visitor must press the send button themselves.',
+        'Fill the contact form with a project inquiry and bring it into view for the human to review. It never sends anything from the site: the visitor presses "أرسل عبر واتساب" to open WhatsApp with a ready message, then reviews and sends it inside WhatsApp.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -10106,7 +9859,7 @@ if (document.readyState === 'loading') {
 
         return reply(
           'تم تعبئة النموذج ولم يُرسل. راجع البيانات مع الزائر، وبعد موافقته اضغط ' +
-            '«أرسل الطلب» بنفسك. الإرسال لا يحدث تلقائيًا أبدًا.'
+            '«أرسل عبر واتساب» بنفسك. يفتح واتساب برسالة جاهزة، والإرسال لا يحدث تلقائيًا أبدًا.'
         );
       },
     },

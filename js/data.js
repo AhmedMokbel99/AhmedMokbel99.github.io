@@ -24,8 +24,6 @@ const SITE_DATA = {
     "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع."
   },
   "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
-  "contactEndpoint": "https://ahmed-contact-endpoint.ahmed01068775125.workers.dev",
-  "turnstileSiteKey": "0x4AAAAAAGMQnorfnda9HV0t",
   "whatsapp": "201228084197",
   "behance": "https://www.behance.net/ahmed01068b62e",
   "facebook": "https://www.facebook.com/profile.php?id=61581319508233",

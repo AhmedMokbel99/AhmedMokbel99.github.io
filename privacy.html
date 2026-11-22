@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>سياسة الخصوصية | أحمد مقبل</title>
   <meta name="description" content="كيف تُجمع بياناتك عند استخدام نموذج التواصل في موقع أحمد مقبل، ولماذا تُستخدم، وكيف تتواصل معنا بخصوصها.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com https://ahmed-contact-endpoint.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self'; form-action 'self'; manifest-src 'self'">
   <meta name="robots" content="index,follow">
   <meta name="theme-color" content="#07080d">
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -41,19 +41,21 @@
 
       <h2>ما الذي نجمعه؟</h2>
       <ul>
-        <li>الاسم والبريد الإلكتروني ورقم الهاتف اختياريًا، ونص الرسالة ونوع الخدمة المطلوبة.</li>
+        <li>الاسم، ورقم الهاتف، والبريد الإلكتروني اختياريًا، ونص الرسالة ونوع الخدمة المطلوبة — وهي البيانات التي تكتبها أنت في النموذج.</li>
         <li>لا نطلب بيانات مالية أو كلمة مرور، ولا نضع ملفات تتبّع للإعلانات.</li>
       </ul>
 
       <h2>كيف تُستخدم البيانات؟</h2>
-      <p>تُستخدم البيانات حصرًا للرد على استفسارك ومناقشة تفاصيل المشروع المحتمل. لا تُباع ولا تُشارك مع أطراف تسويقية.</p>
+      <p>عند الضغط على «أرسل عبر واتساب» يُفتح تطبيق واتساب برسالة جاهزة تحتوي بياناتك ورقم مرجعي. لا يُرسل الموقع أي شيء بنفسه؛ أنت الذي تراجع الرسالة وتضغط إرسال داخل واتساب. تُستخدم البيانات حصرًا للرد على استفسارك ومناقشة تفاصيل المشروع المحتمل، ولا تُباع ولا تُشارك مع أطراف تسويقية.</p>
 
       <h2>من يتلقّى البيانات؟</h2>
-      <p>يمرّ طلبك عبر عامل <a href="https://developers.cloudflare.com/workers/" target="_blank" rel="noopener noreferrer" lang="en">Cloudflare Workers</a> للتحقق من الطلب وتحديد الحد المسموح، ثم يصل إشعار به إلى بوت خاص بنا على <a href="https://telegram.org/" target="_blank" rel="noopener noreferrer" lang="en">Telegram</a>. لا تظهر مفاتيح الخدمات في صفحة الموقع. يتولّى <a href="https://developers.cloudflare.com/turnstile/" target="_blank" rel="noopener noreferrer" lang="en">Cloudflare Turnstile</a> التحقق الآلي، وقد يعالج عنوان IP وبيانات الطلب وفق سياسته الخاصة.</p>
+      <p>الرسالة تصل إلى صاحب الموقع على رقم واتساب <a href="https://wa.me/201228084197" target="_blank" rel="noopener noreferrer" dir="ltr">201228084197</a> فقط، بعد موافقتك أنت وإرسالك لها داخل التطبيق. لا يوجد خادم نموذج، ولا بوت تليجرام، ولا تحقق آلي خارجي، ولا بياناتك محفوظة في صفحات الموقع.</p>
 
       <h2>الاحتفاظ بالبيانات وحذفها</h2>
-      <p>يُحفظ إشعار Telegram في محادثة البوت لحين الرد على طلبك، ويمكن حذفه عند عدم الحاجة إليه. لا يخزّن العامل اسمك أو رسالتك؛ بل يحتفظ بقيمة مشفّرة لعنوان IP مع أوقات المحاولات فقط لمدة ساعة واحدة لمنع الإرسال المتكرر، ثم تُحذف تلقائيًا. سجلات الرفض لا تحتوي على بياناتك، بل على سبب الرفض فقط.</p>
-      <p>لك الحق في طلب حذف أي بيانات أرسلتها. أرسل الطلب من صفحة <a href="index.html#contact">التواصل</a> أو عبر واتساب وسنحذف إشعارك.</p>
+      <p>لا يخزّن الموقع بياناتك؛ فالرسالة تبقى فقط في محادثة واتساب بينك وبين صاحب الموقع. يمكنك حذف نسختك من المحادثة في أي وقت، وطلب حذف النسخة الأخرى من صفحة <a href="index.html#contact">التواصل</a> أو عبر واتساب نفسه.</p>
+
+      <h2>إحصائيات الزيارات</h2>
+      <p>لقياس عدد الزيارات وفتح المشاريع فقط، يُستخدم عدّاد خفيف على Cloudflare Workers: مفتاح يومي مشفّر لعنوان IP (بدون تخزين الاسم أو البريد أو الهاتف أو الرسالة) وعدد عام لكل مشروع. لا تُستخدم هذه الأرقام للتعريف بك أو لتتبّعك.</p>
 
       <a class="btn btn--ghost legal-back" href="index.html">العودة إلى الرئيسية</a>
     </article>

@@ -49,8 +49,6 @@
   },
   "contact": {
     "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
-    "contactEndpoint": "https://ahmed-contact-endpoint.ahmed01068775125.workers.dev",
-    "turnstileSiteKey": "0x4AAAAAAGMQnorfnda9HV0t",
     "whatsapp": "201228084197",
     "behance": "https://www.behance.net/ahmed01068b62e",
     "facebook": "https://www.facebook.com/profile.php?id=61581319508233",
@@ -261,12 +259,11 @@
   "contactSection": {
     "eyebrow": "تواصل",
     "title": "لنبدأ مشروعك القادم",
-    "lead": "أرسل تفاصيل المشروع ونوع الخدمة المطلوبة، وسأعود إليك بخطة واضحة للبدء. أو تواصل مباشرة عبر واتساب.",
+    "lead": "املأ تفاصيل المشروع ونوع الخدمة المطلوبة، ثم اضغط «أرسل عبر واتساب» لتراجع الرسالة الجاهزة قبل إرسالها.",
     "formTitle": "أرسل تفاصيل مشروعك",
     "formBadge": "ردّ شخصي على كل طلب",
-    "submitWhatsapp": "أرسل الطلب",
-    "submitEmail": "إرسال الطلب",
-    "formNote": "يُرسَل طلبك عبر خادم محمي، وأراجعه بنفسي وأرد عليك خلال 24 ساعة. إن تعذّر الإرسال من الموقع، يمكنك إرساله مباشرة عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط."
+    "submitWhatsapp": "أرسل عبر واتساب",
+    "formNote": "عند الضغط يفتح واتساب برسالة جاهزة، راجعها وأرسلها."
   },
   "form": {
     "nameLabel": "الاسم",

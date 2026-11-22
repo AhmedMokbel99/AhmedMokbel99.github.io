@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com https://ahmed-contact-endpoint.ahmed01068775125.workers.dev https://ahmed-analytics.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://ahmed-analytics.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -49,7 +49,7 @@
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/showreel-poster.jpg" fetchpriority="high">
-<link rel="stylesheet" href="css/style.css?v=18-8e5583a3">
+<link rel="stylesheet" href="css/style.css?v=18-d1c8b30e">
 
   <noscript>
     <style>
@@ -61,9 +61,9 @@
 
   <!-- Structured data -->
 
-  <script src="js/data.js?v=18-8e5583a3" defer></script>
-  <script src="js/main.js?v=18-8e5583a3" defer></script>
-  <script src="js/webmcp.js?v=18-8e5583a3" defer></script>
+  <script src="js/data.js?v=18-d1c8b30e" defer></script>
+  <script src="js/main.js?v=18-d1c8b30e" defer></script>
+  <script src="js/webmcp.js?v=18-d1c8b30e" defer></script>
 
   <script type="application/ld+json">
 {
@@ -2137,7 +2137,7 @@
         <div class="contact-copy" data-reveal>
           <div class="eyebrow" data-cms="contactSection.eyebrow">تواصل</div>
           <h2 data-cms="contactSection.title">لنبدأ مشروعك القادم</h2>
-          <p data-cms="contactSection.lead">أرسل تفاصيل المشروع ونوع الخدمة المطلوبة، وسأعود إليك بخطة واضحة للبدء. أو تواصل مباشرة عبر واتساب.</p>
+          <p data-cms="contactSection.lead">املأ تفاصيل المشروع ونوع الخدمة المطلوبة، ثم اضغط «أرسل عبر واتساب» لتراجع الرسالة الجاهزة قبل إرسالها.</p>
 
           <div class="contact-channels">
             <!-- channels:start -->
@@ -2215,8 +2215,8 @@
             <span data-cms="contactSection.formBadge">ردّ شخصي على كل طلب</span>
           </div>
 
-          <!-- The form posts JSON to the Worker URL in SITE_DATA.contactEndpoint. Secrets stay in the Worker, never in this page. -->
-          <form id="contactForm" novalidate action="#" method="POST" toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. It only fills the form for the visitor to review; the visitor must submit it.">
+          <!-- لا يوجد إرسال من الموقع: الزر يفتح واتساب برسالة جاهزة ليوافق الزائر ويرسلها بنفسه. -->
+          <form id="contactForm" novalidate toolname="start_project_inquiry" tooldescription="Fill a project inquiry for Ahmed Mokbel. Pressing the button opens WhatsApp with a ready message; the visitor reviews and sends it inside WhatsApp.">
             <input class="form__honeypot" type="text" name="botcheck" value="" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="form-grid">
               <div class="field">
@@ -2262,24 +2262,15 @@
 
             </div>
 
-            <div class="turnstile-wrap">
-              <div id="turnstileWidget" dir="ltr" aria-label="التحقق الآلي"></div>
-              <p class="turnstile-note" id="turnstileNote" role="status" aria-live="polite"></p>
-            </div>
-
             <div class="form-actions">
               <button type="submit" class="btn btn--primary" id="formSubmit">
-                <svg class="icon icon--solid" aria-hidden="true"><use href="#i-send"></use></svg>
-                <span data-cms="contactSection.submitWhatsapp">أرسل الطلب</span>
-              </button>
-              <button type="button" class="btn btn--ghost" id="formWhatsapp">
                 <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
-                <span>أو أرسلها على واتساب</span>
+                <span data-cms="contactSection.submitWhatsapp">أرسل عبر واتساب</span>
               </button>
             </div>
 
-            <p class="form-note" data-cms="contactSection.formNote">يُرسَل طلبك عبر خادم محمي، وأراجعه بنفسي وأرد عليك خلال 24 ساعة. إن تعذّر الإرسال من الموقع، يمكنك إرساله مباشرة عبر واتساب. تُستخدم بياناتك للرد على طلبك فقط.</p>
-            <p class="form-note">محمي بتحقق Cloudflare Turnstile · <a href="privacy.html">سياسة الخصوصية</a></p>
+            <p class="form-note" data-cms="contactSection.formNote">عند الضغط يفتح واتساب برسالة جاهزة، راجعها وأرسلها.</p>
+            <p class="form-note"><a href="privacy.html">سياسة الخصوصية</a></p>
             <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           </form>
         </div>

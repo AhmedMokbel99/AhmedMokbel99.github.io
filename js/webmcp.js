@@ -230,7 +230,7 @@
     {
       name: 'start_project_inquiry',
       description:
-        'Fill the contact form with a project inquiry and bring it into view for the human to review. It never sends anything: the visitor must press the send button themselves.',
+        'Fill the contact form with a project inquiry and bring it into view for the human to review. It never sends anything from the site: the visitor presses "أرسل عبر واتساب" to open WhatsApp with a ready message, then reviews and sends it inside WhatsApp.',
       inputSchema: {
         type: 'object',
         properties: {
@@ -307,7 +307,7 @@
 
         return reply(
           'تم تعبئة النموذج ولم يُرسل. راجع البيانات مع الزائر، وبعد موافقته اضغط ' +
-            '«أرسل الطلب» بنفسك. الإرسال لا يحدث تلقائيًا أبدًا.'
+            '«أرسل عبر واتساب» بنفسك. يفتح واتساب برسالة جاهزة، والإرسال لا يحدث تلقائيًا أبدًا.'
         );
       },
     },

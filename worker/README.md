@@ -1,4 +1,9 @@
-# Contact endpoint Worker
+# Contact endpoint Worker (legacy — not used by the site)
+
+**Status: disabled from the site.** The contact form now opens WhatsApp directly
+and makes no network request. This Worker and its Telegram/Turnstile flow are
+kept in the repository and deployed in Cloudflare only until the owner approves
+their removal. Do not wire the site back to it.
 
 Free-plan Cloudflare Worker for the portfolio contact form. It verifies Cloudflare Turnstile server-side, applies a per-IP limit (5/minute, 20/hour), rejects spam, and sends one Telegram notification (up to 3 attempts). It fails closed: no secret or no successful Telegram delivery means no success response.
 

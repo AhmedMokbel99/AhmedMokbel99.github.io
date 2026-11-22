@@ -207,8 +207,6 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
             "description": site["agency"]["description"],
         },
         "email": encode_email(contact["email"]),
-        "contactEndpoint": contact.get("contactEndpoint", ""),
-        "turnstileSiteKey": contact.get("turnstileSiteKey", ""),
         "whatsapp": contact["whatsapp"],
         "behance": contact["behance"],
         "facebook": contact["facebook"],
@@ -1162,45 +1160,37 @@ def update_assets_version(html: str) -> str:
 #   • robots — مدعومة عبر <meta name="robots">
 # اللي مش ممكن فرضه عبر <meta> (X-Frame-Options، X-Content-Type-Options،
 # Permissions-Policy، COOP/CORP، HSTS) موثّق في docs/agent-readiness.md §1.
-TURNSTILE_ORIGIN = "https://challenges.cloudflare.com"
 YOUTUBE_ORIGIN = "https://www.youtube-nocookie.com"
 ANALYTICS_ORIGIN = "https://ahmed-analytics.ahmed01068775125.workers.dev"
 
-# يُضبط في main() من contact.contactEndpoint الموجود في content/site.json،
-# عشان سياسة connect-src تتبع عنوان العامل الفعلي وما ترجعش لعنوان قديم.
+# نموذج التواصل يفتح واتساب فقط؛ مفيش نقطة نهاية أو تحقق خارجي محتاج إذن CSP.
 def configure_csp(site: dict) -> None:
     global CSP_PUBLIC, CSP_STANDALONE, CSP_SERVICE
-
-    endpoint = str((site.get("contact") or {}).get("contactEndpoint") or "").strip()
-    parsed = urlparse(endpoint)
-    if parsed.scheme not in {"https", "http"} or not parsed.netloc:
-        fail("site.json: contact.contactEndpoint لازم يكون رابط HTTPS صالح للعامل.")
-    worker_origin = f"{parsed.scheme}://{parsed.netloc}"
 
     CSP_PUBLIC = (
         "default-src 'self'; "
         "base-uri 'self'; "
         "object-src 'none'; "
-        f"script-src 'self' {TURNSTILE_ORIGIN}; "
+        "script-src 'self'; "
         "style-src 'self' 'unsafe-inline'; "
         "img-src 'self' data:; "
         "font-src 'self' data:; "
         "media-src 'self'; "
-        f"frame-src {YOUTUBE_ORIGIN} {TURNSTILE_ORIGIN}; "
-        f"connect-src 'self' {TURNSTILE_ORIGIN} {worker_origin} {ANALYTICS_ORIGIN}; "
+        f"frame-src {YOUTUBE_ORIGIN}; "
+        f"connect-src 'self' {ANALYTICS_ORIGIN}; "
         "form-action 'self'; "
         "manifest-src 'self'"
     )
     # standalone.html بيضمّن الـCSS والـJS جوّه الملف، فمحتاج 'unsafe-inline' للسكربتات
     CSP_STANDALONE = CSP_PUBLIC.replace(
-        f"script-src 'self' {TURNSTILE_ORIGIN};",
-        f"script-src 'self' {TURNSTILE_ORIGIN} 'unsafe-inline';",
+        "script-src 'self';",
+        "script-src 'self' 'unsafe-inline';",
     )
     # صفحات الخدمات فيها سكربت صغير واحد بيحدّث سنة الفوتر. بدل 'unsafe-inline'
     # بنحسب هاش الـsha256 وقت البناء ونسمح به هو بس.
     CSP_SERVICE = CSP_PUBLIC.replace(
-        f"script-src 'self' {TURNSTILE_ORIGIN};",
-        f"script-src 'self' {TURNSTILE_ORIGIN} 'sha256-{SERVICE_YEAR_HASH}';",
+        "script-src 'self';",
+        f"script-src 'self' 'sha256-{SERVICE_YEAR_HASH}';",
     )
 
 

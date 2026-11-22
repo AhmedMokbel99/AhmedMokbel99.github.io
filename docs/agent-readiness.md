@@ -47,24 +47,24 @@ Verified against the live host:
 `build.py` injects the following into every public page, after `<meta charset>`:
 
 - `Content-Security-Policy` via `<meta http-equiv>` — `default-src 'self'`,
-  `script-src 'self' https://challenges.cloudflare.com`,
-  `style-src 'self' 'unsafe-inline'` (inline `style="…"` attributes are still
-  used), `img-src 'self' data:`, `media-src 'self'`,
-  `frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com`
-  (the lightbox embed and Turnstile widget),
-  `connect-src 'self' <contact Worker origin>` and `form-action 'self'` (the
-  contact form is submitted as JSON), `base-uri 'self'`, `object-src 'none'`,
+  `script-src 'self'`, `style-src 'self' 'unsafe-inline'` (inline `style="…"`
+  attributes are still used), `img-src 'self' data:`, `media-src 'self'`,
+  `frame-src https://www.youtube-nocookie.com` (the lightbox embed only),
+  `connect-src 'self'` plus the separate analytics counter origin, and
+  `form-action 'self'`. `base-uri 'self'`, `object-src 'none'`,
   `manifest-src 'self'`. `frame-ancestors` is deliberately omitted because it is
   ignored in `<meta>` and would only add a console warning.
 - `Referrer-Policy: strict-origin-when-cross-origin` via `<meta name="referrer">`.
 - `robots` (`index, follow, max-image-preview:large` on public pages; `noindex`
   on 404 and the admin area).
 
-The contact form is submitted as JSON to the Worker URL in
-`contact.contactEndpoint` in `content/site.json`. The public Turnstile sitekey
-is in `contact.turnstileSiteKey`; the secret key, Telegram token/chat ID and
-contact email exist only as Worker Secrets in `worker/`. While either value is
-empty, the form offers the WhatsApp fallback instead of attempting a send.
+The contact form makes **no network request**. Pressing «أرسل عبر واتساب» opens
+`wa.me/201228084197` with a ready message (name, phone, optional email, service,
+details and an `AM-YYYYMMDD-XXXX` reference). The visitor reviews and sends it
+inside WhatsApp; if the app does not open, the page offers the same link and a
+copyable phone number. There is no contact Worker endpoint, Turnstile widget,
+Telegram bot or external form provider in the site. The deployed contact Worker
+in Cloudflare is left untouched until the owner approves its removal.
 
 `netlify.toml` in the repository root contains a fuller header set, but **it is
 not read by GitHub Pages** and none of it is active on the live site. The
@@ -111,8 +111,10 @@ GitHub Pages today.
 `start_project_inquiry`.
 
 `start_project_inquiry` only pre-fills the contact form and scrolls it into view.
-It never submits. The form carries `toolname` / `tooldescription` /
-`toolparamdescription` attributes for the declarative API. In browsers without
+It never sends anything: the visitor presses «أرسل عبر واتساب», which opens
+WhatsApp with a ready message to review and send there. The form carries
+`toolname` / `tooldescription` / `toolparamdescription` attributes for the
+declarative API. In browsers without
 WebMCP the script exits silently — no errors, no side effects.
 
 ---
