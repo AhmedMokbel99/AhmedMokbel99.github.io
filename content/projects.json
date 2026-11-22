@@ -70,7 +70,7 @@
     "id": "f03",
     "code": "F04",
     "title": "آنس الدمشقي — إعلان طبق اللحم",
-    "cat": "ads",
+    "cat": "motion",
     "tag": "إعلان مطعم",
     "isVideo": true,
     "video": "assets/projects/f03_ans-dimashqi-steak.mp4",
@@ -87,13 +87,16 @@
     "tools": "إنتاج فيديو – تصوير – مونتاج",
     "alt": "آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم",
     "imageSmall": "assets/projects/ans-dimashqi-steak-ad-900.jpg",
-    "featured": true
+    "featured": true,
+    "gallery": [],
+    "facts": [],
+    "details": ""
   },
   {
     "id": "f21",
     "code": "F22",
     "title": "آنس الدمشقي — إعلان الفطيرة",
-    "cat": "ads",
+    "cat": "motion",
     "tag": "إعلان مطعم",
     "isVideo": true,
     "video": "assets/projects/f21_ans-dimashqi-pie.mp4",
@@ -109,13 +112,16 @@
     "result": "إعلان طعام جاهز للنشر، ينتهي برقم الطلب.",
     "tools": "إنتاج فيديو – موشن جرافيك",
     "alt": "آنس الدمشقي — إعلان الفطيرة — إعلان مطعم",
-    "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg"
+    "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg",
+    "gallery": [],
+    "facts": [],
+    "details": ""
   },
   {
     "id": "f06",
     "code": "F07",
     "title": "هارفارد — الهوية البصرية الأساسية",
-    "cat": "brand",
+    "cat": "digital",
     "tag": "هوية وطباعة",
     "isVideo": false,
     "url": "https://www.behance.net/gallery/148210723/_",
@@ -157,7 +163,7 @@
     "id": "f24",
     "code": "F01",
     "title": "هارفارد 2026 — هوية العام الجديد",
-    "cat": "brand",
+    "cat": "digital",
     "tag": "هوية وطباعة",
     "isVideo": false,
     "url": "",
@@ -341,7 +347,9 @@
     "role": "تصميم التكوين واختيار الخطوط وإخراج النسخة النهائية.",
     "result": "تصميم تهنئة جاهز للنشر على منصات العلامة.",
     "tools": "تصميم رقمي – سوشيال ميديا",
-    "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا"
+    "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f23",
@@ -361,7 +369,9 @@
     "role": "تصميم التكوين ومعالجة التفاصيل وإخراج النسخة النهائية.",
     "result": "تصميم تهنئة جاهز للنشر.",
     "tools": "تصميم رقمي – سوشيال ميديا",
-    "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا"
+    "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f09",
@@ -382,7 +392,9 @@
     "tools": "تصميم رقمي – سوشيال ميديا",
     "alt": "مختارات سوشيال ميديا — تصميم رقمي",
     "imageSmall": "assets/projects/social-media-design-collection-900.jpg",
-    "imageMedium": "assets/projects/social-media-design-collection-1200.jpg"
+    "imageMedium": "assets/projects/social-media-design-collection-1200.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f13",
@@ -403,7 +415,9 @@
     "role": "تصميم الرول أب وترتيب المعلومات وتطبيق هوية الجهة.",
     "result": "رول أب جاهز للطباعة والاستخدام في معارض القبول.",
     "tools": "تصميم طباعي – رول أب",
-    "alt": "بوابة القبول — تصميم طباعي"
+    "alt": "بوابة القبول — تصميم طباعي",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f10",
@@ -423,7 +437,9 @@
     "role": "تصميم الإعلان واختيار الصور والإضاءة والألوان.",
     "result": "تصميم إعلاني جاهز للنشر بأسلوب ناعم وهادئ.",
     "tools": "تصميم رقمي – إعلان سوشيال ميديا",
-    "alt": "حقن فيلر — تصميم رقمي"
+    "alt": "حقن فيلر — تصميم رقمي",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f07",
@@ -444,7 +460,9 @@
     "result": "عبوة بهوية واضحة وحضور قوي على الرف.",
     "tools": "هوية – تغليف – تصميم طباعي",
     "alt": "ULTRA GROW — تغليف المنتجات — هوية وطباعة",
-    "featured": true
+    "featured": true,
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f01",
@@ -465,7 +483,9 @@
     "result": "عمل بصري جاهز للنشر على منصات المناسبة، بهوية خضراء وذهبية واضحة.",
     "tools": "موشن جرافيك – تصميم مشاهد – مونتاج",
     "alt": "يوم التأسيس السعودي — موشن جرافيك",
-    "featured": true
+    "featured": true,
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f11",
@@ -487,7 +507,9 @@
     "alt": "INSTA WATCHES — تصميم رقمي",
     "imageSmall": "assets/projects/insta-watches-ad-design-900.jpg",
     "imageMedium": "assets/projects/insta-watches-ad-design-1200.jpg",
-    "featured": true
+    "featured": true,
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f16",
@@ -509,7 +531,9 @@
     "result": "تحريك شعار قصير وجاهز للاستخدام في الفيديوهات.",
     "tools": "تحريك شعار – موشن جرافيك",
     "alt": "EN-SERV — تحريك شعار",
-    "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg"
+    "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f20",
@@ -531,7 +555,9 @@
     "result": "إعلان عقاري جاهز للنشر.",
     "tools": "موشن جرافيك – مونتاج",
     "alt": "الوثبة العقارية — مشروع سكني — إعلان عقاري",
-    "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg"
+    "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f19",
@@ -553,7 +579,9 @@
     "result": "إعلان سينمائي قصير جاهز للنشر.",
     "tools": "موشن جرافيك – مونتاج",
     "alt": "بديل — إعلان سيارة — إعلان سيارات",
-    "imageSmall": "assets/projects/bdeel-car-ad-900.jpg"
+    "imageSmall": "assets/projects/bdeel-car-ad-900.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f18",
@@ -575,7 +603,9 @@
     "result": "إعلان تعريفي جاهز للنشر.",
     "tools": "موشن جرافيك – 3D – مونتاج",
     "alt": "المقصود للمولدات — إعلان الشركة — إعلان شركة",
-    "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg"
+    "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f17",
@@ -597,7 +627,9 @@
     "result": "فيديو تعريفي جاهز للسوشيال ميديا.",
     "tools": "تصوير – مونتاج",
     "alt": "الزين — مطعم سوري — تصوير ومونتاج",
-    "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg"
+    "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f15",
@@ -619,7 +651,9 @@
     "result": "عمل موشن جرافيك متكامل جاهز للنشر.",
     "tools": "موشن جرافيك – تحريك – مونتاج",
     "alt": "ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك",
-    "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg"
+    "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f14",
@@ -641,7 +675,9 @@
     "result": "فيلم موشن جرافيك قصير جاهز للنشر.",
     "tools": "موشن جرافيك – تحريك – مونتاج",
     "alt": "البدايات — ياسر الحزيمي — موشن جرافيك",
-    "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg"
+    "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f05",
@@ -661,7 +697,9 @@
     "role": "تصميم الشعار والنظام الطباعي والمطبوعات وتطبيقات الهوية.",
     "result": "هوية ومطبوعات جاهزة للتطبيق داخل المطبعة.",
     "tools": "هوية بصرية – تصميم طباعي – مطبوعات",
-    "alt": "طاهر للطباعة — هوية وطباعة"
+    "alt": "طاهر للطباعة — هوية وطباعة",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f04",
@@ -682,7 +720,9 @@
     "tools": "موشن جرافيك – تحريك",
     "alt": "تجربة موشن جرافيك من بدايات المسار — موشن جرافيك",
     "imageSmall": "assets/projects/first-motion-graphics-work-900.jpg",
-    "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg"
+    "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f08",
@@ -702,7 +742,9 @@
     "role": "تطوير النظام البصري وتوسيع تطبيقاته على المواد المختلفة.",
     "result": "نظام بصري متسق يغطي التطبيقات الأساسية للعلامة.",
     "tools": "هوية بصرية – تطبيقات – تصميم رقمي",
-    "alt": "ULTRA GROW — النظام البصري — هوية وطباعة"
+    "alt": "ULTRA GROW — النظام البصري — هوية وطباعة",
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f02",
@@ -724,7 +766,9 @@
     "alt": "ابن الباسل — موشن جرافيك",
     "imageSmall": "assets/projects/ibn-albasel-motion-graphic-900.jpg",
     "imageMedium": "assets/projects/ibn-albasel-motion-graphic-1200.jpg",
-    "featured": true
+    "featured": true,
+    "gallery": [],
+    "facts": []
   },
   {
     "id": "f12",
@@ -745,6 +789,8 @@
     "tools": "تصميم رقمي – معالجة صور",
     "alt": "سر الطبيعة — تصميم رقمي",
     "imageSmall": "assets/projects/nature-secret-ad-design-900.jpg",
-    "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg"
+    "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg",
+    "gallery": [],
+    "facts": []
   }
 ]
