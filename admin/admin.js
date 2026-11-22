@@ -507,8 +507,7 @@ function renderProjects() {
       const from = draggedFrom ?? Number(event.dataTransfer.getData('text/plain'));
       const to = Number(card.dataset.dragProject);
       if (Number.isInteger(from) && Number.isInteger(to) && from !== to) {
-        const dir = to - from - (from < to ? 1 : 0);
-        moveProject(from, dir);
+        moveProject(from, to - from);
       }
       draggedFrom = null;
     });
@@ -2037,7 +2036,7 @@ function bindEditors(panel, scope) {
     if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= arr.length || toIndex >= arr.length) return;
 
     const [item] = arr.splice(fromIndex, 1);
-    arr.splice(toIndex - (fromIndex < toIndex ? 1 : 0), 0, item);
+    arr.splice(toIndex, 0, item);
     setPath(root, toKey, arr);
     markDirty();
     isPageDrop ? renderPages() : renderTexts();
