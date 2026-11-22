@@ -5,6 +5,8 @@ const EXPECTED_HOSTNAME = 'ahmedmokbel99.github.io';
 const TURNSTILE_ACTION = 'contact_form';
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const MAX_BODY_BYTES = 8192;
+const TELEGRAM_ATTEMPTS = 3;
+const TELEGRAM_TIMEOUT_MS = 2000;
 const LIMIT_MINUTE = 5;
 const LIMIT_HOUR = 20;
 const WHATSAPP = '201228084197';
@@ -186,17 +188,34 @@ async function verifyTurnstile(token, ip, env) {
 }
 
 async function notifyTelegram(env, text) {
-  const response = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: env.TELEGRAM_CHAT_ID,
-      text,
-      disable_web_page_preview: true,
-    }),
-    signal: AbortSignal.timeout(8000),
+  const url = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`;
+  const body = JSON.stringify({
+    chat_id: env.TELEGRAM_CHAT_ID,
+    text,
+    disable_web_page_preview: true,
   });
-  if (!response.ok) throw new Error('telegram_http_error');
+
+  for (let attempt = 0; attempt < TELEGRAM_ATTEMPTS; attempt += 1) {
+    let retryable = false;
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+        signal: AbortSignal.timeout(TELEGRAM_TIMEOUT_MS),
+      });
+      if (response.ok) return;
+      /* 4xx غير 429 معناها إعداد غلط، وإعادتها مش هتغيّر النتيجة */
+      retryable = response.status === 429 || response.status >= 500;
+    } catch {
+      retryable = true;
+    }
+    if (!retryable) break;
+    if (attempt < TELEGRAM_ATTEMPTS - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 150 * (attempt + 1)));
+    }
+  }
+  throw new Error('telegram_delivery_failed');
 }
 
 function buildNotification(values, reference, contactEmail) {
@@ -283,7 +302,7 @@ export default {
       !env.RATE_LIMITER
     ) {
       logRejected('missing_config');
-      return json({ ok: false, error: 'server_error' }, 500, cors);
+      return json({ ok: false, error: 'server_error' }, 503, cors);
     }
 
     const ip = getClientIp(request);
@@ -354,7 +373,7 @@ export default {
       await notifyTelegram(env, buildNotification(values, reference, env.CONTACT_EMAIL));
     } catch {
       logRejected('delivery_failed');
-      return json({ ok: false, error: 'server_error' }, 500, cors);
+      return json({ ok: false, error: 'server_error' }, 503, cors);
     }
 
     return json({ ok: true, reference }, 200, cors);

@@ -4,6 +4,8 @@ const EXPECTED_HOSTNAME = 'ahmedmokbel99.github.io';
 const TURNSTILE_ACTION = 'contact_form';
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const MAX_BODY_BYTES = 8192;
+const TG_TRIES = 3;
+const TG_TIMEOUT = 2000;
 const LIMIT_MINUTE = 5;
 const LIMIT_HOUR = 20;
 const WHATSAPP = '201228084197';
@@ -53,12 +55,12 @@ headers: {
 },
 });
 }
-const logRejected = (reason) =>
+const log = (reason) =>
 console.warn(JSON.stringify({ event: 'rejected', reason, at: new Date().toISOString() }));
-function asString(value) {
+function str(value) {
 return typeof value === 'string' ? value.trim() : '';
 }
-async function readLimitedBody(request) {
+async function readBody(request) {
 const declared = Number(request.headers.get('content-length') || 0);
 if (declared > MAX_BODY_BYTES) return { tooLarge: true };
 const reader = request.body?.getReader();
@@ -78,7 +80,7 @@ text += decoder.decode(value, { stream: true });
 text += decoder.decode();
 return { tooLarge: false, text };
 }
-function getClientIp(request) {
+function clientIp(request) {
 const cfIp = request.headers.get('cf-connecting-ip');
 if (cfIp) return cfIp.trim();
 const forwarded = request.headers.get('x-forwarded-for') || '';
@@ -99,11 +101,11 @@ return Array.from(new Uint8Array(signature))
 }
 function validate(payload) {
 const values = {
-name: asString(payload.name),
-phone: asString(payload.phone),
-email: asString(payload.email),
-service: asString(payload.service),
-message: asString(payload.message),
+name: str(payload.name),
+phone: str(payload.phone),
+email: str(payload.email),
+service: str(payload.service),
+message: str(payload.message),
 };
 const invalid = [];
 if (values.name.length < 2 || values.name.length > 80) invalid.push('name');
@@ -118,7 +120,7 @@ if (!SERVICES.has(values.service)) invalid.push('service');
 if (values.message.length < 10 || values.message.length > 2000) invalid.push('message');
 return { values, invalid };
 }
-function spamReason(message) {
+function spam(message) {
 const lower = message.toLowerCase();
 const links = lower.match(/(https?:\/\/|www\.|t\.me\/)/g) || [];
 if (links.length > 2) return 'spam_links';
@@ -133,7 +135,7 @@ if (top / words.length > 0.45) return 'spam_repeat';
 if (/(.)\1{9,}/u.test(message)) return 'spam_repeat_chars';
 return null;
 }
-function makeReference() {
+function makeRef() {
 const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
 const bytes = new Uint8Array(4);
 crypto.getRandomValues(bytes);
@@ -144,7 +146,7 @@ return `AM-${date}-${suffix}`;
 function clean(text) {
 return String(text).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
 }
-async function verifyTurnstile(token, ip, env) {
+async function verifyTG(token, ip, env) {
 const body = new URLSearchParams();
 body.set('secret', env.TURNSTILE_SECRET_KEY);
 body.set('response', token);
@@ -163,24 +165,39 @@ if (data.action && data.action !== TURNSTILE_ACTION) return false;
 if (data.cdata && typeof data.cdata === 'string' && data.cdata.includes(ip)) return false;
 return true;
 }
-async function notifyTelegram(env, text) {
-const response = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-method: 'POST',
-headers: { 'Content-Type': 'application/json' },
-body: JSON.stringify({
+async function notifyTG(env, text) {
+const url = `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`;
+const body = JSON.stringify({
 chat_id: env.TELEGRAM_CHAT_ID,
 text,
 disable_web_page_preview: true,
-}),
-signal: AbortSignal.timeout(8000),
 });
-if (!response.ok) throw new Error('telegram_http_error');
+for (let i = 0; i < TG_TRIES; i += 1) {
+let retry = false;
+try {
+const response = await fetch(url, {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body,
+signal: AbortSignal.timeout(TG_TIMEOUT),
+});
+if (response.ok) return;
+retry = response.status === 429 || response.status >= 500;
+} catch {
+retry = true;
 }
-function buildNotification(values, reference, contactEmail) {
-const replyLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`مرجع الطلب: ${reference}`)}`;
+if (!retry) break;
+if (i < TG_TRIES - 1) {
+await new Promise((v) => setTimeout(v, 150 * (i + 1)));
+}
+}
+throw new Error('telegram_delivery_failed');
+}
+function buildNote(values, ref, contactEmail) {
+const replyLink = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`مرجع الطلب: ${ref}`)}`;
 return clean(
 [
-`${SUBJECT} [${reference}]`,
+`${SUBJECT} [${ref}]`,
 '',
 `الاسم: ${values.name}`,
 `الهاتف: ${values.phone}`,
@@ -234,7 +251,7 @@ return cors
 : json({ ok: false, error: 'forbidden' }, 403);
 }
 if (!cors) {
-logRejected('bad_origin');
+log('bad_origin');
 return json({ ok: false, error: 'forbidden' }, 403);
 }
 if (request.method !== 'POST') {
@@ -248,69 +265,69 @@ if (
 !env.IP_HASH_SECRET ||
 !env.RATE_LIMITER
 ) {
-logRejected('missing_config');
-return json({ ok: false, error: 'server_error' }, 500, cors);
+log('missing_config');
+return json({ ok: false, error: 'server_error' }, 503, cors);
 }
-const ip = getClientIp(request);
+const ip = clientIp(request);
 const ipHash = await hashIp(ip, env.IP_HASH_SECRET);
 const limiter = env.RATE_LIMITER.get(env.RATE_LIMITER.idFromName(ipHash));
 const limitResponse = await limiter.fetch('https://rate-limiter/check');
 if (!limitResponse.ok) {
-logRejected('rate_limited');
+log('rate_limited');
 return json({ ok: false, error: 'rate_limited' }, 429, cors);
 }
-const contentType = (request.headers.get('content-type') || '').toLowerCase();
-if (!contentType.startsWith('application/json')) {
-logRejected('bad_content_type');
+const ct = (request.headers.get('content-type') || '').toLowerCase();
+if (!ct.startsWith('application/json')) {
+log('bad_content_type');
 return json({ ok: false, error: 'bad_request' }, 400, cors);
 }
-const body = await readLimitedBody(request);
+const body = await readBody(request);
 if (body.tooLarge) {
-logRejected('body_too_large');
+log('body_too_large');
 return json({ ok: false, error: 'payload_too_large' }, 413, cors);
 }
 let payload;
 try {
 payload = JSON.parse(body.text);
 } catch {
-logRejected('invalid_json');
+log('invalid_json');
 return json({ ok: false, error: 'bad_request' }, 400, cors);
 }
 if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
-logRejected('invalid_payload');
+log('invalid_payload');
 return json({ ok: false, error: 'bad_request' }, 400, cors);
 }
-const reference = makeReference();
-if (asString(payload.botcheck)) {
-logRejected('honeypot');
-return json({ ok: true, reference }, 200, cors);
+const ref = makeRef();
+if (str(payload.botcheck)) {
+log('honeypot');
+return json({ ok: true, ref }, 200, cors);
 }
 const { values, invalid } = validate(payload);
 if (invalid.length) {
-logRejected('invalid_fields');
+log('invalid_fields');
 return json({ ok: false, error: 'bad_request' }, 400, cors);
 }
-const spam = spamReason(values.message);
+const spam = spam(values.message);
 if (spam) {
-logRejected(spam);
+log(spam);
 return json({ ok: false, error: 'bad_request' }, 400, cors);
 }
-const token = asString(payload['cf-turnstile-response']);
+const token = str(payload['cf-turnstile-response']);
 if (!token) {
-logRejected('missing_turnstile');
+log('missing_turnstile');
 return json({ ok: false, error: 'verification_required' }, 400, cors);
 }
 try {
-const verified = await verifyTurnstile(token, ip, env);
+const verified = await verifyTG(token, ip, env);
 if (!verified) {
-logRejected('turnstile_failed');
+log('turnstile_failed');
 return json({ ok: false, error: 'verification_failed' }, 403, cors);
 }
-await notifyTelegram(env, buildNotification(values, reference, env.CONTACT_EMAIL));
+await notifyTG(env, buildNote(values, ref, env.CONTACT_EMAIL));
 } catch {
-logRejected('delivery_failed');
-return json({ ok: false, error: 'server_error' }, 500, cors);
+log('delivery_failed');
+return json({ ok: false, error: 'server_error' }, 503, cors);
 }
-return json({ ok: true, reference }, 200, cors);
+return json({ ok: true, ref }, 200, cors);
 },
 };
