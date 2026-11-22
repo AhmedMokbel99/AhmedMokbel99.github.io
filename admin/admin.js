@@ -15,7 +15,7 @@ const LS = {
 
 const CONTENT_FILES = ['content/site.json', 'content/projects.json', 'content/pages.json'];
 const MAX_IMAGE = 3 * 1024 * 1024;
-const MAX_VIDEO = 8 * 1024 * 1024;
+const MAX_VIDEO = 25 * 1024 * 1024;
 
 const state = {
   token: '',
@@ -794,7 +794,7 @@ function renderProjectForm() {
         videoMode === 'local'
           ? `<div style="margin-top:.7rem">
               <input type="file" id="videoInput" accept="video/mp4,video/webm">
-              <p class="hint">MP4 حتى 8MB. الملفات الأكبر ارفعها على يوتيوب (غير مدرج) والصق الرابط.</p>
+              <p class="hint">MP4 أو WebM حتى 25MB. الملفات الأكبر ارفعها على يوتيوب (غير مدرج) والصق الرابط.</p>
               ${draft.video ? `<p class="hint" dir="ltr">${h(draft.video)}</p>` : ''}
             </div>`
           : videoMode === 'youtube'
@@ -818,6 +818,10 @@ function renderProjectForm() {
           <input type="text" value="${h(draft.image)}" data-draft="image" dir="ltr">
         </label>
       </div>
+      <label class="field" style="margin-top:.7rem">
+        <span>تاريخ الفيديو (لبيانات محركات البحث)</span>
+        <input type="text" value="${h(draft.date || '')}" data-draft="date" placeholder="2026-11-22T00:00:00Z" dir="ltr">
+      </label>
       <p class="note">غيّر الـid فقط لو تعرف ما تفعل — الروابط الداخلية تعتمد عليه.</p>
     </div>
   `;
@@ -1056,7 +1060,7 @@ function removeGalleryItem(index) {
 async function attachVideo(file) {
   try {
     if (file.size > MAX_VIDEO) {
-      throw new Error('الفيديو أكبر من 8MB. ارفعه على يوتيوب (غير مدرج) واستخدم رابط يوتيوب.');
+      throw new Error('الفيديو أكبر من 25MB. ارفعه على يوتيوب (غير مدرج) واستخدم رابط يوتيوب.');
     }
     const base = slugify(state.draftImageName) || `project-${state.draft.id}`;
     const path = `assets/projects/${base}.mp4`;
@@ -1066,6 +1070,7 @@ async function attachVideo(file) {
     state.draft.video = path;
     state.draft.youtube = '';
     state.draft.isVideo = true;
+    if (!String(state.draft.date || '').trim()) state.draft.date = new Date().toISOString();
     renderProjectForm();
     toast('تم تجهيز الفيديو.', 'ok');
   } catch (error) {
@@ -1277,6 +1282,7 @@ function saveProjectDraft() {
   if (draft.isVideo && !draft.video && !draft.youtube) {
     draft.isVideo = false;
   }
+  if (draft.isVideo && !String(draft.date || '').trim()) draft.date = new Date().toISOString();
 
   /* حذف الصورة/الفيديو القديم لو استُبدل ولم يعد مستخدمًا في مشروع آخر */
   const original = state.draftOriginal;
