@@ -157,7 +157,7 @@ export default {
     }
     if (!env.ANALYTICS) return json({ ok: false }, 500, cors);
 
-    const stub = env.ANALYTICS.get(env.ANALYTICS.idFromName('site-live'));
+    const stub = env.ANALYTICS.get(env.ANALYTICS.idFromName('site-v1'));
     const path = new URL(request.url).pathname;
 
     if (request.method === 'GET' && path === '/summary') {
