@@ -63,8 +63,9 @@ The contact form makes **no network request**. Pressing «أرسل عبر وات
 details and an `AM-YYYYMMDD-XXXX` reference). The visitor reviews and sends it
 inside WhatsApp; if the app does not open, the page offers the same link and a
 copyable phone number. There is no contact Worker endpoint, Turnstile widget,
-Telegram bot or external form provider in the site. The deployed contact Worker
-in Cloudflare is left untouched until the owner approves its removal.
+Telegram bot or external form provider in the site. With the owner's approval,
+the legacy `ahmed-contact-endpoint` Worker was deleted from Cloudflare and its
+source files were removed; only the separate analytics Worker remains.
 
 `netlify.toml` in the repository root contains a fuller header set, but **it is
 not read by GitHub Pages** and none of it is active on the live site. The
