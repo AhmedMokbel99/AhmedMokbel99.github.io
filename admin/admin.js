@@ -411,7 +411,7 @@ function renderProjects() {
   const cards = list
     .map(
       ({ project, index }) => `
-      <article class="pcard${project.visible === false ? ' is-hidden' : ''}">
+      <article class="pcard${project.visible === false ? ' is-hidden' : ''}" draggable="true" data-drag-project="${index}" title="اسحب بالماوس لتغيير الترتيب">
         <div class="pcard__media">
           ${
             project.image
@@ -486,6 +486,37 @@ function renderProjects() {
       moveProject(Number(btn.dataset.moveProject), Number(btn.dataset.dir))
     )
   );
+
+  /* سحب وإفلات بالماوس لتغيير ترتيب المشاريع */
+  let draggedFrom = null;
+  $$('[data-drag-project]', panel).forEach((card) => {
+    card.addEventListener('dragstart', (event) => {
+      draggedFrom = Number(card.dataset.dragProject);
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', String(draggedFrom));
+      card.classList.add('is-dragging');
+    });
+    card.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      card.classList.add('drop-target');
+    });
+    card.addEventListener('dragleave', () => card.classList.remove('drop-target'));
+    card.addEventListener('drop', (event) => {
+      event.preventDefault();
+      card.classList.remove('drop-target');
+      const from = draggedFrom ?? Number(event.dataTransfer.getData('text/plain'));
+      const to = Number(card.dataset.dragProject);
+      if (Number.isInteger(from) && Number.isInteger(to) && from !== to) {
+        const dir = to - from - (from < to ? 1 : 0);
+        moveProject(from, dir);
+      }
+      draggedFrom = null;
+    });
+    card.addEventListener('dragend', () => {
+      card.classList.remove('is-dragging');
+      draggedFrom = null;
+    });
+  });
 }
 
 function moveProject(index, dir) {
@@ -1539,7 +1570,7 @@ function listEditor(config) {
   const cards = items
     .map(
       (item, index) => `
-      <div class="item-card">
+      <div class="item-card" draggable="true" data-drag-list="${config.path}.${index}" title="اسحب بالماوس لتغيير الترتيب">
         <div class="item-card__head">
           <b>${h(config.itemTitle(item, index))}</b>
           <div class="actions">
@@ -1778,7 +1809,7 @@ function pageList(page, index, path, label, items, fields) {
   const cards = (items || [])
     .map(
       (item, row) => `
-      <div class="item-card">
+      <div class="item-card" draggable="true" data-drag-list="${path}.${row}" data-scope="page" data-page="${index}" title="اسحب بالماوس لتغيير الترتيب">
         <div class="item-card__head">
           <b>${h(label)} ${row + 1}</b>
           <div class="actions">
@@ -1957,6 +1988,65 @@ function bindEditors(panel, scope) {
       markDirty();
       isPage ? renderPages() : renderTexts();
     }
+  });
+
+  /* سحب وإفلات بالماوس لترتيب عناصر النصوص وصفحات الخدمات */
+  panel.addEventListener('dragstart', (event) => {
+    const card = event.target.closest('[data-drag-list]');
+    if (!card || event.target.closest('input, textarea, select, button')) {
+      event.preventDefault();
+      return;
+    }
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', card.dataset.dragList);
+    card.classList.add('is-dragging');
+  });
+
+  panel.addEventListener('dragover', (event) => {
+    const card = event.target.closest('[data-drag-list]');
+    if (!card) return;
+    event.preventDefault();
+    card.classList.add('drop-target');
+  });
+
+  panel.addEventListener('dragleave', (event) => {
+    const card = event.target.closest('[data-drag-list]');
+    if (card) card.classList.remove('drop-target');
+  });
+
+  panel.addEventListener('drop', (event) => {
+    const card = event.target.closest('[data-drag-list]');
+    if (!card) return;
+    event.preventDefault();
+    card.classList.remove('drop-target');
+
+    const fromPath = event.dataTransfer.getData('text/plain') || '';
+    const toPath = card.dataset.dragList;
+    const fromParts = fromPath.split('.');
+    const toParts = toPath.split('.');
+    const fromIndex = Number(fromParts.pop());
+    const toIndex = Number(toParts.pop());
+    const fromKey = fromParts.join('.');
+    const toKey = toParts.join('.');
+    if (fromKey !== toKey || !Number.isInteger(fromIndex) || !Number.isInteger(toIndex)) return;
+
+    const isPageDrop = card.dataset.scope === 'page';
+    const root = isPageDrop ? state.pages[Number(card.dataset.page)] : state.site;
+    const fromRoot = isPageDrop ? state.pages[Number(card.dataset.page)] : state.site;
+    const arr = getPath(fromRoot, fromKey) || [];
+    if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= arr.length || toIndex >= arr.length) return;
+
+    const [item] = arr.splice(fromIndex, 1);
+    arr.splice(toIndex - (fromIndex < toIndex ? 1 : 0), 0, item);
+    setPath(root, toKey, arr);
+    markDirty();
+    isPageDrop ? renderPages() : renderTexts();
+  });
+
+  panel.addEventListener('dragend', () => {
+    $$('[data-drag-list]', panel).forEach((card) =>
+      card.classList.remove('is-dragging', 'drop-target')
+    );
   });
 }
 

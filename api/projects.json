@@ -2,9 +2,27 @@
   "schemaVersion": "1.0",
   "generatedAt": "2026-11-22",
   "source": "https://ahmedmokbel99.github.io/",
-  "count": 24,
+  "count": 25,
   "detailPattern": "https://ahmedmokbel99.github.io/api/projects/{slug}.json",
   "projects": [
+    {
+      "slug": "project-f25",
+      "title": "✨ تصميم إعلانات وبوستات السوشيال ميديا الإبداعية لعلامات تجارية متنوعة",
+      "category": "motion",
+      "categoryLabel": "موشن جرافيك",
+      "tag": "تصميم_جرافيك، بوستات_سوشيال_ميديا، إعلانات_خلاقة، هوية_بصرية، صناعة_المحتوى_البصري، Photoshop، Illustrator، حملات_تسويقية",
+      "summary": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، وتساهم بفعالية في تعزيز وعي الجمهور بالعلامات التجارية وزيادة نسب التفاعل (Engagement Rate) والمبيعات.",
+      "featured": false,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/project-f25.jpg",
+        "width": 1198,
+        "height": 798
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f25",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/project-f25.json"
+    },
     {
       "slug": "saudi-founding-day-motion-graphic",
       "title": "يوم التأسيس السعودي",
