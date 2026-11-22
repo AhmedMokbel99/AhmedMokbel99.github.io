@@ -18,9 +18,15 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="preload" href="../assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="admin.css?v=8">
+<link rel="stylesheet" href="admin.css?v=9">
 </head>
 <body>
+
+  <div class="upload-progress" id="uploadProgress" hidden aria-live="polite">
+    <span id="uploadProgressLabel">جاري التحميل</span>
+    <div class="upload-progress__track"><div class="upload-progress__bar" id="uploadProgressBar"></div></div>
+    <span class="upload-progress__text" id="uploadProgressText">0%</span>
+  </div>
 
   <!-- شاشة الدخول -->
   <main class="login" id="loginView">
@@ -95,7 +101,7 @@
       <div class="topbar__start">
         <span class="brand-mark brand-mark--sm">AM</span>
         <div class="topbar__title">
-          <b>لوحة التحكم <small dir="ltr" style="opacity:.65;font-weight:400">v30</small></b>
+          <b>لوحة التحكم <small dir="ltr" style="opacity:.65;font-weight:400">v31</small></b>
           <small id="repoLabel">—</small>
         </div>
       </div>
@@ -164,6 +170,6 @@
     <button class="btn btn--primary btn--sm" id="dirtySaveBtn" type="button">حفظ ونشر الآن</button>
   </div>
 
-  <script src="admin.js?v=30"></script>
+  <script src="admin.js?v=31"></script>
 </body>
 </html>

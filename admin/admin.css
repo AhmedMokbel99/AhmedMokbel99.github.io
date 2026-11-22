@@ -659,6 +659,43 @@ button, input, select, textarea { font: inherit; }
   font-size: 0.78rem;
 }
 
+/* ---------- شريط التقدم ---------- */
+.upload-progress {
+  position: fixed;
+  z-index: 300;
+  inset-block-start: 0;
+  inset-inline: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.9rem;
+  border-block-end: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(7, 8, 13, 0.96);
+  color: #fcd34d;
+  font-size: 0.82rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+}
+.upload-progress[hidden] { display: none; }
+.upload-progress__track {
+  flex: 1;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.upload-progress__bar {
+  width: 0;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  transition: width 0.18s ease;
+}
+.upload-progress__text {
+  min-width: 5.5rem;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ---------- التوست ---------- */
 .toast {
   position: fixed;

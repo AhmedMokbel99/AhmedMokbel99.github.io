@@ -92,6 +92,34 @@ function busy(message) {
   node.className = 'toast is-on';
 }
 
+function showProgress(label = 'جاري التحميل') {
+  const wrap = $('#uploadProgress');
+  if (!wrap) return;
+  wrap.hidden = false;
+  $('#uploadProgressLabel').textContent = label;
+  $('#uploadProgressBar').style.width = '0%';
+  $('#uploadProgressText').textContent = '0%';
+}
+
+function setProgress(percent, label) {
+  const wrap = $('#uploadProgress');
+  if (!wrap) return;
+  wrap.hidden = false;
+  const value = Math.max(0, Math.min(100, Math.round(percent)));
+  $('#uploadProgressBar').style.width = `${value}%`;
+  $('#uploadProgressText').textContent = `تم التحميل ${value}%`;
+  if (label) $('#uploadProgressLabel').textContent = label;
+}
+
+function hideProgress(delay = 0) {
+  const wrap = $('#uploadProgress');
+  if (!wrap) return;
+  clearTimeout(hideProgress._timer);
+  hideProgress._timer = setTimeout(() => {
+    wrap.hidden = true;
+  }, delay);
+}
+
 function markDirty() {
   state.dirty = true;
   const btn = $('#saveBtn');
@@ -1120,6 +1148,7 @@ async function attachCover(file) {
   const cleanName = String(file.name || '').replace(/\.[^.]+$/, '');
   state.draftImageName = slugify(cleanName) || state.draftImageName;
   await attachVideo(file);
+  setProgress(45, 'جاري أخذ صورة من الفيديو');
   busy('الفيديو اتقرأ — جاري أخذ صورة منه وتجهيزها…');
 
   try {
@@ -1130,8 +1159,12 @@ async function attachCover(file) {
       { type: 'image/jpeg' }
     );
     await attachImage(posterFile);
+    setProgress(100, 'تم تجهيز الفيديو');
+    hideProgress(1600);
     toast('تم تجهيز الفيديو وصورة الغلاف منه تلقائيًا ✅', 'ok');
   } catch (error) {
+    setProgress(100, 'تم تجهيز الفيديو');
+    hideProgress(1600);
     state.draft.image = 'assets/projects/video-poster.svg';
     state.draft.imageSmall = '';
     state.draftPreview = rawUrl('assets/projects/video-poster.svg');
@@ -1142,6 +1175,7 @@ async function attachCover(file) {
 
 async function attachImage(file) {
   try {
+    showProgress('جاري تجهيز الصورة');
     if (file.size > MAX_IMAGE) throw new Error('الصورة أكبر من 3MB. اضغطها قبل الرفع.');
     const prepared = await prepareImage(file);
     const base = slugify(state.draftImageName) || `project-${state.draft.id}`;
@@ -1170,14 +1204,18 @@ async function attachImage(file) {
 
     state.draftPreview = URL.createObjectURL(prepared.fullBlob);
     renderProjectForm();
+    setProgress(100, 'تم تجهيز الصورة');
+    hideProgress(1200);
     toast('تم تجهيز الصورة — اضغط «تأكيد المشروع» ثم «حفظ ونشر».', 'ok');
   } catch (error) {
+    hideProgress();
     toast(error.message || 'تعذّر تجهيز الصورة', 'err');
   }
 }
 
 async function attachGalleryImage(file) {
   try {
+    showProgress('جاري تجهيز صورة الجاليري');
     if (file.size > MAX_IMAGE) throw new Error('الصورة أكبر من 3MB. اضغطها قبل الرفع.');
     if (!Array.isArray(state.draft.gallery)) state.draft.gallery = [];
 
@@ -1222,8 +1260,11 @@ async function attachGalleryImage(file) {
     state.draftGalleryPreviews.set(src, URL.createObjectURL(prepared.fullBlob));
 
     renderProjectForm();
+    setProgress(100, 'تم تجهيز الصورة');
+    hideProgress(1200);
     toast('تمت إضافة الصورة للجاليري — اضغط «تأكيد المشروع» ثم «حفظ ونشر».', 'ok');
   } catch (error) {
+    hideProgress();
     toast(error.message || 'تعذّر تجهيز الصورة', 'err');
   }
 }
@@ -1272,12 +1313,16 @@ function removeGalleryItem(index) {
 async function attachVideo(file) {
   try {
     busy('جاري قراءة الفيديو وتجهيزه… ما تغلقش الصفحة');
+    showProgress('جاري قراءة الفيديو');
     if (file.size > MAX_VIDEO) {
       throw new Error('الفيديو أكبر من 100MB — ده حد GitHub API. ارفعه على يوتيوب (غير مدرج) واستخدم رابط يوتيوب.');
     }
     const base = slugify(state.draftImageName) || `project-${state.draft.id}`;
     const path = `assets/projects/${base}.mp4`;
-    state.pendingUploads.set(path, await fileToBase64(file));
+    state.pendingUploads.set(
+      path,
+      await fileToBase64(file, (fraction) => setProgress(fraction * 40, 'جاري قراءة الفيديو'))
+    );
     state.draftUploads.push(path);
     state.draft.video = path;
     state.draft.youtube = '';
@@ -1287,6 +1332,7 @@ async function attachVideo(file) {
     renderProjectForm();
     toast('تم تجهيز الفيديو.', 'ok');
   } catch (error) {
+    hideProgress();
     toast(error.message || 'تعذّر تجهيز الفيديو', 'err');
   }
 }
@@ -1443,10 +1489,16 @@ async function attachSiteImage(key, file) {
   }
 }
 
-function fileToBase64(file) {
+function fileToBase64(file, onProgress) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result || '').split(',')[1] || '');
+    reader.onprogress = (event) => {
+      if (event.lengthComputable && onProgress) onProgress(event.loaded / event.total);
+    };
+    reader.onload = () => {
+      if (onProgress) onProgress(1);
+      resolve(String(reader.result || '').split(',')[1] || '');
+    };
     reader.onerror = () => reject(reader.error || new Error('تعذّر قراءة الفيديو'));
     reader.readAsDataURL(file);
   });
@@ -2490,9 +2542,12 @@ async function saveAll() {
 
     const message = `تحديث الموقع من لوحة التحكم — ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`;
     busy('جاري رفع الملفات على GitHub… ما تغلقش الصفحة');
+    setProgress(40, 'جاري رفع الملفات');
     await commitFiles(files, deletions, message, (percent) => {
-      busy(`جاري رفع الملفات… ${percent}% — ما تغلقش الصفحة`);
-      button.textContent = `جاري الحفظ… ${percent}%`;
+      const overall = 40 + Math.round((percent / 100) * 60);
+      setProgress(overall, 'جاري رفع الملفات');
+      busy(`جاري رفع الملفات… ${overall}% — ما تغلقش الصفحة`);
+      button.textContent = `جاري الحفظ… ${overall}%`;
     });
 
     state.pendingUploads.clear();
@@ -2502,6 +2557,8 @@ async function saveAll() {
     if (bar) bar.hidden = true;
     await loadContent();
     renderAll();
+    setProgress(100, 'تم التحميل — جاري بناء الموقع');
+    hideProgress(2500);
     toast('تم الحفظ ✅ — GitHub يبني الموقع الآن تلقائيًا (حوالي دقيقة).', 'ok');
     setTimeout(() => checkDeploy(), 4000);
   } catch (error) {
@@ -2511,6 +2568,7 @@ async function saveAll() {
     } else if (/Resource not accessible/i.test(error.message)) {
       hint = ' — افتح /admin/?reset=1 وسجّل بتوكن جديد عليه Contents: Read and write.';
     }
+    hideProgress();
     toast(`فشل الحفظ: ${error.message}${hint}`, 'err');
     button.disabled = false;
   } finally {
