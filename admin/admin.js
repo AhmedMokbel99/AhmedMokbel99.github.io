@@ -2289,11 +2289,14 @@ async function init() {
     });
   }
 
-  /* رابط إعادة ضبط: يمسح الجلسة القديمة فورًا لو التوكن اتغير أو اتسحب */
-  if (new URLSearchParams(location.search).has('reset')) {
+  /* رابط إعادة ضبط: يمسح الجلسة القديمة مرة واحدة فقط، ثم يشيل الرابط عشان F5 ما يمسحش تاني */
+  const resetUrl = new URL(location.href);
+  if (resetUrl.searchParams.has('reset')) {
     localStorage.removeItem(LS.token);
     localStorage.removeItem(LS.owner);
     localStorage.removeItem(LS.repo);
+    resetUrl.searchParams.delete('reset');
+    history.replaceState(null, '', resetUrl.pathname + resetUrl.search + resetUrl.hash);
   }
 
   state.token = localStorage.getItem(LS.token) || '';
