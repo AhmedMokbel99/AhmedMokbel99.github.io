@@ -4,7 +4,7 @@
   "kind": "static-build",
   "note": "ملف ثابت يتولّد مع كل بناء ونشر — لا يوجد سيرفر حي وراءه.",
   "counts": {
-    "projects": 25,
+    "projects": 26,
     "services": 6,
     "servicePages": 6
   }

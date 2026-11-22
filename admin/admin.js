@@ -2193,6 +2193,22 @@ async function saveAll() {
   button.textContent = 'جاري الحفظ…';
 
   try {
+    /* نفس شروط build.py — منع حفظ مشروع هيوقف النشر بعدين */
+    const missing = [];
+    state.projects.forEach((project, index) => {
+      const required = ['id', 'code', 'title', 'cat', 'tag', 'image'];
+      const absent = required.filter((key) => !String(project[key] || '').trim());
+      if (absent.length) {
+        missing.push(`المشروع ${index + 1} (${project.code || 'بدون كود'}): ${absent.join(', ')}`);
+      }
+      if (/\.(mp4|webm|mov)$/i.test(String(project.video || '')) && !String(project.date || '').trim()) {
+        missing.push(`المشروع ${index + 1} (${project.code || 'بدون كود'}): date`);
+      }
+    });
+    if (missing.length) {
+      throw new Error(`حقول ناقصة لازم تكتبها قبل النشر: ${missing.join(' — ')}`);
+    }
+
     /* حماية من كتابة نسخة قديمة فوق تعديلات أحدث (تاب مفتوح من زمان) */
     const stale = await remoteChanged();
     if (stale) {

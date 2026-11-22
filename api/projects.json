@@ -2,9 +2,27 @@
   "schemaVersion": "1.0",
   "generatedAt": "2026-11-22",
   "source": "https://ahmedmokbel99.github.io/",
-  "count": 25,
+  "count": 26,
   "detailPattern": "https://ahmedmokbel99.github.io/api/projects/{slug}.json",
   "projects": [
+    {
+      "slug": "project-f26",
+      "title": "📸 تصميم بوستر وباقات إعلانية لمصور فوتوغرافي محترف (إبراهيم مطر)",
+      "category": "brand",
+      "categoryLabel": "هوية وطباعة",
+      "tag": "تصميم إعلاني وهوية بصرية",
+      "summary": "🎯 صناعة الهوية البصرية والعروض الترويجية لخدمات التصوير الفوتوغرافي\n\nتصميم بوستر إعلاني وترويجي متكامل لصالح المصور المحترف \"إبراهيم مطر\" لعرض باقات وتفاصيل تصوير حفلات الزفاف والمناسبات. تم التركيز على دمج لقطات حية من أعماله في إطار هندسي يحاكي عدسة الكاميرا، مع تنظيم ذكي ومقروء للباقات والأسعار لجذب الجمهور المستهدف وتحفيز الحجز المباشر.",
+      "featured": false,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/project-f26.jpg",
+        "width": 1189,
+        "height": 1658
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f26",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/project-f26.json"
+    },
     {
       "slug": "project-f25",
       "title": "✨ تصميم إعلانات وبوستات السوشيال ميديا الإبداعية لعلامات تجارية متنوعة",
@@ -24,44 +42,6 @@
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/project-f25.json"
     },
     {
-      "slug": "saudi-founding-day-motion-graphic",
-      "title": "يوم التأسيس السعودي",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
-      "tag": "موشن جرافيك",
-      "summary": "عمل بصري بمناسبة يوم التأسيس السعودي لصالح TECHIFAY، يجمع بين التراث السعودي والهوية الخضراء والذهبية في تكوين مهيب.",
-      "featured": true,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/saudi-founding-day-motion-graphic.jpg",
-        "width": 1072,
-        "height": 1344
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f01",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/saudi-founding-day-motion-graphic.json",
-      "externalUrl": "https://www.behance.net/gallery/244580859/_"
-    },
-    {
-      "slug": "ibn-albasel-motion-graphic",
-      "title": "ابن الباسل",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
-      "tag": "موشن جرافيك",
-      "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
-      "featured": true,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/ibn-albasel-motion-graphic.jpg",
-        "width": 1600,
-        "height": 1200
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f02",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ibn-albasel-motion-graphic.json",
-      "externalUrl": "https://www.behance.net/gallery/244097521/_"
-    },
-    {
       "slug": "ans-dimashqi-steak-ad",
       "title": "آنس الدمشقي — إعلان طبق اللحم",
       "category": "ads",
@@ -78,6 +58,24 @@
       },
       "pageUrl": "https://ahmedmokbel99.github.io/#project-f03",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ans-dimashqi-steak-ad.json"
+    },
+    {
+      "slug": "ans-dimashqi-pie-ad",
+      "title": "آنس الدمشقي — إعلان الفطيرة",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
+      "tag": "إعلان مطعم",
+      "summary": "إعلان طعام ثانٍ لمطعم «آنس الدمشقي»: الفطيرة باللحم والمكونات المتطايرة حولها على خلفية برتقالية، بأسلوب دعائي مباشر ينتهي برقم الطلب.",
+      "featured": false,
+      "hasVideo": true,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/ans-dimashqi-pie-ad.jpg",
+        "width": 1200,
+        "height": 900
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f21",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ans-dimashqi-pie-ad.json"
     },
     {
       "slug": "harvard-education-center-brand",
@@ -99,6 +97,116 @@
       "externalUrl": "https://www.behance.net/gallery/148210723/_"
     },
     {
+      "slug": "harvard-2026-new-year-identity",
+      "title": "هارفارد 2026 — هوية العام الجديد",
+      "category": "brand",
+      "categoryLabel": "هوية وطباعة",
+      "tag": "هوية وطباعة",
+      "summary": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي. 2026",
+      "featured": false,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/harvard-2026-new-year-identity.jpg",
+        "width": 1600,
+        "height": 1600
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f24",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/harvard-2026-new-year-identity.json"
+    },
+    {
+      "slug": "almenissy-hijri-1448-greeting",
+      "title": "تهنئة العام الهجري 1448 — Almenissy",
+      "category": "digital",
+      "categoryLabel": "تصميم رقمي",
+      "tag": "سوشيال ميديا",
+      "summary": "تصميم تهنئة بمناسبة العام الهجري الجديد 1448 لعلامة Almenissy Ideas & Solutions: الخط العربي يملأ المساحة العلوية، وتحته الرقم 1448 كعنصر بصري، مع قافلة جمال في صحراء تحت سماء نجوم.",
+      "featured": false,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/almenissy-hijri-1448-greeting.jpg",
+        "width": 1200,
+        "height": 1204
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f22",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/almenissy-hijri-1448-greeting.json"
+    },
+    {
+      "slug": "grm-hijri-1448-greeting",
+      "title": "تهنئة العام الهجري 1448 — GRM Developments",
+      "category": "digital",
+      "categoryLabel": "تصميم رقمي",
+      "tag": "سوشيال ميديا",
+      "summary": "تصميم تهنئة بالعام الهجري الجديد 1448 لشركة GRM Developments: هلال في سماء ليلية، وقوس أزرق يحتضن الخط العربي والرقم، وقافلة على الجمال تكمل المشهد في المقدمة.",
+      "featured": false,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/grm-hijri-1448-greeting.jpg",
+        "width": 1400,
+        "height": 1842
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f23",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/grm-hijri-1448-greeting.json"
+    },
+    {
+      "slug": "social-media-design-collection",
+      "title": "مختارات سوشيال ميديا — تغذية بصرية",
+      "category": "digital",
+      "categoryLabel": "تصميم رقمي",
+      "tag": "تصميم رقمي",
+      "summary": "مجموعة تصميمات رقمية متنوعة أُنتجت لعلامات ومناسبات مختلفة، تجمع بين الوضوح والجاذبية البصرية.",
+      "featured": false,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/social-media-design-collection.jpg",
+        "width": 1600,
+        "height": 1200
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f09",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/social-media-design-collection.json",
+      "externalUrl": "https://www.behance.net/gallery/228287151/_"
+    },
+    {
+      "slug": "admission-gateway-rollup",
+      "title": "بوابة القبول",
+      "category": "brand",
+      "categoryLabel": "هوية وطباعة",
+      "tag": "تصميم طباعي",
+      "summary": "تصميم رول أب لبوابة القبول للالتحاق بالجامعات، يجمع بين الهوية الأكاديمية والوضوح المعلوماتي في قطعة طباعية واحدة.",
+      "featured": false,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/admission-gateway-rollup.jpg",
+        "width": 1508,
+        "height": 2000
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f13",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/admission-gateway-rollup.json"
+    },
+    {
+      "slug": "filler-injection-ad-design",
+      "title": "حقن فيلر",
+      "category": "digital",
+      "categoryLabel": "تصميم رقمي",
+      "tag": "تصميم رقمي",
+      "summary": "تصميم إعلاني لخدمة حقن الفيلر للدكتورة لينا بعّاد، بأسلوب ناعم يعتمد على درجات الوردي وعناصر الطبيعة.",
+      "featured": false,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/filler-injection-ad-design.jpg",
+        "width": 1400,
+        "height": 1400
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f10",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/filler-injection-ad-design.json",
+      "externalUrl": "https://www.behance.net/gallery/194077395/_"
+    },
+    {
       "slug": "ultra-grow-brand-packaging",
       "title": "ULTRA GROW — تغليف المنتجات",
       "category": "brand",
@@ -116,6 +224,25 @@
       "pageUrl": "https://ahmedmokbel99.github.io/#project-f07",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ultra-grow-brand-packaging.json",
       "externalUrl": "https://www.behance.net/gallery/148215371/ULTRA-GROW"
+    },
+    {
+      "slug": "saudi-founding-day-motion-graphic",
+      "title": "يوم التأسيس السعودي",
+      "category": "motion",
+      "categoryLabel": "موشن جرافيك",
+      "tag": "موشن جرافيك",
+      "summary": "عمل بصري بمناسبة يوم التأسيس السعودي لصالح TECHIFAY، يجمع بين التراث السعودي والهوية الخضراء والذهبية في تكوين مهيب.",
+      "featured": true,
+      "hasVideo": true,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/saudi-founding-day-motion-graphic.jpg",
+        "width": 1072,
+        "height": 1344
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f01",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/saudi-founding-day-motion-graphic.json",
+      "externalUrl": "https://www.behance.net/gallery/244580859/_"
     },
     {
       "slug": "insta-watches-ad-design",
@@ -137,22 +264,130 @@
       "externalUrl": "https://www.behance.net/gallery/175994775/INSTA-WATCHES"
     },
     {
-      "slug": "harvard-2026-new-year-identity",
-      "title": "هارفارد 2026 — هوية العام الجديد",
-      "category": "brand",
-      "categoryLabel": "هوية وطباعة",
-      "tag": "هوية وطباعة",
-      "summary": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي. 2026",
+      "slug": "en-serv-logo-animation",
+      "title": "EN-SERV — تحريك شعار",
+      "category": "motion",
+      "categoryLabel": "موشن جرافيك",
+      "tag": "تحريك شعار",
+      "summary": "تحريك شعار EN-SERV: مونوجرام هندسي يتبلور من خطوط ضوئية على خلفية داكنة، وينتهي بظهور الاسم في مشهد إغلاق نظيف.",
       "featured": false,
-      "hasVideo": false,
+      "hasVideo": true,
       "media": {
         "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/harvard-2026-new-year-identity.jpg",
-        "width": 1600,
-        "height": 1600
+        "url": "https://ahmedmokbel99.github.io/assets/projects/en-serv-logo-animation.jpg",
+        "width": 1200,
+        "height": 900
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f24",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/harvard-2026-new-year-identity.json"
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f16",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/en-serv-logo-animation.json"
+    },
+    {
+      "slug": "alwathba-real-estate-ad",
+      "title": "الوثبة العقارية — مشروع سكني",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
+      "tag": "إعلان عقاري",
+      "summary": "إعلان لمشروع سكني لشركة «الوثبة» العقارية: جولة بصرية على واجهات المبنى وتفاصيله، بإطار جرافيكي وخلفية داكنة تُبرز الهوية.",
+      "featured": false,
+      "hasVideo": true,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/alwathba-real-estate-ad.jpg",
+        "width": 1200,
+        "height": 900
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f20",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/alwathba-real-estate-ad.json"
+    },
+    {
+      "slug": "bdeel-car-ad",
+      "title": "بديل — إعلان سيارة",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
+      "tag": "إعلان سيارات",
+      "summary": "إعلان سيارة لعلامة «بديل» بأسلوب سينمائي: إضاءة درامية، حركة كاميرا قريبة، وخلفية خطوط ضوئية تمنح المشهد إحساسًا بالسرعة والفخامة.",
+      "featured": false,
+      "hasVideo": true,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/bdeel-car-ad.jpg",
+        "width": 1200,
+        "height": 900
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f19",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/bdeel-car-ad.json"
+    },
+    {
+      "slug": "elmaqsoud-generators-ad",
+      "title": "المقصود للمولدات — إعلان الشركة",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
+      "tag": "إعلان شركة",
+      "summary": "إعلان شركة المقصود لتوريد المولدات: عرض للمعدات ولوحات التحكم في تكوين ثلاثي الأبعاد يعرّف بالخدمة ويختم برابط الموقع.",
+      "featured": false,
+      "hasVideo": true,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/elmaqsoud-generators-ad.jpg",
+        "width": 1200,
+        "height": 900
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f18",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/elmaqsoud-generators-ad.json"
+    },
+    {
+      "slug": "elzain-restaurant-video",
+      "title": "الزين — مطعم سوري",
+      "category": "ads",
+      "categoryLabel": "إعلانات وتصوير",
+      "tag": "تصوير ومونتاج",
+      "summary": "فيديو تعريفي لمطعم «الزين» السوري: لقطات من داخل المطعم تبرز الشيف والطبق الرئيسي والهوية الحمراء، بمونتاج سريع مناسب للسوشيال ميديا.",
+      "featured": false,
+      "hasVideo": true,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/elzain-restaurant-video.jpg",
+        "width": 1200,
+        "height": 900
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f17",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/elzain-restaurant-video.json"
+    },
+    {
+      "slug": "alhakum-altakathur-motion",
+      "title": "ألهاكم التكاثر — الشيخ أمجد سمير",
+      "category": "motion",
+      "categoryLabel": "موشن جرافيك",
+      "tag": "موشن جرافيك",
+      "summary": "عمل موشن جرافيك بعنوان «ألهاكم التكاثر» للشيخ أمجد سمير، يجسّد المعنى في مشاهد متتابعة: الجري خلف المال، ثم الثراء والاستقرار، ثم لحظة الصفاء والرجوع — بأسلوب ثلاثي الأبعاد وإضاءة دافئة.",
+      "featured": false,
+      "hasVideo": true,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/alhakum-altakathur-motion.jpg",
+        "width": 1200,
+        "height": 900
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f15",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/alhakum-altakathur-motion.json"
+    },
+    {
+      "slug": "beginnings-motion-graphic",
+      "title": "البدايات — ياسر الحزيمي",
+      "category": "motion",
+      "categoryLabel": "موشن جرافيك",
+      "tag": "موشن جرافيك",
+      "summary": "فيلم موشن جرافيك قصير بعنوان «البدايات» يقدّم الفكرة بأسلوب رسومي دافئ: شخصية تشكّل إناءً من الطين، في بناء بصري هادئ يرمز إلى بداية الطريق وصناعة الشيء باليد.",
+      "featured": false,
+      "hasVideo": true,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/beginnings-motion-graphic.jpg",
+        "width": 1200,
+        "height": 900
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f14",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/beginnings-motion-graphic.json"
     },
     {
       "slug": "taher-printing-brand-identity",
@@ -212,42 +447,23 @@
       "externalUrl": "https://www.behance.net/gallery/194077839/ULTRA-GROW-2"
     },
     {
-      "slug": "social-media-design-collection",
-      "title": "مختارات سوشيال ميديا — تغذية بصرية",
-      "category": "digital",
-      "categoryLabel": "تصميم رقمي",
-      "tag": "تصميم رقمي",
-      "summary": "مجموعة تصميمات رقمية متنوعة أُنتجت لعلامات ومناسبات مختلفة، تجمع بين الوضوح والجاذبية البصرية.",
-      "featured": false,
-      "hasVideo": false,
+      "slug": "ibn-albasel-motion-graphic",
+      "title": "ابن الباسل",
+      "category": "motion",
+      "categoryLabel": "موشن جرافيك",
+      "tag": "موشن جرافيك",
+      "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
+      "featured": true,
+      "hasVideo": true,
       "media": {
         "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/social-media-design-collection.jpg",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/ibn-albasel-motion-graphic.jpg",
         "width": 1600,
         "height": 1200
       },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f09",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/social-media-design-collection.json",
-      "externalUrl": "https://www.behance.net/gallery/228287151/_"
-    },
-    {
-      "slug": "filler-injection-ad-design",
-      "title": "حقن فيلر",
-      "category": "digital",
-      "categoryLabel": "تصميم رقمي",
-      "tag": "تصميم رقمي",
-      "summary": "تصميم إعلاني لخدمة حقن الفيلر للدكتورة لينا بعّاد، بأسلوب ناعم يعتمد على درجات الوردي وعناصر الطبيعة.",
-      "featured": false,
-      "hasVideo": false,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/filler-injection-ad-design.jpg",
-        "width": 1400,
-        "height": 1400
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f10",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/filler-injection-ad-design.json",
-      "externalUrl": "https://www.behance.net/gallery/194077395/_"
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f02",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ibn-albasel-motion-graphic.json",
+      "externalUrl": "https://www.behance.net/gallery/244097521/_"
     },
     {
       "slug": "nature-secret-ad-design",
@@ -267,204 +483,6 @@
       "pageUrl": "https://ahmedmokbel99.github.io/#project-f12",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/nature-secret-ad-design.json",
       "externalUrl": "https://www.behance.net/gallery/194077227/_"
-    },
-    {
-      "slug": "admission-gateway-rollup",
-      "title": "بوابة القبول",
-      "category": "brand",
-      "categoryLabel": "هوية وطباعة",
-      "tag": "تصميم طباعي",
-      "summary": "تصميم رول أب لبوابة القبول للالتحاق بالجامعات، يجمع بين الهوية الأكاديمية والوضوح المعلوماتي في قطعة طباعية واحدة.",
-      "featured": false,
-      "hasVideo": false,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/admission-gateway-rollup.jpg",
-        "width": 1508,
-        "height": 2000
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f13",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/admission-gateway-rollup.json"
-    },
-    {
-      "slug": "beginnings-motion-graphic",
-      "title": "البدايات — ياسر الحزيمي",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
-      "tag": "موشن جرافيك",
-      "summary": "فيلم موشن جرافيك قصير بعنوان «البدايات» يقدّم الفكرة بأسلوب رسومي دافئ: شخصية تشكّل إناءً من الطين، في بناء بصري هادئ يرمز إلى بداية الطريق وصناعة الشيء باليد.",
-      "featured": false,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/beginnings-motion-graphic.jpg",
-        "width": 1200,
-        "height": 900
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f14",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/beginnings-motion-graphic.json"
-    },
-    {
-      "slug": "alhakum-altakathur-motion",
-      "title": "ألهاكم التكاثر — الشيخ أمجد سمير",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
-      "tag": "موشن جرافيك",
-      "summary": "عمل موشن جرافيك بعنوان «ألهاكم التكاثر» للشيخ أمجد سمير، يجسّد المعنى في مشاهد متتابعة: الجري خلف المال، ثم الثراء والاستقرار، ثم لحظة الصفاء والرجوع — بأسلوب ثلاثي الأبعاد وإضاءة دافئة.",
-      "featured": false,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/alhakum-altakathur-motion.jpg",
-        "width": 1200,
-        "height": 900
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f15",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/alhakum-altakathur-motion.json"
-    },
-    {
-      "slug": "en-serv-logo-animation",
-      "title": "EN-SERV — تحريك شعار",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
-      "tag": "تحريك شعار",
-      "summary": "تحريك شعار EN-SERV: مونوجرام هندسي يتبلور من خطوط ضوئية على خلفية داكنة، وينتهي بظهور الاسم في مشهد إغلاق نظيف.",
-      "featured": false,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/en-serv-logo-animation.jpg",
-        "width": 1200,
-        "height": 900
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f16",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/en-serv-logo-animation.json"
-    },
-    {
-      "slug": "elzain-restaurant-video",
-      "title": "الزين — مطعم سوري",
-      "category": "ads",
-      "categoryLabel": "إعلانات وتصوير",
-      "tag": "تصوير ومونتاج",
-      "summary": "فيديو تعريفي لمطعم «الزين» السوري: لقطات من داخل المطعم تبرز الشيف والطبق الرئيسي والهوية الحمراء، بمونتاج سريع مناسب للسوشيال ميديا.",
-      "featured": false,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/elzain-restaurant-video.jpg",
-        "width": 1200,
-        "height": 900
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f17",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/elzain-restaurant-video.json"
-    },
-    {
-      "slug": "elmaqsoud-generators-ad",
-      "title": "المقصود للمولدات — إعلان الشركة",
-      "category": "ads",
-      "categoryLabel": "إعلانات وتصوير",
-      "tag": "إعلان شركة",
-      "summary": "إعلان شركة المقصود لتوريد المولدات: عرض للمعدات ولوحات التحكم في تكوين ثلاثي الأبعاد يعرّف بالخدمة ويختم برابط الموقع.",
-      "featured": false,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/elmaqsoud-generators-ad.jpg",
-        "width": 1200,
-        "height": 900
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f18",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/elmaqsoud-generators-ad.json"
-    },
-    {
-      "slug": "bdeel-car-ad",
-      "title": "بديل — إعلان سيارة",
-      "category": "ads",
-      "categoryLabel": "إعلانات وتصوير",
-      "tag": "إعلان سيارات",
-      "summary": "إعلان سيارة لعلامة «بديل» بأسلوب سينمائي: إضاءة درامية، حركة كاميرا قريبة، وخلفية خطوط ضوئية تمنح المشهد إحساسًا بالسرعة والفخامة.",
-      "featured": false,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/bdeel-car-ad.jpg",
-        "width": 1200,
-        "height": 900
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f19",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/bdeel-car-ad.json"
-    },
-    {
-      "slug": "alwathba-real-estate-ad",
-      "title": "الوثبة العقارية — مشروع سكني",
-      "category": "ads",
-      "categoryLabel": "إعلانات وتصوير",
-      "tag": "إعلان عقاري",
-      "summary": "إعلان لمشروع سكني لشركة «الوثبة» العقارية: جولة بصرية على واجهات المبنى وتفاصيله، بإطار جرافيكي وخلفية داكنة تُبرز الهوية.",
-      "featured": false,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/alwathba-real-estate-ad.jpg",
-        "width": 1200,
-        "height": 900
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f20",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/alwathba-real-estate-ad.json"
-    },
-    {
-      "slug": "ans-dimashqi-pie-ad",
-      "title": "آنس الدمشقي — إعلان الفطيرة",
-      "category": "ads",
-      "categoryLabel": "إعلانات وتصوير",
-      "tag": "إعلان مطعم",
-      "summary": "إعلان طعام ثانٍ لمطعم «آنس الدمشقي»: الفطيرة باللحم والمكونات المتطايرة حولها على خلفية برتقالية، بأسلوب دعائي مباشر ينتهي برقم الطلب.",
-      "featured": false,
-      "hasVideo": true,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/ans-dimashqi-pie-ad.jpg",
-        "width": 1200,
-        "height": 900
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f21",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ans-dimashqi-pie-ad.json"
-    },
-    {
-      "slug": "almenissy-hijri-1448-greeting",
-      "title": "تهنئة العام الهجري 1448 — Almenissy",
-      "category": "digital",
-      "categoryLabel": "تصميم رقمي",
-      "tag": "سوشيال ميديا",
-      "summary": "تصميم تهنئة بمناسبة العام الهجري الجديد 1448 لعلامة Almenissy Ideas & Solutions: الخط العربي يملأ المساحة العلوية، وتحته الرقم 1448 كعنصر بصري، مع قافلة جمال في صحراء تحت سماء نجوم.",
-      "featured": false,
-      "hasVideo": false,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/almenissy-hijri-1448-greeting.jpg",
-        "width": 1200,
-        "height": 1204
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f22",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/almenissy-hijri-1448-greeting.json"
-    },
-    {
-      "slug": "grm-hijri-1448-greeting",
-      "title": "تهنئة العام الهجري 1448 — GRM Developments",
-      "category": "digital",
-      "categoryLabel": "تصميم رقمي",
-      "tag": "سوشيال ميديا",
-      "summary": "تصميم تهنئة بالعام الهجري الجديد 1448 لشركة GRM Developments: هلال في سماء ليلية، وقوس أزرق يحتضن الخط العربي والرقم، وقافلة على الجمال تكمل المشهد في المقدمة.",
-      "featured": false,
-      "hasVideo": false,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/grm-hijri-1448-greeting.jpg",
-        "width": 1400,
-        "height": 1842
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f23",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/grm-hijri-1448-greeting.json"
     }
   ]
 }
