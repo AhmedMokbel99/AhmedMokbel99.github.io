@@ -633,7 +633,8 @@ function projectPreviewSrc() {
 function renderProjectForm() {
   const draft = state.draft;
   const categories = (state.site.categories || []).filter((c) => c.id !== 'all');
-  const videoMode = draft.youtube ? 'youtube' : draft.video ? 'local' : 'none';
+  const videoMode =
+    state.draft.videoMode || (draft.youtube ? 'youtube' : draft.video ? 'local' : 'none');
   const preview = projectPreviewSrc();
 
   $('#projectForm').innerHTML = `
@@ -835,8 +836,14 @@ function renderProjectForm() {
       else if (input.type === 'number') value = Number(input.value);
       else value = input.value;
       state.draft[key] = value;
-      if (key === 'youtube' && value) state.draft.video = '';
-      if (key === 'video' && value) state.draft.youtube = '';
+      if (key === 'youtube' && value) {
+        state.draft.video = '';
+        state.draft.videoMode = 'youtube';
+      }
+      if (key === 'video' && value) {
+        state.draft.youtube = '';
+        state.draft.videoMode = 'local';
+      }
     };
     input.addEventListener('input', update);
     input.addEventListener('change', update);
@@ -845,6 +852,7 @@ function renderProjectForm() {
   $$('#videoMode [data-video-mode]').forEach((btn) =>
     btn.addEventListener('click', () => {
       const mode = btn.dataset.videoMode;
+      state.draft.videoMode = mode;
       if (mode === 'none') {
         state.draft.video = '';
         state.draft.youtube = '';
@@ -1069,6 +1077,7 @@ async function attachVideo(file) {
     state.draftUploads.push(path);
     state.draft.video = path;
     state.draft.youtube = '';
+    state.draft.videoMode = 'local';
     state.draft.isVideo = true;
     if (!String(state.draft.date || '').trim()) state.draft.date = new Date().toISOString();
     renderProjectForm();
@@ -1314,6 +1323,8 @@ function saveProjectDraft() {
       });
     });
   }
+
+  delete draft.videoMode; /* حالة الواجهة مش جزء من بيانات المشروع */
 
   if (state.draftIndex < 0) {
     state.projects.unshift(clone(draft));
