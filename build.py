@@ -55,6 +55,10 @@ ASSET_VERSION = "18"
 # عدد المشاريع الظاهرة في الصفحة الرئيسية قبل زر «عرض المزيد»
 INITIAL_CARDS = 8
 
+# أول أربعة مشاريع في شبكة الأعمال: اثنان بعرض الصفحة واثنان بنصف العرض
+LEAD_CARDS = 2
+FEATURED_CARDS = 4
+
 # توكِنات تتغيّر تلقائيًا داخل أي نص: {location} و{city}
 TOKENS: dict[str, str] = {}
 
@@ -362,6 +366,17 @@ def project_has_video(project: dict) -> bool:
     return bool(project.get("video") or project.get("youtube") or project.get("videos"))
 
 
+def project_first_video(project: dict) -> str:
+    """أول ملف فيديو محلي نستخدمه كمعاينة عند التحويم (بدون صوت)."""
+    videos = project.get("videos")
+    if isinstance(videos, list) and videos:
+        first = videos[0]
+        if isinstance(first, dict):
+            return str(first.get("src") or "")
+        return str(first or "")
+    return str(project.get("video") or "")
+
+
 def project_card(project: dict, index: int = 0) -> str:
     """Keep in sync with projectMarkup() in js/main.js."""
     image = project.get("image", "")
@@ -386,34 +401,55 @@ def project_card(project: dict, index: int = 0) -> str:
     alt = project_alt(project)
     aria_label = dedupe_alt(f'عرض تفاصيل مشروع {project["title"]} — {project.get("tag", "")}')
 
+    classes = ["project"]
+    if index < LEAD_CARDS:
+        classes.append("project--lead")
+    elif index < FEATURED_CARDS:
+        classes.append("project--feature")
+    if project_has_video(project):
+        classes.append("project--video")
+    if index >= INITIAL_CARDS:
+        classes.append("is-deferred")
+
+    has_video = project_has_video(project)
     badge = (
         '<span class="project__type">'
         '<svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>'
-        "فيديو"
+        "اضغط للمشاهدة"
         "</span>"
-        if project_has_video(project)
+        if has_video
         else ""
     )
 
-    return f'''<article id="project-{esc(project["id"])}" class="project{" is-deferred" if index >= INITIAL_CARDS else ""}" data-reveal data-project-card="{esc(project["id"])}" data-category="{esc(project["cat"])}">
+    preview_src = project_first_video(project)
+    preview = (
+        f'    <video class="project__preview" src="{esc(preview_src)}" '
+        f'poster="{esc(fallback)}" muted loop playsinline preload="none" '
+        'aria-hidden="true" tabindex="-1"></video>'
+        if preview_src
+        else ""
+    )
+
+    return f'''<article id="project-{esc(project["id"])}" class="{" ".join(classes)}" data-reveal data-project-card="{esc(project["id"])}" data-category="{esc(project["cat"])}">
   <div class="project__media">
     <img
       src="{esc(fallback)}"
       srcset="{esc(srcset)}"
-      sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
       width="{width}"
       height="{height}"
       alt="{esc(alt)}"
       loading="lazy"
       decoding="async"
     >
+{preview}
     {f'<div class="project__badges">{badge}</div>' if badge else ''}
   </div>
   <div class="project__body">
     <span class="project__tag">{esc(project["tag"])}</span>
     <h3 class="project__title">{mark_latin(project["title"])}</h3>
     <span class="project__more">
-      <span>{"شاهد الفيديو" if project_has_video(project) else "عرض التفاصيل"}</span>
+      <span>{"شاهد الفيديو" if has_video else "عرض التفاصيل"}</span>
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
     </span>
   </div>
@@ -432,18 +468,25 @@ def services_block(services: list[dict]) -> str:
         link = ""
         if service.get("link") and service.get("linkLabel"):
             link = f'''
-            <a class="service__link" href="{esc(service["link"])}">
-              {esc(service["linkLabel"])}
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-            </a>'''
+              <a class="service__link" href="{esc(service["link"])}">
+                {esc(service["linkLabel"])}
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+              </a>'''
         cards.append(
             f'''          <article class="service" data-reveal>
-            <span class="service__num" aria-hidden="true">{index:02d}</span>
-            <div class="service__icon">
-              <svg class="icon" aria-hidden="true"><use href="#{esc(service.get("icon", "i-compass"))}"></use></svg>
+            <div class="service__head">
+              <span class="service__num" aria-hidden="true">{index:02d}</span>
+              <div class="service__icon">
+                <svg class="icon" aria-hidden="true"><use href="#{esc(service.get("icon", "i-compass"))}"></use></svg>
+              </div>
+              <h3>{esc(service["title"])}</h3>
+              <button class="service__toggle" type="button" aria-expanded="false" aria-label="عرض تفاصيل {esc(service["title"])}">
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg>
+              </button>
             </div>
-            <h3>{esc(service["title"])}</h3>
-            <p>{esc(service["desc"])}</p>{link}
+            <div class="service__panel">
+              <p>{esc(service["desc"])}</p>{link}
+            </div>
           </article>'''
         )
     return "\n\n".join(cards)
@@ -497,9 +540,16 @@ def process_block(steps: list[dict]) -> str:
     for index, step in enumerate(steps, start=1):
         cards.append(
             f'''          <article class="step" data-reveal>
-            <div class="step__num">{index:02d}</div>
-            <h3>{esc(step["title"])}</h3>
-            <p>{esc(step["desc"])}</p>
+            <div class="step__head">
+              <div class="step__num">{index:02d}</div>
+              <h3>{esc(step["title"])}</h3>
+              <button class="step__toggle" type="button" aria-expanded="false" aria-label="عرض تفاصيل {esc(step["title"])}">
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg>
+              </button>
+            </div>
+            <div class="step__panel">
+              <p>{esc(step["desc"])}</p>
+            </div>
           </article>'''
         )
     return "\n".join(cards)
@@ -2044,16 +2094,16 @@ def write_auth_md(site: dict, base: str) -> None:
 
 
 DOCS_CSS = """
-:root{--bg:#07080d;--surface:#11141d;--line:rgba(255,255,255,.09);--text:#f7f9fc;--muted:#a8b4c8;--brand:#8b5cf6;--cyan:#22d3ee;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+:root{--bg:#08090b;--surface:#121316;--line:rgba(255,255,255,.09);--text:#f4f4f4;--muted:#bcbcbc;--brand:#ff5a1f;--cyan:#ff5a1f;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;line-height:1.75;font-size:16px}
 .wrap{max-width:860px;margin:0 auto;padding:3rem 1.25rem 5rem}
 a{color:var(--cyan)}
 h1{font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.3;margin:.4rem 0 1rem}
 h2{margin:2.6rem 0 .8rem;font-size:1.25rem;padding-bottom:.5rem;border-bottom:1px solid var(--line)}
-h3{margin:1.8rem 0 .4rem;font-size:1.02rem;color:#d8c8ff}
+h3{margin:1.8rem 0 .4rem;font-size:1.02rem;color:#f4f4f4}
 p,li{color:var(--muted)}
-code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.06);padding:.15em .4em;border-radius:6px;color:#e9e2ff;direction:ltr;display:inline-block}
+code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.06);padding:.15em .4em;border-radius:6px;color:#f4f4f4;direction:ltr;display:inline-block}
 pre{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem 1.1rem;overflow:auto;direction:ltr;text-align:left}
 pre code{background:none;padding:0;font-size:.84rem;display:block;white-space:pre}
 .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin:0}
@@ -2061,8 +2111,8 @@ table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
 th,td{text-align:start;padding:.6rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
 th{color:var(--text);font-weight:600}
 td code{font-size:.8rem}
-.note{border-inline-start:3px solid var(--brand);background:rgba(139,92,246,.08);padding:.8rem 1rem;border-radius:10px;margin:1.2rem 0}
-footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.85rem;color:#8593a8}
+.note{border-inline-start:3px solid var(--brand);background:rgba(255,90,31,.08);padding:.8rem 1rem;border-radius:10px;margin:1.2rem 0}
+footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.85rem;color:#929292}
 """
 
 

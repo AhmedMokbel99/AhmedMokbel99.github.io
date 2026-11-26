@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/style.css?v=18-d1c8b30e">
+<link rel="stylesheet" href="/css/style.css?v=18-33178b41">
 
   <style>
     .error-page {
@@ -26,33 +26,6 @@
       padding: clamp(1.5rem, 5vw, 4rem);
       overflow: hidden;
       isolation: isolate;
-    }
-
-    .error-page::before,
-    .error-page::after {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      border-radius: 50%;
-      filter: blur(10px);
-      pointer-events: none;
-    }
-
-    .error-page::before {
-      inset-block-start: -20%;
-      inset-inline-start: 50%;
-      width: min(90vw, 780px);
-      aspect-ratio: 1;
-      transform: translateX(50%);
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.22), transparent 65%);
-    }
-
-    .error-page::after {
-      inset-block-end: -30%;
-      inset-inline-end: -10%;
-      width: min(70vw, 520px);
-      aspect-ratio: 1;
-      background: radial-gradient(circle, rgba(34, 211, 238, 0.12), transparent 68%);
     }
 
     .error-card {
@@ -71,10 +44,7 @@
       font-weight: 600;
       line-height: 0.9;
       letter-spacing: -0.02em;
-      background: linear-gradient(120deg, #c4b5fd 0%, #8b5cf6 45%, #22d3ee 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--accent, #ff5a1f);
     }
 
     .error-kicker {

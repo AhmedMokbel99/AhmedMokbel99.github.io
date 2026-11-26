@@ -252,8 +252,8 @@ const WORK_DATA = [
     "isVideo": true,
     "url": "",
     "external": false,
-    "image": "assets/projects/ultra-grow.jpg",
-    "imageSmall": "assets/projects/ultra-grow-900.jpg",
+    "image": "assets/projects/ultra-grow-cover.jpg",
+    "imageSmall": "assets/projects/ultra-grow-cover-900.jpg",
     "width": 1600,
     "height": 900,
     "alt": "إطار من فيديو موشن جرافيك لمنصة ألترا جرو",
@@ -269,7 +269,7 @@ const WORK_DATA = [
     "youtube": "",
     "gallery": [],
     "date": "2026-11-22T15:04:54.685Z",
-    "slug": "ultra-grow"
+    "slug": "ultra-grow-cover"
   },
   {
     "id": "f06",

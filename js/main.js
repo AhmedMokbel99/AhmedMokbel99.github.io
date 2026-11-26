@@ -210,14 +210,6 @@ function initSiteData() {
       .join('');
   }
 
-  /* شريط الماركي */
-  const track = $('#marqueeTrack');
-  if (track) {
-    const words = [...SITE_DATA.skills];
-    const set = words.map((w) => `<span class="marquee__item">${w}</span>`).join('');
-    track.innerHTML = set + set;
-  }
-
   /* الإحصائيات — القيم الديناميكية تُحسب من نفس مصدر البيانات */
   const currentYear = new Date().getFullYear();
   const work = typeof WORK_DATA !== 'undefined' ? WORK_DATA : [];
@@ -659,13 +651,24 @@ function projectHasVideo(project) {
   return Boolean(project && (project.video || project.youtube || (project.videos && project.videos.length)));
 }
 
-function projectMarkup(project) {
+function projectFirstVideo(project) {
+  if (!project) return '';
+  if (Array.isArray(project.videos) && project.videos.length) {
+    const first = project.videos[0];
+    return typeof first === 'string' ? first : String((first && first.src) || '');
+  }
+  return String(project.video || '');
+}
+
+/* Keep in sync with project_card() in build.py. */
+function projectMarkup(project, index = 0) {
   const fallback = project.imageSmall || project.image;
   const alt = dedupeAlt(project.alt || `${project.title} — ${project.tag}`);
-  const badge = projectHasVideo(project)
+  const hasVideo = projectHasVideo(project);
+  const badge = hasVideo
     ? `<span class="project__type">
          <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
-         فيديو
+         اضغط للمشاهدة
        </span>`
     : '';
   const gridSmall = project.image
@@ -679,26 +682,37 @@ function projectMarkup(project) {
     .filter(Boolean)
     .join(', ');
 
+  const classes = ['project'];
+  if (index < 2) classes.push('project--lead');
+  else if (index < 4) classes.push('project--feature');
+  if (hasVideo) classes.push('project--video');
+
+  const previewSrc = projectFirstVideo(project);
+  const preview = previewSrc
+    ? `<video class="project__preview" src="${previewSrc}" poster="${fallback}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>`
+    : '';
+
   return `
-    <article id="project-${project.id}" class="project" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
+    <article id="project-${project.id}" class="${classes.join(' ')}" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
       <div class="project__media">
         <img
           src="${fallback}"
           srcset="${srcset}"
-          sizes="(max-width: 680px) 92vw, (max-width: 1080px) 45vw, 560px"
+          sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
           width="${project.width}"
           height="${project.height}"
           alt="${alt}"
           loading="lazy"
           decoding="async"
         >
+        ${preview}
         ${badge ? `<div class="project__badges">${badge}</div>` : ''}
       </div>
       <div class="project__body">
         <span class="project__tag">${project.tag}</span>
         <h3 class="project__title">${markLatin(project.title)}</h3>
         <span class="project__more">
-          <span>${projectHasVideo(project) ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
+          <span>${hasVideo ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
           <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
         </span>
       </div>
@@ -1802,16 +1816,72 @@ function initContactForm() {
 /* ------------------------------------------------------------
    11) روابط إضافية
 ------------------------------------------------------------ */
-/* إيقاف الشريط المتحرك لما يكون خارج الشاشة (توفير معالج وبطارية) */
-function initMarquee() {
-  const marquee = document.querySelector('.marquee');
-  const track = document.querySelector('.marquee__track');
-  if (!marquee || !track || !('IntersectionObserver' in window)) return;
+/* الخدمات والطريقة: صفوف واضحة، وتفاصيل قابلة للفتح على الموبايل */
+function initCollapsibleSections() {
+  document.addEventListener('click', (event) => {
+    const toggle = event.target.closest('.service__toggle, .step__toggle');
+    if (!toggle) return;
+    const row = toggle.closest('.service, .step');
+    if (!row) return;
+    const open = !row.classList.contains('is-open');
+    row.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+}
 
-  new IntersectionObserver(
-    ([entry]) => track.classList.toggle('is-paused', !entry.isIntersecting),
-    { rootMargin: '120px 0px' }
-  ).observe(marquee);
+/* معاينة الفيديو على الديسكتوب فقط: بلا صوت، وبلا تحميل قبل التحويم */
+function initGalleryMotion() {
+  const grid = $('#workGrid');
+  if (!grid) return;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!canHover || reduceMotion.matches) return;
+  let active = null;
+
+  const stop = (card) => {
+    if (!card) return;
+    card.classList.remove('is-previewing');
+    const video = $('.project__preview', card);
+    if (video) {
+      video.pause();
+      try { video.currentTime = 0; } catch (_) { /* تجاهل */ }
+    }
+    if (active === card) active = null;
+  };
+
+  const start = (card) => {
+    const video = $('.project__preview', card);
+    if (!video || !video.getAttribute('src')) return;
+    if (active && active !== card) stop(active);
+    if (video.readyState === 0) video.load();
+    const shown = () => {
+      active = card;
+      card.classList.add('is-previewing');
+    };
+    const attempt = video.play();
+    if (attempt && typeof attempt.then === 'function') attempt.then(shown).catch(() => stop(card));
+    else shown();
+  };
+
+  grid.addEventListener('pointerover', (event) => {
+    const card = event.target.closest('[data-project-card].project--video');
+    if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
+    start(card);
+  });
+
+  grid.addEventListener('pointerout', (event) => {
+    const card = event.target.closest('[data-project-card].project--video');
+    if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
+    stop(card);
+  });
+
+  grid.addEventListener('focusin', (event) => {
+    const card = event.target.closest('[data-project-card].project--video');
+    if (card) start(card);
+  });
+  grid.addEventListener('focusout', (event) => {
+    const card = event.target.closest('[data-project-card].project--video');
+    if (card) stop(card);
+  });
 }
 
 /* الريل في الهيرو: تحميل مؤجّل عشان مايتأخرش ظهور الصفحة، مع تحكم تشغيل/إيقاف */
@@ -1924,10 +1994,11 @@ function init() {
   initScrollUI();
   initScrollSpy();
   initReveal();
-  initMarquee();
   initShowreel();
+  initCollapsibleSections();
   renderProjects();
   initWork();
+  initGalleryMotion();
   initProjectDialog();
   initLightbox();
   openProjectFromHash();

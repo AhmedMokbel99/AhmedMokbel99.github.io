@@ -20,6 +20,8 @@ dist/
 _site/
 _source/
 review-files/
+__pycache__/
+*.pyc
 *.log
 
 # Secrets and local environment — never commit
