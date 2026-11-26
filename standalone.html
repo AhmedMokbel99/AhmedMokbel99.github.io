@@ -4904,26 +4904,39 @@ button {
   border-top: 1px solid var(--line);
 }
 
-.stat {
+.about-stats .stat {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 0;
   border: 0;
   background: transparent;
-  text-align: start;
+  text-align: center;
 }
 
-.stat + .stat::before {
+.about-stats .stat + .stat::before {
   display: none;
 }
 
-.stat__value {
+.about-stats .stat__value {
+  margin: 0;
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: currentColor;
+  color: var(--accent);
   font-family: var(--font-mono);
-  font-size: clamp(2rem, 4vw, 3rem);
-  color: var(--text);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.1;
 }
 
-.stat__label {
+.about-stats .stat__label {
+  margin: 0;
+  color: var(--text);
   font-family: var(--font-body);
-  color: var(--dim);
+  font-size: 0.95rem;
+  white-space: nowrap;
 }
 
 /* ---------- FAQ, contact and floating actions ---------- */
@@ -5153,16 +5166,20 @@ body:has(.project-dialog[open]) .floating {
   }
 
   .about-stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
-  .stat__value {
-    font-size: 1.6rem;
+  .about-stats .stat {
+    justify-content: flex-start;
   }
 
-  .stat__label {
-    font-size: 0.72rem;
+  .about-stats .stat__value {
+    font-size: 1.9rem;
+  }
+
+  .about-stats .stat__label {
+    font-size: 0.9rem;
   }
 
   .floating--whatsapp {
@@ -5177,12 +5194,8 @@ body:has(.project-dialog[open]) .floating {
 }
 
 @media (max-width: 420px) {
-  .about-stats {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .stat:last-child {
-    grid-column: 1 / -1;
+  .about-stats .stat__value {
+    font-size: 1.75rem;
   }
 }
 
