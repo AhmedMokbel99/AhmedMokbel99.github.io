@@ -55,9 +55,9 @@ ASSET_VERSION = "18"
 # عدد المشاريع الظاهرة في الصفحة الرئيسية قبل زر «عرض المزيد»
 INITIAL_CARDS = 8
 
-# أول أربعة مشاريع في شبكة الأعمال: اثنان بعرض الصفحة واثنان بنصف العرض
-LEAD_CARDS = 2
-FEATURED_CARDS = 4
+# كل بطاقات الأعمال بنفس الحجم — لا بطاقات بعرض الصفحة ولا بنصف العرض
+LEAD_CARDS = 0
+FEATURED_CARDS = 0
 
 # توكِنات تتغيّر تلقائيًا داخل أي نص: {location} و{city}
 TOKENS: dict[str, str] = {}
@@ -402,10 +402,6 @@ def project_card(project: dict, index: int = 0) -> str:
     aria_label = dedupe_alt(f'عرض تفاصيل مشروع {project["title"]} — {project.get("tag", "")}')
 
     classes = ["project"]
-    if index < LEAD_CARDS:
-        classes.append("project--lead")
-    elif index < FEATURED_CARDS:
-        classes.append("project--feature")
     if project_has_video(project):
         classes.append("project--video")
     if index >= INITIAL_CARDS:
@@ -1180,9 +1176,9 @@ def portrait_tag(images: dict) -> str:
         '                data-site-image="portrait"\n'
         f'                src="{esc(portrait["small"] or portrait["src"])}"\n'
         f'                srcset="{esc(", ".join(srcset))}"\n'
-        '                sizes="72px"\n'
-        '                width="72"\n'
-        '                height="83"\n'
+        '                sizes="132px"\n'
+        '                width="132"\n'
+        '                height="152"\n'
         f'                alt="{esc(portrait["alt"])}"\n'
         "                loading=\"eager\"\n"
         "                decoding=\"async\"\n"

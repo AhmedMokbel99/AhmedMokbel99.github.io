@@ -4434,14 +4434,6 @@ button {
   box-shadow: none;
 }
 
-.project--feature {
-  grid-column: span 6;
-}
-
-.project--lead {
-  grid-column: 1 / -1;
-}
-
 .project:hover {
   border-color: transparent;
   box-shadow: none;
@@ -4455,10 +4447,6 @@ button {
 .project__media {
   aspect-ratio: 4 / 3;
   border-radius: 14px;
-}
-
-.project--lead .project__media {
-  aspect-ratio: 16 / 9;
 }
 
 .project:hover .project__media img {
@@ -4521,10 +4509,6 @@ button {
 
 .project__title {
   font-size: 1.05rem;
-}
-
-.project--lead .project__title {
-  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
 }
 
 .project__more {
@@ -4707,16 +4691,16 @@ button {
 
 .about-portrait {
   grid-column: 1;
-  width: 72px;
+  width: 132px;
   margin-bottom: 1rem;
 }
 
 .about-portrait img {
-  width: 72px;
-  height: 83px;
+  width: 132px;
+  height: 152px;
   object-fit: cover;
-  border-radius: 12px;
-  filter: grayscale(1);
+  border-radius: 14px;
+  filter: none;
 }
 
 .about-portrait figcaption {
@@ -4892,17 +4876,8 @@ body:has(.project-dialog[open]) .floating {
     gap: 1rem;
   }
 
-  .project,
-  .project--feature {
+  .project {
     grid-column: span 1;
-  }
-
-  .project--lead {
-    grid-column: 1 / -1;
-  }
-
-  .project--lead .project__media {
-    aspect-ratio: 4 / 3;
   }
 
   .project__media {
@@ -4915,10 +4890,6 @@ body:has(.project-dialog[open]) .floating {
 
   .project__title {
     font-size: 0.92rem;
-  }
-
-  .project--lead .project__title {
-    font-size: 1.1rem;
   }
 
   .project__more {
@@ -5942,7 +5913,7 @@ body:has(.project-dialog[open]) .floating {
 
         <div class="work-grid" id="workGrid" data-reveal-group>
           <!-- static-projects:start -->
-<article id="project-f26" class="project project--lead" data-reveal data-project-card="f26" data-category="brand">
+<article id="project-f26" class="project" data-reveal data-project-card="f26" data-category="brand">
   <div class="project__media">
     <img
       src="assets/projects/project-f26-900.jpg"
@@ -5972,7 +5943,7 @@ body:has(.project-dialog[open]) .floating {
     aria-label="عرض تفاصيل مشروع بوستر وباقات تصوير إبراهيم مطر — تصميم إعلاني"
   ></button>
 </article>
-<article id="project-f25" class="project project--lead" data-reveal data-project-card="f25" data-category="digital">
+<article id="project-f25" class="project" data-reveal data-project-card="f25" data-category="digital">
   <div class="project__media">
     <img
       src="assets/projects/project-f25-900.jpg"
@@ -6002,7 +5973,7 @@ body:has(.project-dialog[open]) .floating {
     aria-label="عرض تفاصيل مشروع بوستات سوشيال ميديا لعلامات تجارية — سوشيال ميديا"
   ></button>
 </article>
-<article id="project-f03" class="project project--feature project--video" data-reveal data-project-card="f03" data-category="ads">
+<article id="project-f03" class="project project--video" data-reveal data-project-card="f03" data-category="ads">
   <div class="project__media">
     <img
       src="assets/projects/ans-dimashqi-steak-ad-900.jpg"
@@ -6032,7 +6003,7 @@ body:has(.project-dialog[open]) .floating {
     aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
   ></button>
 </article>
-<article id="project-f21" class="project project--feature project--video" data-reveal data-project-card="f21" data-category="ads">
+<article id="project-f21" class="project project--video" data-reveal data-project-card="f21" data-category="ads">
   <div class="project__media">
     <img
       src="assets/projects/ans-dimashqi-pie-ad-900.jpg"
@@ -6972,9 +6943,9 @@ body:has(.project-dialog[open]) .floating {
                 data-site-image="portrait"
                 src="assets/ahmed-mokbel-480.jpg"
                 srcset="assets/ahmed-mokbel-480.jpg 480w, assets/ahmed-mokbel-800.jpg 800w, assets/ahmed-mokbel.jpg 887w"
-                sizes="72px"
-                width="72"
-                height="83"
+                sizes="132px"
+                width="132"
+                height="152"
                 alt="أحمد مقبل — مصمم ومخرج بصري"
                 loading="eager"
                 decoding="async"
@@ -9192,8 +9163,6 @@ function projectMarkup(project, index = 0) {
     .join(', ');
 
   const classes = ['project'];
-  if (index < 2) classes.push('project--lead');
-  else if (index < 4) classes.push('project--feature');
   if (hasVideo) classes.push('project--video');
 
   const previewSrc = projectFirstVideo(project);

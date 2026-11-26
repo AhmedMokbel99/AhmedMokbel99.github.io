@@ -683,8 +683,6 @@ function projectMarkup(project, index = 0) {
     .join(', ');
 
   const classes = ['project'];
-  if (index < 2) classes.push('project--lead');
-  else if (index < 4) classes.push('project--feature');
   if (hasVideo) classes.push('project--video');
 
   const previewSrc = projectFirstVideo(project);

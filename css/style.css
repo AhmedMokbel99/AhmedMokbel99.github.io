@@ -4381,14 +4381,6 @@ button {
   box-shadow: none;
 }
 
-.project--feature {
-  grid-column: span 6;
-}
-
-.project--lead {
-  grid-column: 1 / -1;
-}
-
 .project:hover {
   border-color: transparent;
   box-shadow: none;
@@ -4402,10 +4394,6 @@ button {
 .project__media {
   aspect-ratio: 4 / 3;
   border-radius: 14px;
-}
-
-.project--lead .project__media {
-  aspect-ratio: 16 / 9;
 }
 
 .project:hover .project__media img {
@@ -4468,10 +4456,6 @@ button {
 
 .project__title {
   font-size: 1.05rem;
-}
-
-.project--lead .project__title {
-  font-size: clamp(1.25rem, 2.2vw, 1.8rem);
 }
 
 .project__more {
@@ -4654,16 +4638,16 @@ button {
 
 .about-portrait {
   grid-column: 1;
-  width: 72px;
+  width: 132px;
   margin-bottom: 1rem;
 }
 
 .about-portrait img {
-  width: 72px;
-  height: 83px;
+  width: 132px;
+  height: 152px;
   object-fit: cover;
-  border-radius: 12px;
-  filter: grayscale(1);
+  border-radius: 14px;
+  filter: none;
 }
 
 .about-portrait figcaption {
@@ -4839,17 +4823,8 @@ body:has(.project-dialog[open]) .floating {
     gap: 1rem;
   }
 
-  .project,
-  .project--feature {
+  .project {
     grid-column: span 1;
-  }
-
-  .project--lead {
-    grid-column: 1 / -1;
-  }
-
-  .project--lead .project__media {
-    aspect-ratio: 4 / 3;
   }
 
   .project__media {
@@ -4862,10 +4837,6 @@ body:has(.project-dialog[open]) .floating {
 
   .project__title {
     font-size: 0.92rem;
-  }
-
-  .project--lead .project__title {
-    font-size: 1.1rem;
   }
 
   .project__more {
