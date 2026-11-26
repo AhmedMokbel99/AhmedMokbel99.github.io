@@ -1889,6 +1889,22 @@ function initShowreel() {
   if (!card || !video) return;
 
   const toggle = $('#reelToggle');
+  const timeEl = $('#reelTime');
+  const progressEl = $('#reelProgress');
+  const formatTime = (seconds) => {
+    if (!Number.isFinite(seconds)) return '00:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+  const updateHud = () => {
+    if (timeEl) {
+      timeEl.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+    }
+    if (progressEl && Number.isFinite(video.duration) && video.duration > 0) {
+      progressEl.style.width = `${Math.min(100, (video.currentTime / video.duration) * 100)}%`;
+    }
+  };
   const isMobile = window.matchMedia('(max-width: 699px)').matches;
   const source = isMobile
     ? 'assets/showreel-720.mp4'
@@ -1944,6 +1960,12 @@ function initShowreel() {
 
   video.addEventListener('playing', () => setState(true));
   video.addEventListener('pause', () => setState(false));
+  video.addEventListener('timeupdate', updateHud);
+  video.addEventListener('loadedmetadata', updateHud);
+  video.addEventListener('ended', () => {
+    updateHud();
+    setState(false);
+  });
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver(
