@@ -4524,46 +4524,84 @@ button {
   background: rgba(227, 179, 65, 0.06);
 }
 
-/* ---------- Clients: quiet wordmark grid, no fake logos ---------- */
+/* ---------- Clients: professional tiles, no invented logos ---------- */
 .clients {
   padding-block: clamp(2.5rem, 4vw, 3.5rem);
 }
 
 .clients__grid {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 1px;
-  border: 1px solid var(--line);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  border: 0;
   border-radius: 0;
-  background: var(--line);
-  overflow: hidden;
+  background: transparent;
+  overflow: visible;
+  counter-reset: client;
 }
 
 .client {
+  position: relative;
+  counter-increment: client;
   align-items: center;
-  min-height: 92px;
-  padding: 1rem 0.75rem;
-  border: 0;
-  border-radius: 0;
-  background: var(--bg);
+  justify-content: center;
+  min-height: 112px;
+  padding: 1.15rem 1rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
   text-align: center;
-  transition: none;
+  overflow: hidden;
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.client::before {
+  content: counter(client, decimal-leading-zero);
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+}
+
+.client::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s ease;
 }
 
 .client:hover {
-  background: var(--bg);
-  transform: none;
+  background: var(--secondary-soft);
+  border-color: var(--accent-line);
+  transform: translateY(-2px);
+}
+
+.client:hover::after {
+  transform: scaleX(1);
+}
+
+.client:hover .client__wordmark {
+  color: var(--accent);
 }
 
 .client__wordmark {
   font-family: var(--font-mono);
-  font-size: 0.92rem;
-  letter-spacing: 0.06em;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
   color: var(--text);
+  transition: color 0.25s ease;
 }
 
 .client__name {
   font-family: var(--font-body);
-  font-size: 0.72rem;
+  font-size: 0.75rem;
 }
 
 /* ---------- Services and method: clean rows, compact on mobile ---------- */
@@ -4908,15 +4946,16 @@ body:has(.project-dialog[open]) .floating {
 
   .clients__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
   }
 
   .client {
-    min-height: 78px;
-    padding: 0.75rem 0.5rem;
+    min-height: 94px;
+    padding: 1rem 0.6rem 0.7rem;
   }
 
   .client__wordmark {
-    font-size: 0.82rem;
+    font-size: 0.86rem;
   }
 
   .services-grid,
