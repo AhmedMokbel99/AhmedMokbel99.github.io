@@ -8,8 +8,8 @@
   "scope": "/admin/",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#07080d",
-  "theme_color": "#07080d",
+  "background_color": "#111314",
+  "theme_color": "#111314",
   "icons": [
     {
       "src": "../assets/admin-icon-192.png",

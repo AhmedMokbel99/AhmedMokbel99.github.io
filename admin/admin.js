@@ -1429,7 +1429,7 @@ async function prepareOgImage(file) {
   const scale = Math.max(width / bitmap.width, height / bitmap.height);
   const drawWidth = bitmap.width * scale;
   const drawHeight = bitmap.height * scale;
-  ctx.fillStyle = '#07080d';
+  ctx.fillStyle = '#111314';
   ctx.fillRect(0, 0, width, height);
   ctx.imageSmoothingQuality = 'high';
   ctx.drawImage(bitmap, (width - drawWidth) / 2, (height - drawHeight) / 2, drawWidth, drawHeight);

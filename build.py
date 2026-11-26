@@ -921,7 +921,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
   <title>{esc(page["title"])}</title>
   <meta name="description" content="{esc(page["description"])}">
   <meta name="author" content="{esc(brand["name"])}">
-  <meta name="theme-color" content="#07080d">
+  <meta name="theme-color" content="#111314">
   <meta name="color-scheme" content="dark">
   <link rel="canonical" href="{esc(url)}">
 {agent_head_links(base, "/" + page["slug"].replace(".html", ".md"))}
@@ -2094,7 +2094,7 @@ def write_auth_md(site: dict, base: str) -> None:
 
 
 DOCS_CSS = """
-:root{--bg:#08090b;--surface:#121316;--line:rgba(255,255,255,.09);--text:#f4f4f4;--muted:#bcbcbc;--brand:#ff5a1f;--cyan:#ff5a1f;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+:root{--bg:#111314;--surface:#1a1e20;--line:rgba(46,196,182,.12);--text:#f4f4f4;--muted:#c6cdcd;--brand:#e3b341;--cyan:#2ec4b6;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;line-height:1.75;font-size:16px}
 .wrap{max-width:860px;margin:0 auto;padding:3rem 1.25rem 5rem}
@@ -2111,7 +2111,7 @@ table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.92rem}
 th,td{text-align:start;padding:.6rem .5rem;border-bottom:1px solid var(--line);vertical-align:top}
 th{color:var(--text);font-weight:600}
 td code{font-size:.8rem}
-.note{border-inline-start:3px solid var(--brand);background:rgba(255,90,31,.08);padding:.8rem 1rem;border-radius:10px;margin:1.2rem 0}
+.note{border-inline-start:3px solid var(--brand);background:rgba(227,179,65,.08);padding:.8rem 1rem;border-radius:10px;margin:1.2rem 0}
 footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.85rem;color:#929292}
 """
 
@@ -2134,7 +2134,7 @@ def docs_api_page(site: dict, base: str, slugs: list[str], services: list[dict])
   <link rel="api-catalog" href="{base}/.well-known/api-catalog" type="application/linkset+json">
   <link rel="alternate" type="application/json" href="{base}/openapi.json">
   <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#07080d">
+  <meta name="theme-color" content="#111314">
   <style>{DOCS_CSS}</style>
 </head>
 <body>
