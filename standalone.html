@@ -49,7 +49,6 @@
   <!-- Fonts -->
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="assets/showreel-poster.jpg" fetchpriority="high">
   <style>
 /* fonts:start — خطوط مستضافة محليًا، لا تعدّل هذا القسم يدويًا */
 
@@ -909,161 +908,6 @@ main:focus {
 
 
 
-/* Reel card (hero) */
-.reel-card {
-  position: relative;
-  display: grid;
-  aspect-ratio: 4 / 5;
-  padding: 10px;
-  border-radius: 30px;
-  background: linear-gradient(150deg, rgba(46, 196, 182, 0.75), rgba(255, 255, 255, 0.06) 38%, rgba(46, 196, 182, 0.55));
-  box-shadow: var(--shadow), 0 0 60px -24px rgba(46, 196, 182, 0.7);
-  transform: rotate(1deg);
-  transition: transform 0.6s var(--ease);
-}
-
-.reel-card:hover {
-  transform: rotate(0deg) translateY(-4px);
-}
-
-.reel-card__video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 22px;
-  object-fit: cover;
-  background: var(--surface-2);
-}
-
-.reel-card__scrim {
-  position: absolute;
-  inset: 10px;
-  border-radius: 22px;
-  background: linear-gradient(
-    180deg,
-    rgba(7, 8, 13, 0.5) 0%,
-    transparent 24%,
-    transparent 50%,
-    rgba(7, 8, 13, 0.86) 100%
-  );
-  pointer-events: none;
-}
-
-.reel-card__top {
-  position: absolute;
-  inset-inline: 22px;
-  top: 22px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
-}
-
-.reel-card__tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(8, 9, 14, 0.62);
-  backdrop-filter: blur(10px);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  color: #f2f2f2;
-}
-
-.reel-card__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #f43f5e;
-  box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.18);
-}
-
-.reel-card__toggle {
-  display: inline-grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(8, 9, 14, 0.62);
-  color: #fff;
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.reel-card__toggle:hover {
-  background: rgba(46, 196, 182, 0.55);
-}
-
-.reel-card__toggle:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 3px;
-}
-
-.reel-card__toggle .icon {
-  width: 15px;
-  height: 15px;
-}
-
-.reel-card .reel-card__play {
-  display: none;
-}
-
-.reel-card.is-paused .reel-card__play {
-  display: block;
-}
-
-.reel-card.is-paused .reel-card__pause {
-  display: none;
-}
-
-.reel-card__person {
-  position: absolute;
-  inset-inline-start: 22px;
-  bottom: 22px;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding-block: 0.4rem;
-  padding-inline: 0.4rem 0.9rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(8, 9, 14, 0.68);
-  backdrop-filter: blur(12px);
-}
-
-.reel-card__person img {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  object-fit: cover;
-  object-position: center 18%;
-}
-
-.reel-card__meta {
-  display: grid;
-  gap: 0.05rem;
-  line-height: 1.25;
-}
-
-.reel-card__meta b {
-  font-size: 0.85rem;
-  color: var(--text);
-}
-
-.reel-card__meta small {
-  font-size: 0.68rem;
-  color: var(--muted);
-}
-
 /* Clients */
 .clients {
   padding-block: clamp(2.8rem, 5vw, 4rem);
@@ -1362,7 +1206,7 @@ main:focus {
   max-width: 26rem;
 }
 
-.about-body h2 {
+.about-body h1 {
   font-size: clamp(1.7rem, 3vw, 2.35rem);
   margin-bottom: 1.2rem;
 }
@@ -1431,6 +1275,18 @@ main:focus {
 .chip--tool {
   font-family: var(--font-mono);
   font-size: 0.76rem;
+}
+
+.about-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.about-actions .about-link {
+  margin-top: 0;
 }
 
 .about-link {
@@ -4245,137 +4101,6 @@ button {
   -webkit-mask-image: none;
 }
 
-/* ---------- First screen: a clean, wide reel stage ---------- */
-.hero {
-  padding-block: clamp(1.25rem, 2.5vw, 2.5rem) clamp(2.5rem, 5vw, 4rem);
-}
-
-.hero-stage {
-  width: 100%;
-}
-
-.reel-card {
-  position: relative;
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  padding: 0;
-  border: 1px solid var(--line);
-  border-radius: clamp(12px, 2vw, 22px);
-  background: #000;
-  box-shadow: none;
-  overflow: hidden;
-  transform: none;
-}
-
-.reel-card:hover {
-  transform: none;
-}
-
-/* Awaiting the owner's 16:9 master: the current vertical reel is
-   letterboxed honestly instead of being cropped or replaced. */
-.reel-card__video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 0;
-  object-fit: contain;
-  background: #000;
-}
-
-.reel-card__scrim {
-  inset: 0;
-  border-radius: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 0.86) 0%,
-    rgba(0, 0, 0, 0.5) 42%,
-    rgba(0, 0, 0, 0.08) 72%
-  );
-}
-
-.reel-card__top {
-  inset-inline-end: clamp(0.75rem, 2vw, 1.25rem);
-  inset-inline-start: auto;
-  top: clamp(0.75rem, 2vw, 1.25rem);
-}
-
-.reel-card__tag {
-  font-family: var(--font-body);
-  letter-spacing: 0;
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #000;
-  backdrop-filter: none;
-}
-
-.reel-card__dot {
-  background: #000;
-  box-shadow: none;
-}
-
-.reel-card__toggle {
-  width: 48px;
-  height: 48px;
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #000;
-  backdrop-filter: none;
-}
-
-.reel-card__toggle:hover {
-  background: var(--accent);
-  color: #000;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  z-index: 2;
-  max-width: min(46rem, 72%);
-  padding: clamp(1.1rem, 3.5vw, 3rem);
-}
-
-.hero-overlay .eyebrow {
-  font-family: var(--font-body);
-  letter-spacing: 0;
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #000;
-  border-radius: 999px;
-  padding: 0.3rem 0.8rem;
-  backdrop-filter: none;
-}
-
-.hero-overlay .badge__dot {
-  background: #000;
-  box-shadow: none;
-  animation: none;
-}
-
-.hero h1 {
-  margin-top: 0.8rem;
-}
-
-.hero h1 .h1-name {
-  display: block;
-  font-size: clamp(2.6rem, 7vw, 5.6rem);
-  line-height: 1.02;
-}
-
-.hero-lead {
-  color: #f2f2f2;
-  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
-  line-height: 1.8;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-}
-
-.hero-actions {
-  margin-top: 1.2rem;
-}
-
 /* ---------- Work: editorial grid, four big projects first ---------- */
 .section-head h2 {
   font-size: clamp(1.8rem, 3.4vw, 2.6rem);
@@ -4522,123 +4247,6 @@ button {
 
 .project__open::before {
   background: rgba(227, 179, 65, 0.06);
-}
-
-/* ---------- Clean reel player: no copy over the video ---------- */
-.reel-card__video {
-  object-fit: cover;
-  object-position: center;
-}
-
-.reel-card__scrim {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0) 38%);
-}
-
-.reel-card__toggle {
-  position: absolute;
-  inset-inline: 0;
-  top: 50%;
-  z-index: 3;
-  width: 74px;
-  height: 74px;
-  margin-inline: auto;
-  transform: translateY(-50%);
-  border-color: var(--accent);
-  border-radius: 50%;
-  background: var(--accent);
-  color: #000;
-  box-shadow: none;
-  backdrop-filter: none;
-  transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
-}
-
-.reel-card__toggle:hover {
-  background: var(--accent);
-  color: #000;
-  transform: translateY(-50%) scale(1.05);
-}
-
-.reel-card__toggle:focus-visible {
-  outline-color: var(--accent);
-  outline-offset: 4px;
-}
-
-.reel-card__toggle .icon {
-  width: 24px;
-  height: 24px;
-}
-
-.reel-card:not(.is-paused) .reel-card__toggle {
-  opacity: 0;
-}
-
-.reel-card:not(.is-paused):hover .reel-card__toggle,
-.reel-card:not(.is-paused):focus-within .reel-card__toggle {
-  opacity: 1;
-}
-
-.reel-card__hud {
-  position: absolute;
-  inset-inline: clamp(0.8rem, 2vw, 1.4rem);
-  bottom: clamp(1rem, 2.2vw, 1.6rem);
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  color: #fff;
-}
-
-.reel-card__label {
-  color: var(--accent);
-}
-
-.reel-card__time {
-  direction: ltr;
-  unicode-bidi: isolate;
-}
-
-.reel-card__progress {
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  z-index: 3;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.reel-card__progress span {
-  display: block;
-  width: 0;
-  height: 100%;
-  background: var(--accent);
-}
-
-.hero-caption {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: clamp(1rem, 3vw, 3rem);
-  padding-top: clamp(1.25rem, 2.5vw, 2rem);
-}
-
-.hero-caption__copy {
-  max-width: 52rem;
-}
-
-.hero-caption h1 {
-  margin-top: 0.5rem;
-}
-
-.hero-caption .hero-lead {
-  margin-top: 0.65rem;
-}
-
-.hero-caption .hero-actions {
-  flex: 0 0 auto;
 }
 
 /* ---------- Clients: professional tiles, no invented logos ---------- */
@@ -4994,48 +4602,9 @@ body:has(.project-dialog[open]) .floating {
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 900px) {
-  .reel-card__scrim {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.68) 0%, rgba(0, 0, 0, 0) 42%);
-  }
-}
-
 @media (max-width: 680px) {
   :root {
     --section-y: clamp(2.25rem, 6vw, 3rem);
-  }
-
-  .hero {
-    padding-top: 1rem;
-  }
-
-  .reel-card {
-    aspect-ratio: 16 / 9;
-  }
-
-  .reel-card__toggle {
-    width: 58px;
-    height: 58px;
-  }
-
-  .reel-card__toggle .icon {
-    width: 19px;
-    height: 19px;
-  }
-
-  .reel-card__hud {
-    bottom: 0.7rem;
-    font-size: 0.62rem;
-  }
-
-  .hero-caption {
-    flex-direction: column;
-    align-items: flex-start;
-    padding-top: 1.1rem;
-  }
-
-  .hero h1 .h1-name {
-    font-size: clamp(2.2rem, 10vw, 3.2rem);
   }
 
   .hero-lead {
@@ -5200,7 +4769,6 @@ body:has(.project-dialog[open]) .floating {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reel-card,
   .project,
   .filter,
   .service,
@@ -6062,7 +5630,7 @@ body:has(.project-dialog[open]) .floating {
 
         <div class="about-body">
           <div class="eyebrow" data-reveal data-cms="about.eyebrow">نبذة</div>
-          <h2 data-reveal data-cms="about.title">هوية بصرية وصورة واضحة لكل علامة</h2>
+          <h1 data-reveal data-cms="about.title">هوية بصرية وصورة واضحة لكل علامة</h1>
           <p data-reveal>
             <span data-cms="about.p1a">بدأت العمل في التصميم عام 2013 من مدينة الجمالية، وتطوّرت المسيرة من المطبوعات إلى الموشن جرافيك، ثم إلى التصوير وإنتاج الفيديو. أسّست</span>
             <strong data-cms="about.p1strong">DOT Media</strong>
@@ -6081,10 +5649,16 @@ body:has(.project-dialog[open]) .floating {
             </div>
           </div>
 
-          <a class="about-link" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
-            <span data-cms="about.behanceCta">تابع أعمالي على بيهانس</span>
-            <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-          </a>
+          <div class="about-actions">
+            <a href="#work" class="btn btn--accent">
+              <span data-cms="hero.ctaWork">شاهد الأعمال</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+            <a class="about-link" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
+              <span data-cms="about.behanceCta">تابع أعمالي على بيهانس</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+          </div>
         </div>
 <ul class="hero-meta">
             <li>
@@ -6117,66 +5691,6 @@ body:has(.project-dialog[open]) .floating {
             <span class="stat__label">عميل راضٍ</span>
           </div>
 <!-- stats:end -->
-      </div>
-    </section>
-
-        <!-- ═══ Hero ═══ -->
-    <section class="hero" id="hero" aria-labelledby="heroTitle">
-      <div class="wrap hero-stage">
-        <div class="reel-card" data-reel>
-          <video
-            class="reel-card__video"
-            id="heroReel"
-            poster="assets/showreel-poster.jpg"
-            width="1920"
-            height="1080"
-            muted
-            loop
-            playsinline
-            preload="none"
-            disablepictureinpicture
-            aria-label="ريل مختارات من أعمال الموشن جرافيك والهوية البصرية — بدون صوت"
-          ></video>
-          <div class="reel-card__scrim" aria-hidden="true"></div>
-
-          <button
-            class="reel-card__toggle"
-            id="reelToggle"
-            type="button"
-            aria-controls="heroReel"
-            aria-pressed="false"
-            aria-label="تشغيل أو إيقاف الريل"
-          >
-            <svg class="icon icon--solid reel-card__pause" aria-hidden="true"><use href="#i-pause"></use></svg>
-            <svg class="icon icon--solid reel-card__play" aria-hidden="true"><use href="#i-play"></use></svg>
-          </button>
-
-          <div class="reel-card__hud" aria-hidden="true">
-            <span class="reel-card__label">SHOWREEL</span>
-            <span class="reel-card__time" id="reelTime">00:00 / 00:00</span>
-          </div>
-          <div class="reel-card__progress" aria-hidden="true"><span id="reelProgress"></span></div>
-        </div>
-
-        <div class="hero-caption">
-          <div class="hero-caption__copy">
-            <span class="eyebrow">
-              <span class="badge__dot" aria-hidden="true"></span>
-              <span data-cms="hero.availability">متاح لمشاريع جديدة</span>
-            </span>
-            <h1 id="heroTitle">
-              <span class="h1-name" data-cms="hero.name">أحمد مقبل</span>
-              <span class="sr-only" data-cms="hero.specialty">التخصص: تصميم، موشن جرافيك، تصوير، ومونتاج.</span>
-            </h1>
-            <p class="hero-lead" data-cms="hero.lead">مصمم ومخرج بصري من مدينة الجمالية، أعمل على الهوية البصرية والموشن جرافيك والتصوير وإنتاج الفيديو — من الفكرة والسيناريو حتى الملف الجاهز للنشر.</p>
-          </div>
-          <div class="hero-actions">
-            <a href="#work" class="btn btn--accent">
-              <span data-cms="hero.ctaWork">شاهد الأعمال</span>
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-            </a>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -10537,105 +10051,6 @@ function initGalleryMotion() {
   });
 }
 
-/* الريل في الهيرو: تحميل مؤجّل عشان مايتأخرش ظهور الصفحة، مع تحكم تشغيل/إيقاف */
-function initShowreel() {
-  const card = $('[data-reel]');
-  const video = $('#heroReel');
-  if (!card || !video) return;
-
-  const toggle = $('#reelToggle');
-  const timeEl = $('#reelTime');
-  const progressEl = $('#reelProgress');
-  const formatTime = (seconds) => {
-    if (!Number.isFinite(seconds)) return '00:00';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  };
-  const updateHud = () => {
-    if (timeEl) {
-      timeEl.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-    }
-    if (progressEl && Number.isFinite(video.duration) && video.duration > 0) {
-      progressEl.style.width = `${Math.min(100, (video.currentTime / video.duration) * 100)}%`;
-    }
-  };
-  const isMobile = window.matchMedia('(max-width: 699px)').matches;
-  const source = isMobile
-    ? 'assets/showreel-720.mp4'
-    : 'assets/showreel-1080.mp4';
-  const connection = navigator.connection;
-  const saveData = Boolean(connection && connection.saveData);
-  /* على شبكة 2G/بطيئة منزّلش فيديو كبير تلقائيًا — الصورة تفضل بديل لحد ما يضغط تشغيل */
-  const slowNet = Boolean(connection && /(^|-)2g$/.test(connection.effectiveType || ''));
-  /* على الموبايل الريل بيتحمّل بضغطة الزائر — البوستر بيغني في أول تحميل */
-  const autoPlay = !(saveData || slowNet || reduceMotion.matches || isMobile);
-  let requested = false;
-
-  const setState = (playing) => {
-    card.classList.toggle('is-paused', !playing);
-    if (!toggle) return;
-    toggle.setAttribute('aria-pressed', String(playing));
-  };
-
-  const play = () => {
-    const attempt = video.play();
-    if (attempt && typeof attempt.catch === 'function') {
-      attempt.catch(() => setState(false));
-    }
-  };
-
-  const load = () => {
-    if (requested) return;
-    requested = true;
-    video.src = source;
-    video.load();
-    if (autoPlay) play();
-    else setState(false);
-  };
-
-  if (!autoPlay) {
-    setState(false);
-  } else if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(() => window.setTimeout(load, 500), { timeout: 2600 });
-  } else {
-    window.setTimeout(load, 2000);
-  }
-
-  toggle?.addEventListener('click', () => {
-    if (!requested) {
-      load();
-      /* الضغط اليدوي لازم يشغّل من أول مرة (الموبايل مش بيعمل autoplay) */
-      play();
-      return;
-    }
-    if (video.paused) play();
-    else video.pause();
-  });
-
-  video.addEventListener('playing', () => setState(true));
-  video.addEventListener('pause', () => setState(false));
-  video.addEventListener('timeupdate', updateHud);
-  video.addEventListener('loadedmetadata', updateHud);
-  video.addEventListener('ended', () => {
-    updateHud();
-    setState(false);
-  });
-
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(
-      ([entry]) => {
-        if (requested && !entry.isIntersecting && !video.paused) video.pause();
-      },
-      { threshold: 0.12 }
-    ).observe(card);
-  }
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && !video.paused) video.pause();
-  });
-}
-
 function initMisc() {
   const floatingWhatsApp = $('#floatingWhatsapp');
   if (floatingWhatsApp && typeof SITE_DATA !== 'undefined') {
@@ -10669,7 +10084,6 @@ function init() {
   initScrollUI();
   initScrollSpy();
   initReveal();
-  initShowreel();
   initCollapsibleSections();
   renderProjects();
   initWork();

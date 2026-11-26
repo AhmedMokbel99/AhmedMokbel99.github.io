@@ -1882,105 +1882,6 @@ function initGalleryMotion() {
   });
 }
 
-/* الريل في الهيرو: تحميل مؤجّل عشان مايتأخرش ظهور الصفحة، مع تحكم تشغيل/إيقاف */
-function initShowreel() {
-  const card = $('[data-reel]');
-  const video = $('#heroReel');
-  if (!card || !video) return;
-
-  const toggle = $('#reelToggle');
-  const timeEl = $('#reelTime');
-  const progressEl = $('#reelProgress');
-  const formatTime = (seconds) => {
-    if (!Number.isFinite(seconds)) return '00:00';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-  };
-  const updateHud = () => {
-    if (timeEl) {
-      timeEl.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-    }
-    if (progressEl && Number.isFinite(video.duration) && video.duration > 0) {
-      progressEl.style.width = `${Math.min(100, (video.currentTime / video.duration) * 100)}%`;
-    }
-  };
-  const isMobile = window.matchMedia('(max-width: 699px)').matches;
-  const source = isMobile
-    ? 'assets/showreel-720.mp4'
-    : 'assets/showreel-1080.mp4';
-  const connection = navigator.connection;
-  const saveData = Boolean(connection && connection.saveData);
-  /* على شبكة 2G/بطيئة منزّلش فيديو كبير تلقائيًا — الصورة تفضل بديل لحد ما يضغط تشغيل */
-  const slowNet = Boolean(connection && /(^|-)2g$/.test(connection.effectiveType || ''));
-  /* على الموبايل الريل بيتحمّل بضغطة الزائر — البوستر بيغني في أول تحميل */
-  const autoPlay = !(saveData || slowNet || reduceMotion.matches || isMobile);
-  let requested = false;
-
-  const setState = (playing) => {
-    card.classList.toggle('is-paused', !playing);
-    if (!toggle) return;
-    toggle.setAttribute('aria-pressed', String(playing));
-  };
-
-  const play = () => {
-    const attempt = video.play();
-    if (attempt && typeof attempt.catch === 'function') {
-      attempt.catch(() => setState(false));
-    }
-  };
-
-  const load = () => {
-    if (requested) return;
-    requested = true;
-    video.src = source;
-    video.load();
-    if (autoPlay) play();
-    else setState(false);
-  };
-
-  if (!autoPlay) {
-    setState(false);
-  } else if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(() => window.setTimeout(load, 500), { timeout: 2600 });
-  } else {
-    window.setTimeout(load, 2000);
-  }
-
-  toggle?.addEventListener('click', () => {
-    if (!requested) {
-      load();
-      /* الضغط اليدوي لازم يشغّل من أول مرة (الموبايل مش بيعمل autoplay) */
-      play();
-      return;
-    }
-    if (video.paused) play();
-    else video.pause();
-  });
-
-  video.addEventListener('playing', () => setState(true));
-  video.addEventListener('pause', () => setState(false));
-  video.addEventListener('timeupdate', updateHud);
-  video.addEventListener('loadedmetadata', updateHud);
-  video.addEventListener('ended', () => {
-    updateHud();
-    setState(false);
-  });
-
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver(
-      ([entry]) => {
-        if (requested && !entry.isIntersecting && !video.paused) video.pause();
-      },
-      { threshold: 0.12 }
-    ).observe(card);
-  }
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden && !video.paused) video.pause();
-  });
-}
-
 function initMisc() {
   const floatingWhatsApp = $('#floatingWhatsapp');
   if (floatingWhatsApp && typeof SITE_DATA !== 'undefined') {
@@ -2014,7 +1915,6 @@ function init() {
   initScrollUI();
   initScrollSpy();
   initReveal();
-  initShowreel();
   initCollapsibleSections();
   renderProjects();
   initWork();

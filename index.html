@@ -48,8 +48,7 @@
   <!-- Fonts -->
   <link rel="preload" href="assets/fonts/ibm-plex-sans-arabic-400-arabic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/tajawal-800-arabic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="assets/showreel-poster.jpg" fetchpriority="high">
-<link rel="stylesheet" href="css/style.css?v=18-7b4269d7">
+<link rel="stylesheet" href="css/style.css?v=18-b763aa25">
 
   <noscript>
     <style>
@@ -61,9 +60,9 @@
 
   <!-- Structured data -->
 
-  <script src="js/data.js?v=18-7b4269d7" defer></script>
-  <script src="js/main.js?v=18-7b4269d7" defer></script>
-  <script src="js/webmcp.js?v=18-7b4269d7" defer></script>
+  <script src="js/data.js?v=18-b763aa25" defer></script>
+  <script src="js/main.js?v=18-b763aa25" defer></script>
+  <script src="js/webmcp.js?v=18-b763aa25" defer></script>
 
   <script type="application/ld+json">
 {
@@ -903,7 +902,7 @@
 
         <div class="about-body">
           <div class="eyebrow" data-reveal data-cms="about.eyebrow">نبذة</div>
-          <h2 data-reveal data-cms="about.title">هوية بصرية وصورة واضحة لكل علامة</h2>
+          <h1 data-reveal data-cms="about.title">هوية بصرية وصورة واضحة لكل علامة</h1>
           <p data-reveal>
             <span data-cms="about.p1a">بدأت العمل في التصميم عام 2013 من مدينة الجمالية، وتطوّرت المسيرة من المطبوعات إلى الموشن جرافيك، ثم إلى التصوير وإنتاج الفيديو. أسّست</span>
             <strong data-cms="about.p1strong">DOT Media</strong>
@@ -922,10 +921,16 @@
             </div>
           </div>
 
-          <a class="about-link" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
-            <span data-cms="about.behanceCta">تابع أعمالي على بيهانس</span>
-            <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-          </a>
+          <div class="about-actions">
+            <a href="#work" class="btn btn--accent">
+              <span data-cms="hero.ctaWork">شاهد الأعمال</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+            <a class="about-link" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
+              <span data-cms="about.behanceCta">تابع أعمالي على بيهانس</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+          </div>
         </div>
 <ul class="hero-meta">
             <li>
@@ -958,66 +963,6 @@
             <span class="stat__label">عميل راضٍ</span>
           </div>
 <!-- stats:end -->
-      </div>
-    </section>
-
-        <!-- ═══ Hero ═══ -->
-    <section class="hero" id="hero" aria-labelledby="heroTitle">
-      <div class="wrap hero-stage">
-        <div class="reel-card" data-reel>
-          <video
-            class="reel-card__video"
-            id="heroReel"
-            poster="assets/showreel-poster.jpg"
-            width="1920"
-            height="1080"
-            muted
-            loop
-            playsinline
-            preload="none"
-            disablepictureinpicture
-            aria-label="ريل مختارات من أعمال الموشن جرافيك والهوية البصرية — بدون صوت"
-          ></video>
-          <div class="reel-card__scrim" aria-hidden="true"></div>
-
-          <button
-            class="reel-card__toggle"
-            id="reelToggle"
-            type="button"
-            aria-controls="heroReel"
-            aria-pressed="false"
-            aria-label="تشغيل أو إيقاف الريل"
-          >
-            <svg class="icon icon--solid reel-card__pause" aria-hidden="true"><use href="#i-pause"></use></svg>
-            <svg class="icon icon--solid reel-card__play" aria-hidden="true"><use href="#i-play"></use></svg>
-          </button>
-
-          <div class="reel-card__hud" aria-hidden="true">
-            <span class="reel-card__label">SHOWREEL</span>
-            <span class="reel-card__time" id="reelTime">00:00 / 00:00</span>
-          </div>
-          <div class="reel-card__progress" aria-hidden="true"><span id="reelProgress"></span></div>
-        </div>
-
-        <div class="hero-caption">
-          <div class="hero-caption__copy">
-            <span class="eyebrow">
-              <span class="badge__dot" aria-hidden="true"></span>
-              <span data-cms="hero.availability">متاح لمشاريع جديدة</span>
-            </span>
-            <h1 id="heroTitle">
-              <span class="h1-name" data-cms="hero.name">أحمد مقبل</span>
-              <span class="sr-only" data-cms="hero.specialty">التخصص: تصميم، موشن جرافيك، تصوير، ومونتاج.</span>
-            </h1>
-            <p class="hero-lead" data-cms="hero.lead">مصمم ومخرج بصري من مدينة الجمالية، أعمل على الهوية البصرية والموشن جرافيك والتصوير وإنتاج الفيديو — من الفكرة والسيناريو حتى الملف الجاهز للنشر.</p>
-          </div>
-          <div class="hero-actions">
-            <a href="#work" class="btn btn--accent">
-              <span data-cms="hero.ctaWork">شاهد الأعمال</span>
-              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-            </a>
-          </div>
-        </div>
       </div>
     </section>
 
