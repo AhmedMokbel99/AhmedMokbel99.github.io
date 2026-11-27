@@ -1770,7 +1770,7 @@ def openapi_doc(base: str, slugs: list[str]) -> dict:
             "/api/projects/{slug}.json": {
                 "get": {
                     "operationId": "getProject",
-                    "summary": "مشروع واحد بدراسة الحالة كاملة",
+                    "summary": "مشروع واحد بتفاصيل المشروع",
                     "parameters": [
                         {
                             "name": "slug",
