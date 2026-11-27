@@ -493,7 +493,7 @@
     "id": "f01",
     "code": "F02",
     "title": "يوم التأسيس السعودي",
-    "cat": "motion",
+    "cat": "digital",
     "tag": "موشن جرافيك",
     "isVideo": false,
     "url": "https://www.behance.net/gallery/244580859/_",
@@ -510,7 +510,8 @@
     "alt": "يوم التأسيس السعودي — موشن جرافيك",
     "featured": true,
     "gallery": [],
-    "facts": []
+    "facts": [],
+    "details": ""
   },
   {
     "id": "f11",
@@ -775,7 +776,7 @@
     "id": "f02",
     "code": "F03",
     "title": "ابن الباسل",
-    "cat": "motion",
+    "cat": "digital",
     "tag": "موشن جرافيك",
     "isVideo": false,
     "url": "https://www.behance.net/gallery/244097521/_",
@@ -793,7 +794,8 @@
     "imageMedium": "assets/projects/ibn-albasel-motion-graphic-1200.jpg",
     "featured": true,
     "gallery": [],
-    "facts": []
+    "facts": [],
+    "details": ""
   },
   {
     "id": "f12",
