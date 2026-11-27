@@ -446,6 +446,25 @@
       "externalUrl": "https://www.behance.net/gallery/119428049/_"
     },
     {
+      "slug": "ibn-albasel-motion-graphic",
+      "title": "ابن الباسل",
+      "category": "motion",
+      "categoryLabel": "موشن جرافيك",
+      "tag": "موشن جرافيك",
+      "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
+      "featured": true,
+      "hasVideo": false,
+      "media": {
+        "type": "image",
+        "url": "https://ahmedmokbel99.github.io/assets/projects/ibn-albasel-motion-graphic.jpg",
+        "width": 1600,
+        "height": 1200
+      },
+      "pageUrl": "https://ahmedmokbel99.github.io/#project-f02",
+      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ibn-albasel-motion-graphic.json",
+      "externalUrl": "https://www.behance.net/gallery/244097521/_"
+    },
+    {
       "slug": "ultra-grow-2-brand-system",
       "title": "ULTRA GROW — النظام البصري",
       "category": "brand",
@@ -463,25 +482,6 @@
       "pageUrl": "https://ahmedmokbel99.github.io/#project-f08",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ultra-grow-2-brand-system.json",
       "externalUrl": "https://www.behance.net/gallery/194077839/ULTRA-GROW-2"
-    },
-    {
-      "slug": "ibn-albasel-motion-graphic",
-      "title": "ابن الباسل",
-      "category": "digital",
-      "categoryLabel": "تصميم رقمي",
-      "tag": "موشن جرافيك",
-      "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
-      "featured": true,
-      "hasVideo": false,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/ibn-albasel-motion-graphic.jpg",
-        "width": 1600,
-        "height": 1200
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f02",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ibn-albasel-motion-graphic.json",
-      "externalUrl": "https://www.behance.net/gallery/244097521/_"
     },
     {
       "slug": "nature-secret-ad-design",
