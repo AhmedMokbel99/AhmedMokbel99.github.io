@@ -2625,6 +2625,9 @@ def main() -> None:
     html = replace_block(html, "channels", channels_block(site))
     html = replace_block(html, "service-options", service_options(site))
     selected = [p for p in visible if p.get("featured")][:7]
+    # المختارة بتظهر مرة واحدة بس؛ الأرشيف يستبعدها عشان ما يتكررش نفس المشروع
+    selected_ids = {p["id"] for p in selected}
+    archive = [p for p in visible if p["id"] not in selected_ids]
     html = replace_block(
         html,
         "selected-projects",
@@ -2633,7 +2636,7 @@ def main() -> None:
             for i, p in enumerate(selected)
         ),
     )
-    html = replace_block(html, "static-projects", "\n".join(project_card(p, i) for i, p in enumerate(visible)))
+    html = replace_block(html, "static-projects", "\n".join(project_card(p, i) for i, p in enumerate(archive)))
 
     html, text_count = apply_cms(html, site)
 
@@ -2667,13 +2670,13 @@ def main() -> None:
     )
     html = re.sub(
         r'(<span id="workTotal">)[^<]*(</span>)',
-        lambda m: m.group(1) + str(len(visible)) + m.group(2),
+        lambda m: m.group(1) + str(len(archive)) + m.group(2),
         html,
         count=1,
     )
     html = re.sub(
         r'(id="dialogCount">)[^<]*(</span>)',
-        lambda m: m.group(1) + f"1 / {len(visible)}" + m.group(2),
+        lambda m: m.group(1) + f"1 / {len(archive)}" + m.group(2),
         html,
         count=1,
     )

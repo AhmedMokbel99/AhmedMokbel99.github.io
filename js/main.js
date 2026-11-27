@@ -499,6 +499,7 @@ function initCounters() {
    8) قسم الأعمال: العرض + الفلترة
 ------------------------------------------------------------ */
 const state = {
+  allProjects: [],
   projects: [],
   visible: [],
   dialogIndex: 0,
@@ -748,7 +749,9 @@ function renderProjects() {
   const grid = $('#workGrid');
   if (!grid || typeof WORK_DATA === 'undefined') return;
 
-  state.projects = WORK_DATA.slice();
+  state.allProjects = WORK_DATA.slice();
+  /* المختارة ليها شبكة مستقلة؛ الأرشيف ما يكررش نفس المشاريع */
+  state.projects = state.allProjects.filter((p) => !p.featured);
   state.visible = state.projects.slice();
 
   /* البطاقات مبنية مسبقًا داخل الـHTML — نستخدمها زي ما هي بدل ما نمسحها
@@ -778,7 +781,7 @@ function renderSelectedProjects() {
   const grid = $('#selectedGrid');
   if (!grid || typeof WORK_DATA === 'undefined') return;
 
-  const selected = state.projects.filter((p) => p.featured).slice(0, 7);
+  const selected = state.allProjects.filter((p) => p.featured).slice(0, 7);
   const existing = $$('[data-project-card]', grid);
   const inSync =
     existing.length === selected.length &&
@@ -861,7 +864,7 @@ function initWork() {
   const warm = (event) => {
     const card = event.target.closest('[data-project-card]');
     if (!card) return;
-    const project = state.projects.find((p) => p.id === card.dataset.projectCard);
+    const project = state.allProjects.find((p) => p.id === card.dataset.projectCard);
     if (!project) return;
     preloadImage(projectLow(project));
   };
@@ -1260,9 +1263,9 @@ function openProject(id) {
   let list = state.visible;
   let index = list.findIndex((p) => p.id === id);
 
-  /* لو المشروع مش ظاهر في الفلتر الحالي، نفتحه من القائمة الكاملة */
+  /* المختارة مش داخل الأرشيف، والفلتر ممكن يستبعد المشروع — افتحه من كل المشاريع */
   if (index === -1) {
-    list = state.projects;
+    list = state.allProjects;
     index = list.findIndex((p) => p.id === id);
     if (index !== -1) state.visible = list;
   }
@@ -1364,6 +1367,11 @@ function initProjectDialog() {
 
   dialog.addEventListener('close', () => {
     document.body.classList.remove('has-dialog');
+
+    /* فتح مشروع مختارة بيستخدم القائمة الكاملة — نرجّع قائمة الأرشيف بعد الإغلاق */
+    state.visible = state.projects.filter(
+      (p) => state.filter === 'all' || p.cat === state.filter
+    );
 
     if (document.fullscreenElement) document.exitFullscreen?.();
 
@@ -1917,13 +1925,14 @@ function openProjectFromHash() {
   if (!match) return;
 
   const key = match[1];
-  const index = state.projects.findIndex((project) => project.id === key || project.slug === key);
-  if (index === -1) return;
+  const project = state.allProjects.find((item) => item.id === key || item.slug === key);
+  if (!project) return;
 
   /* المشروع ممكن يكون مخفيًا تحت «عرض المزيد» — نُظهره قبل فتح النافذة */
-  state.shown = Math.max(state.shown, index + 1);
+  const archiveIndex = state.projects.findIndex((item) => item.id === project.id);
+  if (archiveIndex !== -1) state.shown = Math.max(state.shown, archiveIndex + 1);
   updateWorkMore();
-  openProject(state.projects[index].id);
+  openProject(project.id);
 }
 
 /* ------------------------------------------------------------

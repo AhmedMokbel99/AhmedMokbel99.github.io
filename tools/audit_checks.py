@@ -101,7 +101,28 @@ for p in ROOT.rglob("*"):
     if "24 portfolio projects" in text:
         issues.append(f"STALE_PROJECT_COUNT {p.relative_to(ROOT)}")
 
+# المشاريع المختارة لازم تظهر مرة واحدة بس: 6 مختارة + أرشيف من غير تكرار
+index_text = (ROOT / "index.html").read_text(encoding="utf-8", errors="replace")
+
+
+def block_ids(name):
+    match = re.search(rf"<!-- {name}:start -->(.*?)<!-- {name}:end -->", index_text, re.S)
+    return re.findall(r'data-project-card="([^"]+)"', match.group(1)) if match else []
+
+
+featured_ids = block_ids("selected-projects")
+archive_ids = block_ids("static-projects")
+duplicated = sorted(set(featured_ids) & set(archive_ids))
+if len(featured_ids) != 6:
+    issues.append(f"SELECTED_COUNT {len(featured_ids)} (expected 6)")
+if duplicated:
+    issues.append(f"DUPLICATE_PROJECT_CARDS {', '.join(duplicated)}")
+total = re.search(r'<span id="workTotal">(\d+)</span>', index_text)
+if total and int(total.group(1)) != len(archive_ids):
+    issues.append(f"WORK_TOTAL_MISMATCH {total.group(1)} vs {len(archive_ids)}")
+
 print(f"HTML_FILES {len(HTMLS)}")
+print(f"FEATURED {len(featured_ids)} ARCHIVE {len(archive_ids)}")
 print(f"ISSUES {len(issues)}")
 for item in issues[:200]:
     print(item)
