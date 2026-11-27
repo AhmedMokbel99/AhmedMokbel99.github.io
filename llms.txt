@@ -33,7 +33,7 @@
 
 - الملف التعريفي (JSON): https://ahmedmokbel99.github.io/api/profile.json
 - المشاريع (JSON): https://ahmedmokbel99.github.io/api/projects.json
-- دراسة حالة واحدة: https://ahmedmokbel99.github.io/api/projects/<slug>.json
+- تفاصيل مشروع واحد: https://ahmedmokbel99.github.io/api/projects/<slug>.json
 - الخدمات (JSON): https://ahmedmokbel99.github.io/api/services.json
 - نسخة Markdown من الموقع: https://ahmedmokbel99.github.io/index.md
 - وصف OpenAPI: https://ahmedmokbel99.github.io/openapi.json

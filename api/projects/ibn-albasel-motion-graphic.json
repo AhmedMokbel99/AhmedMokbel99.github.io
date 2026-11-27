@@ -6,7 +6,7 @@
   "tag": "موشن جرافيك",
   "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
   "featured": true,
-  "hasVideo": true,
+  "hasVideo": false,
   "media": {
     "type": "image",
     "url": "https://ahmedmokbel99.github.io/assets/projects/ibn-albasel-motion-graphic.jpg",

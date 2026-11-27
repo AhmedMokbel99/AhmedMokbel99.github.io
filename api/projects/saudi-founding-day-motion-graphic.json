@@ -6,7 +6,7 @@
   "tag": "موشن جرافيك",
   "summary": "عمل بصري بمناسبة يوم التأسيس السعودي لصالح TECHIFAY، يجمع بين التراث السعودي والهوية الخضراء والذهبية في تكوين مهيب.",
   "featured": true,
-  "hasVideo": true,
+  "hasVideo": false,
   "media": {
     "type": "image",
     "url": "https://ahmedmokbel99.github.io/assets/projects/saudi-founding-day-motion-graphic.jpg",

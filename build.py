@@ -505,7 +505,7 @@ def project_card(
     <span class="project__tag">{esc(project["tag"])}</span>
     <h3 class="project__title">{mark_latin(project["title"])}</h3>
     <span class="project__more">
-      <span>{"شاهد الفيديو" if has_video else "عرض التفاصيل"}</span>
+      <span>{"شاهد الفيديو" if has_video else "عرض تفاصيل المشروع"}</span>
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
     </span>
   </div>
@@ -1397,7 +1397,7 @@ def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
         "",
         f"- الملف التعريفي (JSON): {base}/api/profile.json",
         f"- المشاريع (JSON): {base}/api/projects.json",
-        f"- دراسة حالة واحدة: {base}/api/projects/<slug>.json",
+        f"- تفاصيل مشروع واحد: {base}/api/projects/<slug>.json",
         f"- الخدمات (JSON): {base}/api/services.json",
         f"- نسخة Markdown من الموقع: {base}/index.md",
         f"- وصف OpenAPI: {base}/openapi.json",
@@ -1967,7 +1967,7 @@ digital and print design).
 | Resource | URL |
 | --- | --- |
 | All projects (summary) | `{base}/api/projects.json` |
-| One project (full case study) | `{base}/api/projects/<slug>.json` |
+| One project (details) | `{base}/api/projects/<slug>.json` |
 | Human view (dialog) | `{base}/#work` |
 
 ## Steps
@@ -2253,7 +2253,7 @@ def docs_api_page(site: dict, base: str, slugs: list[str], services: list[dict])
       <tbody>
         <tr><td><code>GET /api/profile.json</code></td><td>Identity, disciplines, location, studio, numbers, contact links.</td></tr>
         <tr><td><code>GET /api/projects.json</code></td><td>All published projects with a short summary and a detail URL.</td></tr>
-        <tr><td><code>GET /api/projects/&lt;slug&gt;.json</code></td><td>One project with challenge, role, result, tools and gallery.</td></tr>
+        <tr><td><code>GET /api/projects/&lt;slug&gt;.json</code></td><td>One project with its available details.</td></tr>
         <tr><td><code>GET /api/services.json</code></td><td>Six services with deliverables, audience and page URLs.</td></tr>
         <tr><td><code>GET /api/health.json</code></td><td>Build status and dataset counts.</td></tr>
         <tr><td><code>GET /api/index.json</code></td><td>Machine-readable index of the endpoints above.</td></tr>

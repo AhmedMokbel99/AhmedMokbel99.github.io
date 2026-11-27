@@ -18,7 +18,7 @@ digital and print design).
 | Resource | URL |
 | --- | --- |
 | All projects (summary) | `https://ahmedmokbel99.github.io/api/projects.json` |
-| One project (full case study) | `https://ahmedmokbel99.github.io/api/projects/<slug>.json` |
+| One project (details) | `https://ahmedmokbel99.github.io/api/projects/<slug>.json` |
 | Human view (dialog) | `https://ahmedmokbel99.github.io/#work` |
 
 ## Steps
