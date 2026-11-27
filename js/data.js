@@ -656,7 +656,7 @@ const WORK_DATA = [
     "id": "f01",
     "code": "F02",
     "title": "يوم التأسيس السعودي",
-    "cat": "motion",
+    "cat": "digital",
     "tag": "موشن جرافيك",
     "isVideo": false,
     "url": "https://www.behance.net/gallery/244580859/_",
@@ -674,6 +674,7 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "details": "",
     "smallWidth": 718,
     "gridWidth": 510,
     "slug": "saudi-founding-day-motion-graphic"
@@ -974,7 +975,7 @@ const WORK_DATA = [
     "id": "f02",
     "code": "F03",
     "title": "ابن الباسل",
-    "cat": "motion",
+    "cat": "digital",
     "tag": "موشن جرافيك",
     "isVideo": false,
     "url": "https://www.behance.net/gallery/244097521/_",
@@ -993,6 +994,7 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "details": "",
     "smallWidth": 900,
     "gridWidth": 640,
     "slug": "ibn-albasel-motion-graphic"
