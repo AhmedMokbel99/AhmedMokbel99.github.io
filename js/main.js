@@ -499,7 +499,6 @@ function initCounters() {
    8) قسم الأعمال: العرض + الفلترة
 ------------------------------------------------------------ */
 const state = {
-  allProjects: [],
   projects: [],
   visible: [],
   dialogIndex: 0,
@@ -749,9 +748,7 @@ function renderProjects() {
   const grid = $('#workGrid');
   if (!grid || typeof WORK_DATA === 'undefined') return;
 
-  state.allProjects = WORK_DATA.slice();
-  /* المختارة ليها شبكة مستقلة؛ الأرشيف ما يكررش نفس المشاريع */
-  state.projects = state.allProjects.filter((p) => !p.featured);
+  state.projects = WORK_DATA.slice();
   state.visible = state.projects.slice();
 
   /* البطاقات مبنية مسبقًا داخل الـHTML — نستخدمها زي ما هي بدل ما نمسحها
@@ -766,7 +763,6 @@ function renderProjects() {
   if (!inSync) grid.innerHTML = state.projects.map(projectMarkup).join('');
 
   initGridImages(grid);
-  renderSelectedProjects();
   renderFilters();
   observeReveals(grid);
   ensureWorkMore(grid);
@@ -774,29 +770,6 @@ function renderProjects() {
 
   const counter = $('#workTotal');
   if (counter) counter.textContent = String(state.projects.length);
-}
-
-/* الأعمال المختارة تظهر أولًا، ثم الأرشيف الكامل تحت عنوان مستقل */
-function renderSelectedProjects() {
-  const grid = $('#selectedGrid');
-  if (!grid || typeof WORK_DATA === 'undefined') return;
-
-  const selected = state.allProjects.filter((p) => p.featured).slice(0, 7);
-  const existing = $$('[data-project-card]', grid);
-  const inSync =
-    existing.length === selected.length &&
-    existing.every(
-      (card, index) => card.dataset.projectCard === selected[index].id
-    );
-
-  if (!inSync) {
-    grid.innerHTML = selected
-      .map((project, index) => projectMarkup(project, index, { idPrefix: 'project-selected' }))
-      .join('');
-  }
-
-  initGridImages(grid);
-  observeReveals(grid);
 }
 
 /* إظهار الصور بهدوء عند جهوزها بدل ما تنط في الشاشة */
@@ -864,7 +837,7 @@ function initWork() {
   const warm = (event) => {
     const card = event.target.closest('[data-project-card]');
     if (!card) return;
-    const project = state.allProjects.find((p) => p.id === card.dataset.projectCard);
+    const project = state.projects.find((p) => p.id === card.dataset.projectCard);
     if (!project) return;
     preloadImage(projectLow(project));
   };
@@ -887,13 +860,6 @@ function initWork() {
       );
 
       state.visible = state.projects.filter((p) => filter === 'all' || p.cat === filter);
-
-      /* تقسيم «مختارة / كل الأعمال» يظهر في عرض «الكل» فقط */
-      const showSplit = filter === 'all';
-      const selectedGrid = $('#selectedGrid');
-      const allWorkHead = $('#allWorkHead');
-      if (selectedGrid) selectedGrid.hidden = !showSplit;
-      if (allWorkHead) allWorkHead.hidden = !showSplit;
 
       const shownNow = [];
       $$('[data-project-card]', grid).forEach((card) => {
@@ -1263,9 +1229,9 @@ function openProject(id) {
   let list = state.visible;
   let index = list.findIndex((p) => p.id === id);
 
-  /* المختارة مش داخل الأرشيف، والفلتر ممكن يستبعد المشروع — افتحه من كل المشاريع */
+  /* لو المشروع مش ظاهر في الفلتر الحالي، نفتحه من القائمة الكاملة */
   if (index === -1) {
-    list = state.allProjects;
+    list = state.projects;
     index = list.findIndex((p) => p.id === id);
     if (index !== -1) state.visible = list;
   }
@@ -1367,11 +1333,6 @@ function initProjectDialog() {
 
   dialog.addEventListener('close', () => {
     document.body.classList.remove('has-dialog');
-
-    /* فتح مشروع مختارة بيستخدم القائمة الكاملة — نرجّع قائمة الأرشيف بعد الإغلاق */
-    state.visible = state.projects.filter(
-      (p) => state.filter === 'all' || p.cat === state.filter
-    );
 
     if (document.fullscreenElement) document.exitFullscreen?.();
 
@@ -1855,7 +1816,7 @@ function initCollapsibleSections() {
 
 /* معاينة الفيديو على الديسكتوب فقط: بلا صوت، وبلا تحميل قبل التحويم */
 function initGalleryMotion() {
-  const grids = ['#selectedGrid', '#workGrid'].map((selector) => $(selector)).filter(Boolean);
+  const grids = ['#workGrid'].map((selector) => $(selector)).filter(Boolean);
   if (!grids.length) return;
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (!canHover || reduceMotion.matches) return;
@@ -1925,14 +1886,13 @@ function openProjectFromHash() {
   if (!match) return;
 
   const key = match[1];
-  const project = state.allProjects.find((item) => item.id === key || item.slug === key);
-  if (!project) return;
+  const index = state.projects.findIndex((project) => project.id === key || project.slug === key);
+  if (index === -1) return;
 
   /* المشروع ممكن يكون مخفيًا تحت «عرض المزيد» — نُظهره قبل فتح النافذة */
-  const archiveIndex = state.projects.findIndex((item) => item.id === project.id);
-  if (archiveIndex !== -1) state.shown = Math.max(state.shown, archiveIndex + 1);
+  state.shown = Math.max(state.shown, index + 1);
   updateWorkMore();
-  openProject(project.id);
+  openProject(state.projects[index].id);
 }
 
 /* ------------------------------------------------------------

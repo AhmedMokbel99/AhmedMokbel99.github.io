@@ -4779,6 +4779,11 @@ body:has(.project-dialog[open]) .floating {
   color: var(--text);
 }
 
+/* العنوان تحت «أعمال مختارة» مباشرة — بدون مساحة كبيرة قبل الفقرة */
+.section-head .work-subhead {
+  margin: 0.35rem 0 0.25rem;
+}
+
 /* مساحات لمس مناسبة للأصابع */
 .filter,
 .nav__toggle,
@@ -5748,201 +5753,15 @@ body:has(.project-dialog[open]) .floating {
           <div class="section-head" data-reveal>
             <div class="eyebrow" data-cms="workSection.eyebrow">الأعمال</div>
             <h2 data-cms="workSection.title">أعمال مختارة</h2>
+            <div class="work-subhead" id="allWorkHead" data-reveal>
+              <h3 data-cms="workSection.allTitle">جميع الأعمال</h3>
+            </div>
             <p data-cms="workSection.lead">مختارات من مشاريعي في الهوية البصرية والموشن جرافيك والتصوير، يليها الأرشيف الكامل. اضغط على أي مشروع لعرض تفاصيله.</p>
           </div>
         </div>
 
         <div class="filters" id="filters" role="group" aria-label="تصفية الأعمال"></div>
         <p class="sr-only" id="workLive" aria-live="polite"></p>
-
-        <div class="work-grid work-grid--selected" id="selectedGrid" data-reveal-group>
-          <!-- selected-projects:start -->
-<article id="project-selected-f03" class="project project--video" data-reveal data-project-card="f03" data-category="ads">
-  <div class="project__media">
-    <img
-      src="assets/projects/ans-dimashqi-steak-ad-900.jpg"
-      srcset="assets/projects/ans-dimashqi-steak-ad-640.jpg 640w, assets/projects/ans-dimashqi-steak-ad-900.jpg 900w, assets/projects/ans-dimashqi-steak-ad.jpg 1200w"
-      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-      width="1200"
-      height="900"
-      alt="آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
-      loading="lazy"
-      decoding="async"
-    >
-    <video class="project__preview" src="assets/projects/f03_ans-dimashqi-steak.mp4" poster="assets/projects/ans-dimashqi-steak-ad-900.jpg" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
-    <div class="project__badges"><span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>اضغط للمشاهدة</span></div>
-  </div>
-  <div class="project__body">
-    <span class="project__tag">إعلان مطعم</span>
-    <h3 class="project__title">آنس الدمشقي — إعلان طبق اللحم</h3>
-    <span class="project__more">
-      <span>شاهد الفيديو</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f03"
-    aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
-  ></button>
-</article>
-<article id="project-selected-f06" class="project" data-reveal data-project-card="f06" data-category="brand">
-  <div class="project__media">
-    <img
-      src="assets/projects/harvard-education-center-brand-900.jpg"
-      srcset="assets/projects/harvard-education-center-brand-640.jpg 640w, assets/projects/harvard-education-center-brand-900.jpg 900w, assets/projects/harvard-education-center-brand.jpg 1600w"
-      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-      width="1600"
-      height="1200"
-      alt="مركز هارفارد التعليمي — هوية وطباعة"
-      loading="lazy"
-      decoding="async"
-    >
-
-    
-  </div>
-  <div class="project__body">
-    <span class="project__tag">هوية وطباعة</span>
-    <h3 class="project__title">هارفارد — الهوية البصرية الأساسية</h3>
-    <span class="project__more">
-      <span>عرض تفاصيل المشروع</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f06"
-    aria-label="عرض تفاصيل مشروع هارفارد — الهوية البصرية الأساسية — هوية وطباعة"
-  ></button>
-</article>
-<article id="project-selected-f07" class="project" data-reveal data-project-card="f07" data-category="brand">
-  <div class="project__media">
-    <img
-      src="assets/projects/ultra-grow-brand-packaging-900.jpg"
-      srcset="assets/projects/ultra-grow-brand-packaging-640.jpg 640w, assets/projects/ultra-grow-brand-packaging-900.jpg 900w, assets/projects/ultra-grow-brand-packaging.jpg 1400w"
-      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-      width="1400"
-      height="964"
-      alt="ULTRA GROW — تغليف المنتجات — هوية وطباعة"
-      loading="lazy"
-      decoding="async"
-    >
-
-    
-  </div>
-  <div class="project__body">
-    <span class="project__tag">هوية وطباعة</span>
-    <h3 class="project__title"><span lang="en" dir="ltr">ULTRA GROW</span> — تغليف المنتجات</h3>
-    <span class="project__more">
-      <span>عرض تفاصيل المشروع</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f07"
-    aria-label="عرض تفاصيل مشروع ULTRA GROW — تغليف المنتجات — هوية وطباعة"
-  ></button>
-</article>
-<article id="project-selected-f01" class="project" data-reveal data-project-card="f01" data-category="digital">
-  <div class="project__media">
-    <img
-      src="assets/projects/saudi-founding-day-motion-graphic-900.jpg"
-      srcset="assets/projects/saudi-founding-day-motion-graphic-640.jpg 510w, assets/projects/saudi-founding-day-motion-graphic-900.jpg 718w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
-      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-      width="1072"
-      height="1344"
-      alt="يوم التأسيس السعودي — موشن جرافيك"
-      loading="lazy"
-      decoding="async"
-    >
-
-    
-  </div>
-  <div class="project__body">
-    <span class="project__tag">موشن جرافيك</span>
-    <h3 class="project__title">يوم التأسيس السعودي</h3>
-    <span class="project__more">
-      <span>عرض تفاصيل المشروع</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f01"
-    aria-label="عرض تفاصيل مشروع يوم التأسيس السعودي — موشن جرافيك"
-  ></button>
-</article>
-<article id="project-selected-f11" class="project" data-reveal data-project-card="f11" data-category="digital">
-  <div class="project__media">
-    <img
-      src="assets/projects/insta-watches-ad-design-900.jpg"
-      srcset="assets/projects/insta-watches-ad-design-640.jpg 640w, assets/projects/insta-watches-ad-design-900.jpg 900w, assets/projects/insta-watches-ad-design.jpg 1600w"
-      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-      width="1600"
-      height="1200"
-      alt="INSTA WATCHES — تصميم رقمي"
-      loading="lazy"
-      decoding="async"
-    >
-
-    
-  </div>
-  <div class="project__body">
-    <span class="project__tag">تصميم رقمي</span>
-    <h3 class="project__title"><span lang="en" dir="ltr">INSTA WATCHES</span></h3>
-    <span class="project__more">
-      <span>عرض تفاصيل المشروع</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f11"
-    aria-label="عرض تفاصيل مشروع INSTA WATCHES — تصميم رقمي"
-  ></button>
-</article>
-<article id="project-selected-f02" class="project" data-reveal data-project-card="f02" data-category="motion">
-  <div class="project__media">
-    <img
-      src="assets/projects/ibn-albasel-motion-graphic-900.jpg"
-      srcset="assets/projects/ibn-albasel-motion-graphic-640.jpg 640w, assets/projects/ibn-albasel-motion-graphic-900.jpg 900w, assets/projects/ibn-albasel-motion-graphic.jpg 1600w"
-      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-      width="1600"
-      height="1200"
-      alt="ابن الباسل — موشن جرافيك"
-      loading="lazy"
-      decoding="async"
-    >
-
-    
-  </div>
-  <div class="project__body">
-    <span class="project__tag">موشن جرافيك</span>
-    <h3 class="project__title">ابن الباسل</h3>
-    <span class="project__more">
-      <span>عرض تفاصيل المشروع</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f02"
-    aria-label="عرض تفاصيل مشروع ابن الباسل — موشن جرافيك"
-  ></button>
-</article>
-<!-- selected-projects:end -->
-        </div>
-
-        <div class="work-subhead" id="allWorkHead" data-reveal>
-          <h3 data-cms="workSection.allTitle">جميع الأعمال</h3>
-        </div>
 
         <div class="work-grid" id="workGrid" data-reveal-group>
           <!-- static-projects:start -->
@@ -6006,6 +5825,36 @@ body:has(.project-dialog[open]) .floating {
     aria-label="عرض تفاصيل مشروع بوستات سوشيال ميديا لعلامات تجارية — سوشيال ميديا"
   ></button>
 </article>
+<article id="project-f03" class="project project--video" data-reveal data-project-card="f03" data-category="ads">
+  <div class="project__media">
+    <img
+      src="assets/projects/ans-dimashqi-steak-ad-900.jpg"
+      srcset="assets/projects/ans-dimashqi-steak-ad-640.jpg 640w, assets/projects/ans-dimashqi-steak-ad-900.jpg 900w, assets/projects/ans-dimashqi-steak-ad.jpg 1200w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1200"
+      height="900"
+      alt="آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
+      loading="lazy"
+      decoding="async"
+    >
+    <video class="project__preview" src="assets/projects/f03_ans-dimashqi-steak.mp4" poster="assets/projects/ans-dimashqi-steak-ad-900.jpg" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    <div class="project__badges"><span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>اضغط للمشاهدة</span></div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">إعلان مطعم</span>
+    <h3 class="project__title">آنس الدمشقي — إعلان طبق اللحم</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f03"
+    aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
+  ></button>
+</article>
 <article id="project-f21" class="project project--video" data-reveal data-project-card="f21" data-category="ads">
   <div class="project__media">
     <img
@@ -6064,6 +5913,36 @@ body:has(.project-dialog[open]) .floating {
     class="project__open"
     data-project-open="f27"
     aria-label="عرض تفاصيل مشروع ألترا جرو — موشن جرافيك"
+  ></button>
+</article>
+<article id="project-f06" class="project" data-reveal data-project-card="f06" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/harvard-education-center-brand-900.jpg"
+      srcset="assets/projects/harvard-education-center-brand-640.jpg 640w, assets/projects/harvard-education-center-brand-900.jpg 900w, assets/projects/harvard-education-center-brand.jpg 1600w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1600"
+      height="1200"
+      alt="مركز هارفارد التعليمي — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title">هارفارد — الهوية البصرية الأساسية</h3>
+    <span class="project__more">
+      <span>عرض تفاصيل المشروع</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f06"
+    aria-label="عرض تفاصيل مشروع هارفارد — الهوية البصرية الأساسية — هوية وطباعة"
   ></button>
 </article>
 <article id="project-f24" class="project" data-reveal data-project-card="f24" data-category="brand">
@@ -6126,7 +6005,7 @@ body:has(.project-dialog[open]) .floating {
     aria-label="عرض تفاصيل مشروع تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا"
   ></button>
 </article>
-<article id="project-f23" class="project" data-reveal data-project-card="f23" data-category="digital">
+<article id="project-f23" class="project is-deferred" data-reveal data-project-card="f23" data-category="digital">
   <div class="project__media">
     <img
       src="assets/projects/grm-hijri-1448-greeting-900.jpg"
@@ -6156,7 +6035,7 @@ body:has(.project-dialog[open]) .floating {
     aria-label="عرض تفاصيل مشروع تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا"
   ></button>
 </article>
-<article id="project-f09" class="project" data-reveal data-project-card="f09" data-category="digital">
+<article id="project-f09" class="project is-deferred" data-reveal data-project-card="f09" data-category="digital">
   <div class="project__media">
     <img
       src="assets/projects/social-media-design-collection-900.jpg"
@@ -6244,6 +6123,96 @@ body:has(.project-dialog[open]) .floating {
     class="project__open"
     data-project-open="f10"
     aria-label="عرض تفاصيل مشروع حقن فيلر — تصميم رقمي"
+  ></button>
+</article>
+<article id="project-f07" class="project is-deferred" data-reveal data-project-card="f07" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/ultra-grow-brand-packaging-900.jpg"
+      srcset="assets/projects/ultra-grow-brand-packaging-640.jpg 640w, assets/projects/ultra-grow-brand-packaging-900.jpg 900w, assets/projects/ultra-grow-brand-packaging.jpg 1400w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1400"
+      height="964"
+      alt="ULTRA GROW — تغليف المنتجات — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title"><span lang="en" dir="ltr">ULTRA GROW</span> — تغليف المنتجات</h3>
+    <span class="project__more">
+      <span>عرض تفاصيل المشروع</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f07"
+    aria-label="عرض تفاصيل مشروع ULTRA GROW — تغليف المنتجات — هوية وطباعة"
+  ></button>
+</article>
+<article id="project-f01" class="project is-deferred" data-reveal data-project-card="f01" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/saudi-founding-day-motion-graphic-900.jpg"
+      srcset="assets/projects/saudi-founding-day-motion-graphic-640.jpg 510w, assets/projects/saudi-founding-day-motion-graphic-900.jpg 718w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1072"
+      height="1344"
+      alt="يوم التأسيس السعودي — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">يوم التأسيس السعودي</h3>
+    <span class="project__more">
+      <span>عرض تفاصيل المشروع</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f01"
+    aria-label="عرض تفاصيل مشروع يوم التأسيس السعودي — موشن جرافيك"
+  ></button>
+</article>
+<article id="project-f11" class="project is-deferred" data-reveal data-project-card="f11" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/insta-watches-ad-design-900.jpg"
+      srcset="assets/projects/insta-watches-ad-design-640.jpg 640w, assets/projects/insta-watches-ad-design-900.jpg 900w, assets/projects/insta-watches-ad-design.jpg 1600w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1600"
+      height="1200"
+      alt="INSTA WATCHES — تصميم رقمي"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصميم رقمي</span>
+    <h3 class="project__title"><span lang="en" dir="ltr">INSTA WATCHES</span></h3>
+    <span class="project__more">
+      <span>عرض تفاصيل المشروع</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f11"
+    aria-label="عرض تفاصيل مشروع INSTA WATCHES — تصميم رقمي"
   ></button>
 </article>
 <article id="project-f16" class="project project--video is-deferred" data-reveal data-project-card="f16" data-category="motion">
@@ -6516,6 +6485,36 @@ body:has(.project-dialog[open]) .floating {
     aria-label="عرض تفاصيل مشروع تجربة موشن جرافيك — البدايات — موشن جرافيك"
   ></button>
 </article>
+<article id="project-f02" class="project is-deferred" data-reveal data-project-card="f02" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/ibn-albasel-motion-graphic-900.jpg"
+      srcset="assets/projects/ibn-albasel-motion-graphic-640.jpg 640w, assets/projects/ibn-albasel-motion-graphic-900.jpg 900w, assets/projects/ibn-albasel-motion-graphic.jpg 1600w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1600"
+      height="1200"
+      alt="ابن الباسل — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">ابن الباسل</h3>
+    <span class="project__more">
+      <span>عرض تفاصيل المشروع</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f02"
+    aria-label="عرض تفاصيل مشروع ابن الباسل — موشن جرافيك"
+  ></button>
+</article>
 <article id="project-f08" class="project is-deferred" data-reveal data-project-card="f08" data-category="brand">
   <div class="project__media">
     <img
@@ -6588,7 +6587,7 @@ body:has(.project-dialog[open]) .floating {
         </noscript>
 
         <p class="work-note">
-          <span id="workTotal">21</span> <span data-cms="workSection.note">مشروعًا في الأرشيف الكامل من مسيرتي في التصميم والموشن والتصوير.</span>
+          <span id="workTotal">27</span> <span data-cms="workSection.note">مشروعًا في الأرشيف الكامل من مسيرتي في التصميم والموشن والتصوير.</span>
         </p>
       </div>
     </section>
@@ -7207,7 +7206,7 @@ body:has(.project-dialog[open]) .floating {
             <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
             السابق
           </button>
-          <span class="dialog-nav__count" id="dialogCount">1 / 21</span>
+          <span class="dialog-nav__count" id="dialogCount">1 / 27</span>
           <button class="dialog-nav__btn" id="dialogNext" type="button">
             التالي
             <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -8779,7 +8778,6 @@ function initCounters() {
    8) قسم الأعمال: العرض + الفلترة
 ------------------------------------------------------------ */
 const state = {
-  allProjects: [],
   projects: [],
   visible: [],
   dialogIndex: 0,
@@ -9029,9 +9027,7 @@ function renderProjects() {
   const grid = $('#workGrid');
   if (!grid || typeof WORK_DATA === 'undefined') return;
 
-  state.allProjects = WORK_DATA.slice();
-  /* المختارة ليها شبكة مستقلة؛ الأرشيف ما يكررش نفس المشاريع */
-  state.projects = state.allProjects.filter((p) => !p.featured);
+  state.projects = WORK_DATA.slice();
   state.visible = state.projects.slice();
 
   /* البطاقات مبنية مسبقًا داخل الـHTML — نستخدمها زي ما هي بدل ما نمسحها
@@ -9046,7 +9042,6 @@ function renderProjects() {
   if (!inSync) grid.innerHTML = state.projects.map(projectMarkup).join('');
 
   initGridImages(grid);
-  renderSelectedProjects();
   renderFilters();
   observeReveals(grid);
   ensureWorkMore(grid);
@@ -9054,29 +9049,6 @@ function renderProjects() {
 
   const counter = $('#workTotal');
   if (counter) counter.textContent = String(state.projects.length);
-}
-
-/* الأعمال المختارة تظهر أولًا، ثم الأرشيف الكامل تحت عنوان مستقل */
-function renderSelectedProjects() {
-  const grid = $('#selectedGrid');
-  if (!grid || typeof WORK_DATA === 'undefined') return;
-
-  const selected = state.allProjects.filter((p) => p.featured).slice(0, 7);
-  const existing = $$('[data-project-card]', grid);
-  const inSync =
-    existing.length === selected.length &&
-    existing.every(
-      (card, index) => card.dataset.projectCard === selected[index].id
-    );
-
-  if (!inSync) {
-    grid.innerHTML = selected
-      .map((project, index) => projectMarkup(project, index, { idPrefix: 'project-selected' }))
-      .join('');
-  }
-
-  initGridImages(grid);
-  observeReveals(grid);
 }
 
 /* إظهار الصور بهدوء عند جهوزها بدل ما تنط في الشاشة */
@@ -9144,7 +9116,7 @@ function initWork() {
   const warm = (event) => {
     const card = event.target.closest('[data-project-card]');
     if (!card) return;
-    const project = state.allProjects.find((p) => p.id === card.dataset.projectCard);
+    const project = state.projects.find((p) => p.id === card.dataset.projectCard);
     if (!project) return;
     preloadImage(projectLow(project));
   };
@@ -9167,13 +9139,6 @@ function initWork() {
       );
 
       state.visible = state.projects.filter((p) => filter === 'all' || p.cat === filter);
-
-      /* تقسيم «مختارة / كل الأعمال» يظهر في عرض «الكل» فقط */
-      const showSplit = filter === 'all';
-      const selectedGrid = $('#selectedGrid');
-      const allWorkHead = $('#allWorkHead');
-      if (selectedGrid) selectedGrid.hidden = !showSplit;
-      if (allWorkHead) allWorkHead.hidden = !showSplit;
 
       const shownNow = [];
       $$('[data-project-card]', grid).forEach((card) => {
@@ -9543,9 +9508,9 @@ function openProject(id) {
   let list = state.visible;
   let index = list.findIndex((p) => p.id === id);
 
-  /* المختارة مش داخل الأرشيف، والفلتر ممكن يستبعد المشروع — افتحه من كل المشاريع */
+  /* لو المشروع مش ظاهر في الفلتر الحالي، نفتحه من القائمة الكاملة */
   if (index === -1) {
-    list = state.allProjects;
+    list = state.projects;
     index = list.findIndex((p) => p.id === id);
     if (index !== -1) state.visible = list;
   }
@@ -9647,11 +9612,6 @@ function initProjectDialog() {
 
   dialog.addEventListener('close', () => {
     document.body.classList.remove('has-dialog');
-
-    /* فتح مشروع مختارة بيستخدم القائمة الكاملة — نرجّع قائمة الأرشيف بعد الإغلاق */
-    state.visible = state.projects.filter(
-      (p) => state.filter === 'all' || p.cat === state.filter
-    );
 
     if (document.fullscreenElement) document.exitFullscreen?.();
 
@@ -10135,7 +10095,7 @@ function initCollapsibleSections() {
 
 /* معاينة الفيديو على الديسكتوب فقط: بلا صوت، وبلا تحميل قبل التحويم */
 function initGalleryMotion() {
-  const grids = ['#selectedGrid', '#workGrid'].map((selector) => $(selector)).filter(Boolean);
+  const grids = ['#workGrid'].map((selector) => $(selector)).filter(Boolean);
   if (!grids.length) return;
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (!canHover || reduceMotion.matches) return;
@@ -10205,14 +10165,13 @@ function openProjectFromHash() {
   if (!match) return;
 
   const key = match[1];
-  const project = state.allProjects.find((item) => item.id === key || item.slug === key);
-  if (!project) return;
+  const index = state.projects.findIndex((project) => project.id === key || project.slug === key);
+  if (index === -1) return;
 
   /* المشروع ممكن يكون مخفيًا تحت «عرض المزيد» — نُظهره قبل فتح النافذة */
-  const archiveIndex = state.projects.findIndex((item) => item.id === project.id);
-  if (archiveIndex !== -1) state.shown = Math.max(state.shown, archiveIndex + 1);
+  state.shown = Math.max(state.shown, index + 1);
   updateWorkMore();
-  openProject(project.id);
+  openProject(state.projects[index].id);
 }
 
 /* ------------------------------------------------------------

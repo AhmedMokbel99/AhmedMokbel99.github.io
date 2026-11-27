@@ -101,28 +101,28 @@ for p in ROOT.rglob("*"):
     if "24 portfolio projects" in text:
         issues.append(f"STALE_PROJECT_COUNT {p.relative_to(ROOT)}")
 
-# المشاريع المختارة لازم تظهر مرة واحدة بس: 6 مختارة + أرشيف من غير تكرار
+# شبكة واحدة: 27 مشروع بترتيب المحتوى الأصلي، وتحت «أعمال مختارة» عنوان «جميع الأعمال»
 index_text = (ROOT / "index.html").read_text(encoding="utf-8", errors="replace")
-
-
-def block_ids(name):
-    match = re.search(rf"<!-- {name}:start -->(.*?)<!-- {name}:end -->", index_text, re.S)
-    return re.findall(r'data-project-card="([^"]+)"', match.group(1)) if match else []
-
-
-featured_ids = block_ids("selected-projects")
-archive_ids = block_ids("static-projects")
-duplicated = sorted(set(featured_ids) & set(archive_ids))
-if len(featured_ids) != 6:
-    issues.append(f"SELECTED_COUNT {len(featured_ids)} (expected 6)")
+match = re.search(r"<!-- static-projects:start -->(.*?)<!-- static-projects:end -->", index_text, re.S)
+grid_ids = re.findall(r'data-project-card="([^"]+)"', match.group(1)) if match else []
+projects = json.loads((ROOT / "content/projects.json").read_text(encoding="utf-8"))
+expected = [p["id"] for p in projects if p.get("visible", True) is not False]
+if grid_ids != expected:
+    issues.append(f"GRID_ORDER_OR_COUNT {grid_ids} vs {expected}")
+duplicated = sorted({pid for pid in grid_ids if grid_ids.count(pid) > 1})
 if duplicated:
     issues.append(f"DUPLICATE_PROJECT_CARDS {', '.join(duplicated)}")
+if 'id="selectedGrid"' in index_text or "<!-- selected-projects:start -->" in index_text:
+    issues.append("SELECTED_GRID_STILL_PRESENT")
+head = re.search(r'<div class="work-subhead" id="allWorkHead"[^>]*>\s*<h3[^>]*>([^<]+)</h3>', index_text)
+if not head or head.group(1).strip() != "جميع الأعمال":
+    issues.append("ALL_WORK_HEAD_MISSING")
 total = re.search(r'<span id="workTotal">(\d+)</span>', index_text)
-if total and int(total.group(1)) != len(archive_ids):
-    issues.append(f"WORK_TOTAL_MISMATCH {total.group(1)} vs {len(archive_ids)}")
+if total and int(total.group(1)) != len(grid_ids):
+    issues.append(f"WORK_TOTAL_MISMATCH {total.group(1)} vs {len(grid_ids)}")
 
 print(f"HTML_FILES {len(HTMLS)}")
-print(f"FEATURED {len(featured_ids)} ARCHIVE {len(archive_ids)}")
+print(f"GRID {len(grid_ids)}")
 print(f"ISSUES {len(issues)}")
 for item in issues[:200]:
     print(item)

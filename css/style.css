@@ -4727,6 +4727,11 @@ body:has(.project-dialog[open]) .floating {
   color: var(--text);
 }
 
+/* العنوان تحت «أعمال مختارة» مباشرة — بدون مساحة كبيرة قبل الفقرة */
+.section-head .work-subhead {
+  margin: 0.35rem 0 0.25rem;
+}
+
 /* مساحات لمس مناسبة للأصابع */
 .filter,
 .nav__toggle,
