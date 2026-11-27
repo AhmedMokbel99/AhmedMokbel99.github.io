@@ -3,14 +3,14 @@
 User-agent: *
 Allow: /
 
-# Content Signals (contentsignals.org):
+# تفضيلات المحتوى (داخل تعليقات لأنها ليست توجيهات robots.txt قياسية):
 #   ai-train=no  — لا يُستخدم المحتوى لتدريب النماذج
 #   search=yes   — الفهرسة والظهور في نتائج البحث مسموح
 #   ai-input=yes — يُسمح باستخدام المحتوى للإجابة والإحالة
-Content-Signal: ai-train=no, search=yes, ai-input=yes
 
 # Agentic Resource Discovery manifest
-Agentmap: https://ahmedmokbel99.github.io/.well-known/ai-catalog.json
+# Agentmap: https://ahmedmokbel99.github.io/.well-known/ai-catalog.json
+# معلن أيضًا عبر <link rel="describedby"> في رأس الصفحة وملف llms.txt
 
 # نسخة الملف الواحد مخصّصة للاستخدام المحلي فقط
 Disallow: /standalone.html

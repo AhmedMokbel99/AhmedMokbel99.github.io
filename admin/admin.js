@@ -37,6 +37,7 @@ const state = {
   draftOriginal: null,
   imagePreviews: {},
   tab: 'projects',
+  modalReturnFocus: null,
   pollTimer: null,
   lastRunId: null,
   search: '',
@@ -55,6 +56,25 @@ function h(value) {
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function trapTab(event, container) {
+  if (event.key !== 'Tab') return;
+  const focusables = $$(
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    container
+  ).filter((el) => el.offsetParent !== null);
+  if (!focusables.length) return;
+
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 function getPath(obj, path) {
@@ -437,7 +457,12 @@ function logout() {
 /* ---------------- التبويبات ---------------- */
 function switchTab(tab) {
   state.tab = tab;
-  $$('.tab').forEach((btn) => btn.classList.toggle('is-active', btn.dataset.tab === tab));
+  $$('.tab').forEach((btn) => {
+    const active = btn.dataset.tab === tab;
+    btn.classList.toggle('is-active', active);
+    btn.setAttribute('aria-selected', String(active));
+    btn.tabIndex = active ? 0 : -1;
+  });
   ['projects', 'texts', 'images', 'pages', 'analytics', 'settings'].forEach((name) => {
     $(`#panel-${name}`).hidden = name !== tab;
   });
@@ -738,6 +763,7 @@ function openProjectEditor(index) {
 
   $('#projectModalTitle').textContent = isNew ? 'إضافة مشروع' : 'تعديل مشروع';
   renderProjectForm();
+  state.modalReturnFocus = document.activeElement;
   $('#projectModal').hidden = false;
   document.body.style.overflow = 'hidden';
   setTimeout(() => $('#pf_title')?.focus(), 40);
@@ -765,6 +791,9 @@ function closeProjectModal() {
   state.draftPreview = '';
   state.draftUploads = [];
   state.draftOriginal = null;
+  const returnTo = state.modalReturnFocus;
+  state.modalReturnFocus = null;
+  if (returnTo && typeof returnTo.focus === 'function') returnTo.focus({ preventScroll: true });
 }
 
 function projectPreviewSrc() {
@@ -2779,8 +2808,30 @@ function bindGlobal() {
   );
 
   $$('[data-close-modal]').forEach((node) => node.addEventListener('click', closeProjectModal));
+
+  const tabs = $$('.tab');
+  $('#tabsNav').addEventListener('keydown', (event) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const current = tabs.findIndex((btn) => btn.getAttribute('aria-selected') === 'true');
+    let next = current;
+    if (event.key === 'Home') next = 0;
+    else if (event.key === 'End') next = tabs.length - 1;
+    else if (event.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
+    else next = (current + 1) % tabs.length;
+    tabs[next].focus();
+    switchTab(tabs[next].dataset.tab);
+    if (tabs[next].dataset.tab === 'settings') renderSettings();
+  });
+
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && !$('#projectModal').hidden) closeProjectModal();
+    const modal = $('#projectModal');
+    if (modal.hidden) return;
+    if (event.key === 'Escape') {
+      closeProjectModal();
+      return;
+    }
+    trapTab(event, $('.modal__dialog', modal));
   });
 
   window.addEventListener('beforeunload', (event) => {

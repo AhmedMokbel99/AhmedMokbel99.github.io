@@ -163,6 +163,8 @@ const WORK_DATA = [
         "alt": "تفصيل من تصميم بوستر باقات التصوير — إبراهيم مطر (2)"
       }
     ],
+    "smallWidth": 645,
+    "gridWidth": 459,
     "slug": "project-f26"
   },
   {
@@ -179,8 +181,8 @@ const WORK_DATA = [
     "width": 1198,
     "height": 798,
     "alt": "مجموعة بوستات إعلانية لعلامات تجارية على السوشيال ميديا",
-    "summary": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، وتساهم بفعالية في تعزيز وعي الجمهور بالعلامات التجارية وزيادة نسب التفاعل (Engagement Rate) والمبيعات.",
-    "details": "🚀 تحويل الرؤية الإعلانية إلى واقع بصري يأسر العين ويحقق النتائج\n\nتعد منصات التواصل الاجتماعي ساحة سريعة التغير، ومن هنا انطلقت في هذا المشروع لتقديم حلول تصميمية مبتكرة وخارجة عن المألوف، تراعي \"الاستراتيجية البصرية\" لكل قطاع لضمان تميزه وسط المنافسين.",
+    "summary": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، ووتُستخدم في المنشورات والحملات على منصات التواصل المختلفة.",
+    "details": "🚀 تحويل الرؤية الإعلانية إلى رسائل بصرية واضحة للنشر\n\nتعد منصات التواصل الاجتماعي ساحة سريعة التغير، ومن هنا انطلقت في هذا المشروع لتقديم حلول تصميمية مبتكرة وخارجة عن المألوف، تراعي \"الاستراتيجية البصرية\" لكل قطاع لضمان تميزه وسط المنافسين.",
     "challenge": "",
     "role": "",
     "result": "",
@@ -190,6 +192,8 @@ const WORK_DATA = [
     "video": "",
     "youtube": "",
     "gallery": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "project-f25"
   },
   {
@@ -216,6 +220,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ans-dimashqi-steak-ad"
   },
   {
@@ -241,6 +247,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ans-dimashqi-pie-ad"
   },
   {
@@ -254,10 +262,10 @@ const WORK_DATA = [
     "external": false,
     "image": "assets/projects/ultra-grow-cover.jpg",
     "imageSmall": "assets/projects/ultra-grow-cover-900.jpg",
-    "width": 1600,
-    "height": 900,
+    "width": 1920,
+    "height": 1080,
     "alt": "إطار من فيديو موشن جرافيك لمنصة ألترا جرو",
-    "summary": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) - الرائدة في تقديم حلول النمو والدعم الرقمي للأعمال في الوطن العربي. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون الشريك الأمثل لرواد الأعمال والشركات للتوسع والانتشار، وذلك من خلال قصة بصرية شيقة تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي لضمان أعلى نسب تفاعل وتحويل",
+    "summary": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) لحلول النمو والدعم الرقمي للأعمال. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون شريكًا لرواد الأعمال والشركات للتوسع والانتشار، من خلال قصة بصرية تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي بأسلوب واضح وجذاب",
     "details": "",
     "challenge": "",
     "role": "",
@@ -269,6 +277,8 @@ const WORK_DATA = [
     "youtube": "",
     "gallery": [],
     "date": "2026-11-22T15:04:54.685Z",
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ultra-grow-cover"
   },
   {
@@ -312,6 +322,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/harvard-education-center-brand-900.jpg",
     "imageMedium": "assets/projects/harvard-education-center-brand-1200.jpg",
     "featured": true,
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "harvard-education-center-brand"
   },
   {
@@ -483,6 +495,8 @@ const WORK_DATA = [
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       }
     ],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "harvard-2026-new-year-identity"
   },
   {
@@ -506,6 +520,8 @@ const WORK_DATA = [
     "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا",
     "gallery": [],
     "facts": [],
+    "smallWidth": 897,
+    "gridWidth": 638,
     "slug": "almenissy-hijri-1448-greeting"
   },
   {
@@ -529,6 +545,8 @@ const WORK_DATA = [
     "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا",
     "gallery": [],
     "facts": [],
+    "smallWidth": 684,
+    "gridWidth": 486,
     "slug": "grm-hijri-1448-greeting"
   },
   {
@@ -553,6 +571,8 @@ const WORK_DATA = [
     "imageMedium": "assets/projects/social-media-design-collection-1200.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "social-media-design-collection"
   },
   {
@@ -577,6 +597,8 @@ const WORK_DATA = [
     "alt": "بوابة القبول — تصميم طباعي",
     "gallery": [],
     "facts": [],
+    "smallWidth": 679,
+    "gridWidth": 483,
     "slug": "admission-gateway-rollup"
   },
   {
@@ -600,6 +622,8 @@ const WORK_DATA = [
     "alt": "حقن فيلر — تصميم رقمي",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "filler-injection-ad-design"
   },
   {
@@ -624,6 +648,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ultra-grow-brand-packaging"
   },
   {
@@ -648,6 +674,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 718,
+    "gridWidth": 510,
     "slug": "saudi-founding-day-motion-graphic"
   },
   {
@@ -673,6 +701,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "insta-watches-ad-design"
   },
   {
@@ -698,6 +728,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "en-serv-logo-animation"
   },
   {
@@ -723,6 +755,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "alwathba-real-estate-ad"
   },
   {
@@ -748,6 +782,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/bdeel-car-ad-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "bdeel-car-ad"
   },
   {
@@ -773,6 +809,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "elmaqsoud-generators-ad"
   },
   {
@@ -798,6 +836,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "elzain-restaurant-video"
   },
   {
@@ -823,6 +863,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "alhakum-altakathur-motion"
   },
   {
@@ -848,6 +890,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "beginnings-motion-graphic"
   },
   {
@@ -871,6 +915,8 @@ const WORK_DATA = [
     "alt": "طاهر للطباعة — هوية وطباعة",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "taher-printing-brand-identity"
   },
   {
@@ -895,6 +941,8 @@ const WORK_DATA = [
     "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "first-motion-graphics-work"
   },
   {
@@ -918,6 +966,8 @@ const WORK_DATA = [
     "alt": "ULTRA GROW — النظام البصري — هوية وطباعة",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ultra-grow-2-brand-system"
   },
   {
@@ -943,6 +993,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ibn-albasel-motion-graphic"
   },
   {
@@ -967,6 +1019,8 @@ const WORK_DATA = [
     "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "nature-secret-ad-design"
   }
 ];

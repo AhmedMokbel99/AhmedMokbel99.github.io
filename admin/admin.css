@@ -756,3 +756,16 @@ button, input, select, textarea { font: inherit; }
   .topbar__title small { max-width: 42vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .content { padding: 0.8rem; }
 }
+
+/* وصول لوحة التحكم: تركيز واضح ومساحة لمس لا تقل عن 44px */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.icon-btn,
+.pcard__actions .icon-btn,
+.tab {
+  min-width: 44px;
+  min-height: 44px;
+}

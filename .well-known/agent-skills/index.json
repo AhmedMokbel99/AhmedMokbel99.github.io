@@ -11,9 +11,9 @@
     {
       "name": "project-discovery",
       "type": "skill-md",
-      "description": "Search and read Ahmed Mokbel's 24 portfolio projects and case studies.",
+      "description": "Search and read Ahmed Mokbel's portfolio projects and case studies.",
       "url": "https://ahmedmokbel99.github.io/skills/project-discovery/SKILL.md",
-      "digest": "sha256:8b1565410d07373f105c6830a7ee246b9e7989ce1bf073ed172dcfbc3e7b1eb7"
+      "digest": "sha256:5cedce60e2e815add6c3c514b474cf2282e96323c138b9b56bb80029a40e4d91"
     },
     {
       "name": "service-discovery",

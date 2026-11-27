@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; frame-src https://www.youtube-nocookie.com; connect-src 'self' https://ahmed-analytics.ahmed01068775125.workers.dev; form-action 'self'; manifest-src 'self'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
   <title>أحمد مقبل — تصميم وموشن جرافيك وتصوير | مصمم ومخرج بصري</title>
@@ -895,18 +895,6 @@ main:focus {
   color: var(--text);
   font-weight: 500;
 }
-
-/* Reel / visual */
-.hero-visual {
-  position: relative;
-  width: 100%;
-  max-width: 430px;
-  justify-self: center;
-  isolation: isolate;
-  order: 1;
-}
-
-
 
 /* Clients */
 .clients {
@@ -4768,12 +4756,56 @@ body:has(.project-dialog[open]) .floating {
   }
 }
 
+/* العناصر المخفية عبر JS تظل مخفية حتى لو كان لها display صريح */
+[hidden] {
+  display: none !important;
+}
+
+.about-body .about-lead {
+  color: var(--text);
+  font-size: 1.08rem;
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.work-subhead {
+  margin: 3rem 0 1.25rem;
+  padding-inline-start: 0.9rem;
+  border-inline-start: 3px solid var(--accent);
+}
+
+.work-subhead h3 {
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+/* مساحات لمس مناسبة للأصابع */
+.filter,
+.dialog-close,
+.dialog-zoom,
+.dialog-full,
+.service-nav a {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@media (max-width: 420px) {
+  .work-grid,
+  .clients__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project,
   .filter,
   .service,
   .step {
     transition: none !important;
+  }
+
+  .btn[aria-busy="true"]::before {
+    animation: none !important;
   }
 }
   </style>
@@ -4812,6 +4844,7 @@ body:has(.project-dialog[open]) .floating {
         "addressCountry": "EG"
       },
       "worksFor": {
+        "@id": "https://ahmedmokbel99.github.io/#organization",
         "@type": "Organization",
         "name": "DOT Media",
         "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع.",
@@ -4834,6 +4867,16 @@ body:has(.project-dialog[open]) .floating {
       ]
     },
     {
+      "@type": "Organization",
+      "@id": "https://ahmedmokbel99.github.io/#organization",
+      "name": "DOT Media",
+      "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع.",
+      "url": "https://www.facebook.com/profile.php?id=61581319508233",
+      "founder": {
+        "@id": "https://ahmedmokbel99.github.io/#person"
+      }
+    },
+    {
       "@type": "WebSite",
       "@id": "https://ahmedmokbel99.github.io/#website",
       "url": "https://ahmedmokbel99.github.io/",
@@ -4849,14 +4892,16 @@ body:has(.project-dialog[open]) .floating {
         "LocalBusiness"
       ],
       "@id": "https://ahmedmokbel99.github.io/#service",
-      "name": "أحمد مقبل — DOT Media",
-      "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع. خدمات تصميم الجرافيك والموشن جرافيك والهوية البصرية والإنتاج الإعلامي من مدينة الجمالية، محافظة الدقهلية، مصر.",
+      "name": "أحمد مقبل — مصمم ومخرج بصري",
+      "description": "أحمد مقبل، مصمم ومخرج بصري من مدينة الجمالية، محافظة الدقهلية. هويات بصرية، موشن جرافيك، تصوير ومونتاج إعلانات للعلامات داخل مصر وخارجها.",
       "url": "https://ahmedmokbel99.github.io/",
       "image": "https://ahmedmokbel99.github.io/assets/og-image.jpg",
       "telephone": "+201228084197",
-      "priceRange": "$$",
       "founder": {
         "@id": "https://ahmedmokbel99.github.io/#person"
+      },
+      "parentOrganization": {
+        "@id": "https://ahmedmokbel99.github.io/#organization"
       },
       "address": {
         "@type": "PostalAddress",
@@ -4877,11 +4922,6 @@ body:has(.project-dialog[open]) .floating {
           "@type": "AdministrativeArea",
           "name": "العالم العربي"
         }
-      ],
-      "sameAs": [
-        "https://www.behance.net/ahmed01068b62e",
-        "https://www.facebook.com/profile.php?id=61581319508233",
-        "https://x.com/ahmed0106877"
       ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
@@ -5018,7 +5058,7 @@ body:has(.project-dialog[open]) .floating {
             "name": "بوستات سوشيال ميديا لعلامات تجارية",
             "url": "https://ahmedmokbel99.github.io/#project-f25",
             "genre": "سوشيال ميديا",
-            "description": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، وتساهم بفعالية في تعزيز وعي الجمهور بالعلامات التجارية وزيادة نسب التفاعل (Engagement Rate) والمبيعات.",
+            "description": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، ووتُستخدم في المنشورات والحملات على منصات التواصل المختلفة.",
             "image": "https://ahmedmokbel99.github.io/assets/projects/project-f25.jpg"
           }
         },
@@ -5054,7 +5094,7 @@ body:has(.project-dialog[open]) .floating {
             "name": "ألترا جرو — موشن جرافيك",
             "url": "https://ahmedmokbel99.github.io/#project-f27",
             "genre": "موشن جرافيك",
-            "description": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) - الرائدة في تقديم حلول النمو والدعم الرقمي للأعمال في الوطن العربي. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون الشريك الأمثل لرواد الأعمال والشركات للتوسع والانتشار، وذلك من خلال قصة بصرية شيقة تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي لضمان أعلى نسب تفاعل وتحويل",
+            "description": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) لحلول النمو والدعم الرقمي للأعمال. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون شريكًا لرواد الأعمال والشركات للتوسع والانتشار، من خلال قصة بصرية تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي بأسلوب واضح وجذاب",
             "image": "https://ahmedmokbel99.github.io/assets/projects/ultra-grow-cover.jpg"
           }
         },
@@ -5361,7 +5401,7 @@ body:has(.project-dialog[open]) .floating {
       "@type": "VideoObject",
       "@id": "https://ahmedmokbel99.github.io/#video-f27",
       "name": "ألترا جرو — موشن جرافيك",
-      "description": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) - الرائدة في تقديم حلول النمو والدعم الرقمي للأعمال في الوطن العربي. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون الشريك الأمثل لرواد الأعمال والشركات للتوسع والانتشار، وذلك من خلال قصة بصرية شيقة تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي لضمان أعلى نسب تفاعل وتحويل",
+      "description": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) لحلول النمو والدعم الرقمي للأعمال. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون شريكًا لرواد الأعمال والشركات للتوسع والانتشار، من خلال قصة بصرية تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي بأسلوب واضح وجذاب",
       "thumbnailUrl": "https://ahmedmokbel99.github.io/assets/projects/ultra-grow-cover.jpg",
       "contentUrl": "https://ahmedmokbel99.github.io/assets/projects/ultra-grow.mp4",
       "uploadDate": "2026-11-22T15:04:54.685Z",
@@ -5630,7 +5670,8 @@ body:has(.project-dialog[open]) .floating {
 
         <div class="about-body">
           <div class="eyebrow" data-reveal data-cms="about.eyebrow">نبذة</div>
-          <h1 data-reveal data-cms="about.title">هوية بصرية وصورة واضحة لكل علامة</h1>
+          <h1 data-reveal data-cms="about.title">أحمد مقبل — مصمم ومخرج بصري</h1>
+          <p class="about-lead" data-reveal data-cms="about.lead">مصمم ومخرج بصري من مدينة الجمالية، أعمل على الهوية البصرية والموشن جرافيك والتصوير وإنتاج الفيديو، ومونتاج الإعلانات للعلامات داخل مصر وخارجها.</p>
           <p data-reveal>
             <span data-cms="about.p1a">بدأت العمل في التصميم عام 2013 من مدينة الجمالية، وتطوّرت المسيرة من المطبوعات إلى الموشن جرافيك، ثم إلى التصوير وإنتاج الفيديو. أسّست</span>
             <strong data-cms="about.p1strong">DOT Media</strong>
@@ -5651,7 +5692,11 @@ body:has(.project-dialog[open]) .floating {
 
           <div class="about-actions">
             <a href="#work" class="btn btn--accent">
-              <span data-cms="hero.ctaWork">شاهد الأعمال</span>
+              <span data-cms="hero.ctaWork">شاهد الأعمال المختارة</span>
+              <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </a>
+            <a href="#contact" class="btn btn--ghost">
+              <span data-cms="hero.ctaContact">ابدأ مشروعك</span>
               <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
             </a>
             <a class="about-link" data-link="behance" href="https://www.behance.net/ahmed01068b62e" target="_blank" rel="noopener noreferrer">
@@ -5701,12 +5746,202 @@ body:has(.project-dialog[open]) .floating {
           <div class="section-head" data-reveal>
             <div class="eyebrow" data-cms="workSection.eyebrow">الأعمال</div>
             <h2 data-cms="workSection.title">أعمال مختارة</h2>
-            <p data-cms="workSection.lead">مختارات من مشاريعي في الهوية البصرية والموشن جرافيك والتصوير. اضغط على أي مشروع لعرض دراسة الحالة كاملة.</p>
+            <p data-cms="workSection.lead">مختارات من مشاريعي في الهوية البصرية والموشن جرافيك والتصوير، يليها الأرشيف الكامل. اضغط على أي مشروع لعرض دراسة الحالة كاملة.</p>
           </div>
         </div>
 
         <div class="filters" id="filters" role="group" aria-label="تصفية الأعمال"></div>
         <p class="sr-only" id="workLive" aria-live="polite"></p>
+
+        <h3 class="sr-only">الأعمال المختارة</h3>
+        <div class="work-grid work-grid--selected" id="selectedGrid" data-reveal-group>
+          <!-- selected-projects:start -->
+<article id="project-selected-f03" class="project project--video" data-reveal data-project-card="f03" data-category="ads">
+  <div class="project__media">
+    <img
+      src="assets/projects/ans-dimashqi-steak-ad-900.jpg"
+      srcset="assets/projects/ans-dimashqi-steak-ad-640.jpg 640w, assets/projects/ans-dimashqi-steak-ad-900.jpg 900w, assets/projects/ans-dimashqi-steak-ad.jpg 1200w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1200"
+      height="900"
+      alt="آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
+      loading="lazy"
+      decoding="async"
+    >
+    <video class="project__preview" src="assets/projects/f03_ans-dimashqi-steak.mp4" poster="assets/projects/ans-dimashqi-steak-ad-900.jpg" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    <div class="project__badges"><span class="project__type"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>اضغط للمشاهدة</span></div>
+  </div>
+  <div class="project__body">
+    <span class="project__tag">إعلان مطعم</span>
+    <h3 class="project__title">آنس الدمشقي — إعلان طبق اللحم</h3>
+    <span class="project__more">
+      <span>شاهد الفيديو</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f03"
+    aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
+  ></button>
+</article>
+<article id="project-selected-f06" class="project" data-reveal data-project-card="f06" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/harvard-education-center-brand-900.jpg"
+      srcset="assets/projects/harvard-education-center-brand-640.jpg 640w, assets/projects/harvard-education-center-brand-900.jpg 900w, assets/projects/harvard-education-center-brand.jpg 1600w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1600"
+      height="1200"
+      alt="مركز هارفارد التعليمي — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title">هارفارد — الهوية البصرية الأساسية</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f06"
+    aria-label="عرض تفاصيل مشروع هارفارد — الهوية البصرية الأساسية — هوية وطباعة"
+  ></button>
+</article>
+<article id="project-selected-f07" class="project" data-reveal data-project-card="f07" data-category="brand">
+  <div class="project__media">
+    <img
+      src="assets/projects/ultra-grow-brand-packaging-900.jpg"
+      srcset="assets/projects/ultra-grow-brand-packaging-640.jpg 640w, assets/projects/ultra-grow-brand-packaging-900.jpg 900w, assets/projects/ultra-grow-brand-packaging.jpg 1400w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1400"
+      height="964"
+      alt="ULTRA GROW — تغليف المنتجات — هوية وطباعة"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">هوية وطباعة</span>
+    <h3 class="project__title"><span lang="en" dir="ltr">ULTRA GROW</span> — تغليف المنتجات</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f07"
+    aria-label="عرض تفاصيل مشروع ULTRA GROW — تغليف المنتجات — هوية وطباعة"
+  ></button>
+</article>
+<article id="project-selected-f01" class="project" data-reveal data-project-card="f01" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/saudi-founding-day-motion-graphic-900.jpg"
+      srcset="assets/projects/saudi-founding-day-motion-graphic-640.jpg 510w, assets/projects/saudi-founding-day-motion-graphic-900.jpg 718w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1072"
+      height="1344"
+      alt="يوم التأسيس السعودي — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">يوم التأسيس السعودي</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f01"
+    aria-label="عرض تفاصيل مشروع يوم التأسيس السعودي — موشن جرافيك"
+  ></button>
+</article>
+<article id="project-selected-f11" class="project" data-reveal data-project-card="f11" data-category="digital">
+  <div class="project__media">
+    <img
+      src="assets/projects/insta-watches-ad-design-900.jpg"
+      srcset="assets/projects/insta-watches-ad-design-640.jpg 640w, assets/projects/insta-watches-ad-design-900.jpg 900w, assets/projects/insta-watches-ad-design.jpg 1600w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1600"
+      height="1200"
+      alt="INSTA WATCHES — تصميم رقمي"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">تصميم رقمي</span>
+    <h3 class="project__title"><span lang="en" dir="ltr">INSTA WATCHES</span></h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f11"
+    aria-label="عرض تفاصيل مشروع INSTA WATCHES — تصميم رقمي"
+  ></button>
+</article>
+<article id="project-selected-f02" class="project" data-reveal data-project-card="f02" data-category="motion">
+  <div class="project__media">
+    <img
+      src="assets/projects/ibn-albasel-motion-graphic-900.jpg"
+      srcset="assets/projects/ibn-albasel-motion-graphic-640.jpg 640w, assets/projects/ibn-albasel-motion-graphic-900.jpg 900w, assets/projects/ibn-albasel-motion-graphic.jpg 1600w"
+      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
+      width="1600"
+      height="1200"
+      alt="ابن الباسل — موشن جرافيك"
+      loading="lazy"
+      decoding="async"
+    >
+
+    
+  </div>
+  <div class="project__body">
+    <span class="project__tag">موشن جرافيك</span>
+    <h3 class="project__title">ابن الباسل</h3>
+    <span class="project__more">
+      <span>عرض التفاصيل</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+    </span>
+  </div>
+  <button
+    type="button"
+    class="project__open"
+    data-project-open="f02"
+    aria-label="عرض تفاصيل مشروع ابن الباسل — موشن جرافيك"
+  ></button>
+</article>
+<!-- selected-projects:end -->
+        </div>
+
+        <div class="work-subhead" id="allWorkHead" data-reveal>
+          <h3 data-cms="workSection.allTitle">كل الأعمال</h3>
+        </div>
 
         <div class="work-grid" id="workGrid" data-reveal-group>
           <!-- static-projects:start -->
@@ -5714,7 +5949,7 @@ body:has(.project-dialog[open]) .floating {
   <div class="project__media">
     <img
       src="assets/projects/project-f26-900.jpg"
-      srcset="assets/projects/project-f26-640.jpg 640w, assets/projects/project-f26-900.jpg 900w, assets/projects/project-f26.jpg 1189w"
+      srcset="assets/projects/project-f26-640.jpg 459w, assets/projects/project-f26-900.jpg 645w, assets/projects/project-f26.jpg 1189w"
       sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
       width="1189"
       height="1658"
@@ -5834,10 +6069,10 @@ body:has(.project-dialog[open]) .floating {
   <div class="project__media">
     <img
       src="assets/projects/ultra-grow-cover-900.jpg"
-      srcset="assets/projects/ultra-grow-cover-640.jpg 640w, assets/projects/ultra-grow-cover-900.jpg 900w, assets/projects/ultra-grow-cover.jpg 1600w"
+      srcset="assets/projects/ultra-grow-cover-640.jpg 640w, assets/projects/ultra-grow-cover-900.jpg 900w, assets/projects/ultra-grow-cover.jpg 1920w"
       sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-      width="1600"
-      height="900"
+      width="1920"
+      height="1080"
       alt="إطار من فيديو موشن جرافيك لمنصة ألترا جرو"
       loading="lazy"
       decoding="async"
@@ -5924,7 +6159,7 @@ body:has(.project-dialog[open]) .floating {
   <div class="project__media">
     <img
       src="assets/projects/almenissy-hijri-1448-greeting-900.jpg"
-      srcset="assets/projects/almenissy-hijri-1448-greeting-640.jpg 640w, assets/projects/almenissy-hijri-1448-greeting-900.jpg 900w, assets/projects/almenissy-hijri-1448-greeting.jpg 1200w"
+      srcset="assets/projects/almenissy-hijri-1448-greeting-640.jpg 638w, assets/projects/almenissy-hijri-1448-greeting-900.jpg 897w, assets/projects/almenissy-hijri-1448-greeting.jpg 1200w"
       sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
       width="1200"
       height="1204"
@@ -5954,7 +6189,7 @@ body:has(.project-dialog[open]) .floating {
   <div class="project__media">
     <img
       src="assets/projects/grm-hijri-1448-greeting-900.jpg"
-      srcset="assets/projects/grm-hijri-1448-greeting-640.jpg 640w, assets/projects/grm-hijri-1448-greeting-900.jpg 900w, assets/projects/grm-hijri-1448-greeting.jpg 1400w"
+      srcset="assets/projects/grm-hijri-1448-greeting-640.jpg 486w, assets/projects/grm-hijri-1448-greeting-900.jpg 684w, assets/projects/grm-hijri-1448-greeting.jpg 1400w"
       sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
       width="1400"
       height="1842"
@@ -6014,7 +6249,7 @@ body:has(.project-dialog[open]) .floating {
   <div class="project__media">
     <img
       src="assets/projects/admission-gateway-rollup-900.jpg"
-      srcset="assets/projects/admission-gateway-rollup-640.jpg 640w, assets/projects/admission-gateway-rollup-900.jpg 900w, assets/projects/admission-gateway-rollup.jpg 1508w"
+      srcset="assets/projects/admission-gateway-rollup-640.jpg 483w, assets/projects/admission-gateway-rollup-900.jpg 679w, assets/projects/admission-gateway-rollup.jpg 1508w"
       sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
       width="1508"
       height="2000"
@@ -6104,7 +6339,7 @@ body:has(.project-dialog[open]) .floating {
   <div class="project__media">
     <img
       src="assets/projects/saudi-founding-day-motion-graphic-900.jpg"
-      srcset="assets/projects/saudi-founding-day-motion-graphic-640.jpg 640w, assets/projects/saudi-founding-day-motion-graphic-900.jpg 900w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
+      srcset="assets/projects/saudi-founding-day-motion-graphic-640.jpg 510w, assets/projects/saudi-founding-day-motion-graphic-900.jpg 718w, assets/projects/saudi-founding-day-motion-graphic.jpg 1072w"
       sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
       width="1072"
       height="1344"
@@ -6532,7 +6767,7 @@ body:has(.project-dialog[open]) .floating {
         </noscript>
 
         <p class="work-note">
-          <span id="workTotal">27</span> <span data-cms="workSection.note">مشروعًا مختارًا من مسيرتي في التصميم والموشن والتصوير.</span>
+          <span id="workTotal">27</span> <span data-cms="workSection.note">مشروعًا في الأرشيف الكامل من مسيرتي في التصميم والموشن والتصوير.</span>
         </p>
       </div>
     </section>
@@ -6886,7 +7121,7 @@ body:has(.project-dialog[open]) .floating {
               <svg class="icon channel__arrow" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
             </a>
 
-            <a class="channel" data-link="whatsapp" href="https://wa.me/201228084197" target="_blank" rel="noopener noreferrer">
+            <a class="channel" data-link="whatsapp" href="https://wa.me/201228084197?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%A3%D8%AD%D9%85%D8%AF%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%AA%D8%B5%D9%85%D9%8A%D9%85%20/%20%D9%85%D9%88%D8%B4%D9%86%20%D8%AC%D8%B1%D8%A7%D9%81%D9%8A%D9%83" target="_blank" rel="noopener noreferrer">
               <span class="channel__icon">
                 <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
               </span>
@@ -7034,7 +7269,7 @@ body:has(.project-dialog[open]) .floating {
             <a class="social-btn" data-link="twitter" href="https://x.com/ahmed0106877" target="_blank" rel="noopener noreferrer" aria-label="إكس (تويتر)">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-x"></use></svg>
             </a>
-            <a class="social-btn" data-link="whatsapp" href="https://wa.me/201228084197" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
+            <a class="social-btn" data-link="whatsapp" href="https://wa.me/201228084197?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%A3%D8%AD%D9%85%D8%AF%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%AA%D8%B5%D9%85%D9%8A%D9%85%20/%20%D9%85%D9%88%D8%B4%D9%86%20%D8%AC%D8%B1%D8%A7%D9%81%D9%8A%D9%83" target="_blank" rel="noopener noreferrer" aria-label="واتساب">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
             </a>
           </div>
@@ -7056,7 +7291,7 @@ body:has(.project-dialog[open]) .floating {
   <a
     class="floating floating--whatsapp"
     id="floatingWhatsapp"
-    href="https://wa.me/201228084197"
+    href="https://wa.me/201228084197?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%A3%D8%AD%D9%85%D8%AF%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%AA%D8%B5%D9%85%D9%8A%D9%85%20/%20%D9%85%D9%88%D8%B4%D9%86%20%D8%AC%D8%B1%D8%A7%D9%81%D9%8A%D9%83"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="تواصل عبر واتساب"
@@ -7078,7 +7313,7 @@ body:has(.project-dialog[open]) .floating {
 
     <div class="dialog-grid">
       <div class="dialog-media" id="dialogMedia">
-        <img id="dialogImage" src="assets/projects/saudi-founding-day-motion-graphic-900.jpg" alt="" width="900" height="1128" loading="lazy" decoding="async">
+        <img id="dialogImage" src="assets/projects/saudi-founding-day-motion-graphic-900.jpg" alt="" width="718" height="900" loading="lazy" decoding="async">
         <video id="dialogVideo" class="dialog-video" controls playsinline preload="metadata" hidden></video>
         <button class="dialog-zoom" id="dialogZoom" type="button" aria-label="عرض الصورة بالحجم الكامل">
           <svg class="icon" aria-hidden="true"><use href="#i-expand"></use></svg>
@@ -7174,7 +7409,7 @@ body:has(.project-dialog[open]) .floating {
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
     </button>
 
-    <img class="lightbox__image" id="lightboxImage" alt="" decoding="async" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+    <img class="lightbox__image" id="lightboxImage" alt="" width="1200" height="900" decoding="async" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
 
     <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" type="button" aria-label="الصورة التالية">
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -7358,6 +7593,8 @@ const WORK_DATA = [
         "alt": "تفصيل من تصميم بوستر باقات التصوير — إبراهيم مطر (2)"
       }
     ],
+    "smallWidth": 645,
+    "gridWidth": 459,
     "slug": "project-f26"
   },
   {
@@ -7374,8 +7611,8 @@ const WORK_DATA = [
     "width": 1198,
     "height": 798,
     "alt": "مجموعة بوستات إعلانية لعلامات تجارية على السوشيال ميديا",
-    "summary": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، وتساهم بفعالية في تعزيز وعي الجمهور بالعلامات التجارية وزيادة نسب التفاعل (Engagement Rate) والمبيعات.",
-    "details": "🚀 تحويل الرؤية الإعلانية إلى واقع بصري يأسر العين ويحقق النتائج\n\nتعد منصات التواصل الاجتماعي ساحة سريعة التغير، ومن هنا انطلقت في هذا المشروع لتقديم حلول تصميمية مبتكرة وخارجة عن المألوف، تراعي \"الاستراتيجية البصرية\" لكل قطاع لضمان تميزه وسط المنافسين.",
+    "summary": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، ووتُستخدم في المنشورات والحملات على منصات التواصل المختلفة.",
+    "details": "🚀 تحويل الرؤية الإعلانية إلى رسائل بصرية واضحة للنشر\n\nتعد منصات التواصل الاجتماعي ساحة سريعة التغير، ومن هنا انطلقت في هذا المشروع لتقديم حلول تصميمية مبتكرة وخارجة عن المألوف، تراعي \"الاستراتيجية البصرية\" لكل قطاع لضمان تميزه وسط المنافسين.",
     "challenge": "",
     "role": "",
     "result": "",
@@ -7385,6 +7622,8 @@ const WORK_DATA = [
     "video": "",
     "youtube": "",
     "gallery": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "project-f25"
   },
   {
@@ -7411,6 +7650,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ans-dimashqi-steak-ad"
   },
   {
@@ -7436,6 +7677,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/ans-dimashqi-pie-ad-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ans-dimashqi-pie-ad"
   },
   {
@@ -7449,10 +7692,10 @@ const WORK_DATA = [
     "external": false,
     "image": "assets/projects/ultra-grow-cover.jpg",
     "imageSmall": "assets/projects/ultra-grow-cover-900.jpg",
-    "width": 1600,
-    "height": 900,
+    "width": 1920,
+    "height": 1080,
     "alt": "إطار من فيديو موشن جرافيك لمنصة ألترا جرو",
-    "summary": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) - الرائدة في تقديم حلول النمو والدعم الرقمي للأعمال في الوطن العربي. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون الشريك الأمثل لرواد الأعمال والشركات للتوسع والانتشار، وذلك من خلال قصة بصرية شيقة تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي لضمان أعلى نسب تفاعل وتحويل",
+    "summary": "فيديو موشن جرافيك إبداعي متكامل تم إنتاجه لصالح منصة \"ألترا جرو\" (Ultra Grow) لحلول النمو والدعم الرقمي للأعمال. يهدف الفيديو إلى تبسيط خدمات المنصة، واستعراض كيف يمكن لـ \"Ultra Grow\" أن تكون شريكًا لرواد الأعمال والشركات للتوسع والانتشار، من خلال قصة بصرية تدمج التحريك السلس، والشخصيات المبتكرة، والتعليق الصوتي الحماسي بأسلوب واضح وجذاب",
     "details": "",
     "challenge": "",
     "role": "",
@@ -7464,6 +7707,8 @@ const WORK_DATA = [
     "youtube": "",
     "gallery": [],
     "date": "2026-11-22T15:04:54.685Z",
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ultra-grow-cover"
   },
   {
@@ -7507,6 +7752,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/harvard-education-center-brand-900.jpg",
     "imageMedium": "assets/projects/harvard-education-center-brand-1200.jpg",
     "featured": true,
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "harvard-education-center-brand"
   },
   {
@@ -7678,6 +7925,8 @@ const WORK_DATA = [
         "alt": "مركز هارفارد التعليمي 2026 — هوية وطباعة"
       }
     ],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "harvard-2026-new-year-identity"
   },
   {
@@ -7701,6 +7950,8 @@ const WORK_DATA = [
     "alt": "تهنئة العام الهجري 1448 — Almenissy — سوشيال ميديا",
     "gallery": [],
     "facts": [],
+    "smallWidth": 897,
+    "gridWidth": 638,
     "slug": "almenissy-hijri-1448-greeting"
   },
   {
@@ -7724,6 +7975,8 @@ const WORK_DATA = [
     "alt": "تهنئة العام الهجري 1448 — GRM Developments — سوشيال ميديا",
     "gallery": [],
     "facts": [],
+    "smallWidth": 684,
+    "gridWidth": 486,
     "slug": "grm-hijri-1448-greeting"
   },
   {
@@ -7748,6 +8001,8 @@ const WORK_DATA = [
     "imageMedium": "assets/projects/social-media-design-collection-1200.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "social-media-design-collection"
   },
   {
@@ -7772,6 +8027,8 @@ const WORK_DATA = [
     "alt": "بوابة القبول — تصميم طباعي",
     "gallery": [],
     "facts": [],
+    "smallWidth": 679,
+    "gridWidth": 483,
     "slug": "admission-gateway-rollup"
   },
   {
@@ -7795,6 +8052,8 @@ const WORK_DATA = [
     "alt": "حقن فيلر — تصميم رقمي",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "filler-injection-ad-design"
   },
   {
@@ -7819,6 +8078,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ultra-grow-brand-packaging"
   },
   {
@@ -7843,6 +8104,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 718,
+    "gridWidth": 510,
     "slug": "saudi-founding-day-motion-graphic"
   },
   {
@@ -7868,6 +8131,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "insta-watches-ad-design"
   },
   {
@@ -7893,6 +8158,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/en-serv-logo-animation-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "en-serv-logo-animation"
   },
   {
@@ -7918,6 +8185,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/alwathba-real-estate-ad-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "alwathba-real-estate-ad"
   },
   {
@@ -7943,6 +8212,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/bdeel-car-ad-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "bdeel-car-ad"
   },
   {
@@ -7968,6 +8239,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/elmaqsoud-generators-ad-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "elmaqsoud-generators-ad"
   },
   {
@@ -7993,6 +8266,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/elzain-restaurant-video-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "elzain-restaurant-video"
   },
   {
@@ -8018,6 +8293,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/alhakum-altakathur-motion-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "alhakum-altakathur-motion"
   },
   {
@@ -8043,6 +8320,8 @@ const WORK_DATA = [
     "imageSmall": "assets/projects/beginnings-motion-graphic-900.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "beginnings-motion-graphic"
   },
   {
@@ -8066,6 +8345,8 @@ const WORK_DATA = [
     "alt": "طاهر للطباعة — هوية وطباعة",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "taher-printing-brand-identity"
   },
   {
@@ -8090,6 +8371,8 @@ const WORK_DATA = [
     "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "first-motion-graphics-work"
   },
   {
@@ -8113,6 +8396,8 @@ const WORK_DATA = [
     "alt": "ULTRA GROW — النظام البصري — هوية وطباعة",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ultra-grow-2-brand-system"
   },
   {
@@ -8138,6 +8423,8 @@ const WORK_DATA = [
     "featured": true,
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "ibn-albasel-motion-graphic"
   },
   {
@@ -8162,6 +8449,8 @@ const WORK_DATA = [
     "imageMedium": "assets/projects/nature-secret-ad-design-1200.jpg",
     "gallery": [],
     "facts": [],
+    "smallWidth": 900,
+    "gridWidth": 640,
     "slug": "nature-secret-ad-design"
   }
 ];
@@ -8187,6 +8476,16 @@ const categoryLabel = (id) =>
   (typeof CATEGORIES !== 'undefined' && CATEGORIES.find((c) => c.id === id)?.label) || id;
 
 const formatCount = (n) => new Intl.NumberFormat('en-US').format(n);
+
+/* يمنع كسر الـ markup لو جاء نص من لوحة التحكم فيه علامات HTML */
+const escHtml = (value) =>
+  String(value ?? '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[char]);
 
 /* إحصائيات خفيفة على Cloudflare — من غير كوكيز ولا بيانات شخصية */
 const ANALYTICS_ENDPOINT = 'https://ahmed-analytics.ahmed01068775125.workers.dev';
@@ -8290,20 +8589,6 @@ const dedupeAlt = (text) => {
   return out.join(' — ');
 };
 
-/* ------------------------------------------------------------
-   Toast
------------------------------------------------------------- */
-let toastTimer = null;
-function showToast(message) {
-  const toast = $('#toastMsg');
-  const text = $('#toastText');
-  if (!toast || !text) return;
-  text.textContent = message;
-  toast.classList.add('is-visible');
-  window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 5000);
-}
-
 /* حبس التركيز جوه نافذة مفتوحة (Dialog أو Lightbox) */
 function trapTab(event, container) {
   if (event.key !== 'Tab') return;
@@ -8369,13 +8654,15 @@ function initSiteData() {
   /* شرائح المهارات والأدوات */
   const skills = $('#skillChips');
   if (skills) {
-    skills.innerHTML = SITE_DATA.skills.map((s) => `<li class="chip">${s}</li>`).join('');
+    skills.innerHTML = SITE_DATA.skills
+      .map((s) => `<li class="chip">${escHtml(s)}</li>`)
+      .join('');
   }
 
   const tools = $('#toolChips');
   if (tools) {
     tools.innerHTML = SITE_DATA.tools
-      .map((t) => `<li class="chip chip--tool">${t}</li>`)
+      .map((t) => `<li class="chip chip--tool">${escHtml(t)}</li>`)
       .join('');
   }
 
@@ -8406,8 +8693,8 @@ function initSiteData() {
       .map(
         (s) => `
         <div class="stat">
-          <span class="stat__value" data-count="${s.value}" data-suffix="${s.suffix || ''}">0</span>
-          <span class="stat__label">${s.label}</span>
+          <span class="stat__value" data-count="${escHtml(s.value)}" data-suffix="${escHtml(s.suffix || '')}">0</span>
+          <span class="stat__label">${escHtml(s.label)}</span>
         </div>`
       )
       .join('');
@@ -8830,7 +9117,8 @@ function projectFirstVideo(project) {
 }
 
 /* Keep in sync with project_card() in build.py. */
-function projectMarkup(project, index = 0) {
+function projectMarkup(project, index = 0, options = {}) {
+  const idPrefix = options.idPrefix || 'project';
   const fallback = project.imageSmall || project.image;
   const alt = dedupeAlt(project.alt || `${project.title} — ${project.tag}`);
   const hasVideo = projectHasVideo(project);
@@ -8844,8 +9132,8 @@ function projectMarkup(project, index = 0) {
     ? String(project.image).replace(/\.(jpe?g|png|webp)$/i, '-640.jpg')
     : '';
   const srcset = [
-    project.image && /^assets\//.test(project.image) ? `${gridSmall} 640w` : '',
-    project.imageSmall ? `${project.imageSmall} 900w` : '',
+    project.image && /^assets\//.test(project.image) ? `${gridSmall} ${project.gridWidth || 640}w` : '',
+    project.imageSmall ? `${project.imageSmall} ${project.smallWidth || 900}w` : '',
     `${project.image} ${project.width}w`,
   ]
     .filter(Boolean)
@@ -8856,19 +9144,19 @@ function projectMarkup(project, index = 0) {
 
   const previewSrc = projectFirstVideo(project);
   const preview = previewSrc
-    ? `<video class="project__preview" src="${previewSrc}" poster="${fallback}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>`
+    ? `<video class="project__preview" src="${escHtml(previewSrc)}" poster="${escHtml(fallback)}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>`
     : '';
 
   return `
-    <article id="project-${project.id}" class="${classes.join(' ')}" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
+    <article id="${escHtml(idPrefix)}-${escHtml(project.id)}" class="${classes.join(' ')}" data-reveal data-project-card="${escHtml(project.id)}" data-category="${escHtml(project.cat)}">
       <div class="project__media">
         <img
-          src="${fallback}"
-          srcset="${srcset}"
+          src="${escHtml(fallback)}"
+          srcset="${escHtml(srcset)}"
           sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-          width="${project.width}"
-          height="${project.height}"
-          alt="${alt}"
+          width="${escHtml(project.width)}"
+          height="${escHtml(project.height)}"
+          alt="${escHtml(alt)}"
           loading="lazy"
           decoding="async"
         >
@@ -8876,8 +9164,8 @@ function projectMarkup(project, index = 0) {
         ${badge ? `<div class="project__badges">${badge}</div>` : ''}
       </div>
       <div class="project__body">
-        <span class="project__tag">${project.tag}</span>
-        <h3 class="project__title">${markLatin(project.title)}</h3>
+        <span class="project__tag">${escHtml(project.tag)}</span>
+        <h3 class="project__title">${escHtml(markLatin(project.title))}</h3>
         <span class="project__more">
           <span>${hasVideo ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
           <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -8886,8 +9174,8 @@ function projectMarkup(project, index = 0) {
       <button
         type="button"
         class="project__open"
-        data-project-open="${project.id}"
-        aria-label="${dedupeAlt(`عرض تفاصيل مشروع ${project.title} — ${project.tag}`)}"
+        data-project-open="${escHtml(project.id)}"
+        aria-label="${escHtml(dedupeAlt(`عرض تفاصيل مشروع ${project.title} — ${project.tag}`))}"
       ></button>
     </article>`;
 }
@@ -8905,11 +9193,11 @@ function renderFilters() {
     return `<button
       type="button"
       class="filter"
-      data-filter="${category.id}"
+      data-filter="${escHtml(category.id)}"
       aria-pressed="${category.id === 'all' ? 'true' : 'false'}"
     >
-      ${category.label}
-      <span class="filter__count">${count}</span>
+      ${escHtml(category.label)}
+      <span class="filter__count">${escHtml(count)}</span>
     </button>`;
   }).join('');
 }
@@ -8933,6 +9221,7 @@ function renderProjects() {
   if (!inSync) grid.innerHTML = state.projects.map(projectMarkup).join('');
 
   initGridImages(grid);
+  renderSelectedProjects();
   renderFilters();
   observeReveals(grid);
   ensureWorkMore(grid);
@@ -8940,6 +9229,29 @@ function renderProjects() {
 
   const counter = $('#workTotal');
   if (counter) counter.textContent = String(state.projects.length);
+}
+
+/* الأعمال المختارة تظهر أولًا، ثم الأرشيف الكامل تحت عنوان مستقل */
+function renderSelectedProjects() {
+  const grid = $('#selectedGrid');
+  if (!grid || typeof WORK_DATA === 'undefined') return;
+
+  const selected = state.projects.filter((p) => p.featured).slice(0, 7);
+  const existing = $$('[data-project-card]', grid);
+  const inSync =
+    existing.length === selected.length &&
+    existing.every(
+      (card, index) => card.dataset.projectCard === selected[index].id
+    );
+
+  if (!inSync) {
+    grid.innerHTML = selected
+      .map((project, index) => projectMarkup(project, index, { idPrefix: 'project-selected' }))
+      .join('');
+  }
+
+  initGridImages(grid);
+  observeReveals(grid);
 }
 
 /* إظهار الصور بهدوء عند جهوزها بدل ما تنط في الشاشة */
@@ -9030,6 +9342,13 @@ function initWork() {
       );
 
       state.visible = state.projects.filter((p) => filter === 'all' || p.cat === filter);
+
+      /* تقسيم «مختارة / كل الأعمال» يظهر في عرض «الكل» فقط */
+      const showSplit = filter === 'all';
+      const selectedGrid = $('#selectedGrid');
+      const allWorkHead = $('#allWorkHead');
+      if (selectedGrid) selectedGrid.hidden = !showSplit;
+      if (allWorkHead) allWorkHead.hidden = !showSplit;
 
       const shownNow = [];
       $$('[data-project-card]', grid).forEach((card) => {
@@ -9198,7 +9517,7 @@ function renderDialog() {
         button.dataset.videoIndex = String(index);
         button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
         button.setAttribute('aria-label', item.title || `المقطع ${index + 1}`);
-        button.innerHTML = `<img src="${poster}" alt="" width="200" height="150" loading="lazy" decoding="async"><span class="dialog-playlist__index">${index + 1}</span>`;
+        button.innerHTML = `<img src="${escHtml(poster)}" alt="" width="200" height="150" loading="lazy" decoding="async"><span class="dialog-playlist__index">${index + 1}</span>`;
         playlist.append(button);
       });
       playlist.hidden = false;
@@ -9241,7 +9560,7 @@ function renderDialog() {
         button.className = 'dialog-gallery__item';
         button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
         button.setAttribute('aria-label', item.alt || `صورة ${index + 1}`);
-        button.innerHTML = `<img src="${thumbOf(item)}" data-fallback="${item.small || item.src}" alt="" width="80" height="80" loading="lazy" decoding="async">`;
+        button.innerHTML = `<img src="${escHtml(thumbOf(item))}" data-fallback="${escHtml(item.small || item.src)}" alt="" width="80" height="80" loading="lazy" decoding="async">`;
 
         button.addEventListener('click', () => {
           if (!image) return;
@@ -9709,11 +10028,7 @@ function initContactForm() {
   const status = $('#formStatus');
   const submitBtn = $('#formSubmit');
 
-  const clock = () =>
-    window.performance && typeof performance.now === 'function' ? performance.now() : Date.now();
-  const MIN_FILL_MS = 3000;
   const COOLDOWN_MS = 60000;
-  const readyAt = clock();
   let cooldownUntil = 0;
   let submitting = false;
 
@@ -9912,15 +10227,7 @@ function initContactForm() {
     event.preventDefault();
 
     if (form.querySelector('[name="botcheck"]')?.value) {
-      form.reset();
-      clearStatus();
-      return;
-    }
-
-    /* ملء النموذج في أقل من 3 ثوانٍ سلوك آلي؛ نرفضه بهدوء */
-    if (clock() - readyAt < MIN_FILL_MS) {
-      form.reset();
-      clearStatus();
+      setStatus('error', 'تعذّر تجهيز الرسالة. راجع البيانات وحاول مرة أخرى.');
       return;
     }
 
@@ -9998,8 +10305,8 @@ function initCollapsibleSections() {
 
 /* معاينة الفيديو على الديسكتوب فقط: بلا صوت، وبلا تحميل قبل التحويم */
 function initGalleryMotion() {
-  const grid = $('#workGrid');
-  if (!grid) return;
+  const grids = ['#selectedGrid', '#workGrid'].map((selector) => $(selector)).filter(Boolean);
+  if (!grids.length) return;
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (!canHover || reduceMotion.matches) return;
   let active = null;
@@ -10029,25 +10336,27 @@ function initGalleryMotion() {
     else shown();
   };
 
-  grid.addEventListener('pointerover', (event) => {
-    const card = event.target.closest('[data-project-card].project--video');
-    if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
-    start(card);
-  });
+  grids.forEach((grid) => {
+    grid.addEventListener('pointerover', (event) => {
+      const card = event.target.closest('[data-project-card].project--video');
+      if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
+      start(card);
+    });
 
-  grid.addEventListener('pointerout', (event) => {
-    const card = event.target.closest('[data-project-card].project--video');
-    if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
-    stop(card);
-  });
+    grid.addEventListener('pointerout', (event) => {
+      const card = event.target.closest('[data-project-card].project--video');
+      if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
+      stop(card);
+    });
 
-  grid.addEventListener('focusin', (event) => {
-    const card = event.target.closest('[data-project-card].project--video');
-    if (card) start(card);
-  });
-  grid.addEventListener('focusout', (event) => {
-    const card = event.target.closest('[data-project-card].project--video');
-    if (card) stop(card);
+    grid.addEventListener('focusin', (event) => {
+      const card = event.target.closest('[data-project-card].project--video');
+      if (card) start(card);
+    });
+    grid.addEventListener('focusout', (event) => {
+      const card = event.target.closest('[data-project-card].project--video');
+      if (card) stop(card);
+    });
   });
 }
 

@@ -19,6 +19,16 @@ const categoryLabel = (id) =>
 
 const formatCount = (n) => new Intl.NumberFormat('en-US').format(n);
 
+/* يمنع كسر الـ markup لو جاء نص من لوحة التحكم فيه علامات HTML */
+const escHtml = (value) =>
+  String(value ?? '').replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  })[char]);
+
 /* إحصائيات خفيفة على Cloudflare — من غير كوكيز ولا بيانات شخصية */
 const ANALYTICS_ENDPOINT = 'https://ahmed-analytics.ahmed01068775125.workers.dev';
 function trackEvent(kind, project = '') {
@@ -121,20 +131,6 @@ const dedupeAlt = (text) => {
   return out.join(' — ');
 };
 
-/* ------------------------------------------------------------
-   Toast
------------------------------------------------------------- */
-let toastTimer = null;
-function showToast(message) {
-  const toast = $('#toastMsg');
-  const text = $('#toastText');
-  if (!toast || !text) return;
-  text.textContent = message;
-  toast.classList.add('is-visible');
-  window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 5000);
-}
-
 /* حبس التركيز جوه نافذة مفتوحة (Dialog أو Lightbox) */
 function trapTab(event, container) {
   if (event.key !== 'Tab') return;
@@ -200,13 +196,15 @@ function initSiteData() {
   /* شرائح المهارات والأدوات */
   const skills = $('#skillChips');
   if (skills) {
-    skills.innerHTML = SITE_DATA.skills.map((s) => `<li class="chip">${s}</li>`).join('');
+    skills.innerHTML = SITE_DATA.skills
+      .map((s) => `<li class="chip">${escHtml(s)}</li>`)
+      .join('');
   }
 
   const tools = $('#toolChips');
   if (tools) {
     tools.innerHTML = SITE_DATA.tools
-      .map((t) => `<li class="chip chip--tool">${t}</li>`)
+      .map((t) => `<li class="chip chip--tool">${escHtml(t)}</li>`)
       .join('');
   }
 
@@ -237,8 +235,8 @@ function initSiteData() {
       .map(
         (s) => `
         <div class="stat">
-          <span class="stat__value" data-count="${s.value}" data-suffix="${s.suffix || ''}">0</span>
-          <span class="stat__label">${s.label}</span>
+          <span class="stat__value" data-count="${escHtml(s.value)}" data-suffix="${escHtml(s.suffix || '')}">0</span>
+          <span class="stat__label">${escHtml(s.label)}</span>
         </div>`
       )
       .join('');
@@ -661,7 +659,8 @@ function projectFirstVideo(project) {
 }
 
 /* Keep in sync with project_card() in build.py. */
-function projectMarkup(project, index = 0) {
+function projectMarkup(project, index = 0, options = {}) {
+  const idPrefix = options.idPrefix || 'project';
   const fallback = project.imageSmall || project.image;
   const alt = dedupeAlt(project.alt || `${project.title} — ${project.tag}`);
   const hasVideo = projectHasVideo(project);
@@ -675,8 +674,8 @@ function projectMarkup(project, index = 0) {
     ? String(project.image).replace(/\.(jpe?g|png|webp)$/i, '-640.jpg')
     : '';
   const srcset = [
-    project.image && /^assets\//.test(project.image) ? `${gridSmall} 640w` : '',
-    project.imageSmall ? `${project.imageSmall} 900w` : '',
+    project.image && /^assets\//.test(project.image) ? `${gridSmall} ${project.gridWidth || 640}w` : '',
+    project.imageSmall ? `${project.imageSmall} ${project.smallWidth || 900}w` : '',
     `${project.image} ${project.width}w`,
   ]
     .filter(Boolean)
@@ -687,19 +686,19 @@ function projectMarkup(project, index = 0) {
 
   const previewSrc = projectFirstVideo(project);
   const preview = previewSrc
-    ? `<video class="project__preview" src="${previewSrc}" poster="${fallback}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>`
+    ? `<video class="project__preview" src="${escHtml(previewSrc)}" poster="${escHtml(fallback)}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>`
     : '';
 
   return `
-    <article id="project-${project.id}" class="${classes.join(' ')}" data-reveal data-project-card="${project.id}" data-category="${project.cat}">
+    <article id="${escHtml(idPrefix)}-${escHtml(project.id)}" class="${classes.join(' ')}" data-reveal data-project-card="${escHtml(project.id)}" data-category="${escHtml(project.cat)}">
       <div class="project__media">
         <img
-          src="${fallback}"
-          srcset="${srcset}"
+          src="${escHtml(fallback)}"
+          srcset="${escHtml(srcset)}"
           sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-          width="${project.width}"
-          height="${project.height}"
-          alt="${alt}"
+          width="${escHtml(project.width)}"
+          height="${escHtml(project.height)}"
+          alt="${escHtml(alt)}"
           loading="lazy"
           decoding="async"
         >
@@ -707,8 +706,8 @@ function projectMarkup(project, index = 0) {
         ${badge ? `<div class="project__badges">${badge}</div>` : ''}
       </div>
       <div class="project__body">
-        <span class="project__tag">${project.tag}</span>
-        <h3 class="project__title">${markLatin(project.title)}</h3>
+        <span class="project__tag">${escHtml(project.tag)}</span>
+        <h3 class="project__title">${escHtml(markLatin(project.title))}</h3>
         <span class="project__more">
           <span>${hasVideo ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
           <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -717,8 +716,8 @@ function projectMarkup(project, index = 0) {
       <button
         type="button"
         class="project__open"
-        data-project-open="${project.id}"
-        aria-label="${dedupeAlt(`عرض تفاصيل مشروع ${project.title} — ${project.tag}`)}"
+        data-project-open="${escHtml(project.id)}"
+        aria-label="${escHtml(dedupeAlt(`عرض تفاصيل مشروع ${project.title} — ${project.tag}`))}"
       ></button>
     </article>`;
 }
@@ -736,11 +735,11 @@ function renderFilters() {
     return `<button
       type="button"
       class="filter"
-      data-filter="${category.id}"
+      data-filter="${escHtml(category.id)}"
       aria-pressed="${category.id === 'all' ? 'true' : 'false'}"
     >
-      ${category.label}
-      <span class="filter__count">${count}</span>
+      ${escHtml(category.label)}
+      <span class="filter__count">${escHtml(count)}</span>
     </button>`;
   }).join('');
 }
@@ -764,6 +763,7 @@ function renderProjects() {
   if (!inSync) grid.innerHTML = state.projects.map(projectMarkup).join('');
 
   initGridImages(grid);
+  renderSelectedProjects();
   renderFilters();
   observeReveals(grid);
   ensureWorkMore(grid);
@@ -771,6 +771,29 @@ function renderProjects() {
 
   const counter = $('#workTotal');
   if (counter) counter.textContent = String(state.projects.length);
+}
+
+/* الأعمال المختارة تظهر أولًا، ثم الأرشيف الكامل تحت عنوان مستقل */
+function renderSelectedProjects() {
+  const grid = $('#selectedGrid');
+  if (!grid || typeof WORK_DATA === 'undefined') return;
+
+  const selected = state.projects.filter((p) => p.featured).slice(0, 7);
+  const existing = $$('[data-project-card]', grid);
+  const inSync =
+    existing.length === selected.length &&
+    existing.every(
+      (card, index) => card.dataset.projectCard === selected[index].id
+    );
+
+  if (!inSync) {
+    grid.innerHTML = selected
+      .map((project, index) => projectMarkup(project, index, { idPrefix: 'project-selected' }))
+      .join('');
+  }
+
+  initGridImages(grid);
+  observeReveals(grid);
 }
 
 /* إظهار الصور بهدوء عند جهوزها بدل ما تنط في الشاشة */
@@ -861,6 +884,13 @@ function initWork() {
       );
 
       state.visible = state.projects.filter((p) => filter === 'all' || p.cat === filter);
+
+      /* تقسيم «مختارة / كل الأعمال» يظهر في عرض «الكل» فقط */
+      const showSplit = filter === 'all';
+      const selectedGrid = $('#selectedGrid');
+      const allWorkHead = $('#allWorkHead');
+      if (selectedGrid) selectedGrid.hidden = !showSplit;
+      if (allWorkHead) allWorkHead.hidden = !showSplit;
 
       const shownNow = [];
       $$('[data-project-card]', grid).forEach((card) => {
@@ -1029,7 +1059,7 @@ function renderDialog() {
         button.dataset.videoIndex = String(index);
         button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
         button.setAttribute('aria-label', item.title || `المقطع ${index + 1}`);
-        button.innerHTML = `<img src="${poster}" alt="" width="200" height="150" loading="lazy" decoding="async"><span class="dialog-playlist__index">${index + 1}</span>`;
+        button.innerHTML = `<img src="${escHtml(poster)}" alt="" width="200" height="150" loading="lazy" decoding="async"><span class="dialog-playlist__index">${index + 1}</span>`;
         playlist.append(button);
       });
       playlist.hidden = false;
@@ -1072,7 +1102,7 @@ function renderDialog() {
         button.className = 'dialog-gallery__item';
         button.setAttribute('aria-current', index === 0 ? 'true' : 'false');
         button.setAttribute('aria-label', item.alt || `صورة ${index + 1}`);
-        button.innerHTML = `<img src="${thumbOf(item)}" data-fallback="${item.small || item.src}" alt="" width="80" height="80" loading="lazy" decoding="async">`;
+        button.innerHTML = `<img src="${escHtml(thumbOf(item))}" data-fallback="${escHtml(item.small || item.src)}" alt="" width="80" height="80" loading="lazy" decoding="async">`;
 
         button.addEventListener('click', () => {
           if (!image) return;
@@ -1540,11 +1570,7 @@ function initContactForm() {
   const status = $('#formStatus');
   const submitBtn = $('#formSubmit');
 
-  const clock = () =>
-    window.performance && typeof performance.now === 'function' ? performance.now() : Date.now();
-  const MIN_FILL_MS = 3000;
   const COOLDOWN_MS = 60000;
-  const readyAt = clock();
   let cooldownUntil = 0;
   let submitting = false;
 
@@ -1743,15 +1769,7 @@ function initContactForm() {
     event.preventDefault();
 
     if (form.querySelector('[name="botcheck"]')?.value) {
-      form.reset();
-      clearStatus();
-      return;
-    }
-
-    /* ملء النموذج في أقل من 3 ثوانٍ سلوك آلي؛ نرفضه بهدوء */
-    if (clock() - readyAt < MIN_FILL_MS) {
-      form.reset();
-      clearStatus();
+      setStatus('error', 'تعذّر تجهيز الرسالة. راجع البيانات وحاول مرة أخرى.');
       return;
     }
 
@@ -1829,8 +1847,8 @@ function initCollapsibleSections() {
 
 /* معاينة الفيديو على الديسكتوب فقط: بلا صوت، وبلا تحميل قبل التحويم */
 function initGalleryMotion() {
-  const grid = $('#workGrid');
-  if (!grid) return;
+  const grids = ['#selectedGrid', '#workGrid'].map((selector) => $(selector)).filter(Boolean);
+  if (!grids.length) return;
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (!canHover || reduceMotion.matches) return;
   let active = null;
@@ -1860,25 +1878,27 @@ function initGalleryMotion() {
     else shown();
   };
 
-  grid.addEventListener('pointerover', (event) => {
-    const card = event.target.closest('[data-project-card].project--video');
-    if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
-    start(card);
-  });
+  grids.forEach((grid) => {
+    grid.addEventListener('pointerover', (event) => {
+      const card = event.target.closest('[data-project-card].project--video');
+      if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
+      start(card);
+    });
 
-  grid.addEventListener('pointerout', (event) => {
-    const card = event.target.closest('[data-project-card].project--video');
-    if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
-    stop(card);
-  });
+    grid.addEventListener('pointerout', (event) => {
+      const card = event.target.closest('[data-project-card].project--video');
+      if (!card || (event.relatedTarget && card.contains(event.relatedTarget))) return;
+      stop(card);
+    });
 
-  grid.addEventListener('focusin', (event) => {
-    const card = event.target.closest('[data-project-card].project--video');
-    if (card) start(card);
-  });
-  grid.addEventListener('focusout', (event) => {
-    const card = event.target.closest('[data-project-card].project--video');
-    if (card) stop(card);
+    grid.addEventListener('focusin', (event) => {
+      const card = event.target.closest('[data-project-card].project--video');
+      if (card) start(card);
+    });
+    grid.addEventListener('focusout', (event) => {
+      const card = event.target.closest('[data-project-card].project--video');
+      if (card) stop(card);
+    });
   });
 }
 

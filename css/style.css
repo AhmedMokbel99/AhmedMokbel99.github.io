@@ -844,18 +844,6 @@ main:focus {
   font-weight: 500;
 }
 
-/* Reel / visual */
-.hero-visual {
-  position: relative;
-  width: 100%;
-  max-width: 430px;
-  justify-self: center;
-  isolation: isolate;
-  order: 1;
-}
-
-
-
 /* Clients */
 .clients {
   padding-block: clamp(2.8rem, 5vw, 4rem);
@@ -4716,11 +4704,55 @@ body:has(.project-dialog[open]) .floating {
   }
 }
 
+/* العناصر المخفية عبر JS تظل مخفية حتى لو كان لها display صريح */
+[hidden] {
+  display: none !important;
+}
+
+.about-body .about-lead {
+  color: var(--text);
+  font-size: 1.08rem;
+  font-weight: 500;
+  line-height: 1.8;
+}
+
+.work-subhead {
+  margin: 3rem 0 1.25rem;
+  padding-inline-start: 0.9rem;
+  border-inline-start: 3px solid var(--accent);
+}
+
+.work-subhead h3 {
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+/* مساحات لمس مناسبة للأصابع */
+.filter,
+.dialog-close,
+.dialog-zoom,
+.dialog-full,
+.service-nav a {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@media (max-width: 420px) {
+  .work-grid,
+  .clients__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .project,
   .filter,
   .service,
   .step {
     transition: none !important;
+  }
+
+  .btn[aria-busy="true"]::before {
+    animation: none !important;
   }
 }

@@ -50,6 +50,6 @@
 
 ## التواصل
 
-- واتساب: https://wa.me/201228084197
-- البريد: YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=
+- واتساب: https://wa.me/201228084197?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%A3%D8%AD%D9%85%D8%AF%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%AA%D8%B5%D9%85%D9%8A%D9%85%20/%20%D9%85%D9%88%D8%B4%D9%86%20%D8%AC%D8%B1%D8%A7%D9%81%D9%8A%D9%83
+- البريد: ahmed01068775125@gmail.com
 - صفحة التواصل: https://ahmedmokbel99.github.io/#contact

@@ -114,23 +114,23 @@
 
     <div class="layout">
       <aside class="sidebar">
-        <nav id="tabsNav">
-          <button class="tab is-active" data-tab="projects" type="button">
+        <nav id="tabsNav" role="tablist" aria-label="أقسام اللوحة">
+          <button class="tab is-active" id="tab-projects" data-tab="projects" type="button" role="tab" aria-selected="true" aria-controls="panel-projects" tabindex="0">
             <span aria-hidden="true">▦</span> المشاريع
           </button>
-          <button class="tab" data-tab="texts" type="button">
+          <button class="tab" id="tab-texts" data-tab="texts" type="button" role="tab" aria-selected="false" aria-controls="panel-texts" tabindex="-1">
             <span aria-hidden="true">✎</span> نصوص الموقع
           </button>
-          <button class="tab" data-tab="pages" type="button">
+          <button class="tab" id="tab-pages" data-tab="pages" type="button" role="tab" aria-selected="false" aria-controls="panel-pages" tabindex="-1">
             <span aria-hidden="true">▤</span> صفحات الخدمات
           </button>
-          <button class="tab" data-tab="images" type="button">
+          <button class="tab" id="tab-images" data-tab="images" type="button" role="tab" aria-selected="false" aria-controls="panel-images" tabindex="-1">
             <span aria-hidden="true">🖼</span> صور الموقع
           </button>
-          <button class="tab" data-tab="analytics" type="button">
+          <button class="tab" id="tab-analytics" data-tab="analytics" type="button" role="tab" aria-selected="false" aria-controls="panel-analytics" tabindex="-1">
             <span aria-hidden="true">📊</span> الإحصائيات
           </button>
-          <button class="tab" data-tab="settings" type="button">
+          <button class="tab" id="tab-settings" data-tab="settings" type="button" role="tab" aria-selected="false" aria-controls="panel-settings" tabindex="-1">
             <span aria-hidden="true">⚙</span> الإعدادات
           </button>
         </nav>
@@ -141,12 +141,12 @@
       </aside>
 
       <main class="content">
-        <section class="panel" id="panel-projects"></section>
-        <section class="panel" id="panel-texts" hidden></section>
-        <section class="panel" id="panel-pages" hidden></section>
-        <section class="panel" id="panel-images" hidden></section>
-        <section class="panel" id="panel-analytics" hidden></section>
-        <section class="panel" id="panel-settings" hidden></section>
+        <section class="panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects" tabindex="0"></section>
+        <section class="panel" id="panel-texts" role="tabpanel" aria-labelledby="tab-texts" tabindex="0" hidden></section>
+        <section class="panel" id="panel-pages" role="tabpanel" aria-labelledby="tab-pages" tabindex="0" hidden></section>
+        <section class="panel" id="panel-images" role="tabpanel" aria-labelledby="tab-images" tabindex="0" hidden></section>
+        <section class="panel" id="panel-analytics" role="tabpanel" aria-labelledby="tab-analytics" tabindex="0" hidden></section>
+        <section class="panel" id="panel-settings" role="tabpanel" aria-labelledby="tab-settings" tabindex="0" hidden></section>
       </main>
     </div>
   </div>

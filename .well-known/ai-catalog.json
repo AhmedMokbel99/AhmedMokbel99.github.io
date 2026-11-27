@@ -60,6 +60,16 @@
       ]
     },
     {
+      "identifier": "urn:air:ahmedmokbel99.github.io:portfolio:llms",
+      "displayName": "Ahmed Mokbel — llms.txt guidance",
+      "type": "text/plain",
+      "url": "https://ahmedmokbel99.github.io/llms.txt",
+      "representativeQueries": [
+        "What does this site tell AI assistants about Ahmed Mokbel?",
+        "How should an agent cite Ahmed Mokbel's portfolio?"
+      ]
+    },
+    {
       "identifier": "urn:air:ahmedmokbel99.github.io:portfolio:markdown",
       "displayName": "Ahmed Mokbel — Portfolio in Markdown",
       "type": "text/markdown",

@@ -29,9 +29,10 @@ import hashlib
 import html as html_lib
 import json
 import re
+import struct
 import sys
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content"
@@ -230,6 +231,18 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
     site_data = apply_tokens(site_data)
     visible = apply_tokens(visible)
 
+    # أوصاف srcset لازم تعكس العرض الحقيقي للملفات المولّدة
+    for project in visible:
+        image = str(project.get("image") or "")
+        small = str(project.get("imageSmall") or "")
+        grid = re.sub(r"\.(?:jpe?g|png|webp)$", "-640.jpg", image, flags=re.I) if image.startswith("assets/") else ""
+        if image:
+            project["width"] = image_width(image) or int(project.get("width") or 1200)
+        if small:
+            project["smallWidth"] = image_width(small) or 900
+        if grid:
+            project["gridWidth"] = image_width(grid) or 640
+
     # نفس الـslug العلني اللي في api/projects/<slug>.json
     slugs = project_slugs(visible)
     visible = [dict(p, slug=slugs[p["id"]]) for p in visible]
@@ -377,7 +390,49 @@ def project_first_video(project: dict) -> str:
     return str(project.get("video") or "")
 
 
-def project_card(project: dict, index: int = 0) -> str:
+def image_width(src: str) -> int | None:
+    """Width from the local JPEG/PNG header, without adding a build dependency."""
+    if not src:
+        return None
+    path = ROOT / src
+    if not path.is_file():
+        return None
+    try:
+        data = path.read_bytes()[:65536]
+    except OSError:
+        return None
+
+    if data.startswith(b"\x89PNG\r\n\x1a\n") and len(data) >= 24:
+        return struct.unpack(">I", data[16:20])[0]
+
+    if data.startswith(b"\xff\xd8"):
+        pos = 2
+        while pos + 9 < len(data):
+            if data[pos] != 0xFF:
+                pos += 1
+                continue
+            marker = data[pos + 1]
+            if marker in (0xD8, 0xD9, 0x01) or 0xD0 <= marker <= 0xD7:
+                pos += 2
+                continue
+            if marker in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF):
+                return struct.unpack(">H", data[pos + 7:pos + 9])[0]
+            if marker == 0xDA:
+                break
+            if pos + 4 > len(data):
+                break
+            length = struct.unpack(">H", data[pos + 2:pos + 4])[0]
+            pos += 2 + length
+    return None
+
+
+def project_card(
+    project: dict,
+    index: int = 0,
+    *,
+    id_prefix: str = "project",
+    defer: bool = True,
+) -> str:
     """Keep in sync with projectMarkup() in js/main.js."""
     image = project.get("image", "")
     image_small = project.get("imageSmall") or ""
@@ -392,9 +447,9 @@ def project_card(project: dict, index: int = 0) -> str:
     srcset = ", ".join(
         part
         for part in (
-            f"{grid_small} 640w" if grid_small else "",
-            f"{image_small} 900w" if image_small else "",
-            f"{image} {width}w",
+            f"{grid_small} {image_width(grid_small) or 640}w" if grid_small else "",
+            f"{image_small} {image_width(image_small) or 900}w" if image_small else "",
+            f"{image} {image_width(image) or width}w",
         )
         if part
     )
@@ -404,7 +459,7 @@ def project_card(project: dict, index: int = 0) -> str:
     classes = ["project"]
     if project_has_video(project):
         classes.append("project--video")
-    if index >= INITIAL_CARDS:
+    if defer and index >= INITIAL_CARDS:
         classes.append("is-deferred")
 
     has_video = project_has_video(project)
@@ -426,7 +481,7 @@ def project_card(project: dict, index: int = 0) -> str:
         else ""
     )
 
-    return f'''<article id="project-{esc(project["id"])}" class="{" ".join(classes)}" data-reveal data-project-card="{esc(project["id"])}" data-category="{esc(project["cat"])}">
+    return f'''<article id="{id_prefix}-{esc(project["id"])}" class="{" ".join(classes)}" data-reveal data-project-card="{esc(project["id"])}" data-category="{esc(project["cat"])}">
   <div class="project__media">
     <img
       src="{esc(fallback)}"
@@ -591,7 +646,7 @@ def channels_block(site: dict) -> str:
         else:
             value = f"<b>{esc(channel.get('value', ''))}</b>"
             if kind == "whatsapp":
-                href = f' href="https://wa.me/{esc(contact["whatsapp"])}" target="_blank" rel="noopener noreferrer"'
+                href = f' href="{esc(wa_link(contact["whatsapp"]))}" target="_blank" rel="noopener noreferrer"'
             else:
                 href = f' href="{esc(contact.get(kind, ""))}" target="_blank" rel="noopener noreferrer"'
         cards.append(
@@ -642,6 +697,14 @@ def site_base(site: dict) -> str:
     return meta["siteUrl"].rstrip("/")
 
 
+DEFAULT_WA_TEXT = "مرحباً أحمد، أود الاستفسار عن مشروع تصميم / موشن جرافيك"
+
+
+def wa_link(number: str, text: str = DEFAULT_WA_TEXT) -> str:
+    """رابط واتساب برسالة جاهزة، يشتغل حتى بدون JavaScript."""
+    return f"https://wa.me/{number}?text={quote(text)}"
+
+
 def home_jsonld(site: dict, projects: list[dict]) -> str:
     base = site_base(site)
     contact = site["contact"]
@@ -649,6 +712,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
     agency = site["agency"]
     images = site_images(site)
     person_id = f"{base}/#person"
+    org_id = f"{base}/#organization"
 
     person = {
         "@type": "Person",
@@ -666,6 +730,7 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
             "addressCountry": "EG",
         },
         "worksFor": {
+            "@id": org_id,
             "@type": "Organization",
             "name": agency["name"],
             "description": agency["description"],
@@ -691,13 +756,13 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
     service = {
         "@type": ["ProfessionalService", "LocalBusiness"],
         "@id": f"{base}/#service",
-        "name": f'{brand["name"]} — {agency["name"]}',
-        "description": f'{agency["description"]} خدمات تصميم الجرافيك والموشن جرافيك والهوية البصرية والإنتاج الإعلامي من {brand["location"]}، مصر.',
+        "name": f'{brand["name"]} — {brand["jobTitle"]}',
+        "description": site["meta"]["description"],
         "url": base + "/",
         "image": f'{base}/{images["og"]["src"]}',
         "telephone": f'+{contact["whatsapp"]}',
-        "priceRange": "$$",
         "founder": {"@id": person_id},
+        "parentOrganization": {"@id": org_id},
         "address": {
             "@type": "PostalAddress",
             "addressLocality": brand["location"].split("،")[0],
@@ -709,7 +774,6 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
             {"@type": "Country", "name": "مصر"},
             {"@type": "AdministrativeArea", "name": "العالم العربي"},
         ],
-        "sameAs": [contact["behance"], contact["facebook"], contact["twitter"]],
         "hasOfferCatalog": {
             "@type": "OfferCatalog",
             "name": "خدمات التصميم والموشن جرافيك",
@@ -743,7 +807,16 @@ def home_jsonld(site: dict, projects: list[dict]) -> str:
     portfolio = portfolio_jsonld(site, projects)
     videos = video_jsonld(site, projects)
 
-    return jsonld_script([person, website, service, faq, portfolio] + videos)
+    organization = {
+        "@type": "Organization",
+        "@id": org_id,
+        "name": agency["name"],
+        "description": agency["description"],
+        "url": contact.get("agencyUrl", contact.get("facebook")),
+        "founder": {"@id": person_id},
+    }
+
+    return jsonld_script([person, organization, website, service, faq, portfolio] + videos)
 
 
 def portfolio_jsonld(site: dict, projects: list[dict]) -> dict:
@@ -821,7 +894,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
     contact = site["contact"]
     images = site_images(site)
     url = f'{base}/{page["slug"]}'
-    whatsapp = f'https://wa.me/{contact["whatsapp"]}'
+    whatsapp = wa_link(contact["whatsapp"])
     phone_display = f'+{contact["whatsapp"]}'
 
     faq_items = page["faq"]["items"]
@@ -834,6 +907,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
             "description": page["serviceDescription"],
             "url": url,
             "provider": {
+                "@id": f"{base}/#person",
                 "@type": "Person",
                 "name": brand["name"],
                 "url": base + "/",
@@ -1323,6 +1397,7 @@ def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
         f"- فهرس مهارات الوكلاء: {base}/.well-known/agent-skills/index.json",
         f"- كتالوج الموارد (ARD): {base}/.well-known/ai-catalog.json",
         f"- بيان الوصول للوكلاء: {base}/auth.md",
+        f"- دليل الوكلاء هذا: {base}/llms.txt",
         "",
         "المحتوى عام للقراءة فقط. لا يوجد تسجيل ولا مفاتيح وصول. "
         "لا تُستخدم بيانات الموقع خارج ما هو منشور فيه.",
@@ -1332,12 +1407,14 @@ def write_llms(site: dict, projects: list[dict], pages: list[dict]) -> None:
         "",
         "## التواصل",
         "",
-        f"- واتساب: https://wa.me/{contact['whatsapp']}",
-        f"- البريد: {encode_email(contact['email'])}",
+        f"- واتساب: {wa_link(contact['whatsapp'])}",
+        f"- البريد: {contact['email']}",
         f"- Behance: {contact['behance']}",
         f"- Facebook (DOT Media): {contact['facebook']}",
         f"- X: {contact['twitter']}",
         f"- صفحة التواصل: {base}/#contact",
+        "",
+        f"آخر تحديث: {TODAY}. كل الوقائع أعلاه منقولة من محتوى الموقع نفسه.",
         "",
     ]
 
@@ -1366,14 +1443,14 @@ def write_robots(site: dict) -> None:
                 "User-agent: *",
                 "Allow: /",
                 "",
-                "# Content Signals (contentsignals.org):",
+                "# تفضيلات المحتوى (داخل تعليقات لأنها ليست توجيهات robots.txt قياسية):",
                 "#   ai-train=no  — لا يُستخدم المحتوى لتدريب النماذج",
                 "#   search=yes   — الفهرسة والظهور في نتائج البحث مسموح",
                 "#   ai-input=yes — يُسمح باستخدام المحتوى للإجابة والإحالة",
-                "Content-Signal: ai-train=no, search=yes, ai-input=yes",
                 "",
                 "# Agentic Resource Discovery manifest",
-                f"Agentmap: {base}/.well-known/ai-catalog.json",
+                f"# Agentmap: {base}/.well-known/ai-catalog.json",
+                "# معلن أيضًا عبر <link rel=\"describedby\"> في رأس الصفحة وملف llms.txt",
                 "",
                 "# نسخة الملف الواحد مخصّصة للاستخدام المحلي فقط",
                 "Disallow: /standalone.html",
@@ -1543,10 +1620,10 @@ def api_profile(site: dict, projects: list[dict], base: str) -> dict:
             "behance": contact["behance"],
             "facebook": contact["facebook"],
             "x": contact["twitter"],
-            "whatsapp": f'https://wa.me/{contact["whatsapp"]}',
+            "whatsapp": wa_link(contact["whatsapp"]),
         },
         "contact": {
-            "email": encode_email(contact["email"]),
+            "email": contact["email"],
             "whatsapp": f'+{contact["whatsapp"]}',
             "preferredLanguage": "ar",
         },
@@ -1806,6 +1883,16 @@ def ai_catalog_doc(site: dict, base: str) -> dict:
                 ],
             },
             {
+                "identifier": f"urn:air:{host}:portfolio:llms",
+                "displayName": "Ahmed Mokbel — llms.txt guidance",
+                "type": "text/plain",
+                "url": f"{base}/llms.txt",
+                "representativeQueries": [
+                    "What does this site tell AI assistants about Ahmed Mokbel?",
+                    "How should an agent cite Ahmed Mokbel's portfolio?",
+                ],
+            },
+            {
                 "identifier": f"urn:air:{host}:portfolio:markdown",
                 "displayName": "Ahmed Mokbel — Portfolio in Markdown",
                 "type": "text/markdown",
@@ -1861,7 +1948,7 @@ require an explicit human confirmation before anything is sent.
     },
     {
         "name": "project-discovery",
-        "summary": "Search and read Ahmed Mokbel's 24 portfolio projects and case studies.",
+        "summary": "Search and read Ahmed Mokbel's portfolio projects and case studies.",
         "body": """## When to use this skill
 
 Use it when a user asks for examples of Ahmed Mokbel's work, needs a case study,
@@ -1980,8 +2067,8 @@ def write_well_known(site: dict, base: str) -> None:
         WELL_KNOWN_DIR / "security.txt",
         "\n".join(
             [
-                f'Contact: mailto:{encode_email(site["contact"]["email"])}',
-                f'Contact: https://wa.me/{site["contact"]["whatsapp"]}',
+                f'Contact: mailto:{site["contact"]["email"]}',
+                f'Contact: {wa_link(site["contact"]["whatsapp"])}',
                 f"Expires: {expires}T00:00:00.000Z",
                 f"Canonical: {base}/.well-known/security.txt",
                 "Preferred-Languages: ar, en",
@@ -2070,7 +2157,7 @@ are exposed by this site.
 ## Contact
 
 - Email: {email}
-- WhatsApp: https://wa.me/{whatsapp}
+- WhatsApp: {whatsapp}
 - Studio: {agency}
 """
 
@@ -2082,8 +2169,8 @@ def write_auth_md(site: dict, base: str) -> None:
         AUTH_MD.format(
             host=host,
             base=base,
-            email=encode_email(site["contact"]["email"]),
-            whatsapp=site["contact"]["whatsapp"],
+            email=site["contact"]["email"],
+            whatsapp=wa_link(site["contact"]["whatsapp"]),
             agency=site["agency"]["name"],
         ),
     )
@@ -2286,8 +2373,8 @@ def write_markdown_mirror(site: dict, projects: list[dict], pages: list[dict], b
     lines += [
         "## التواصل",
         "",
-        f"- واتساب: https://wa.me/{contact['whatsapp']}",
-        f"- البريد: {encode_email(contact['email'])}",
+        f"- واتساب: {wa_link(contact['whatsapp'])}",
+        f"- البريد: {contact['email']}",
         f"- Behance: {contact['behance']}",
         f"- X: {contact['twitter']}",
         f"- نموذج التواصل: {base}/#contact",
@@ -2329,8 +2416,8 @@ def write_markdown_mirror(site: dict, projects: list[dict], pages: list[dict], b
         md += [
             "## التواصل",
             "",
-            f'- واتساب: https://wa.me/{contact["whatsapp"]}',
-            f'- البريد: {encode_email(contact["email"])}',
+            f'- واتساب: {wa_link(contact["whatsapp"])}',
+            f'- البريد: {contact["email"]}',
             f'- صفحة التواصل: {base}/#contact',
             "",
         ]
@@ -2528,6 +2615,15 @@ def main() -> None:
     ))
     html = replace_block(html, "channels", channels_block(site))
     html = replace_block(html, "service-options", service_options(site))
+    selected = [p for p in visible if p.get("featured")][:7]
+    html = replace_block(
+        html,
+        "selected-projects",
+        "\n".join(
+            project_card(p, i, id_prefix="project-selected", defer=False)
+            for i, p in enumerate(selected)
+        ),
+    )
     html = replace_block(html, "static-projects", "\n".join(project_card(p, i) for i, p in enumerate(visible)))
 
     html, text_count = apply_cms(html, site)
@@ -2591,6 +2687,11 @@ def main() -> None:
     if error_page.is_file():
         write(error_page, head_policy(update_assets_version(read(error_page))))
 
+    # 2c) privacy.html — نفس بصمة الأصول مع الحفاظ على سياسة connect-src المقيّدة
+    privacy_page = ROOT / "privacy.html"
+    if privacy_page.is_file():
+        write(privacy_page, update_assets_version(read(privacy_page)))
+
     # 3) صفحات الخدمات
     for page in pages:
         others = [p for p in pages if p["slug"] != page["slug"]]
@@ -2608,7 +2709,7 @@ def main() -> None:
     base = site_base(site)
     urls = [(base + "/", "1.0")] + [
         (f'{base}/{page["slug"]}', "0.8") for page in pages
-    ] + [(f"{base}/docs/api/", "0.4")]
+    ] + [(f"{base}/docs/api/", "0.4"), (f"{base}/privacy.html", "0.3")]
     entries = "\n".join(
         f"""  <url>
     <loc>{esc(loc)}</loc>
@@ -2657,7 +2758,7 @@ def main() -> None:
 
 def build_standalone(html: str) -> None:
     # السكربتات والستايل مضمّنين جوّه الملف، فالسياستان لازم تسمحا بـ'unsafe-inline'
-    html = head_policy(html, csp=CSP_STANDALONE, robots="index, follow, max-image-preview:large")
+    html = head_policy(html, csp=CSP_STANDALONE, robots="noindex, nofollow")
     css = read(CSS_FILE)
     # standalone.html في جذر الموقع، فمسار الخطوط بيتغيّر
     css = css.replace("../assets/fonts/", "assets/fonts/")

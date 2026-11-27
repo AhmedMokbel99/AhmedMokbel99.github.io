@@ -1,11 +1,11 @@
 ---
 name: "project-discovery"
-description: "Search and read Ahmed Mokbel's 24 portfolio projects and case studies."
+description: "Search and read Ahmed Mokbel's portfolio projects and case studies."
 ---
 
 # project-discovery
 
-Search and read Ahmed Mokbel's 24 portfolio projects and case studies.
+Search and read Ahmed Mokbel's portfolio projects and case studies.
 
 ## When to use this skill
 
