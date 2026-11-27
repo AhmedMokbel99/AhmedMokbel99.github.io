@@ -86,6 +86,11 @@ def esc(value) -> str:
     return html_lib.escape(text, quote=True)
 
 
+def json_for_script(value) -> str:
+    """Serialize JSON safely for inline <script> blocks (prevents </script> breakout)."""
+    return json.dumps(value, ensure_ascii=False, indent=2).replace("<", "\\u003c")
+
+
 def apply_tokens(value):
     """يستبدل {city} و{location} داخل أي نص أو قائمة أو كائن."""
     if isinstance(value, str):
@@ -256,11 +261,11 @@ def build_data_js(site: dict, projects: list[dict]) -> str:
     return (
         header
         + "const SITE_DATA = "
-        + json.dumps(site_data, ensure_ascii=False, indent=2)
+        + json_for_script(site_data)
         + ";\n\nconst CATEGORIES = "
-        + json.dumps(site.get("categories", []), ensure_ascii=False, indent=2)
+        + json_for_script(site.get("categories", []))
         + ";\n\nconst WORK_DATA = "
-        + json.dumps(visible, ensure_ascii=False, indent=2)
+        + json_for_script(visible)
         + ";\n"
     )
 
@@ -679,7 +684,7 @@ def service_options(site: dict) -> str:
 # 4) بيانات منظمة (JSON-LD)
 # ---------------------------------------------------------------------------
 def jsonld_script(graph: list[dict]) -> str:
-    payload = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, indent=2)
+    payload = json_for_script({"@context": "https://schema.org", "@graph": graph})
     return (
         '  <script type="application/ld+json">\n'
         + payload
@@ -1009,9 +1014,11 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
   <meta property="og:image" content="{esc(base)}/{esc(images["og"]["src"])}">
   <meta property="og:image:width" content="{images["og"]["width"]}">
   <meta property="og:image:height" content="{images["og"]["height"]}">
+  <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:alt" content="{esc(images["og"]["alt"])}">
 
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="{esc(url)}">
   <meta name="twitter:title" content="{esc(page["ogTitle"])}">
   <meta name="twitter:description" content="{esc(page["ogDescription"])}">
   <meta name="twitter:image" content="{esc(base)}/{esc(images["og"]["src"])}">
@@ -2205,6 +2212,7 @@ def docs_api_page(site: dict, base: str, slugs: list[str], services: list[dict])
         f'              <tr><td>{esc(s["title"])}</td><td><code>{esc(s["pageUrl"].replace(base, ""))}</code></td></tr>'
         for s in services[:6]
     )
+    base = esc(base)
     return f"""<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -2426,6 +2434,7 @@ def write_markdown_mirror(site: dict, projects: list[dict], pages: list[dict], b
 
 def agent_head_links(base: str, markdown_href: str) -> str:
     """روابط الآلة داخل <head> — بديل ما ينفعش نبعته كـLink headers على GitHub Pages."""
+    base = esc(base)
     return "\n".join(
         [
             f'  <link rel="api-catalog" href="{base}/.well-known/api-catalog" type="application/linkset+json">',

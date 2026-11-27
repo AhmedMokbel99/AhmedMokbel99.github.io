@@ -83,8 +83,11 @@ for p in HTMLS:
     if '"priceRange": "$$"' in text:
         issues.append(f"UNVERIFIED_PRICE_RANGE {p.relative_to(ROOT)}")
     for m in re.finditer(r'href="https://wa\.me/\d+(?:\?text=)?[^"]*"', text, re.I):
-        if "?text=" not in m.group(0):
-            issues.append(f"WA_LINK_NO_TEXT {p.relative_to(ROOT)}: {m.group(0)[:100]}")
+        href = m.group(0)
+        if "?text=" not in href:
+            issues.append(f"WA_LINK_NO_TEXT {p.relative_to(ROOT)}: {href[:100]}")
+        if href.count("?text=") > 1:
+            issues.append(f"WA_LINK_DOUBLE_TEXT {p.relative_to(ROOT)}: {href[:100]}")
 
 for p in ROOT.rglob("*"):
     if not p.is_file() or any(part in p.parts for part in (".git", "_source")):

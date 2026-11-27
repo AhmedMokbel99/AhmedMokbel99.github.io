@@ -765,7 +765,10 @@ button, input, select, textarea { font: inherit; }
 
 .icon-btn,
 .pcard__actions .icon-btn,
-.tab {
+.tab,
+.btn--sm,
+.link-btn,
+.login__back {
   min-width: 44px;
   min-height: 44px;
 }

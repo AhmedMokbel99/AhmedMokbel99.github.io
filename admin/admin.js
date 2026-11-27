@@ -763,13 +763,18 @@ function openProjectEditor(index) {
 
   $('#projectModalTitle').textContent = isNew ? 'إضافة مشروع' : 'تعديل مشروع';
   renderProjectForm();
+  state.draftSnapshot = JSON.stringify(state.draft);
   state.modalReturnFocus = document.activeElement;
   $('#projectModal').hidden = false;
   document.body.style.overflow = 'hidden';
   setTimeout(() => $('#pf_title')?.focus(), 40);
 }
 
-function closeProjectModal() {
+function closeProjectModal({ force = false } = {}) {
+  if (!force && state.draftSnapshot && JSON.stringify(state.draft) !== state.draftSnapshot) {
+    if (!confirm('لديك تعديلات غير محفوظة في المشروع. هل تريد إغلاق النافذة وتجاهلها؟')) return;
+  }
+
   /* إزالة الصور/الفيديوهات التي رُفعت في هذا المحرّر ولم تُستخدم */
   const stillUsed = (path) => {
     const main = mainPathOf(path);
@@ -788,6 +793,7 @@ function closeProjectModal() {
   $('#projectModal').hidden = true;
   document.body.style.overflow = '';
   state.draft = null;
+  state.draftSnapshot = '';
   state.draftPreview = '';
   state.draftUploads = [];
   state.draftOriginal = null;
@@ -1628,7 +1634,7 @@ function saveProjectDraft() {
     state.projects[state.draftIndex] = clone(draft);
   }
 
-  closeProjectModal();
+  closeProjectModal({ force: true });
   markDirty();
   renderProjects();
   toast('اتسجل في اللوحة بس — اضغط «حفظ ونشر» دلوقتي عشان يظهر للناس.', 'ok');
@@ -1655,7 +1661,7 @@ function deleteProject(index) {
 
   if (project.image && !stillUsed(project.image)) drop(project.image);
   if (project.imageSmall && !stillUsed(project.imageSmall)) drop(project.imageSmall);
-  if (project.video) drop(project.video);
+  if (project.video && !stillUsed(project.video)) drop(project.video);
   galleryPaths(project).forEach((path) => {
     if (!stillUsed(path)) drop(path);
   });
@@ -2817,8 +2823,8 @@ function bindGlobal() {
     let next = current;
     if (event.key === 'Home') next = 0;
     else if (event.key === 'End') next = tabs.length - 1;
-    else if (event.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
-    else next = (current + 1) % tabs.length;
+    else if (event.key === 'ArrowLeft') next = (current + 1) % tabs.length;
+    else next = (current - 1 + tabs.length) % tabs.length;
     tabs[next].focus();
     switchTab(tabs[next].dataset.tab);
     if (tabs[next].dataset.tab === 'settings') renderSettings();

@@ -707,7 +707,7 @@ function projectMarkup(project, index = 0, options = {}) {
       </div>
       <div class="project__body">
         <span class="project__tag">${escHtml(project.tag)}</span>
-        <h3 class="project__title">${escHtml(markLatin(project.title))}</h3>
+        <h3 class="project__title">${markLatin(project.title)}</h3>
         <span class="project__more">
           <span>${hasVideo ? 'شاهد الفيديو' : 'عرض التفاصيل'}</span>
           <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>

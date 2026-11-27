@@ -4729,9 +4729,11 @@ body:has(.project-dialog[open]) .floating {
 
 /* مساحات لمس مناسبة للأصابع */
 .filter,
+.nav__toggle,
 .dialog-close,
 .dialog-zoom,
 .dialog-full,
+.dialog-nav__btn,
 .service-nav a {
   min-height: 44px;
   min-width: 44px;
