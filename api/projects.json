@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "generatedAt": "2026-11-27",
   "source": "https://ahmedmokbel99.github.io/",
-  "count": 27,
+  "count": 25,
   "detailPattern": "https://ahmedmokbel99.github.io/api/projects/{slug}.json",
   "projects": [
     {
@@ -29,7 +29,7 @@
       "category": "digital",
       "categoryLabel": "تصميم رقمي",
       "tag": "سوشيال ميديا",
-      "summary": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، وتُستخدم في المنشورات والحملات على منصات التواصل المختلفة.",
+      "summary": "🎯 صناعة الهوية البصرية وتصميم حملات رقمية مبتكرة\n\nمجموعة من تصاميم السوشيال ميديا الإبداعية التي تم العمل عليها بعناية لعدة قطاعات حيوية (تعليمية، تجارية، طبية، ومطاعم)، بهدف تحويل الأفكار والخدمات إلى رسائل بصرية جذابة تؤسس لحضور رقمي قوي، ووتُستخدم في المنشورات والحملات على منصات التواصل المختلفة.",
       "featured": false,
       "hasVideo": false,
       "media": {
@@ -120,7 +120,7 @@
       "category": "brand",
       "categoryLabel": "هوية وطباعة",
       "tag": "هوية وطباعة",
-      "summary": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي.",
+      "summary": "هوية بصرية لمركز هارفارد التعليمي، مبنية على الوضوح والثقة وسهولة التطبيق في المطبوعات والرقمي. 2026",
       "featured": false,
       "hasVideo": false,
       "media": {
@@ -446,25 +446,6 @@
       "externalUrl": "https://www.behance.net/gallery/119428049/_"
     },
     {
-      "slug": "ibn-albasel-motion-graphic",
-      "title": "ابن الباسل",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
-      "tag": "موشن جرافيك",
-      "summary": "فيديو موشن جرافيك يقدّم «ابن الباسل» بأسلوب سينمائي وإيقاع بصري مشدود من أول ثانية.",
-      "featured": true,
-      "hasVideo": false,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/ibn-albasel-motion-graphic.jpg",
-        "width": 1600,
-        "height": 1200
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f02",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ibn-albasel-motion-graphic.json",
-      "externalUrl": "https://www.behance.net/gallery/244097521/_"
-    },
-    {
       "slug": "ultra-grow-2-brand-system",
       "title": "ULTRA GROW — النظام البصري",
       "category": "brand",
@@ -482,25 +463,6 @@
       "pageUrl": "https://ahmedmokbel99.github.io/#project-f08",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/ultra-grow-2-brand-system.json",
       "externalUrl": "https://www.behance.net/gallery/194077839/ULTRA-GROW-2"
-    },
-    {
-      "slug": "nature-secret-ad-design",
-      "title": "سر الطبيعة",
-      "category": "digital",
-      "categoryLabel": "تصميم رقمي",
-      "tag": "تصميم رقمي",
-      "summary": "تصميم إعلاني رقمي يستلهم الطبيعة في تكوين دافئ وجذاب يلفت الانتباه دون ازدحام بصري.",
-      "featured": false,
-      "hasVideo": false,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/nature-secret-ad-design.jpg",
-        "width": 1600,
-        "height": 1200
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f12",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/nature-secret-ad-design.json",
-      "externalUrl": "https://www.behance.net/gallery/194077227/_"
     }
   ]
 }

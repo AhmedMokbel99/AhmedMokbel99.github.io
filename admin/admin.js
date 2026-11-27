@@ -181,6 +181,35 @@ function mainPathOf(path) {
   return String(path || '').replace(/-(thumb|640|1200)(\.(jpe?g|png|webp))$/i, '$2');
 }
 
+/* كل مسارات الملفات المشار إليها في ملفات المحتوى الثلاثة — قبل أي حذف أو نشر */
+function collectAssetPaths(node, out = new Set()) {
+  if (!node || typeof node !== 'object') return out;
+  if (Array.isArray(node)) {
+    node.forEach((item) => collectAssetPaths(item, out));
+    return out;
+  }
+  for (const value of Object.values(node)) {
+    if (typeof value === 'string') {
+      const path = value.trim();
+      if (/^(?:assets|images|_source)\//i.test(path)) out.add(path);
+    } else if (value && typeof value === 'object') {
+      collectAssetPaths(value, out);
+    }
+  }
+  return out;
+}
+
+function contentPaths(excludeProjectIndex = -1) {
+  const out = new Set();
+  collectAssetPaths(state.site, out);
+  collectAssetPaths(state.pages, out);
+  state.projects.forEach((project, index) => {
+    if (index !== excludeProjectIndex) collectAssetPaths(project, out);
+  });
+  if (excludeProjectIndex >= 0 && state.draft) collectAssetPaths(state.draft, out);
+  return out;
+}
+
 /* صور الموقع: البروفايل وصورة المشاركة */
 const DEFAULT_IMAGES = {
   portrait: {
@@ -701,6 +730,15 @@ function ensureProjectFields(project) {
   project.facts = cleanFacts;
 
   if (/\.(mp4|webm|mov)$/i.test(String(project.video || ''))) fill('date', new Date().toISOString());
+
+  /* isVideo لازم يطابق ملف فيديو أو رابط يوتيوب — غير كده زرار الفيديو يظهر فاضي */
+  const hasVideo =
+    /\.(mp4|webm|mov)$/i.test(String(project.video || '')) ||
+    !!String(project.youtube || '').trim();
+  if (Boolean(project.isVideo) !== hasVideo) {
+    project.isVideo = hasVideo;
+    changed = true;
+  }
   return changed;
 }
 
@@ -1328,16 +1366,13 @@ function removeGalleryItem(index) {
     state.draftUploads = state.draftUploads.filter((entry) => entry !== path);
     if (uploadedNow) return;
 
-    const usedElsewhere =
-      list.some((entry) => entry.src === path || entry.small === path) ||
-      state.projects.some(
-        (project, projectIndex) =>
-          projectIndex !== state.draftIndex && galleryPaths(project).includes(path)
-      );
-    if (!usedElsewhere) {
+    const referenced = contentPaths(state.draftIndex);
+    if (!referenced.has(path)) {
       state.pendingDeletes.add(path);
       variantPaths(item.src).forEach((variant) => {
-        if (!state.draftUploads.includes(variant)) state.pendingDeletes.add(variant);
+        if (!referenced.has(variant) && !state.draftUploads.includes(variant)) {
+          state.pendingDeletes.add(variant);
+        }
       });
     }
   });
@@ -1502,7 +1537,9 @@ async function attachSiteImage(key, file) {
     };
     if (key === 'og' && state.site.meta) state.site.meta.ogImage = prepared.data.src;
 
+    const referenced = contentPaths(-1);
     previousPaths.forEach((path) => {
+      if (referenced.has(path)) return;
       if (prepared.uploads.some(([newPath]) => newPath === path)) return;
       if (state.pendingUploads.has(path)) {
         state.pendingUploads.delete(path);
@@ -1598,23 +1635,19 @@ function saveProjectDraft() {
   /* حذف الصورة/الفيديو القديم لو استُبدل ولم يعد مستخدمًا في مشروع آخر */
   const original = state.draftOriginal;
   if (state.draftIndex >= 0 && original) {
-    const others = state.projects.filter((_, index) => index !== state.draftIndex);
-    const orphan = (path) =>
-      path &&
-      !others.some(
-        (item) =>
-          item.image === path ||
-          item.imageSmall === path ||
-          item.video === path ||
-          galleryPaths(item).includes(path)
-      );
+    const referenced = contentPaths(state.draftIndex);
+    const orphan = (path) => !!path && !referenced.has(path);
     if (original.image !== draft.image && orphan(original.image)) {
       state.pendingDeletes.add(original.image);
-      variantPaths(original.image).forEach((variant) => state.pendingDeletes.add(variant));
+      variantPaths(original.image).forEach((variant) => {
+        if (orphan(variant)) state.pendingDeletes.add(variant);
+      });
     }
     if (original.imageSmall !== draft.imageSmall && orphan(original.imageSmall)) {
       state.pendingDeletes.add(original.imageSmall);
-      variantPaths(original.imageSmall).forEach((variant) => state.pendingDeletes.add(variant));
+      variantPaths(original.imageSmall).forEach((variant) => {
+        if (orphan(variant)) state.pendingDeletes.add(variant);
+      });
     }
     if (original.video !== draft.video && orphan(original.video)) state.pendingDeletes.add(original.video);
 
@@ -1645,12 +1678,8 @@ function deleteProject(index) {
   if (!project) return;
   if (!confirm(`حذف مشروع «${project.title}»؟`)) return;
 
-  const stillUsed = (path) =>
-    state.projects.some(
-      (p, i) =>
-        i !== index &&
-        (p.image === path || p.imageSmall === path || p.video === path || galleryPaths(p).includes(path))
-    );
+  const referenced = contentPaths(index);
+  const stillUsed = (path) => !!path && referenced.has(path);
 
   /* الملفات التي لم تُرفع بعد تُلغى من الرفع، والموجودة تُجدول للحذف */
   const drop = (path) => {
@@ -2563,10 +2592,14 @@ async function checkDeploy(manual = false) {
     if (run.status === 'queued' || run.status === 'in_progress') {
       clearTimeout(state.pollTimer);
       state.pollTimer = setTimeout(() => checkDeploy(), 12000);
-    } else if (run.status === 'completed' && run.conclusion === 'success') {
+    } else if (run.status === 'completed') {
       if (state.lastRunId !== run.id) {
         state.lastRunId = run.id;
-        toast('تم نشر التعديلات على الموقع ✅ — اضغط «معاينة الموقع»', 'ok');
+        if (run.conclusion === 'success') {
+          toast('تم نشر التعديلات على الموقع ✅ — اضغط «معاينة الموقع»', 'ok');
+        } else {
+          toast(`اترفع لكن النشر فشل: ${label} — افتح سجل Actions للسبب.`, 'err');
+        }
       }
     } else if (manual) {
       toast(label, cls === 'is-ok' ? 'ok' : 'err');
@@ -2588,6 +2621,61 @@ async function checkDeploy(manual = false) {
       return;
     }
     if (manual) toast(`تعذّر قراءة الحالة: ${error.message}`, 'err');
+  }
+}
+
+/* فحص أخير قبل الرفع: أي ملف مذكور في المحتوى لازم يكون موجود أو جاري رفعه */
+async function validateBeforePublish() {
+  const refs = [];
+  const add = (label, path) => {
+    const clean = String(path || '').trim();
+    if (/^(?:assets|images)\//i.test(clean)) refs.push({ label, path: clean });
+  };
+  const collectProject = (project, label) => {
+    ['image', 'imageSmall', 'imageMedium', 'video'].forEach((key) => add(`${label}.${key}`, project[key]));
+    (project.gallery || []).forEach((item, index) => {
+      ['src', 'small', 'thumb'].forEach((key) => add(`${label}.gallery[${index}].${key}`, item && item[key]));
+    });
+  };
+
+  state.projects.forEach((project, index) =>
+    collectProject(project, project.id || `project${index + 1}`)
+  );
+  if (state.draftIndex >= 0 && state.draft) collectProject(state.draft, 'المشروع الجاري تحريره');
+  (state.pages || []).forEach((page) =>
+    ((page.gallery || {}).items || []).forEach((item, index) =>
+      add(`${page.slug || 'page'}.gallery[${index}].image`, item && item.image)
+    )
+  );
+  const images = (state.site && state.site.images) || {};
+  Object.entries(images).forEach(([key, image]) => {
+    ['src', 'medium', 'small'].forEach((field) => add(`صورة الموقع.${key}.${field}`, image && image[field]));
+  });
+  add('site.meta.ogImage', state.site && state.site.meta && state.site.meta.ogImage);
+
+  const scheduledForDelete = refs.filter((ref) => state.pendingDeletes.has(ref.path));
+  if (scheduledForDelete.length) {
+    throw new Error(
+      'ملفات مذكورة في المحتوى ومجدولة للحذف — النشر هيوقف:\n' +
+        scheduledForDelete.slice(0, 8).map((ref) => `${ref.label}: ${ref.path}`).join('\n')
+    );
+  }
+
+  busy('جاري فحص المحتوى قبل النشر…');
+  const tree = await api(
+    `/repos/${state.owner}/${state.repo}/git/trees/${encodeURIComponent(state.branch)}?recursive=1`
+  );
+  const available = new Set(
+    (tree.tree || []).filter((item) => item.type === 'blob').map((item) => item.path)
+  );
+  const broken = refs.filter(
+    (ref) => !available.has(ref.path) && !state.pendingUploads.has(ref.path)
+  );
+  if (broken.length) {
+    throw new Error(
+      'صور/فيديو مذكورة في المحتوى وغير موجودة على GitHub — النشر هيوقف:\n' +
+        broken.slice(0, 8).map((ref) => `${ref.label}: ${ref.path}`).join('\n')
+    );
   }
 }
 
@@ -2628,6 +2716,10 @@ async function saveAll() {
     if (missing.length) {
       throw new Error(`حقول ناقصة لازم تكتبها قبل النشر: ${missing.join(' — ')}`);
     }
+
+    /* فحص المراجع قبل الرفع — بدل ما النشر يفشل بعد ما المستخدم يظن إنه خلص */
+    setProgress(10, 'جاري فحص المحتوى');
+    await validateBeforePublish();
 
     /* حماية من كتابة نسخة قديمة فوق تعديلات أحدث (تاب مفتوح من زمان) */
     const stale = await remoteChanged();
@@ -2681,7 +2773,7 @@ async function saveAll() {
     renderAll();
     setProgress(100, 'تم التحميل — جاري بناء الموقع');
     hideProgress(2500);
-    toast('تم الحفظ ✅ — GitHub يبني الموقع الآن تلقائيًا (حوالي دقيقة).', 'ok');
+    toast('اترفع ✅ — مستني نتيجة البناء والنشر…', 'ok');
     setTimeout(() => checkDeploy(), 4000);
   } catch (error) {
     let hint = '';
