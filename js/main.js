@@ -250,7 +250,7 @@ function initSiteData() {
 
   const pillProjects = $('#pillProjects');
   if (pillProjects && statValue('projects')) {
-    pillProjects.textContent = `+${statValue('projects')}`;
+    pillProjects.textContent = String(statValue('projects'));
   }
 
   const workTotal = $('#workTotal');
@@ -717,7 +717,7 @@ function projectMarkup(project, index = 0, options = {}) {
         type="button"
         class="project__open"
         data-project-open="${escHtml(project.id)}"
-        aria-label="${escHtml(dedupeAlt(`عرض تفاصيل مشروع ${project.title} — ${project.tag}`))}"
+        aria-label="${escHtml(dedupeAlt(`${hasVideo ? 'شاهد فيديو' : 'عرض تفاصيل'} مشروع ${project.title} — ${project.tag}`))}"
       ></button>
     </article>`;
 }
@@ -785,7 +785,7 @@ function initGridImages(scope) {
   });
 }
 
-/* زر «عرض المزيد» — أول 8 مشاريع بس، والباقي عند الطلب */
+/* زر «عرض الكل» — أول 8 مشاريع تظهر، والباقي عند الطلب */
 function ensureWorkMore(grid) {
   if ($('#workMore')) return;
   const wrap = document.createElement('div');
@@ -793,7 +793,7 @@ function ensureWorkMore(grid) {
   wrap.id = 'workMore';
   wrap.innerHTML = `
     <button class="btn btn--ghost work-more__btn" id="workMoreBtn" type="button">
-      <span>عرض المزيد من الأعمال</span>
+      <span>عرض الكل</span>
       <span class="work-more__count" id="workMoreCount"></span>
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg>
     </button>`;

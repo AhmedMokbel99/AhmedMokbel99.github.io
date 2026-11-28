@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-27",
+  "generatedAt": "2026-11-28",
   "source": "https://ahmedmokbel99.github.io/",
-  "count": 25,
+  "count": 24,
   "detailPattern": "https://ahmedmokbel99.github.io/api/projects/{slug}.json",
   "projects": [
     {
@@ -425,25 +425,6 @@
       "pageUrl": "https://ahmedmokbel99.github.io/#project-f05",
       "detailUrl": "https://ahmedmokbel99.github.io/api/projects/taher-printing-brand-identity.json",
       "externalUrl": "https://www.behance.net/gallery/128103663/_"
-    },
-    {
-      "slug": "first-motion-graphics-work",
-      "title": "تجربة موشن جرافيك — البدايات",
-      "category": "motion",
-      "categoryLabel": "موشن جرافيك",
-      "tag": "موشن جرافيك",
-      "summary": "من أوائل مشاريع الموشن جرافيك التي نفذتها؛ بداية المسار في التحريك والتصميم الحركي.",
-      "featured": false,
-      "hasVideo": false,
-      "media": {
-        "type": "image",
-        "url": "https://ahmedmokbel99.github.io/assets/projects/first-motion-graphics-work.jpg",
-        "width": 1600,
-        "height": 1200
-      },
-      "pageUrl": "https://ahmedmokbel99.github.io/#project-f04",
-      "detailUrl": "https://ahmedmokbel99.github.io/api/projects/first-motion-graphics-work.json",
-      "externalUrl": "https://www.behance.net/gallery/119428049/_"
     },
     {
       "slug": "ultra-grow-2-brand-system",

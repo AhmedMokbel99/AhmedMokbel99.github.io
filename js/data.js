@@ -21,7 +21,7 @@ const SITE_DATA = {
     "name": "DOT Media",
     "tagline": "Creative Production",
     "url": "https://www.facebook.com/profile.php?id=61581319508233",
-    "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع."
+    "description": "استوديو إنتاج إبداعي أسّسته للعمل على مشاريع الهوية والموشن والفيديو، بالتعاون مع فريق مستقل بحسب حجم المشروع."
   },
   "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
   "whatsapp": "201228084197",
@@ -54,15 +54,15 @@ const SITE_DATA = {
     },
     {
       "key": "projects",
-      "value": 160,
-      "suffix": "+",
-      "label": "مشروع منجز"
+      "value": 24,
+      "suffix": "",
+      "label": "مشروعًا في الأرشيف"
     },
     {
       "key": "clients",
-      "value": 80,
-      "suffix": "+",
-      "label": "عميل راضٍ"
+      "value": 11,
+      "suffix": "",
+      "label": "علامة في قائمة العملاء"
     }
   ],
   "services": [
@@ -920,32 +920,6 @@ const WORK_DATA = [
     "smallWidth": 900,
     "gridWidth": 640,
     "slug": "taher-printing-brand-identity"
-  },
-  {
-    "id": "f04",
-    "code": "F05",
-    "title": "تجربة موشن جرافيك — البدايات",
-    "cat": "motion",
-    "tag": "موشن جرافيك",
-    "isVideo": false,
-    "url": "https://www.behance.net/gallery/119428049/_",
-    "external": true,
-    "image": "assets/projects/first-motion-graphics-work.jpg",
-    "width": 1600,
-    "height": 1200,
-    "summary": "من أوائل مشاريع الموشن جرافيك التي نفذتها؛ بداية المسار في التحريك والتصميم الحركي.",
-    "challenge": "تجربة مبكرة في التحريك، والهدف كان تحويل فكرة بسيطة إلى مشهد متحرك متماسك.",
-    "role": "التصميم والتحريك من الصفر، مع تجربة أساليب انتقال وتوقيت مختلفة.",
-    "result": "عمل قصير يمثّل بداية المسار في الموشن جرافيك.",
-    "tools": "موشن جرافيك – تحريك",
-    "alt": "تجربة موشن جرافيك من بدايات المسار — موشن جرافيك",
-    "imageSmall": "assets/projects/first-motion-graphics-work-900.jpg",
-    "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg",
-    "gallery": [],
-    "facts": [],
-    "smallWidth": 900,
-    "gridWidth": 640,
-    "slug": "first-motion-graphics-work"
   },
   {
     "id": "f08",

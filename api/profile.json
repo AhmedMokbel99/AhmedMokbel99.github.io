@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-11-27",
+  "generatedAt": "2026-11-28",
   "source": "https://ahmedmokbel99.github.io/",
   "name": "أحمد مقبل",
   "latinName": "Ahmed Mokbel",
@@ -18,13 +18,13 @@
   "since": 2013,
   "numbers": {
     "experienceYears": 13,
-    "projectsDelivered": 160,
-    "clients": 80
+    "projectsDelivered": 24,
+    "clients": 11
   },
   "studio": {
     "name": "DOT Media",
     "role": "founder",
-    "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع.",
+    "description": "استوديو إنتاج إبداعي أسّسته للعمل على مشاريع الهوية والموشن والفيديو، بالتعاون مع فريق مستقل بحسب حجم المشروع.",
     "url": "https://www.facebook.com/profile.php?id=61581319508233"
   },
   "services": [
@@ -53,7 +53,7 @@
     "Cinema 4D",
     "Lightroom"
   ],
-  "projects": 25,
+  "projects": 24,
   "links": {
     "home": "https://ahmedmokbel99.github.io/",
     "projects": "https://ahmedmokbel99.github.io/api/projects.json",

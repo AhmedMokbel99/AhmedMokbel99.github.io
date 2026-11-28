@@ -53,7 +53,7 @@ ROBOTS_FILE = ROOT / "robots.txt"
 
 ASSET_VERSION = "18"
 
-# عدد المشاريع الظاهرة في الصفحة الرئيسية قبل زر «عرض المزيد»
+# عدد المشاريع الظاهرة في الصفحة الرئيسية قبل زر «عرض الكل»
 INITIAL_CARDS = 8
 
 # كل بطاقات الأعمال بنفس الحجم — لا بطاقات بعرض الصفحة ولا بنصف العرض
@@ -459,7 +459,8 @@ def project_card(
         if part
     )
     alt = project_alt(project)
-    aria_label = dedupe_alt(f'عرض تفاصيل مشروع {project["title"]} — {project.get("tag", "")}')
+    action = "شاهد فيديو" if project_has_video(project) else "عرض تفاصيل"
+    aria_label = dedupe_alt(f'{action} مشروع {project["title"]} — {project.get("tag", "")}')
 
     classes = ["project"]
     if project_has_video(project):
@@ -899,7 +900,7 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
     contact = site["contact"]
     images = site_images(site)
     url = f'{base}/{page["slug"]}'
-    whatsapp = wa_link(contact["whatsapp"])
+    whatsapp = wa_link(contact["whatsapp"], page.get("waText") or DEFAULT_WA_TEXT)
     phone_display = f'+{contact["whatsapp"]}'
 
     faq_items = page["faq"]["items"]
@@ -962,13 +963,30 @@ def service_page(page: dict, site: dict, others: list[dict]) -> str:
             </article>'''
         for card in page["audience"]["cards"]
     )
-    gallery = "\n".join(
-        f'''            <a href="index.html#work">
-              <img src="{esc(item["image"])}" width="{int(item["width"])}" height="{int(item["height"])}" alt="{esc(item["alt"])}" loading="lazy" decoding="async">
-              <span>{esc(item["title"])}</span>
-            </a>'''
-        for item in page["gallery"]["items"]
-    )
+    gallery_cards = []
+    for item in page["gallery"]["items"]:
+        href = (
+            f'index.html#project-{esc(item["projectId"])}'
+            if item.get("projectId")
+            else "index.html#work"
+        )
+        label = "شاهد الفيديو" if item.get("video") else "عرض تفاصيل المشروع"
+        video = (
+            f'''            <video class="service-gallery__video" src="{esc(item["video"])}" poster="{esc(item["image"])}" controls preload="none" aria-label="{esc(item["title"])}"></video>'''
+            if item.get("video")
+            else ""
+        )
+        gallery_cards.append(
+            f'''            <div class="service-gallery__item">
+              <a href="{href}" aria-label="{esc(label)} — {esc(item["title"])}">
+                <img src="{esc(item["image"])}" width="{int(item["width"])}" height="{int(item["height"])}" alt="{esc(item["alt"])}" loading="lazy" decoding="async">
+                <span class="service-gallery__title">{esc(item["title"])}</span>
+                <span class="service-gallery__action">{esc(label)}</span>
+              </a>
+{video}
+            </div>'''
+        )
+    gallery = "\n".join(gallery_cards)
     faq_html = "\n".join(
         f'''            <details class="faq">
               <summary>{esc(item["q"])}<span class="faq__icon" aria-hidden="true"></span></summary>

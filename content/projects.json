@@ -732,6 +732,7 @@
     "id": "f04",
     "code": "F05",
     "title": "تجربة موشن جرافيك — البدايات",
+    "visible": false,
     "cat": "motion",
     "tag": "موشن جرافيك",
     "isVideo": false,

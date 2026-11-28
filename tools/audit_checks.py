@@ -101,7 +101,7 @@ for p in ROOT.rglob("*"):
     if "24 portfolio projects" in text:
         issues.append(f"STALE_PROJECT_COUNT {p.relative_to(ROOT)}")
 
-# شبكة واحدة: 27 مشروع بترتيب المحتوى الأصلي، وتحت «أعمال مختارة» عنوان «جميع الأعمال»
+# شبكة واحدة لكل المشاريع المرئية بترتيب المحتوى الأصلي، وتحت «أعمال مختارة» عنوان «جميع الأعمال»
 index_text = (ROOT / "index.html").read_text(encoding="utf-8", errors="replace")
 match = re.search(r"<!-- static-projects:start -->(.*?)<!-- static-projects:end -->", index_text, re.S)
 grid_ids = re.findall(r'data-project-card="([^"]+)"', match.group(1)) if match else []

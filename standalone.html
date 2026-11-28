@@ -3731,7 +3731,7 @@ html.js .project__media.is-ready::before {
   margin-top: 1.6rem;
 }
 
-.service-gallery a {
+.service-gallery__item > a {
   position: relative;
   display: block;
   overflow: hidden;
@@ -3740,7 +3740,7 @@ html.js .project__media.is-ready::before {
   background: var(--surface);
 }
 
-.service-gallery img {
+.service-gallery__item img {
   width: 100%;
   height: 100%;
   aspect-ratio: 4 / 3;
@@ -3748,11 +3748,15 @@ html.js .project__media.is-ready::before {
   transition: transform 0.5s var(--ease);
 }
 
-.service-gallery a:hover img {
+.service-gallery__item > a:hover img {
   transform: scale(1.04);
 }
 
-.service-gallery span {
+.service-gallery__item {
+  min-width: 0;
+}
+
+.service-gallery__title {
   position: absolute;
   inset-inline: 0;
   bottom: 0;
@@ -3760,6 +3764,26 @@ html.js .project__media.is-ready::before {
   font-size: 0.8rem;
   color: var(--text);
   background: linear-gradient(0deg, rgba(5, 6, 10, 0.94), rgba(5, 6, 10, 0));
+}
+
+.service-gallery__action {
+  position: absolute;
+  inset-block-start: 0.6rem;
+  inset-inline-start: 0.6rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  color: var(--brand);
+  background: rgba(227, 179, 65, 0.16);
+}
+
+.service-gallery__video {
+  width: 100%;
+  margin-top: 0.5rem;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: #000;
 }
 
 .service-faq {
@@ -4840,7 +4864,7 @@ body:has(.project-dialog[open]) .floating {
       "@id": "https://ahmedmokbel99.github.io/#person",
       "name": "أحمد مقبل",
       "jobTitle": "مصمم ومخرج بصري",
-      "description": "مصمم ومخرج بصري من مدينة الجمالية، محافظة الدقهلية، ومؤسس DOT Media. استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع.",
+      "description": "مصمم ومخرج بصري من مدينة الجمالية، محافظة الدقهلية، ومؤسس DOT Media. استوديو إنتاج إبداعي أسّسته للعمل على مشاريع الهوية والموشن والفيديو، بالتعاون مع فريق مستقل بحسب حجم المشروع.",
       "url": "https://ahmedmokbel99.github.io/",
       "image": "https://ahmedmokbel99.github.io/assets/ahmed-mokbel.jpg",
       "telephone": "+201228084197",
@@ -4854,7 +4878,7 @@ body:has(.project-dialog[open]) .floating {
         "@id": "https://ahmedmokbel99.github.io/#organization",
         "@type": "Organization",
         "name": "DOT Media",
-        "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع.",
+        "description": "استوديو إنتاج إبداعي أسّسته للعمل على مشاريع الهوية والموشن والفيديو، بالتعاون مع فريق مستقل بحسب حجم المشروع.",
         "url": "https://www.facebook.com/profile.php?id=61581319508233"
       },
       "sameAs": [
@@ -4877,7 +4901,7 @@ body:has(.project-dialog[open]) .floating {
       "@type": "Organization",
       "@id": "https://ahmedmokbel99.github.io/#organization",
       "name": "DOT Media",
-      "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع.",
+      "description": "استوديو إنتاج إبداعي أسّسته للعمل على مشاريع الهوية والموشن والفيديو، بالتعاون مع فريق مستقل بحسب حجم المشروع.",
       "url": "https://www.facebook.com/profile.php?id=61581319508233",
       "founder": {
         "@id": "https://ahmedmokbel99.github.io/#person"
@@ -5043,7 +5067,7 @@ body:has(.project-dialog[open]) .floating {
       "@type": "ItemList",
       "@id": "https://ahmedmokbel99.github.io/#work",
       "name": "مشاريع مختارة",
-      "numberOfItems": 25,
+      "numberOfItems": 24,
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -5331,19 +5355,6 @@ body:has(.project-dialog[open]) .floating {
         {
           "@type": "ListItem",
           "position": 24,
-          "item": {
-            "@type": "CreativeWork",
-            "name": "تجربة موشن جرافيك — البدايات",
-            "url": "https://ahmedmokbel99.github.io/#project-f04",
-            "genre": "موشن جرافيك",
-            "description": "من أوائل مشاريع الموشن جرافيك التي نفذتها؛ بداية المسار في التحريك والتصميم الحركي.",
-            "sameAs": "https://www.behance.net/gallery/119428049/_",
-            "image": "https://ahmedmokbel99.github.io/assets/projects/first-motion-graphics-work.jpg"
-          }
-        },
-        {
-          "@type": "ListItem",
-          "position": 25,
           "item": {
             "@type": "CreativeWork",
             "name": "ULTRA GROW — النظام البصري",
@@ -5640,7 +5651,7 @@ body:has(.project-dialog[open]) .floating {
                 <div class="agency-card__title" data-cms="about.agencyTitle">DOT Media</div>
                 <span data-cms="about.agencyTagline">استوديو إنتاج إبداعي</span>
               </div>
-              <p data-cms="about.agencyDesc">استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع.</p>
+              <p data-cms="about.agencyDesc">أوقّع به أعمال الإنتاج والتصوير، وأستعين بفريق مستقل عندما يتطلب المشروع ذلك.</p>
             </div>
             <a class="btn btn--ghost btn--sm" data-link="agency" href="https://www.facebook.com/profile.php?id=61581319508233" target="_blank" rel="noopener noreferrer">
               <span data-cms="about.agencyCta">صفحة الاستوديو</span>
@@ -5656,7 +5667,7 @@ body:has(.project-dialog[open]) .floating {
           <p data-reveal>
             <span data-cms="about.p1a">بدأت العمل في التصميم عام 2013 من مدينة الجمالية، وتطوّرت المسيرة من المطبوعات إلى الموشن جرافيك، ثم إلى التصوير وإنتاج الفيديو. أسّست</span>
             <strong data-cms="about.p1strong">DOT Media</strong>
-            <span data-cms="about.p1b">، استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع.</span>
+            <span data-cms="about.p1b">، استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع. ومن بدايات المسار تجربة موشن جرافيك مبكرة نشرتها على بيهانس.</span>
           </p>
           <p data-reveal data-cms="about.p2">أعمل على أن يكون لكل مشروع سبب واضح: رسالة محددة، جمهور معروف، وقرار بصري يخدم الهدف — لا مجرد شكل جميل.</p>
 
@@ -5709,12 +5720,12 @@ body:has(.project-dialog[open]) .floating {
             <span class="stat__label">سنوات خبرة</span>
           </div>
           <div class="stat">
-            <span class="stat__value" data-count="160" data-suffix="+">160+</span>
-            <span class="stat__label">مشروع منجز</span>
+            <span class="stat__value" data-count="24" data-suffix="">24</span>
+            <span class="stat__label">مشروعًا في الأرشيف</span>
           </div>
           <div class="stat">
-            <span class="stat__value" data-count="80" data-suffix="+">80+</span>
-            <span class="stat__label">عميل راضٍ</span>
+            <span class="stat__value" data-count="11" data-suffix="">11</span>
+            <span class="stat__label">علامة في قائمة العملاء</span>
           </div>
 <!-- stats:end -->
       </div>
@@ -5730,7 +5741,7 @@ body:has(.project-dialog[open]) .floating {
             <div class="work-subhead" id="allWorkHead" data-reveal>
               <h3 data-cms="workSection.allTitle">جميع الأعمال</h3>
             </div>
-            <p data-cms="workSection.lead">مختارات من مشاريعي في الهوية البصرية والموشن جرافيك والتصوير، يليها الأرشيف الكامل. اضغط على أي مشروع لعرض تفاصيل المشروع.</p>
+            <p data-cms="workSection.lead">أبدأ بثمانية أعمال مختارة من الهوية البصرية والموشن جرافيك والتصوير والإعلانات. الضغط على «عرض الكل» يظهر بقية المشاريع في «جميع الأعمال» هنا. اضغط على أي مشروع لعرض تفاصيله أو مشاهدة فيديوه.</p>
           </div>
         </div>
 
@@ -5826,7 +5837,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f03"
-    aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
+    aria-label="شاهد فيديو مشروع آنس الدمشقي — إعلان طبق اللحم — إعلان مطعم"
   ></button>
 </article>
 <article id="project-f21" class="project project--video" data-reveal data-project-card="f21" data-category="ads">
@@ -5856,7 +5867,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f21"
-    aria-label="عرض تفاصيل مشروع آنس الدمشقي — إعلان الفطيرة — إعلان مطعم"
+    aria-label="شاهد فيديو مشروع آنس الدمشقي — إعلان الفطيرة — إعلان مطعم"
   ></button>
 </article>
 <article id="project-f27" class="project project--video" data-reveal data-project-card="f27" data-category="motion">
@@ -5886,7 +5897,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f27"
-    aria-label="عرض تفاصيل مشروع ألترا جرو — موشن جرافيك"
+    aria-label="شاهد فيديو مشروع ألترا جرو — موشن جرافيك"
   ></button>
 </article>
 <article id="project-f06" class="project" data-reveal data-project-card="f06" data-category="brand">
@@ -6216,7 +6227,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f16"
-    aria-label="عرض تفاصيل مشروع EN-SERV — تحريك شعار"
+    aria-label="شاهد فيديو مشروع EN-SERV — تحريك شعار"
   ></button>
 </article>
 <article id="project-f20" class="project project--video is-deferred" data-reveal data-project-card="f20" data-category="ads">
@@ -6246,7 +6257,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f20"
-    aria-label="عرض تفاصيل مشروع الوثبة العقارية — مشروع سكني — إعلان عقاري"
+    aria-label="شاهد فيديو مشروع الوثبة العقارية — مشروع سكني — إعلان عقاري"
   ></button>
 </article>
 <article id="project-f19" class="project project--video is-deferred" data-reveal data-project-card="f19" data-category="ads">
@@ -6276,7 +6287,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f19"
-    aria-label="عرض تفاصيل مشروع بديل — إعلان سيارة — إعلان سيارات"
+    aria-label="شاهد فيديو مشروع بديل — إعلان سيارة — إعلان سيارات"
   ></button>
 </article>
 <article id="project-f18" class="project project--video is-deferred" data-reveal data-project-card="f18" data-category="ads">
@@ -6306,7 +6317,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f18"
-    aria-label="عرض تفاصيل مشروع المقصود للمولدات — إعلان الشركة — إعلان شركة"
+    aria-label="شاهد فيديو مشروع المقصود للمولدات — إعلان الشركة — إعلان شركة"
   ></button>
 </article>
 <article id="project-f17" class="project project--video is-deferred" data-reveal data-project-card="f17" data-category="ads">
@@ -6336,7 +6347,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f17"
-    aria-label="عرض تفاصيل مشروع الزين — مطعم سوري — تصوير ومونتاج"
+    aria-label="شاهد فيديو مشروع الزين — مطعم سوري — تصوير ومونتاج"
   ></button>
 </article>
 <article id="project-f15" class="project project--video is-deferred" data-reveal data-project-card="f15" data-category="motion">
@@ -6366,7 +6377,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f15"
-    aria-label="عرض تفاصيل مشروع ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك"
+    aria-label="شاهد فيديو مشروع ألهاكم التكاثر — الشيخ أمجد سمير — موشن جرافيك"
   ></button>
 </article>
 <article id="project-f14" class="project project--video is-deferred" data-reveal data-project-card="f14" data-category="motion">
@@ -6396,7 +6407,7 @@ body:has(.project-dialog[open]) .floating {
     type="button"
     class="project__open"
     data-project-open="f14"
-    aria-label="عرض تفاصيل مشروع البدايات — ياسر الحزيمي — موشن جرافيك"
+    aria-label="شاهد فيديو مشروع البدايات — ياسر الحزيمي — موشن جرافيك"
   ></button>
 </article>
 <article id="project-f05" class="project is-deferred" data-reveal data-project-card="f05" data-category="brand">
@@ -6427,36 +6438,6 @@ body:has(.project-dialog[open]) .floating {
     class="project__open"
     data-project-open="f05"
     aria-label="عرض تفاصيل مشروع طاهر للطباعة — هوية وطباعة"
-  ></button>
-</article>
-<article id="project-f04" class="project is-deferred" data-reveal data-project-card="f04" data-category="motion">
-  <div class="project__media">
-    <img
-      src="assets/projects/first-motion-graphics-work-900.jpg"
-      srcset="assets/projects/first-motion-graphics-work-640.jpg 640w, assets/projects/first-motion-graphics-work-900.jpg 900w, assets/projects/first-motion-graphics-work.jpg 1600w"
-      sizes="(max-width: 680px) 100vw, (max-width: 1080px) 90vw, 60vw"
-      width="1600"
-      height="1200"
-      alt="تجربة موشن جرافيك من بدايات المسار — موشن جرافيك"
-      loading="lazy"
-      decoding="async"
-    >
-
-    
-  </div>
-  <div class="project__body">
-    <span class="project__tag">موشن جرافيك</span>
-    <h3 class="project__title">تجربة موشن جرافيك — البدايات</h3>
-    <span class="project__more">
-      <span>عرض تفاصيل المشروع</span>
-      <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-    </span>
-  </div>
-  <button
-    type="button"
-    class="project__open"
-    data-project-open="f04"
-    aria-label="عرض تفاصيل مشروع تجربة موشن جرافيك — البدايات — موشن جرافيك"
   ></button>
 </article>
 <article id="project-f08" class="project is-deferred" data-reveal data-project-card="f08" data-category="brand">
@@ -6501,7 +6482,7 @@ body:has(.project-dialog[open]) .floating {
         </noscript>
 
         <p class="work-note">
-          <span id="workTotal">25</span> <span data-cms="workSection.note">مشروعًا في الأرشيف الكامل من مسيرتي في التصميم والموشن والتصوير.</span>
+          <span id="workTotal">24</span> <span data-cms="workSection.note">مشروعًا في «جميع الأعمال»؛ ثمانية منها تظهر أولًا، والباقي يظهر عند الضغط على «عرض الكل».</span>
         </p>
       </div>
     </section>
@@ -6547,8 +6528,7 @@ body:has(.project-dialog[open]) .floating {
             <span class="client__wordmark" lang="en" dir="ltr">INSTA WATCHES</span>
           </li>
           <li class="client">
-            <span class="client__wordmark" lang="en" dir="ltr" aria-hidden="true">NATURE SECRET</span>
-            <span class="client__name">سر الطبيعة</span>
+            <span class="client__wordmark" lang="en" dir="ltr">EN-SERV</span>
           </li>
           <li class="client">
             <span class="client__wordmark" lang="en" dir="ltr" aria-hidden="true">BDEEL</span>
@@ -7120,7 +7100,7 @@ body:has(.project-dialog[open]) .floating {
             <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
             السابق
           </button>
-          <span class="dialog-nav__count" id="dialogCount">1 / 25</span>
+          <span class="dialog-nav__count" id="dialogCount">1 / 24</span>
           <button class="dialog-nav__btn" id="dialogNext" type="button">
             التالي
             <svg class="icon" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
@@ -7185,7 +7165,7 @@ const SITE_DATA = {
     "name": "DOT Media",
     "tagline": "Creative Production",
     "url": "https://www.facebook.com/profile.php?id=61581319508233",
-    "description": "استوديو إنتاج إبداعي أعمل من خلاله على مشاريع الهوية البصرية والموشن جرافيك وإنتاج الفيديو، بالتعاون مع فريق مستقل حسب حجم المشروع."
+    "description": "استوديو إنتاج إبداعي أسّسته للعمل على مشاريع الهوية والموشن والفيديو، بالتعاون مع فريق مستقل بحسب حجم المشروع."
   },
   "email": "YWhtZWQwMTA2ODc3NTEyNUBnbWFpbC5jb20=",
   "whatsapp": "201228084197",
@@ -7218,15 +7198,15 @@ const SITE_DATA = {
     },
     {
       "key": "projects",
-      "value": 160,
-      "suffix": "+",
-      "label": "مشروع منجز"
+      "value": 24,
+      "suffix": "",
+      "label": "مشروعًا في الأرشيف"
     },
     {
       "key": "clients",
-      "value": 80,
-      "suffix": "+",
-      "label": "عميل راضٍ"
+      "value": 11,
+      "suffix": "",
+      "label": "علامة في قائمة العملاء"
     }
   ],
   "services": [
@@ -8086,32 +8066,6 @@ const WORK_DATA = [
     "slug": "taher-printing-brand-identity"
   },
   {
-    "id": "f04",
-    "code": "F05",
-    "title": "تجربة موشن جرافيك — البدايات",
-    "cat": "motion",
-    "tag": "موشن جرافيك",
-    "isVideo": false,
-    "url": "https://www.behance.net/gallery/119428049/_",
-    "external": true,
-    "image": "assets/projects/first-motion-graphics-work.jpg",
-    "width": 1600,
-    "height": 1200,
-    "summary": "من أوائل مشاريع الموشن جرافيك التي نفذتها؛ بداية المسار في التحريك والتصميم الحركي.",
-    "challenge": "تجربة مبكرة في التحريك، والهدف كان تحويل فكرة بسيطة إلى مشهد متحرك متماسك.",
-    "role": "التصميم والتحريك من الصفر، مع تجربة أساليب انتقال وتوقيت مختلفة.",
-    "result": "عمل قصير يمثّل بداية المسار في الموشن جرافيك.",
-    "tools": "موشن جرافيك – تحريك",
-    "alt": "تجربة موشن جرافيك من بدايات المسار — موشن جرافيك",
-    "imageSmall": "assets/projects/first-motion-graphics-work-900.jpg",
-    "imageMedium": "assets/projects/first-motion-graphics-work-1200.jpg",
-    "gallery": [],
-    "facts": [],
-    "smallWidth": 900,
-    "gridWidth": 640,
-    "slug": "first-motion-graphics-work"
-  },
-  {
     "id": "f08",
     "code": "F09",
     "title": "ULTRA GROW — النظام البصري",
@@ -8391,7 +8345,7 @@ function initSiteData() {
 
   const pillProjects = $('#pillProjects');
   if (pillProjects && statValue('projects')) {
-    pillProjects.textContent = `+${statValue('projects')}`;
+    pillProjects.textContent = String(statValue('projects'));
   }
 
   const workTotal = $('#workTotal');
@@ -8858,7 +8812,7 @@ function projectMarkup(project, index = 0, options = {}) {
         type="button"
         class="project__open"
         data-project-open="${escHtml(project.id)}"
-        aria-label="${escHtml(dedupeAlt(`عرض تفاصيل مشروع ${project.title} — ${project.tag}`))}"
+        aria-label="${escHtml(dedupeAlt(`${hasVideo ? 'شاهد فيديو' : 'عرض تفاصيل'} مشروع ${project.title} — ${project.tag}`))}"
       ></button>
     </article>`;
 }
@@ -8926,7 +8880,7 @@ function initGridImages(scope) {
   });
 }
 
-/* زر «عرض المزيد» — أول 8 مشاريع بس، والباقي عند الطلب */
+/* زر «عرض الكل» — أول 8 مشاريع تظهر، والباقي عند الطلب */
 function ensureWorkMore(grid) {
   if ($('#workMore')) return;
   const wrap = document.createElement('div');
@@ -8934,7 +8888,7 @@ function ensureWorkMore(grid) {
   wrap.id = 'workMore';
   wrap.innerHTML = `
     <button class="btn btn--ghost work-more__btn" id="workMoreBtn" type="button">
-      <span>عرض المزيد من الأعمال</span>
+      <span>عرض الكل</span>
       <span class="work-more__count" id="workMoreCount"></span>
       <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg>
     </button>`;

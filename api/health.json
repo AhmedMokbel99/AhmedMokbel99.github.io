@@ -1,10 +1,10 @@
 {
   "status": "ok",
-  "generatedAt": "2026-11-27",
+  "generatedAt": "2026-11-28",
   "kind": "static-build",
   "note": "ملف ثابت يتولّد مع كل بناء ونشر — لا يوجد سيرفر حي وراءه.",
   "counts": {
-    "projects": 25,
+    "projects": 24,
     "services": 6,
     "servicePages": 6
   }
