@@ -60,7 +60,7 @@ const SITE_DATA = {
     },
     {
       "key": "clients",
-      "value": 11,
+      "value": 12,
       "suffix": "",
       "label": "علامة في قائمة العملاء"
     }

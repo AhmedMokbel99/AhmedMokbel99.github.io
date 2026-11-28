@@ -2675,6 +2675,14 @@ def main() -> None:
         html,
         count=1,
     )
+    early_link = (site.get("about") or {}).get("p1bLinkUrl")
+    if early_link:
+        html = re.sub(
+            r'(<a id="earlyMotionLink" href=")[^"]*(")',
+            lambda m: m.group(1) + esc(early_link) + m.group(2),
+            html,
+            count=1,
+        )
     html = re.sub(
         r'(<span id="workTotal">)[^<]*(</span>)',
         lambda m: m.group(1) + str(len(visible)) + m.group(2),
